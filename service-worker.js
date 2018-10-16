@@ -41,3 +41,7 @@ self.addEventListener('activate', function(e) {
   );
   return self.clients.claim();
 });
+
+self.addEventListener('fetch', function (e) {
+    // it can be empty if you just want to get rid of that error
+});
