@@ -7,7 +7,7 @@ title: Hexo
 subtitle:
 description:
 keywords:
-author: John Doe
+author: Caesiumy
 language:
 timezone:
 
@@ -77,5 +77,5 @@ theme: landscape
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
-deploy:
-  type:
+deploy: git
+  type: https://github.com/CaesiumY/CaesiumY.github.io
