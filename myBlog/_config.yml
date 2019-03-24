@@ -78,4 +78,4 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy: git
-  type: https://github.com/CaesiumY/CaesiumY.github.io
+  type: https://github.com/CaesiumY/CaesiumY.github.io.git
