@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle:
-description:
+title: 문과생 코딩 개척기
+subtitle: 풀스택 개발자가 되는 날까지
+description: 간간히 팁들을 올리는 개발 블로그
 keywords:
 author: Caesiumy
-language:
+language: ko
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://caesiumy.github.io/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -73,6 +73,8 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
+plugins:
+  - hexo-deployer-git
 theme: landscape
 
 # Deployment
