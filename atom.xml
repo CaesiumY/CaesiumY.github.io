@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://caesiumy.github.io/"/>
-  <updated>2019-03-27T16:32:40.447Z</updated>
+  <updated>2019-03-27T16:35:04.487Z</updated>
   <id>https://caesiumy.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://caesiumy.github.io/2019/03/25/image-test/"/>
     <id>https://caesiumy.github.io/2019/03/25/image-test/</id>
     <published>2019-03-25T14:27:41.000Z</published>
-    <updated>2019-03-27T16:32:40.447Z</updated>
+    <updated>2019-03-27T16:35:04.487Z</updated>
     
     <content type="html"><![CDATA[<h3 id="Related-Posts"><a href="#Related-Posts" class="headerlink" title="Related Posts"></a>Related Posts</h3><a id="more"></a><img src="/2019/03/25/image-test/test.png" title="[test]"><img src="/2019/03/25/image-test/test.png" title="[test]"><div class="alert info"><p>content</p></div><span class="highlight-text danger">your highlighted text</span><figure class="codeblock codeblock--tabbed"><figcaption><a href="http://example.com" target="_blank" rel="noopener">example</a><ul class="tabs"><li class="tab active">js</li><li class="tab">css</li></ul></figcaption><div class="tabs-content"><figure class="highlight js" style="display: block;"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="string">'test'</span>;</span><br></pre></td></tr></tbody></table></figure><figure class="highlight css" style="display: none;"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.btn</span> {</span><br><span class="line"><span class="attribute">color</span>: red;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div></figure><div class="figure right" style="width:150px;"><a class="fancybox" href="image2.png" title="A beautiful sunrise" data-caption="A beautiful sunrise" data-fancybox="travel"><img class="fig-img" src="https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-sample-grunge-red-round-stamp.jpg" style="width:150px;height:300px;" alt="A beautiful sunrise"></a><span class="caption">A beautiful sunrise</span></div><div style="clear:both;"></div><!-- endcontent --><div class="figure figure--fullWidth"><img class="figure-img" src="https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-sample-grunge-red-round-stamp.jpg" alt="A beautiful sunrise"><span class="caption">A beautiful sunrise</span></div><!-- content -->]]></content>
     
