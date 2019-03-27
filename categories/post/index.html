@@ -11,6 +11,8 @@
     
     
     
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
     <script type="application/ld+json">{}</script>
     <meta name="description" content="간간히 팁들을 올리는 개발 블로그">
 <meta property="og:type" content="blog">
@@ -34,7 +36,7 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/style-3ykfymqy0axqhthlksyufx37ybeqiitlz7qbah7ilalfrt6mdsjahhuprpc4.min.css">
+    <link rel="stylesheet" href="/assets/css/style-hwrael1i3958yn5p9jq31pytb1ikpffxvrpwrgnu3tubl0euixo9nfhb98s5.min.css">
     <!--STYLES END-->
     
 
@@ -324,12 +326,110 @@
 </div>
 
         
+            <div id="algolia-search-modal" class="modal-container">
+    <div class="modal">
+        <div class="modal-header">
+            <span class="close-button"><i class="fa fa-times"></i></span>
+            <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+                <span class="searchby-algolia-text text-color-light text-small">by</span>
+                <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+            </a>
+            <i class="search-icon fa fa-search"></i>
+            <form id="algolia-search-form">
+                <input type="text" id="algolia-search-input" name="search" class="form-control input--large search-input" placeholder="Search ">
+            </form>
+        </div>
+        <div class="modal-body">
+            <div class="no-result text-color-light text-center">no post found</div>
+            <div class="results">
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="https://caesiumy.github.io/2019/03/24/hello-world/">
+                            <h3 class="media-heading">Hello World</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    Mar 24, 2019
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="https://caesiumy.github.io/2019/03/24/my-New-Post/">
+                            <h3 class="media-heading">첫 포스트</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    Mar 24, 2019
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+                <div class="media">
+                    
+                    <div class="media-left">
+                        <a class="link-unstyled" href="https://caesiumy.github.io/2019/03/25/image-test/">
+                            <img class="media-image" src="https://caesiumy.github.io/2019/03/25/image-test/test2.png" width="90" height="90">
+                        </a>
+                    </div>
+                    
+                    <div class="media-body">
+                        <a class="link-unstyled" href="https://caesiumy.github.io/2019/03/25/image-test/">
+                            <h3 class="media-heading">image-test</h3>
+                        </a>
+                        <span class="media-meta">
+                            <span class="media-date text-small">
+                                
+                                    Mar 25, 2019
+                                
+                            </span>
+                        </span>
+                        <div class="media-content hide-xs font-merryweather"><h3 id="Related-Posts"><a href="#Related-Posts" class="headerlink" title="Related Posts"></a>Related Posts</h3></div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <hr>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <p class="results-count text-medium" data-message-zero="no post found" data-message-one="1 post found" data-message-other="{n} posts found">
+                3 posts found
+            </p>
+        </div>
+    </div>
+</div>
+
+        
         
 <div id="cover" style="background-image:url('/assets/images/cover2.png');"></div>
         <!--SCRIPTS-->
-<script src="/assets/js/script-e0pnj29m0rvdwizx3rxhioumolwdtxhuakhwdrlmiqwmtaup7fypxvtplibo.min.js"></script>
+<script src="/assets/js/script-26ijq6yxynnq9maulp9oygjf457ayjwrdtxsvhqqw7usjxzf811uzk2f67yd.min.js"></script>
 <!--SCRIPTS END-->
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script>
+        var algoliaClient = algoliasearch('Z7A3XW4R2I', '12db1ad54372045549ef465881c17e743');
+        var algoliaIndex = algoliaClient.initIndex('my-hexo-blog');
+    </script>
 
 
     </body>

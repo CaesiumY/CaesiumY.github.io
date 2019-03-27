@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>문과생 코딩 개척기</title>
+  
+  <subtitle>풀스택 개발자가 되는 날까지</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://caesiumy.github.io/"/>
+  <updated>2019-03-27T16:32:40.447Z</updated>
+  <id>https://caesiumy.github.io/</id>
+  
+  <author>
+    <name>Caesiumy</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>image-test</title>
+    <link href="https://caesiumy.github.io/2019/03/25/image-test/"/>
+    <id>https://caesiumy.github.io/2019/03/25/image-test/</id>
+    <published>2019-03-25T14:27:41.000Z</published>
+    <updated>2019-03-27T16:32:40.447Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Related-Posts"><a href="#Related-Posts" class="headerlink" title="Related Posts"></a>Related Posts</h3><a id="more"></a><img src="/2019/03/25/image-test/test.png" title="[test]"><img src="/2019/03/25/image-test/test.png" title="[test]"><div class="alert info"><p>content</p></div><span class="highlight-text danger">your highlighted text</span><figure class="codeblock codeblock--tabbed"><figcaption><a href="http://example.com" target="_blank" rel="noopener">example</a><ul class="tabs"><li class="tab active">js</li><li class="tab">css</li></ul></figcaption><div class="tabs-content"><figure class="highlight js" style="display: block;"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="string">'test'</span>;</span><br></pre></td></tr></tbody></table></figure><figure class="highlight css" style="display: none;"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.btn</span> {</span><br><span class="line"><span class="attribute">color</span>: red;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></div></figure><div class="figure right" style="width:150px;"><a class="fancybox" href="image2.png" title="A beautiful sunrise" data-caption="A beautiful sunrise" data-fancybox="travel"><img class="fig-img" src="https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-sample-grunge-red-round-stamp.jpg" style="width:150px;height:300px;" alt="A beautiful sunrise"></a><span class="caption">A beautiful sunrise</span></div><div style="clear:both;"></div><!-- endcontent --><div class="figure figure--fullWidth"><img class="figure-img" src="https://previews.123rf.com/images/aquir/aquir1311/aquir131100316/23569861-sample-grunge-red-round-stamp.jpg" alt="A beautiful sunrise"><span class="caption">A beautiful sunrise</span></div><!-- content -->]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Related-Posts&quot;&gt;&lt;a href=&quot;#Related-Posts&quot; class=&quot;headerlink&quot; title=&quot;Related Posts&quot;&gt;&lt;/a&gt;Related Posts&lt;/h3&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>첫 포스트</title>
+    <link href="https://caesiumy.github.io/2019/03/24/my-New-Post/"/>
+    <id>https://caesiumy.github.io/2019/03/24/my-New-Post/</id>
+    <published>2019-03-24T14:38:15.000Z</published>
+    <updated>2019-03-25T12:45:31.029Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="제목"><a href="#제목" class="headerlink" title="제목"></a>제목</h2><p>Hello World!!</p><p>첫 포스트입니다!</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;제목&quot;&gt;&lt;a href=&quot;#제목&quot; class=&quot;headerlink&quot; title=&quot;제목&quot;&gt;&lt;/a&gt;제목&lt;/h2&gt;&lt;p&gt;Hello World!!&lt;/p&gt;
+&lt;p&gt;첫 포스트입니다!&lt;/p&gt;
+
+
+      
+    
+    </summary>
+    
+      <category term="post" scheme="https://caesiumy.github.io/categories/post/"/>
+    
+    
+      <category term="first" scheme="https://caesiumy.github.io/tags/first/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="https://caesiumy.github.io/2019/03/24/hello-world/"/>
+    <id>https://caesiumy.github.io/2019/03/24/hello-world/</id>
+    <published>2019-03-24T14:16:12.967Z</published>
+    <updated>2019-03-24T14:16:12.967Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
