@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://caesiumy.github.io/"/>
-  <updated>2019-03-31T12:56:00.950Z</updated>
+  <updated>2019-03-31T13:20:20.466Z</updated>
   <id>https://caesiumy.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://caesiumy.github.io/2019/03/31/settings-before-start/"/>
     <id>https://caesiumy.github.io/2019/03/31/settings-before-start/</id>
     <published>2019-03-31T08:45:31.000Z</published>
-    <updated>2019-03-31T12:56:00.950Z</updated>
+    <updated>2019-03-31T13:20:20.466Z</updated>
     
-    <content type="html"><![CDATA[<!-- excerpt --><p>멋쟁이 사자처럼 7기 커리큘럼이 <code>django</code><del>(어무해)</del>로 바뀜과 동시에, 다루는 <code>IDE</code> 등 개발 환경 또한 바뀌게 되었다.</p><p>이번에 설치할 목록은 다음과 같다.</p><div class="alert info no-icon"><ol><li>Visual Studio Code</li><li>git</li><li>python</li><li>django</li></ol></div><p><br></p><h1 id="vscode-설치하기"><a href="#vscode-설치하기" class="headerlink" title="vscode 설치하기"></a>vscode 설치하기</h1><div class="figure center" style="width:;"><img class="fig-img" src="vscode3.png" alt="vscode 로고"><span class="caption">vscode 로고</span></div><p><strong><a href="https://code.visualstudio.com/" rel="external nofollow noopener noreferrer" target="_blank">vscode 설치 링크</a></strong> 에 들어가서 윈도우OS 전용으로 다운 받은 뒤, 파일을 실행하면 빠른 설치가 가능하다.<br>언제나 많은 분들이 그러하듯이 계속 다음 다음만 쭈욱 눌러주면 된다.</p><p>…면 좋겠으나, 막 누르지는 말고 아래 사진이 나오면 <span class="highlight-text red">스탑!! </span><div class="figure center" style="width:;"><a class="fancybox" href="vscode_install.png" title="체크 버튼이 나오는 항목까지만 진행하자" data-caption="체크 버튼이 나오는 항목까지만 진행하자" data-fancybox="default"><img class="fig-img" src="vscode_install.png" alt="체크 버튼이 나오는 항목까지만 진행하자"></a><span class="caption">체크 버튼이 나오는 항목까지만 진행하자</span></div>바탕 화면 바로가기는 취향껏 체크해주고,나머지는 모두 체크해주자.그래야 마우스 컨텍스트 메뉴에서 빠르게 `vscode` 를 실행할 수 있다.> - 마우스 컨텍스트 메뉴란 마우스 우클릭 시 나오는 여러 메뉴들을 가리킴.그 이후는 설치 버튼을 누르고 기다리기만 하면 <span class="highlight-text primary">미션 1 컴플리트! </span></p>]]></content>
+    <content type="html"><![CDATA[<!-- excerpt --><p>멋쟁이 사자처럼 7기 커리큘럼이 <code>django</code><del>(어무해)</del>로 바뀜과 동시에, 다루는 <code>IDE</code> 등 개발 환경 또한 바뀌게 되었다.</p><p>이번에 설치할 목록은 다음과 같다.</p><div class="alert info no-icon"><ol><li>Visual Studio Code</li><li>git</li><li>python</li><li>django</li></ol></div><p><br></p><h1 id="vscode-설치하기"><a href="#vscode-설치하기" class="headerlink" title="vscode 설치하기"></a>vscode 설치하기</h1><div class="figure center" style="width:;"><img class="fig-img" src="vscode3.png" alt="vscode 로고"><span class="caption">vscode 로고</span></div><p><strong><a href="https://code.visualstudio.com/" rel="external nofollow noopener noreferrer" target="_blank">vscode 설치 링크</a></strong> 에 들어가서 윈도우OS 전용으로 다운 받은 뒤, 파일을 실행하면 빠른 설치가 가능하다.<br>언제나 많은 분들이 그러하듯이 계속 다음 다음만 쭈욱 눌러주면 된다.</p><p>…면 좋겠으나, 막 누르지는 말고 아래 사진이 나오면 <span class="highlight-text red">스탑!! </span><div class="figure center" style="width:;"><img class="fig-img" src="vscode_install.png" alt="체크 버튼이 나오는 항목까지만 진행하자"><span class="caption">체크 버튼이 나오는 항목까지만 진행하자</span></div>바탕 화면 바로가기는 취향껏 체크해주고, 나머지는 모두 체크해주자.그래야 마우스 컨텍스트 메뉴에서 빠르게 `vscode` 를 실행할 수 있다.> 마우스 컨텍스트 메뉴란 마우스 우클릭 시 나오는 여러 메뉴들을 가리킴.</p><p>그 이후는 설치 버튼을 누르고 기다리기만 하면 <span class="highlight-text primary">미션 1 컴플리트! </span></p><p></p><h3 id="나머지는-다음에-계속…"><a href="#나머지는-다음에-계속…" class="headerlink" title="나머지는 다음에 계속…"></a>나머지는 다음에 계속…</h3>]]></content>
     
     <summary type="html">
     
@@ -47,27 +47,6 @@
       <category term="개발환경" scheme="https://caesiumy.github.io/tags/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD/"/>
     
       <category term="vscode" scheme="https://caesiumy.github.io/tags/vscode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="https://caesiumy.github.io/2019/03/24/hello-world/"/>
-    <id>https://caesiumy.github.io/2019/03/24/hello-world/</id>
-    <published>2019-03-24T14:16:12.967Z</published>
-    <updated>2019-03-24T14:16:12.967Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" rel="external nofollow noopener noreferrer" target="_blank">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" rel="external nofollow noopener noreferrer" target="_blank">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" rel="external nofollow noopener noreferrer" target="_blank">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" rel="external nofollow noopener noreferrer" target="_blank">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" rel="external nofollow noopener noreferrer" target="_blank">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" rel="external nofollow noopener noreferrer" target="_blank">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" rel="external nofollow noopener noreferrer" target="_blank">Deployment</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; rel=&quot;external nofollow noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Hexo&lt;/a&gt;! This is your very first post.
-      
-    
-    </summary>
-    
     
   </entry>
   
