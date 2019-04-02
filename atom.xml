@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://caesiumy.github.io/"/>
-  <updated>2019-04-01T14:40:01.930Z</updated>
+  <updated>2019-04-02T14:51:57.549Z</updated>
   <id>https://caesiumy.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>VSCODE 추천 부가기능(Extensions)과 세팅</title>
+    <link href="https://caesiumy.github.io/2019/04/02/vscode-recommended-extensions/"/>
+    <id>https://caesiumy.github.io/2019/04/02/vscode-recommended-extensions/</id>
+    <published>2019-04-02T14:46:33.000Z</published>
+    <updated>2019-04-02T14:51:57.549Z</updated>
+    
+    <content type="html"><![CDATA[<!-- excerpt -->]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;vscode 부가기능들을 설치하고 세팅하여, 활용을 극대화해보자!&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="멋쟁이 사자처럼" scheme="https://caesiumy.github.io/categories/%EB%A9%8B%EC%9F%81%EC%9D%B4-%EC%82%AC%EC%9E%90%EC%B2%98%EB%9F%BC/"/>
+    
+      <category term="개발환경" scheme="https://caesiumy.github.io/categories/%EB%A9%8B%EC%9F%81%EC%9D%B4-%EC%82%AC%EC%9E%90%EC%B2%98%EB%9F%BC/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD/"/>
+    
+      <category term="vscode" scheme="https://caesiumy.github.io/categories/%EB%A9%8B%EC%9F%81%EC%9D%B4-%EC%82%AC%EC%9E%90%EC%B2%98%EB%9F%BC/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD/vscode/"/>
+    
+    
+      <category term="멋쟁이 사자처럼" scheme="https://caesiumy.github.io/tags/%EB%A9%8B%EC%9F%81%EC%9D%B4-%EC%82%AC%EC%9E%90%EC%B2%98%EB%9F%BC/"/>
+    
+      <category term="개발환경" scheme="https://caesiumy.github.io/tags/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD/"/>
+    
+      <category term="vscode" scheme="https://caesiumy.github.io/tags/vscode/"/>
+    
+  </entry>
   
   <entry>
     <title>윈도우에서 django 개발환경 설치하기(vscode, git, python)</title>
