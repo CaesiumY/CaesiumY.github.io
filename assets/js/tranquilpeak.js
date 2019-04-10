@@ -805,21 +805,21 @@
   });
 })(jQuery);
 ;(function($) {
-  'use strict';
+  "use strict";
 
   /**
    * Search modal with Algolia
    * @constructor
    */
   var SearchModal = function() {
-    this.$openButton = $('.open-algolia-search');
-    this.$searchModal = $('#algolia-search-modal');
-    this.$closeButton = this.$searchModal.find('.close-button');
-    this.$searchForm = $('#algolia-search-form');
-    this.$searchInput = $('#algolia-search-input');
-    this.$results = this.$searchModal.find('.results');
-    this.$noResults = this.$searchModal.find('.no-result');
-    this.$resultsCount = this.$searchModal.find('.results-count');
+    this.$openButton = $(".open-algolia-search");
+    this.$searchModal = $("#algolia-search-modal");
+    this.$closeButton = this.$searchModal.find(".close-button");
+    this.$searchForm = $("#algolia-search-form");
+    this.$searchInput = $("#algolia-search-input");
+    this.$results = this.$searchModal.find(".results");
+    this.$noResults = this.$searchModal.find(".no-result");
+    this.$resultsCount = this.$searchModal.find(".results-count");
     this.algolia = algoliaIndex;
   };
 
@@ -841,11 +841,11 @@
         var target = event.target || event.srcElement;
         // exit if user is focusing an input or textarea
         var tagName = target.tagName.toUpperCase();
-        if (tagName === 'INPUT' || tagName === 'TEXTAREA') {
+        if (tagName === "INPUT" || tagName === "TEXTAREA") {
           return;
         }
 
-        if (event.keyCode === 83 && !self.$searchModal.is(':visible')) {
+        if (event.keyCode === 83 && !self.$searchModal.is(":visible")) {
           self.open();
         }
       });
@@ -864,7 +864,7 @@
 
       // close modal when `ESC` button is pressed
       $(document).keyup(function(e) {
-        if (e.keyCode === 27 && self.$searchModal.is(':visible')) {
+        if (e.keyCode === 27 && self.$searchModal.is(":visible")) {
           self.close();
         }
       });
@@ -917,35 +917,49 @@
      * @returns {void}
      */
     showResults: function(posts) {
-      var html = '';
+      var html = "";
       posts.forEach(function(post) {
-        var lang = window.navigator.userLanguage || window.navigator.language || post.lang;
+        var lang =
+          window.navigator.userLanguage ||
+          window.navigator.language ||
+          post.lang;
 
         html += '<div class="media">';
         if (post.thumbnailImageUrl) {
           html += '<div class="media-left">';
-          html += '<a class="link-unstyled" href="' + (post.link || post.permalink) + '">';
-          html += '<img class="media-image" ' +
-            'src="' + post.thumbnailImageUrl + '" ' +
+          html +=
+            '<a class="link-unstyled" href="' +
+            (post.link || post.permalink) +
+            '">';
+          html +=
+            '<img class="media-image" ' +
+            'src="' +
+            post.thumbnailImageUrl +
+            '" ' +
             'width="90" height="90"/>';
-          html += '</a>';
-          html += '</div>';
+          html += "</a>";
+          html += "</div>";
         }
 
         html += '<div class="media-body">';
-        html += '<a class="link-unstyled" href="' + (post.link || post.permalink) + '">';
-        html += '<h3 class="media-heading">' + post.title + '</h3>';
-        html += '</a>';
+        html +=
+          '<a class="link-unstyled" href="' +
+          (post.link || post.permalink) +
+          '">';
+        html += '<h3 class="media-heading">' + post.title + "</h3>";
+        html += "</a>";
         html += '<span class="media-meta">';
         html += '<span class="media-date text-small">';
-        html += moment(post.date).locale(lang).format('ll');
-        html += '</span>';
-        html += '</span>';
-        html += '<div class="media-content hide-xs font-merryweather">' + post.excerpt + '</div>';
-        html += '</div>';
+        html += moment(post.date)
+          .locale(lang)
+          .format("ll");
+        html += "</span>";
+        html += "</span>";
+        // html += '<div class="media-content hide-xs">' + post.excerpt + "</div>";
+        html += "</div>";
         html += '<div style="clear:both;"></div>';
-        html += '<hr>';
-        html += '</div>';
+        html += "<hr>";
+        html += "</div>";
       });
       this.$results.html(html);
     },
@@ -972,17 +986,17 @@
      * @returns {void}
      */
     showResultsCount: function(count) {
-      var string = '';
+      var string = "";
       if (count < 1) {
-        string = this.$resultsCount.data('message-zero');
+        string = this.$resultsCount.data("message-zero");
         this.$noResults.show();
-      }
-      else if (count === 1) {
-        string = this.$resultsCount.data('message-one');
+      } else if (count === 1) {
+        string = this.$resultsCount.data("message-one");
         this.$noResults.hide();
-      }
-      else if (count > 1) {
-        string = this.$resultsCount.data('message-other').replace(/\{n\}/, count);
+      } else if (count > 1) {
+        string = this.$resultsCount
+          .data("message-other")
+          .replace(/\{n\}/, count);
         this.$noResults.hide();
       }
       this.$resultsCount.html(string);
@@ -993,9 +1007,9 @@
      * @returns {void}
      */
     showOverlay: function() {
-      $('body').append('<div class="overlay"></div>');
-      $('.overlay').fadeIn();
-      $('body').css('overflow', 'hidden');
+      $("body").append('<div class="overlay"></div>');
+      $(".overlay").fadeIn();
+      $("body").css("overflow", "hidden");
     },
 
     /**
@@ -1003,16 +1017,16 @@
      * @returns {void}
      */
     hideOverlay: function() {
-      $('.overlay').fadeOut(function() {
+      $(".overlay").fadeOut(function() {
         $(this).remove();
-        $('body').css('overflow', 'auto');
+        $("body").css("overflow", "auto");
       });
     }
   };
 
   $(document).ready(function() {
     // launch feature only if there is an Algolia index available
-    if (typeof algoliaIndex !== 'undefined') {
+    if (typeof algoliaIndex !== "undefined") {
       var searchModal = new SearchModal();
       searchModal.run();
     }
