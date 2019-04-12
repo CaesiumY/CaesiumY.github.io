@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://caesiumy.github.io/2019/04/12/lets-start-django/</loc>
+        <lastmod>2019-04-12T14:24:41.626Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://caesiumy.github.io/2019/04/07/vscode-how-to-git/</loc>
         <lastmod>2019-04-07T10:19:53.698Z</lastmod>
         <changefreq>weekly</changefreq>

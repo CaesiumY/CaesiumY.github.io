@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://caesiumy.github.io/"/>
-  <updated>2019-04-07T10:19:53.698Z</updated>
+  <updated>2019-04-12T14:24:41.626Z</updated>
   <id>https://caesiumy.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>django를 시작해보자!</title>
+    <link href="https://caesiumy.github.io/2019/04/12/lets-start-django/"/>
+    <id>https://caesiumy.github.io/2019/04/12/lets-start-django/</id>
+    <published>2019-04-12T14:24:02.000Z</published>
+    <updated>2019-04-12T14:24:41.626Z</updated>
+    
+    <content type="html"><![CDATA[<!-- excerpt -->]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- excerpt --&gt;
+      
+    
+    </summary>
+    
+      <category term="멋쟁이 사자처럼" scheme="https://caesiumy.github.io/categories/%EB%A9%8B%EC%9F%81%EC%9D%B4-%EC%82%AC%EC%9E%90%EC%B2%98%EB%9F%BC/"/>
+    
+      <category term="django" scheme="https://caesiumy.github.io/categories/%EB%A9%8B%EC%9F%81%EC%9D%B4-%EC%82%AC%EC%9E%90%EC%B2%98%EB%9F%BC/django/"/>
+    
+    
+      <category term="멋쟁이 사자처럼" scheme="https://caesiumy.github.io/tags/%EB%A9%8B%EC%9F%81%EC%9D%B4-%EC%82%AC%EC%9E%90%EC%B2%98%EB%9F%BC/"/>
+    
+      <category term="django" scheme="https://caesiumy.github.io/tags/django/"/>
+    
+      <category term="전체세션" scheme="https://caesiumy.github.io/tags/%EC%A0%84%EC%B2%B4%EC%84%B8%EC%85%98/"/>
+    
+  </entry>
   
   <entry>
     <title>Git을 vscode를 통해 간편하게 사용해보자!</title>
