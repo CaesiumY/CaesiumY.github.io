@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://caesiumy.github.io/"/>
-  <updated>2019-04-07T10:19:53.698Z</updated>
+  <updated>2019-04-15T11:19:17.905Z</updated>
   <id>https://caesiumy.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>간단하게 알아보는 프론트엔드와 백엔드의 특징</title>
+    <link href="https://caesiumy.github.io/2019/04/14/frontend-and-backend-features/"/>
+    <id>https://caesiumy.github.io/2019/04/14/frontend-and-backend-features/</id>
+    <published>2019-04-14T14:50:25.000Z</published>
+    <updated>2019-04-15T11:19:17.905Z</updated>
+    
+    <content type="html"><![CDATA[<!-- excerpt --><p>프론트엔드? 백엔드? 그게 뭐죠??</p><!-- excerpt -->]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;!-- excerpt --&gt;
+&lt;p&gt;프론트엔드? 백엔드? 그게 뭐죠??&lt;/p&gt;
+&lt;!-- excerpt --&gt;
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Git을 vscode를 통해 간편하게 사용해보자!</title>
