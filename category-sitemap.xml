@@ -8,6 +8,20 @@
     </url>
 
     <url>
+        <loc>https://caesiumy.github.io/categories/book/IT/</loc>
+        <lastmod>2019-07-18T16:09:03.800Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://caesiumy.github.io/categories/book/</loc>
+        <lastmod>2019-07-18T16:09:03.800Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://caesiumy.github.io/categories/%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D/%EC%8A%A4%ED%84%B0%EB%94%94%EC%9E%BC/</loc>
         <lastmod>2019-05-06T10:29:51.667Z</lastmod>
         <changefreq>weekly</changefreq>
