@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://caesiumy.github.io/"/>
-  <updated>2019-07-18T16:09:03.800Z</updated>
+  <updated>2019-07-18T17:41:05.585Z</updated>
   <id>https://caesiumy.github.io/</id>
   
   <author>
@@ -17,13 +17,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>파이썬 라이브러리로 배우는 딥러닝 입문과 응용 후기</title>
+    <title>&lt;파이썬 라이브러리로 배우는 딥러닝 입문과 응용&gt; 후기</title>
     <link href="https://caesiumy.github.io/2019/07/19/python-library-deep-learning-book/"/>
     <id>https://caesiumy.github.io/2019/07/19/python-library-deep-learning-book/</id>
     <published>2019-07-18T16:05:32.000Z</published>
-    <updated>2019-07-18T16:09:03.800Z</updated>
+    <updated>2019-07-18T17:41:05.585Z</updated>
     
-    <content type="html"><![CDATA[<!-- excerpt -->]]></content>
+    <content type="html"><![CDATA[<!-- excerpt --><h1 id="이-책-받고-방학동안-코딩길만-걸어-EVENT"><a href="#이-책-받고-방학동안-코딩길만-걸어-EVENT" class="headerlink" title="이 책 받고 방학동안 코딩길만 걸어 EVENT"></a>이 책 받고 방학동안 코딩길만 걸어 EVENT</h1><p>멋사 유튜브를 구독하고, 인증하면 책을 준다고 했길래 반신 반의하며 응모…</p><p>결과는 <strong>당첨</strong>…</p><p>어쩔 수 없다 이렇게 된 이상 약속한 대로 리뷰 가자</p><div class="figure center" style="width:;"><img class="fig-img" src="https://cdn-dev-class.likelion.org/media/django-summernote/2019-07-01/ce6796ca-6f95-420c-939c-2fef291b45b9.png" alt="본인은 고양이를 인질로 잡은 책에 투표했다..."><span class="caption">본인은 고양이를 인질로 잡은 책에 투표했다...</span></div><h2 id="스터디잼"><a href="#스터디잼" class="headerlink" title="스터디잼"></a>스터디잼</h2><p>구글 머신러닝 스터디잼 입문 - 중급 - 심화반 모두를 하면서 뼈저리게 느꼈던 것은 바로</p><p><strong>머신러닝은 어렵구나.</strong></p><p><del>그래서 딥러닝이 아닌 고양이를 골랐다</del></p><p>암튼 이렇게 된 이상!</p><p>운명이라 생각하고 달려볼 예정!!</p><div class="figure center" style="width:;"><img class="fig-img" src="20190713_021427.jpg" alt="받고 나서 찰칵"><span class="caption">받고 나서 찰칵</span></div><h2 id="어려워"><a href="#어려워" class="headerlink" title="어려워"></a>어려워</h2><p>위에서 말했듯이 머신러닝은 어려웠다.</p><p>영어라 그런 점도 있었겠지만, 무엇보다도 문과 출신인 내가 이해하기 어려운 수학 공식이 여름철 모기마냥 나를 물어뜯었다ㅠㅠ</p><p>근데 이번엔 다르다. 일단 무려 <strong>한글</strong>이라구!!</p><p>그리고 다행히 스터디잼 시절에 배운 여러 용어들이 책에서도 쓰였기에 왠만큼은 이해가 가능했다.</p><p>하지만…</p><div class="figure center" style="width:;"><img class="fig-img" src="http://file3.instiz.net/data/file3/2018/04/13/e/9/b/e9bf348b01c0ffb7953f327a34c7b0a5.png" alt="한글의 장단점"><span class="caption">한글의 장단점</span></div><h2 id="단점"><a href="#단점" class="headerlink" title="단점"></a>단점</h2><h4 id="1-문과-출신이라-말이-안-통한다…"><a href="#1-문과-출신이라-말이-안-통한다…" class="headerlink" title="1. (문과 출신이라) 말이 안 통한다…"></a>1. (문과 출신이라) 말이 안 통한다…</h4><p>머신러닝에서 배웠던 개념들은 그렇다 치자.</p><p>문제는 수학개념들… 전혀 처음 보는 부호(?)를 사용하고 있는 것부터가 압박감이 장난이 아니다.</p><p>저걸 세타라고 했던가…</p><h4 id="2-입문이라고-치기엔-높은-난이도"><a href="#2-입문이라고-치기엔-높은-난이도" class="headerlink" title="2. 입문이라고 치기엔 높은 난이도"></a>2. 입문이라고 치기엔 높은 난이도</h4><p>머신러닝 딥러닝이 어렵다는 것은 모두 알고 있을 사실이다.<br><del>그걸 알고서도 투표율이 제일 높았다… 다들 머신러닝 안 해본 것이 분명하다ㅂㄷㅂㄷ</del></p><p>이 책이 칭하는 <strong>입문</strong>이라는 단어의 정의는</p><p>머신러닝을 이해하고, 이제 딥러닝에 <strong>입문</strong> 하려는 사람들을 일컫는다.</p><h1 id="장점"><a href="#장점" class="headerlink" title="장점"></a>장점</h1><h4 id="1-코드가-있어서-따라해보기-좋다"><a href="#1-코드가-있어서-따라해보기-좋다" class="headerlink" title="1. 코드가 있어서 따라해보기 좋다."></a>1. 코드가 있어서 따라해보기 좋다.</h4><p>일단 내용을 이해하지 못하더라도, 코드를 따라하며 실습할 수 있는 기회가 주어진다.</p><p>옛날에 했던 파일구조 교재의 코드가 뒤죽박죽이었던 것을 기억하면 감지덕지</p><h4 id="2-그래서-순서대로-따라가기-좋다"><a href="#2-그래서-순서대로-따라가기-좋다" class="headerlink" title="2. 그래서 순서대로 따라가기 좋다."></a>2. 그래서 순서대로 따라가기 좋다.</h4><p>순전히 레퍼런스용 책이 아닌, 입문자들이 사용할 순서대로 따라가는 것이 책이 보여주는 구성방식이다.</p><p>물론 입문자는 ‘그’ 입문자가 아니겠지만…<br><del>프로그래밍 입문자를 뜻하는 것이 아니다!!</del></p><h4 id="3-한글이다"><a href="#3-한글이다" class="headerlink" title="3. 한글이다."></a>3. 한글이다.</h4><p>AI의 경우에는 해외에서 쓰인 영어로 된 문서들이 대부분이다.</p><p>그런 시대에서 한글로 된 AI 서적은 다다익선!!</p><h4 id="4-흥미로운-챕터명"><a href="#4-흥미로운-챕터명" class="headerlink" title="4. 흥미로운 챕터명"></a>4. 흥미로운 챕터명</h4><p>보드게임에서의 딥러닝, 컴퓨터 게임에 딥러닝 적용하기, 침입 탐지 시스템 만들기… </p><p>듣기만해도 어서 책을 읽어보고 싶어진다.</p><h2 id="끝으로"><a href="#끝으로" class="headerlink" title="끝으로"></a>끝으로</h2><p>내가 <strong>머신러닝, 딥러닝에 입문해보겠다!!</strong> 라고 시작하는 사람들에게는 비추한다.</p><p>다만 </p><ul><li>내 진로가 데이터 과학자이고, </li><li>머신러닝 경험을 가지고 있으며, </li><li>충분한 수학적 지식이 있다면</li></ul><p>나쁘지 않은 선택이 될 것이다.</p><p><br><br><div class="figure center" style="width:;"><img class="fig-img" src="20190713_021452.png" alt="여기도 개인 SNS 맞죠?"><span class="caption">여기도 개인 SNS 맞죠?</span></div></p><p>멋사에서 직접 만든 것 같은 종이와 함께 끝! (대충 사자 아이콘)</p><h3 id="구매-링크"><a href="#구매-링크" class="headerlink" title="구매 링크"></a>구매 링크</h3><p><a href="http://www.yes24.com/Product/goods/67293302" rel="external nofollow noopener noreferrer" target="_blank">응24</a><br><a href="http://book.interpark.com/product/BookDisplay.do?_method=detail&amp;sc.saNo=001&amp;sc.prdNo=298160552&amp;gclid=CjwKCAjwscDpBRBnEiwAnQ0HQNPsCimY2dzlq96WkBWuLtgCLGMtsAfLpcHubfNFNgOPgbs_j6yMTRoCTxIQAvD_BwE&amp;product2017=true" rel="external nofollow noopener noreferrer" target="_blank">교차공원</a></p>]]></content>
     
     <summary type="html">
     
