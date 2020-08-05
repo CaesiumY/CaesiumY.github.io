@@ -23,13 +23,13 @@ module.exports = {
   ],
   comment: {
     disqusShortName: 'Caesiumy', // Your disqus-short-name. check disqus.com.
-    utterances: 'CaesiumY/CaesiumY.github.io', // Your repository for archive comment
+    utterances: '', // Your repository for archive comment
   },
   configs: {
     countOfInitialPost: 10, // Config your initial count of post
   },
   sponsor: {
-    buyMeACoffeeId: 'caesiumy',
+    buyMeACoffeeId: '',
   },
   share: {
     facebookAppId: '', // Add facebookAppId for using facebook share feature v3.2
