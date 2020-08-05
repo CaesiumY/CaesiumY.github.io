@@ -5,13 +5,11 @@ module.exports = {
   introduction: `🌍영문과에서 출발해 💻컴퓨터공학으로 도착하는 혼종 👨‍💻개발자!`,
   siteUrl: `https://caesiumy.github.io/`, // Your blog site url
   social: {
-    twitter: ``, // Your Twitter account
     github: `caesiumy`, // Your GitHub account
-    medium: ``, // Your Medium account
     facebook: `mn0658`, // Your Facebook account
-    linkedin: ``, // Your LinkedIn account
+    instagram: `caesium_y`,
   },
-  icon: `https://phinf.pstatic.net/contact/20180818_19/15345325429086Dm26_JPEG/image.jpg?type=s160`, // Add your favicon
+  icon: `content/assets/felog.png`, // Add your favicon
   keywords: [
     `blog`,
     `development`,
