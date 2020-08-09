@@ -1,5 +1,10 @@
 // app
-$theme-gradient: linear-gradient(72deg, #291e95, #cc007a);
+$theme-gradient: linear-gradient(
+  90deg,
+  rgba(9, 132, 227, 0.9) 0%,
+  rgba(116, 185, 255, 1) 50%,
+  rgba(129, 236, 236, 1) 100%
+);
 $top-header-text-color: #fff;
 
 /**
