@@ -30,7 +30,10 @@ export const Bio = () => (
                 <div className="author-introduction">{introduction}</div>
                 <p className="author-socials">
                   {social.github && (
-                    <a href={`https://github.com/${social.github}`}>
+                    <a
+                      target="_blank"
+                      href={`https://github.com/${social.github}`}
+                    >
                       <svg
                         className="social-icon"
                         enableBackground="new 0 0 24 24"
@@ -42,7 +45,10 @@ export const Bio = () => (
                     </a>
                   )}
                   {social.instagram && (
-                    <a href={`https://instagram.com/${social.instagram}`}>
+                    <a
+                      target="_blank"
+                      href={`https://instagram.com/${social.instagram}`}
+                    >
                       <svg
                         className="social-icon"
                         viewBox="0 0 512 512"
@@ -55,7 +61,10 @@ export const Bio = () => (
                     </a>
                   )}
                   {social.twitter && (
-                    <a href={`https://twitter.com/${social.twitter}`}>
+                    <a
+                      target="_blank"
+                      href={`https://twitter.com/${social.twitter}`}
+                    >
                       <svg
                         className="social-icon"
                         viewBox="0 0 512 512"
@@ -66,7 +75,10 @@ export const Bio = () => (
                     </a>
                   )}
                   {social.facebook && (
-                    <a href={`https://www.facebook.com/${social.facebook}`}>
+                    <a
+                      target="_blank"
+                      href={`https://www.facebook.com/${social.facebook}`}
+                    >
                       <svg
                         className="social-icon"
                         viewBox="0 0 512 512"
@@ -88,7 +100,10 @@ export const Bio = () => (
                     </a>
                   )}
                   {social.linkedin && (
-                    <a href={`https://www.linkedin.com/in/${social.linkedin}/`}>
+                    <a
+                      target="_blank"
+                      href={`https://www.linkedin.com/in/${social.linkedin}/`}
+                    >
                       LinkedIn
                     </a>
                   )}
@@ -106,7 +121,7 @@ const bioQuery = graphql`
   query BioQuery {
     avatar: file(absolutePath: { regex: "/profile.png/" }) {
       childImageSharp {
-        fixed(width: 72, height: 72) {
+        fixed(width: 85, height: 85) {
           ...GatsbyImageSharpFixed
         }
       }

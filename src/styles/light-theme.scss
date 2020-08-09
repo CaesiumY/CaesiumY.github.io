@@ -17,6 +17,14 @@ body.light {
     a {
       color: $light-link-color;
     }
+
+    .social-icon {
+      fill: $dark-gray;
+    }
+
+    .social-icon:hover {
+      fill: $middle-gray;
+    }
   }
 
   .category-container {

@@ -18,6 +18,14 @@ body.dark {
     a {
       color: $dark-link-color;
     }
+
+    .social-icon {
+      fill: $light-gray;
+    }
+
+    .social-icon:hover {
+      fill: $middle-gray;
+    }
   }
 
   .category-container {
