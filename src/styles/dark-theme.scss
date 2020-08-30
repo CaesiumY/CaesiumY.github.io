@@ -60,7 +60,8 @@ body.dark {
       color: $dark-middle-font-color;
     }
     &:hover {
-      text-shadow: $dark-hover-text-shadow;
+      // text-shadow: $dark-hover-text-shadow;
+      background-color: $middle-gray;
     }
   }
 
