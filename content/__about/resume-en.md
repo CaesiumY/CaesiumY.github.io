@@ -20,3 +20,8 @@ lang: 'en'
 
 [![caesiumy's github stats](https://github-readme-stats.vercel.app/api?username=caesiumy&show_icons=true&theme=vue)](https://github-readme-stats.vercel.app/api?username=caesiumy&show_icons=true&theme=vue)
 
+<div align="center">
+    <a href="/">
+        <h3>Go back</h3>
+    </a>
+</div>
