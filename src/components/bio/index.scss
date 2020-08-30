@@ -33,6 +33,12 @@
     transform-origin: center;
   }
 
+  .author-name-content:hover,
+  .social-icon:hover {
+    transition: all 0.2s;
+    transform: scale(1.1);
+  }
+
   .author-introduction {
     margin: 10px 0;
     font-size: 85%;
