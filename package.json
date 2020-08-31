@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "author": "Jbee[JaeYeopHan]<ljyhanll@gmail.com>",
   "bugs": {
-    "url": "https://github.com/JaeYeopHan/gatsby-starter-bee/issues"
+    "url": "https://github.com/CaesiumY/CaesiumY.github.io/issues"
   },
   "dependencies": {
     "gatsby": "^2.2.8",
@@ -66,7 +66,7 @@
     "recursive-readdir": "^2.2.2",
     "signale": "^1.3.0"
   },
-  "homepage": "https://github.com/JaeYeopHan/gatsby-starter-bee#readme",
+  "homepage": "https://github.com/CaesiumY/CaesiumY.github.io",
   "keywords": [
     "gatsby"
   ],
@@ -74,7 +74,7 @@
   "main": "n/a",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JaeYeopHan/gatsby-starter-bee.git"
+    "url": "https://github.com/CaesiumY/CaesiumY.github.io"
   },
   "scripts": {
     "post": "gatsby-post-gen",
@@ -86,6 +86,6 @@
     "build": "gatsby build",
     "lh": "lighthousebot",
     "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix gatsby-node.js",
-    "deploy": "gatsby build && gh-pages -d public -b master -r 'git@github.com:${caesiumy}/${caesiumy}.github.io.git'"
+    "deploy": "gatsby build && gh-pages -d public -r 'git@github.com:${caesiumy}/${caesiumy}.github.io.git'"
   }
 }
