@@ -53,6 +53,7 @@ body.dark {
   }
 
   .thumbnail {
+    border: 2px solid $dark-category-highlight-border-color;
     h3 {
       color: $dark-light-font-color;
     }
