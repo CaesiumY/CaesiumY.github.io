@@ -2,8 +2,11 @@
 title: vscode 추천 확장(extensions) 모음
 date: 2020-09-01 22:09:24
 category: development
+thumbnail: './images/2020-09-01/prettier_image.png'
 draft: false
 ---
+
+![prettier](images/2020-09-01/prettier_image.png)
 
 블로그 리모델링과 함께 글도 리워크하기로 결정했다!
 
