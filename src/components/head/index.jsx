@@ -62,9 +62,9 @@ export function Head({ description, lang, meta, keywords, title, thumbnail }) {
               .concat(
                 keywords.length > 0
                   ? {
-                    name: `keywords`,
-                    content: keywords.join(`, `),
-                  }
+                      name: `keywords`,
+                      content: keywords.join(`, `),
+                    }
                   : []
               )
               .concat(meta)}
@@ -76,7 +76,7 @@ export function Head({ description, lang, meta, keywords, title, thumbnail }) {
 }
 
 Head.defaultProps = {
-  lang: `en`,
+  lang: `ko`,
   meta: [],
   keywords: [],
 }
