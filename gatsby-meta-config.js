@@ -9,7 +9,7 @@ module.exports = {
     facebook: `mn0658`, // Your Facebook account
     instagram: `caesium_y`,
   },
-  thumbnail: `caesiumY.github.io/og_image.png`, // Add your thumbnail
+  thumbnail: `https://caesiumy.github.io/og_image.png`, // Add your thumbnail
   icon: `content/assets/felog.png`, // Add your favicon
   keywords: [
     `blog`,
