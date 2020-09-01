@@ -1,7 +1,7 @@
 ---
-title: vscode 추천 확장(extensions) 모음
+title: 'vscode 추천 확장(extensions) 모음'
 date: 2020-09-01 22:09:24
-category: development
+category: 'development'
 thumbnail: './images/2020-09-01/prettier_image.png'
 draft: false
 ---

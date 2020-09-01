@@ -10,6 +10,7 @@ export function Head({ description, lang, meta, keywords, title, thumbnail }) {
       render={data => {
         const metaDescription =
           description || data.site.siteMetadata.description
+        const metaThumbnail = thumbnail || data.site.siteMetadata.thumbnail
         return (
           <Helmet
             htmlAttributes={{
@@ -36,7 +37,7 @@ export function Head({ description, lang, meta, keywords, title, thumbnail }) {
               },
               {
                 property: `og:image`,
-                content: thumbnail,
+                content: metaThumbnail,
               },
               {
                 name: `twitter:card`,
@@ -56,7 +57,7 @@ export function Head({ description, lang, meta, keywords, title, thumbnail }) {
               },
               {
                 name: `twitter:image`,
-                content: thumbnail,
+                content: metaThumbnail,
               },
             ]
               .concat(
@@ -96,6 +97,7 @@ const detailsQuery = graphql`
         title
         description
         author
+        thumbnail
       }
     }
   }

@@ -9,6 +9,7 @@ module.exports = {
     facebook: `mn0658`, // Your Facebook account
     instagram: `caesium_y`,
   },
+  thumbnail: `content/assets/og_image.png`, // Add your thumbnail
   icon: `content/assets/felog.png`, // Add your favicon
   keywords: [
     `blog`,
