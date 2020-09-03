@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Caesiumy's BLOG]]></title><description><![CDATA[Caesiumy's Dev Blog]]></description><link>https://caesiumy.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 02 Sep 2020 10:55:24 GMT</lastBuildDate><item><title><![CDATA[about]]></title><description><![CDATA[# Caesiumy insta
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Caesiumy's BLOG]]></title><description><![CDATA[Caesiumy's Dev Blog]]></description><link>https://caesiumy.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 03 Sep 2020 13:48:00 GMT</lastBuildDate><item><title><![CDATA[about]]></title><description><![CDATA[# Caesiumy insta
 facebook
 blog
 followers Steadiness makes an Icon🌠 🛴A passionate and patient Front-end Engineer. 😅Unfortunately, I’m on a…]]></description><link>https://caesiumy.github.io/resume-en/</link><guid isPermaLink="false">https://caesiumy.github.io/resume-en/</guid><pubDate>Sun, 30 Aug 2020 20:27:13 GMT</pubDate><content:encoded>&lt;h1 id=&quot;-caesiumy&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#-caesiumy&quot; aria-label=&quot; caesiumy permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;# Caesiumy&lt;/h1&gt;
@@ -238,91 +238,271 @@ draft: false
 &lt;hr&gt;
 &lt;h1 id=&quot;협업&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%ED%98%91%EC%97%85&quot; aria-label=&quot;협업 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;👨‍👨‍👧‍👦협업&lt;/h1&gt;
 &lt;h2 id=&quot;git-history&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#git-history&quot; aria-label=&quot;git history permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Git History&lt;/h2&gt;
-&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 544px; &quot;&gt;
-      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 30.66666666666667%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABa0lEQVQY042RPU/bUBSG/SMqxFAmSomdD8dx7Gsn1zZx4nw0HyJEAqYWITYkRsQKEhtSlw5d2VgRA+InIIG6d0aiqtQFuj89MZVYGR69732Ho/ueYxTKMaapWV4Neb+qxQeYkpWddk6l1qFUTSnaa6ItydL/vPh5Np9RKL1gWDJsJWvjHn5n9vWGpeEBVikiG+4Qt7fpDr/QE99MZoR6TJLOiFobwpRYtBlPKNkJVjnKP2J89EL6F3vc/frL3cMTJzc/WaxPUapHPRyjmhOCaIrj9eWXCa7qU/M/UXG7VO2Q1PfIAp+OUjhOhFFoRvSuZhzdnvL4/Ifz+9+8U5sEfhevMRHGeDJ4rq4avL5zRrh+HyWZU8+kspbKtQTnWwt9uc7x9Q/M3TM+WJps8JmNzX3idCuv7DVGhJGgR1JzTKCHNHIdSfWp+AlVt4Nh1uQAnYRi2mbBHrBiNmSHGkuOULRbWJW1/CDz/byFf9dg2FU8oLwvAAAAAElFTkSuQmCC&amp;apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
-  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;git history&quot; title=&quot;git history&quot; src=&quot;/static/c3bfc679223f0faf3083c53f31f9c1e9/b3e51/git_history.png&quot; srcset=&quot;/static/c3bfc679223f0faf3083c53f31f9c1e9/5a46d/git_history.png 300w,
-/static/c3bfc679223f0faf3083c53f31f9c1e9/b3e51/git_history.png 544w&quot; sizes=&quot;(max-width: 544px) 100vw, 544px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot;&gt;
-    &lt;/span&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 544px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 30.66666666666667%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABa0lEQVQY042RPU/bUBSG/SMqxFAmSomdD8dx7Gsn1zZx4nw0HyJEAqYWITYkRsQKEhtSlw5d2VgRA+InIIG6d0aiqtQFuj89MZVYGR69732Ho/ueYxTKMaapWV4Neb+qxQeYkpWddk6l1qFUTSnaa6ItydL/vPh5Np9RKL1gWDJsJWvjHn5n9vWGpeEBVikiG+4Qt7fpDr/QE99MZoR6TJLOiFobwpRYtBlPKNkJVjnKP2J89EL6F3vc/frL3cMTJzc/WaxPUapHPRyjmhOCaIrj9eWXCa7qU/M/UXG7VO2Q1PfIAp+OUjhOhFFoRvSuZhzdnvL4/Ifz+9+8U5sEfhevMRHGeDJ4rq4avL5zRrh+HyWZU8+kspbKtQTnWwt9uc7x9Q/M3TM+WJps8JmNzX3idCuv7DVGhJGgR1JzTKCHNHIdSfWp+AlVt4Nh1uQAnYRi2mbBHrBiNmSHGkuOULRbWJW1/CDz/byFf9dg2FU8oLwvAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;git history&quot;
+        title=&quot;git history&quot;
+        src=&quot;/static/c3bfc679223f0faf3083c53f31f9c1e9/b3e51/git_history.png&quot;
+        srcset=&quot;/static/c3bfc679223f0faf3083c53f31f9c1e9/5a46d/git_history.png 300w,
+/static/c3bfc679223f0faf3083c53f31f9c1e9/b3e51/git_history.png 544w&quot;
+        sizes=&quot;(max-width: 544px) 100vw, 544px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;협업하는 상황에서나, 개인 프로젝트를 하는 상황에서나 &lt;code class=&quot;language-text&quot;&gt;git&lt;/code&gt;으로 코드를 트래킹하는 건 중요한 일이다. 그런데 정작 기록만 해놓고 보는데 애로사항이 있으면 말짱 도루묵 아니겠는가. 이 확장을 통해 보기 좋게 만들어보자.&lt;/p&gt;
 &lt;h2 id=&quot;gitlens&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#gitlens&quot; aria-label=&quot;gitlens permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;GitLens&lt;/h2&gt;
-&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 500px; &quot;&gt;
-      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 33.666666666666664%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAA7DAAAOwwHHb6hkAAABuElEQVQozzWSzY7SUBiG6yUYExcmMxMGIUApP4WW/lBoKZSW0sIMTowZQ0QdM3EuwHgf3oAbdybu3LjQtSsTN8bEC/AmHr824+LkfP2+k+c9532rtLo+lVqf49MmddWiqU0peoPRio4+R+vPaPcCVOn1jZjuYCF1IP2wnBff7d7s9myIcnRSp9da4Ns3tKoulXpfYClJ/oLl+jnzZI8zOaM3jFisDsyiS+bxnuz8mnD5lCg9kG5fke9eM/YfodTuGHy8/s6vL/D+4hvasYGqBxj2GtPNGbkbDGctN/dEKEI3Y+nl5Y2GXZPYGrK0TRLbwOyPUFT3LTfv/vL5w29+vPnD4K5HY+AJMC+fbXlbhlYqoKQE2ZMdppMxlLlpp1hWjO2symWJuHLPjnn29Sf7q09UlA3VExVNfIlWe+LsIM/d4S+e4AjYsBNsL8MapwJPBVwIZlKvZS/EBPiwpnPaHHFUdbj/oEazMxaTQ1b5S5LNFV7wuPRsHFxIvROfdiKyxZ2eSX1e9iw3w/M3BDMBtjo+DdWVZZVpNdoTgU7LJP+nWSRczLqDqNy120SLoAovi3MdPUSTv+Ef8lH3QlKs/HgAAAAASUVORK5CYII=&amp;apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
-  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;gitlens&quot; title=&quot;gitlens&quot; src=&quot;/static/8cdb8411badc813ad69bea27ec09573c/0b533/git_lens.png&quot; srcset=&quot;/static/8cdb8411badc813ad69bea27ec09573c/5a46d/git_lens.png 300w,
-/static/8cdb8411badc813ad69bea27ec09573c/0b533/git_lens.png 500w&quot; sizes=&quot;(max-width: 500px) 100vw, 500px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot;&gt;
-    &lt;/span&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 500px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 33.666666666666664%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAA7DAAAOwwHHb6hkAAABuElEQVQozzWSzY7SUBiG6yUYExcmMxMGIUApP4WW/lBoKZSW0sIMTowZQ0QdM3EuwHgf3oAbdybu3LjQtSsTN8bEC/AmHr824+LkfP2+k+c9532rtLo+lVqf49MmddWiqU0peoPRio4+R+vPaPcCVOn1jZjuYCF1IP2wnBff7d7s9myIcnRSp9da4Ns3tKoulXpfYClJ/oLl+jnzZI8zOaM3jFisDsyiS+bxnuz8mnD5lCg9kG5fke9eM/YfodTuGHy8/s6vL/D+4hvasYGqBxj2GtPNGbkbDGctN/dEKEI3Y+nl5Y2GXZPYGrK0TRLbwOyPUFT3LTfv/vL5w29+vPnD4K5HY+AJMC+fbXlbhlYqoKQE2ZMdppMxlLlpp1hWjO2symWJuHLPjnn29Sf7q09UlA3VExVNfIlWe+LsIM/d4S+e4AjYsBNsL8MapwJPBVwIZlKvZS/EBPiwpnPaHHFUdbj/oEazMxaTQ1b5S5LNFV7wuPRsHFxIvROfdiKyxZ2eSX1e9iw3w/M3BDMBtjo+DdWVZZVpNdoTgU7LJP+nWSRczLqDqNy120SLoAovi3MdPUSTv+Ef8lH3QlKs/HgAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;gitlens&quot;
+        title=&quot;gitlens&quot;
+        src=&quot;/static/8cdb8411badc813ad69bea27ec09573c/0b533/git_lens.png&quot;
+        srcset=&quot;/static/8cdb8411badc813ad69bea27ec09573c/5a46d/git_lens.png 300w,
+/static/8cdb8411badc813ad69bea27ec09573c/0b533/git_lens.png 500w&quot;
+        sizes=&quot;(max-width: 500px) 100vw, 500px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;git&lt;/code&gt;의 로그를 보는 것이 중요하다고 앞서 말했다시피, 이 확장 또한 &lt;code class=&quot;language-text&quot;&gt;git&lt;/code&gt;을 &lt;code class=&quot;language-text&quot;&gt;vscode&lt;/code&gt; 안으로 들여놓는 기분을 느끼에 해줄 것이다.&lt;/p&gt;
 &lt;h2 id=&quot;live-share&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#live-share&quot; aria-label=&quot;live share permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Live Share&lt;/h2&gt;
-&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 481px; &quot;&gt;
-      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 34.333333333333336%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAA7DAAAOwwHHb6hkAAABoElEQVQoz12S22oTURSG500UtUkz02Zq0+w5TzKHTJqkSXNoKJIUe2W88F5BaRG0d5ZCQfDO6yCKIPgEBZ/BK32Sz7UHD+DAx1prw9rr3+sfY8P0qVgBGzWfW3cb3L6nqG3HmPUWVSvEspOy1rmOlpybv7H+YOs6ZnMrwlBuH9NqM5kuWa8/MJ6elM157yHZ/gm5MBivKPqnKK9PnExopTPa+RFRekSYzmnlxzS8g7LPeP3sK++uP/Pj53f0d3l5xZ2KIkzmOMGhMGJnr2BXabrsiQCNVps4Dh1XkTuKVDlYWwHGxYuP3Nx84+L8PU8en+E6IyqyBjccS+MBTW9Iw+mVKH9YnilfD9kncHNCLytj4GbYjQ7G9Zs1b68+kccrsvYC+37Kpkz34xlxdlxe7EkeieKmN5B6KIwIWhOaMqApL2j6ozJ3giHG6vQly/lz8uwBr55+ob6TikkhSbHkcPaItFjgRVOy7oL6bipNPXl6R5R2RXWB4/f+4oYDjKoZiDvawYhtu01NnNL7qZjaea+MVfkL9Bq0i3rxVev/+I9fWRD9CbUOkpUAAAAASUVORK5CYII=&amp;apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
-  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;live share&quot; title=&quot;live share&quot; src=&quot;/static/2ec1aec43fe62c1729855671a4114aff/d024a/live_share.png&quot; srcset=&quot;/static/2ec1aec43fe62c1729855671a4114aff/5a46d/live_share.png 300w,
-/static/2ec1aec43fe62c1729855671a4114aff/d024a/live_share.png 481w&quot; sizes=&quot;(max-width: 481px) 100vw, 481px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot;&gt;
-    &lt;/span&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 481px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 34.333333333333336%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAA7DAAAOwwHHb6hkAAABoElEQVQoz12S22oTURSG500UtUkz02Zq0+w5TzKHTJqkSXNoKJIUe2W88F5BaRG0d5ZCQfDO6yCKIPgEBZ/BK32Sz7UHD+DAx1prw9rr3+sfY8P0qVgBGzWfW3cb3L6nqG3HmPUWVSvEspOy1rmOlpybv7H+YOs6ZnMrwlBuH9NqM5kuWa8/MJ6elM157yHZ/gm5MBivKPqnKK9PnExopTPa+RFRekSYzmnlxzS8g7LPeP3sK++uP/Pj53f0d3l5xZ2KIkzmOMGhMGJnr2BXabrsiQCNVps4Dh1XkTuKVDlYWwHGxYuP3Nx84+L8PU8en+E6IyqyBjccS+MBTW9Iw+mVKH9YnilfD9kncHNCLytj4GbYjQ7G9Zs1b68+kccrsvYC+37Kpkz34xlxdlxe7EkeieKmN5B6KIwIWhOaMqApL2j6ozJ3giHG6vQly/lz8uwBr55+ob6TikkhSbHkcPaItFjgRVOy7oL6bipNPXl6R5R2RXWB4/f+4oYDjKoZiDvawYhtu01NnNL7qZjaea+MVfkL9Bq0i3rxVev/+I9fWRD9CbUOkpUAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;live share&quot;
+        title=&quot;live share&quot;
+        src=&quot;/static/2ec1aec43fe62c1729855671a4114aff/d024a/live_share.png&quot;
+        srcset=&quot;/static/2ec1aec43fe62c1729855671a4114aff/5a46d/live_share.png 300w,
+/static/2ec1aec43fe62c1729855671a4114aff/d024a/live_share.png 481w&quot;
+        sizes=&quot;(max-width: 481px) 100vw, 481px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;이름 그대로 자신의 &lt;code class=&quot;language-text&quot;&gt;vscode&lt;/code&gt;를 팀원에게 원격으로 공유할 수 있는 확장 프로그램이다. 필자는 주로 팀원의 버그를 대신 잡아주는데 사용했다.&lt;/p&gt;
 &lt;h1 id=&quot;테마&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%ED%85%8C%EB%A7%88&quot; aria-label=&quot;테마 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;🎨테마&lt;/h1&gt;
 &lt;h2 id=&quot;material-theme&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#material-theme&quot; aria-label=&quot;material theme permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Material Theme&lt;/h2&gt;
-&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 542px; &quot;&gt;
-      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 30.333333333333336%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABaUlEQVQY03WQOy8EURzF57uINYPZtTtrdx6782Bmxc6MkSVeEc+EQiLR0NHxERQKJb1KQiERoRDZUiORoBWf4OfeQak4Oefcm3vu/38UbbCJ2mcx4CX0NxN6VRNNdykZLYGIYiXMMVT98Xp5BH0oEDrM8Xf/5xVNhBV29yhfXbJ6cUu2sU9BcxiL14izTaLxZbxwnpFogVa8ij86h9lIaQYdGt4Enp/g+ymun+F4kygFYcKHG06eX+h+fHJ6/kTd6mCYbWp2yrCV5CynGCi5GLUxqmaMXokoFS2C2jBhrUrdcFB1D0UNMtav7rnuvvH6/sXFaRfbnKJYDUVYKh4nORsiRHKl3v79ZCKH1Hp5FFVUJ6tSCppFun3IwfEdZ8eP7Cwd0aNaYr1lpue3CVqLhONLdGa3xJozRO0VbDfDasQCCaYTU7fb2KJ/6RWZ3KfZoos5XGeGXqHlWX/REyv6Of9oL59Aasn/4RvM0d6H2Ih/ogAAAABJRU5ErkJggg==&amp;apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
-  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;material theme&quot; title=&quot;material theme&quot; src=&quot;/static/a78623eb7e49dc363776c2bd53bf264a/c0388/material_theme.png&quot; srcset=&quot;/static/a78623eb7e49dc363776c2bd53bf264a/5a46d/material_theme.png 300w,
-/static/a78623eb7e49dc363776c2bd53bf264a/c0388/material_theme.png 542w&quot; sizes=&quot;(max-width: 542px) 100vw, 542px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot;&gt;
-    &lt;/span&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 542px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 30.333333333333336%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABaUlEQVQY03WQOy8EURzF57uINYPZtTtrdx6782Bmxc6MkSVeEc+EQiLR0NHxERQKJb1KQiERoRDZUiORoBWf4OfeQak4Oefcm3vu/38UbbCJ2mcx4CX0NxN6VRNNdykZLYGIYiXMMVT98Xp5BH0oEDrM8Xf/5xVNhBV29yhfXbJ6cUu2sU9BcxiL14izTaLxZbxwnpFogVa8ij86h9lIaQYdGt4Enp/g+ymun+F4kygFYcKHG06eX+h+fHJ6/kTd6mCYbWp2yrCV5CynGCi5GLUxqmaMXokoFS2C2jBhrUrdcFB1D0UNMtav7rnuvvH6/sXFaRfbnKJYDUVYKh4nORsiRHKl3v79ZCKH1Hp5FFVUJ6tSCppFun3IwfEdZ8eP7Cwd0aNaYr1lpue3CVqLhONLdGa3xJozRO0VbDfDasQCCaYTU7fb2KJ/6RWZ3KfZoos5XGeGXqHlWX/REyv6Of9oL59Aasn/4RvM0d6H2Ih/ogAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;material theme&quot;
+        title=&quot;material theme&quot;
+        src=&quot;/static/a78623eb7e49dc363776c2bd53bf264a/c0388/material_theme.png&quot;
+        srcset=&quot;/static/a78623eb7e49dc363776c2bd53bf264a/5a46d/material_theme.png 300w,
+/static/a78623eb7e49dc363776c2bd53bf264a/c0388/material_theme.png 542w&quot;
+        sizes=&quot;(max-width: 542px) 100vw, 542px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;기본 색상의 &lt;code class=&quot;language-text&quot;&gt;vscode&lt;/code&gt;는 이제 지겹다! 새로운 테마를 쓰고 싶으면 추천! 필자는 &lt;code class=&quot;language-text&quot;&gt;Palenight&lt;/code&gt; 테마를 선호한다.&lt;/p&gt;
 &lt;h2 id=&quot;material-theme-etc&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#material-theme-etc&quot; aria-label=&quot;material theme etc permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Material Theme etc.&lt;/h2&gt;
-&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 605px; &quot;&gt;
-      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 21.999999999999996%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA8ElEQVQY01WPyU7EMBBE8ylIAySxMwnZcDxexpmFgAYmEWHCIi5w5AY3JP6BH+DKnT8sHAuQODy1ulSqrvbSogHnW0hzhSCSOCSzf4waiefYpxwTwuDTX49wjHs4VRbt8Hy7sOERpWxRyQ5i3kPVO6jF4GZWnmESMqyOb9HIB+u7sPqAmb503qLauINB9BN4kBq8fnyha5/AdY96fWfb7lx4JToo02MvyPFy8463508UYotlcw+9uAYTLXK2QcnPUbBT19YLIwVCNGhscFScIMnXoEn99/I0rRElBr69PhJnK+cZ5xjgU+EaJtnStlT4Bitzh5qXtFmnAAAAAElFTkSuQmCC&amp;apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
-  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;material_theme2&quot; title=&quot;material_theme2&quot; src=&quot;/static/6e53728245e5afdc64c0fabc376f1be8/90cbd/material_theme2.png&quot; srcset=&quot;/static/6e53728245e5afdc64c0fabc376f1be8/5a46d/material_theme2.png 300w,
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 605px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 21.999999999999996%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA8ElEQVQY01WPyU7EMBBE8ylIAySxMwnZcDxexpmFgAYmEWHCIi5w5AY3JP6BH+DKnT8sHAuQODy1ulSqrvbSogHnW0hzhSCSOCSzf4waiefYpxwTwuDTX49wjHs4VRbt8Hy7sOERpWxRyQ5i3kPVO6jF4GZWnmESMqyOb9HIB+u7sPqAmb503qLauINB9BN4kBq8fnyha5/AdY96fWfb7lx4JToo02MvyPFy8463508UYotlcw+9uAYTLXK2QcnPUbBT19YLIwVCNGhscFScIMnXoEn99/I0rRElBr69PhJnK+cZ5xjgU+EaJtnStlT4Bitzh5qXtFmnAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;material theme2&quot;
+        title=&quot;material theme2&quot;
+        src=&quot;/static/6e53728245e5afdc64c0fabc376f1be8/90cbd/material_theme2.png&quot;
+        srcset=&quot;/static/6e53728245e5afdc64c0fabc376f1be8/5a46d/material_theme2.png 300w,
 /static/6e53728245e5afdc64c0fabc376f1be8/0a47e/material_theme2.png 600w,
-/static/6e53728245e5afdc64c0fabc376f1be8/90cbd/material_theme2.png 605w&quot; sizes=&quot;(max-width: 605px) 100vw, 605px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot;&gt;
-    &lt;/span&gt;
+/static/6e53728245e5afdc64c0fabc376f1be8/90cbd/material_theme2.png 605w&quot;
+        sizes=&quot;(max-width: 605px) 100vw, 605px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;위의 &lt;code class=&quot;language-text&quot;&gt;Material Theme&lt;/code&gt; 말고도 다른 테마를 가진 &lt;code class=&quot;language-text&quot;&gt;Community&lt;/code&gt; 버전의 테마와, &lt;code class=&quot;language-text&quot;&gt;vscode&lt;/code&gt;의 파일 아이콘을 바꿀 수 있는 확장도 있으니 찾아보길 바란다.&lt;/p&gt;
 &lt;h2 id=&quot;vscode-icons&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#vscode-icons&quot; aria-label=&quot;vscode icons permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;vscode-icons&lt;/h2&gt;
-&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 572px; &quot;&gt;
-      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 28.333333333333332%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABPklEQVQY03VR206DQBTkA/QbjIm9cC0UlkKBheVmgUJsTRtfvERjG/tPxk8dD8QmPujD5Myek50zOyuNNY4bM8XYSjAiLmsRNCuFMc9gOiV0KyOeQzPPvRwzO4fZY+AFZk4BnWZTui+pfoZoweDyFFqQk2iEOHtAUb+gal8RJjuUxLnYY7FsEIkt9TYDlryDSFoI0YJHK6hGBMkLQlytT7h8/4Ja7iCbIeaLBm7QwfYaOD9g/hqKEZOrguY1TLYiRyEEY4gdhoJM2VZIgnGC6+YDF2+f0G73UCw+CDK/BVu2g3Bf+7PFquFZipEQ+LBAJt5jqvc8hqS4Aj5zMA8Fpl6KkRohrx7RbQ9Ybw64252GCMrmGd39EQFFUFRPsN0VvKCmGOpftYE00Tl9CIlZMSb9FspQpt5f6F39NzvjG6jXyuRnMZlfAAAAAElFTkSuQmCC&amp;apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
-  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;vscode-icons&quot; title=&quot;vscode-icons&quot; src=&quot;/static/d41a716a2b2e034739d25deb84e32f38/a805e/vscode_icon.png&quot; srcset=&quot;/static/d41a716a2b2e034739d25deb84e32f38/5a46d/vscode_icon.png 300w,
-/static/d41a716a2b2e034739d25deb84e32f38/a805e/vscode_icon.png 572w&quot; sizes=&quot;(max-width: 572px) 100vw, 572px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot;&gt;
-    &lt;/span&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 572px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 28.333333333333332%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABPklEQVQY03VR206DQBTkA/QbjIm9cC0UlkKBheVmgUJsTRtfvERjG/tPxk8dD8QmPujD5Myek50zOyuNNY4bM8XYSjAiLmsRNCuFMc9gOiV0KyOeQzPPvRwzO4fZY+AFZk4BnWZTui+pfoZoweDyFFqQk2iEOHtAUb+gal8RJjuUxLnYY7FsEIkt9TYDlryDSFoI0YJHK6hGBMkLQlytT7h8/4Ja7iCbIeaLBm7QwfYaOD9g/hqKEZOrguY1TLYiRyEEY4gdhoJM2VZIgnGC6+YDF2+f0G73UCw+CDK/BVu2g3Bf+7PFquFZipEQ+LBAJt5jqvc8hqS4Aj5zMA8Fpl6KkRohrx7RbQ9Ybw64252GCMrmGd39EQFFUFRPsN0VvKCmGOpftYE00Tl9CIlZMSb9FspQpt5f6F39NzvjG6jXyuRnMZlfAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;vscode-icons&quot;
+        title=&quot;vscode-icons&quot;
+        src=&quot;/static/d41a716a2b2e034739d25deb84e32f38/a805e/vscode_icon.png&quot;
+        srcset=&quot;/static/d41a716a2b2e034739d25deb84e32f38/5a46d/vscode_icon.png 300w,
+/static/d41a716a2b2e034739d25deb84e32f38/a805e/vscode_icon.png 572w&quot;
+        sizes=&quot;(max-width: 572px) 100vw, 572px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;위에서 설명했던 것과 같이 &lt;code class=&quot;language-text&quot;&gt;vscode&lt;/code&gt;의 파일 아이콘을 바꾸어주는 기능이다. 필자는 파일 아이콘을 바꾸는 것이 거의 반필수적이라고 생각하는데, 가독성을 크게 높여주기 때문이다.&lt;/p&gt;
 &lt;h1 id=&quot;편의성&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%ED%8E%B8%EC%9D%98%EC%84%B1&quot; aria-label=&quot;편의성 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;🔨편의성&lt;/h1&gt;
 &lt;h2 id=&quot;live-server&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#live-server&quot; aria-label=&quot;live server permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Live Server&lt;/h2&gt;
-&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 505px; &quot;&gt;
-      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 31.666666666666664%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABV0lEQVQY00VR2U6DUBDlW7TFFihlkZ3LVgjIVppaGxsbtwdjTPS5+gXajz4O1MSHk5m5uXPOzBxuOgswElxMJIZT7gz5TF1A1lLM9WyArGWQlITyFKqRQbn8x1QOh56JFIAbE1nsb4ggxrloIw22EGYhbLbCIr9DnO2QlfdIiz1c1sHxGwTJGn60Aos6sHAJWYmohxGIUCWFw/YbjfgMNrrBoflBkewgqAk1bWB6DUy3hUBT9JPpVgXDqSEqKfS5hdzSkdkmCseApvrgLLvC1+aILf+B+uwFn8URXfEEnhQtdwnNvILltQPpCSTgLXFJpBblPQynokg1vXO86OG2fIOll+AFD/vqHYpK6iTUXb8irx/hBmuKDzRdDi9oYfsVHFYTeQkv7Oua/rS0ERH2x+xNuZB8TGiqseiiF+kN0O2S1iwGgxQjH0yT6F7iPPxDNNQnxGRcgl/ia84VcatjEAAAAABJRU5ErkJggg==&amp;apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
-  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;live server&quot; title=&quot;live server&quot; src=&quot;/static/9738e04e801d0be7d7ee9fd66a96fe7d/c0cb9/live_server.png&quot; srcset=&quot;/static/9738e04e801d0be7d7ee9fd66a96fe7d/5a46d/live_server.png 300w,
-/static/9738e04e801d0be7d7ee9fd66a96fe7d/c0cb9/live_server.png 505w&quot; sizes=&quot;(max-width: 505px) 100vw, 505px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot;&gt;
-    &lt;/span&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 505px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 31.666666666666664%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABV0lEQVQY00VR2U6DUBDlW7TFFihlkZ3LVgjIVppaGxsbtwdjTPS5+gXajz4O1MSHk5m5uXPOzBxuOgswElxMJIZT7gz5TF1A1lLM9WyArGWQlITyFKqRQbn8x1QOh56JFIAbE1nsb4ggxrloIw22EGYhbLbCIr9DnO2QlfdIiz1c1sHxGwTJGn60Aos6sHAJWYmohxGIUCWFw/YbjfgMNrrBoflBkewgqAk1bWB6DUy3hUBT9JPpVgXDqSEqKfS5hdzSkdkmCseApvrgLLvC1+aILf+B+uwFn8URXfEEnhQtdwnNvILltQPpCSTgLXFJpBblPQynokg1vXO86OG2fIOll+AFD/vqHYpK6iTUXb8irx/hBmuKDzRdDi9oYfsVHFYTeQkv7Oua/rS0ERH2x+xNuZB8TGiqseiiF+kN0O2S1iwGgxQjH0yT6F7iPPxDNNQnxGRcgl/ia84VcatjEAAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;live server&quot;
+        title=&quot;live server&quot;
+        src=&quot;/static/9738e04e801d0be7d7ee9fd66a96fe7d/c0cb9/live_server.png&quot;
+        srcset=&quot;/static/9738e04e801d0be7d7ee9fd66a96fe7d/5a46d/live_server.png 300w,
+/static/9738e04e801d0be7d7ee9fd66a96fe7d/c0cb9/live_server.png 505w&quot;
+        sizes=&quot;(max-width: 505px) 100vw, 505px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;html&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;css&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;js&lt;/code&gt; 만을 다룬다면 꽤나 편리한 확장프로그램이다. 매번 변화가 있을 때마다 새로고침할 필요 없이 알아서 변화를 적용시켜준다.&lt;/p&gt;
 &lt;h2 id=&quot;path-intellisense&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#path-intellisense&quot; aria-label=&quot;path intellisense permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Path Intellisense&lt;/h2&gt;
-&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 543px; &quot;&gt;
-      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 31.333333333333336%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABQUlEQVQY022RuXKDMBCGeRcnE4OROWIjAQIMGHwAAjtHk7FnMqlSpE+dF/+zklOm+GaP2f1Xu7LmbgaNsyzwQNyTb7Mcrl8ZFl5p0L6uWfgllqstvKg1+MY2xrKwhqXFWEgBV8iEQrFqcefm2O4v2HXvyMsXNIcrDuoD9e6Cqn1DlHSQxYQ0H5EUpxv5BLk5wXJouidGzPiI72zAmCjceRVW/EhFTxDpiDg/Yy06LMMK67gjwQEh7+D7KWoeoRU3HgNJgn4NHo/YxwN+8g5MTHCDLcLoYBo5CYYkHqWKYkWCvUH7nHKCXpvIAZHYw2EZrBkrcKbpX5mComY76mHTynq16fkTsnxFc7xCSIUk6xHLnuxAcYe0IEGK5WYyBOsGlq0/hUTndEeb0IfXd3WDGj7dc0HrM/J13ma3D/sP58/+ApICzCqrTFKDAAAAAElFTkSuQmCC&amp;apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
-  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;path intellisense&quot; title=&quot;path intellisense&quot; src=&quot;/static/cde5cee4f278a9dfde7d329031f966ef/29579/path_intellisense.png&quot; srcset=&quot;/static/cde5cee4f278a9dfde7d329031f966ef/5a46d/path_intellisense.png 300w,
-/static/cde5cee4f278a9dfde7d329031f966ef/29579/path_intellisense.png 543w&quot; sizes=&quot;(max-width: 543px) 100vw, 543px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot;&gt;
-    &lt;/span&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 543px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 31.333333333333336%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABQUlEQVQY022RuXKDMBCGeRcnE4OROWIjAQIMGHwAAjtHk7FnMqlSpE+dF/+zklOm+GaP2f1Xu7LmbgaNsyzwQNyTb7Mcrl8ZFl5p0L6uWfgllqstvKg1+MY2xrKwhqXFWEgBV8iEQrFqcefm2O4v2HXvyMsXNIcrDuoD9e6Cqn1DlHSQxYQ0H5EUpxv5BLk5wXJouidGzPiI72zAmCjceRVW/EhFTxDpiDg/Yy06LMMK67gjwQEh7+D7KWoeoRU3HgNJgn4NHo/YxwN+8g5MTHCDLcLoYBo5CYYkHqWKYkWCvUH7nHKCXpvIAZHYw2EZrBkrcKbpX5mComY76mHTynq16fkTsnxFc7xCSIUk6xHLnuxAcYe0IEGK5WYyBOsGlq0/hUTndEeb0IfXd3WDGj7dc0HrM/J13ma3D/sP58/+ApICzCqrTFKDAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;path intellisense&quot;
+        title=&quot;path intellisense&quot;
+        src=&quot;/static/cde5cee4f278a9dfde7d329031f966ef/29579/path_intellisense.png&quot;
+        srcset=&quot;/static/cde5cee4f278a9dfde7d329031f966ef/5a46d/path_intellisense.png 300w,
+/static/cde5cee4f278a9dfde7d329031f966ef/29579/path_intellisense.png 543w&quot;
+        sizes=&quot;(max-width: 543px) 100vw, 543px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;image&lt;/code&gt; 파일이나, &lt;code class=&quot;language-text&quot;&gt;js&lt;/code&gt; 파일처럼 다른 곳에서 &lt;code class=&quot;language-text&quot;&gt;import&lt;/code&gt; 할 때 자동으로 경로를 서치해주는 고마운 도구이다. 이런 자동완성 도구를 사용하면 오타로 인한 오류를 방지할 수 있다는 게 최대 장점.&lt;/p&gt;
 &lt;h2 id=&quot;prettier&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#prettier&quot; aria-label=&quot;prettier permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Prettier&lt;/h2&gt;
-&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 467px; &quot;&gt;
-      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 34.333333333333336%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAA7DAAAOwwHHb6hkAAABiUlEQVQoz42R7VLTUBCGcyGOIqH0M03btPluUlLT5rNJCYKCUBThBzOOF+DFP24qF+CPZ3bPe3bePWdX6Y2WnA09TvseH3ou6sDjfOTR05YMxiHdoU9bcy56XwuOtHmr9UY+3YEryFnquuKjqEMH/SIl+npF/XCJEUW8m7h0pHiTPZKWT+T1C9HmjrERE22/kVYvxOk9cf6D1fbAOv9J2fwiXN+gnPRt7m8v2T/ecL2v+XNbMLIDTqWj49cE0TULJ2cy32BYCZZX4YUNUzPFMiOyICQNViTBWu5TlI8DhzzJudrFzLcVD9+/MLA8VDFc2DmWu2NmJujGJ+Z2JhRCjr5I0DQHZ2YKFtbUOo5DUcXQThp+H0pemwhjVfJ+tjzO0XR22PJKy6vfYoXplpJXku/QphG9ccvFkaG+ki+LYZE1PNcFJ+aSjh2imgFtozg7sP/8Sl49YQcNRf3MdBHjBoU0S3CWBbaXSczxwxIvKFHa4U90F0M4G/t0dB917NEVvf+2yX8b/T/+Ahz/7gL9gMQvAAAAAElFTkSuQmCC&amp;apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
-  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;prettier&quot; title=&quot;prettier&quot; src=&quot;/static/9051a160ff7ccfad5bc04b6e33318467/85ff8/prettier.png&quot; srcset=&quot;/static/9051a160ff7ccfad5bc04b6e33318467/5a46d/prettier.png 300w,
-/static/9051a160ff7ccfad5bc04b6e33318467/85ff8/prettier.png 467w&quot; sizes=&quot;(max-width: 467px) 100vw, 467px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot;&gt;
-    &lt;/span&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 467px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 34.333333333333336%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAA7DAAAOwwHHb6hkAAABiUlEQVQoz42R7VLTUBCGcyGOIqH0M03btPluUlLT5rNJCYKCUBThBzOOF+DFP24qF+CPZ3bPe3bePWdX6Y2WnA09TvseH3ou6sDjfOTR05YMxiHdoU9bcy56XwuOtHmr9UY+3YEryFnquuKjqEMH/SIl+npF/XCJEUW8m7h0pHiTPZKWT+T1C9HmjrERE22/kVYvxOk9cf6D1fbAOv9J2fwiXN+gnPRt7m8v2T/ecL2v+XNbMLIDTqWj49cE0TULJ2cy32BYCZZX4YUNUzPFMiOyICQNViTBWu5TlI8DhzzJudrFzLcVD9+/MLA8VDFc2DmWu2NmJujGJ+Z2JhRCjr5I0DQHZ2YKFtbUOo5DUcXQThp+H0pemwhjVfJ+tjzO0XR22PJKy6vfYoXplpJXku/QphG9ccvFkaG+ki+LYZE1PNcFJ+aSjh2imgFtozg7sP/8Sl49YQcNRf3MdBHjBoU0S3CWBbaXSczxwxIvKFHa4U90F0M4G/t0dB917NEVvf+2yX8b/T/+Ahz/7gL9gMQvAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;prettier&quot;
+        title=&quot;prettier&quot;
+        src=&quot;/static/9051a160ff7ccfad5bc04b6e33318467/85ff8/prettier.png&quot;
+        srcset=&quot;/static/9051a160ff7ccfad5bc04b6e33318467/5a46d/prettier.png 300w,
+/static/9051a160ff7ccfad5bc04b6e33318467/85ff8/prettier.png 467w&quot;
+        sizes=&quot;(max-width: 467px) 100vw, 467px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;개발 편의성 끝판왕 도구이다. 엉망이거나 더러운(?) 코드들을 깔끔하게 만들어준다. &lt;del&gt;클린 코드&lt;/del&gt; 따로 설정 파일을 만들어둔다면, 속해 있는 그룹의 정책대로 알아서 코드의 모습을 바꾸어주기도 한다. &lt;strong&gt;필수!!&lt;/strong&gt;&lt;/p&gt;
-&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 373px; &quot;&gt;
-      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 25.333333333333336%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAFCAYAAABFA8wzAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA90lEQVQY011P7VKDMBDkWRxnWgWUrwTyQVpKqVootFC1o77/a6yXMLYz/tjZu73Lbs4LkhoJf8MTsZ/VCFiDkDdX9qMKMXtBzF/xnJIW166Pst0VCc0eQoOFr+GxzQnKTNDVGWw7QvXf4I2tJ8juC6lsoVfzvNCDCy+rd9dbXm8vMPUnwmjjwrzEtLi7ZyhKMi4nh0IM4PmBgs4Q5uQeGkJOhsKMMJsPrOoLJM2r3Q/0eg4T+ggv1i0WjwpMdMhlT3yAKEdkRYdM7J0u6Yf2TC4HKKo5aXYvV0fi3pml+X4+eRmU7n7LVlgGmlg5WO1P/4/b3k2zPr8e06l09cL+ewAAAABJRU5ErkJggg==&amp;apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
-  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;prettier how to automate&quot; title=&quot;prettier how to automate&quot; src=&quot;/static/26120ec0d2f07fea899ef93dec5ae8d4/67a5d/prettier2.png&quot; srcset=&quot;/static/26120ec0d2f07fea899ef93dec5ae8d4/5a46d/prettier2.png 300w,
-/static/26120ec0d2f07fea899ef93dec5ae8d4/67a5d/prettier2.png 373w&quot; sizes=&quot;(max-width: 373px) 100vw, 373px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot;&gt;
-    &lt;/span&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 373px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 25.333333333333336%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAFCAYAAABFA8wzAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAA90lEQVQY011P7VKDMBDkWRxnWgWUrwTyQVpKqVootFC1o77/a6yXMLYz/tjZu73Lbs4LkhoJf8MTsZ/VCFiDkDdX9qMKMXtBzF/xnJIW166Pst0VCc0eQoOFr+GxzQnKTNDVGWw7QvXf4I2tJ8juC6lsoVfzvNCDCy+rd9dbXm8vMPUnwmjjwrzEtLi7ZyhKMi4nh0IM4PmBgs4Q5uQeGkJOhsKMMJsPrOoLJM2r3Q/0eg4T+ggv1i0WjwpMdMhlT3yAKEdkRYdM7J0u6Yf2TC4HKKo5aXYvV0fi3pml+X4+eRmU7n7LVlgGmlg5WO1P/4/b3k2zPr8e06l09cL+ewAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;prettier how to automate&quot;
+        title=&quot;prettier how to automate&quot;
+        src=&quot;/static/26120ec0d2f07fea899ef93dec5ae8d4/67a5d/prettier2.png&quot;
+        srcset=&quot;/static/26120ec0d2f07fea899ef93dec5ae8d4/5a46d/prettier2.png 300w,
+/static/26120ec0d2f07fea899ef93dec5ae8d4/67a5d/prettier2.png 373w&quot;
+        sizes=&quot;(max-width: 373px) 100vw, 373px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;이렇게 설정에 들어가서 &lt;code class=&quot;language-text&quot;&gt;format on save&lt;/code&gt;를 검색한 뒤 체크해준다면, 매번 저장시마다 깔끔하게 변하는 코드를 확인할 수 있을 것이다!&lt;/p&gt;
 &lt;h2 id=&quot;visual-studio-intellicode&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#visual-studio-intellicode&quot; aria-label=&quot;visual studio intellicode permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Visual Studio Intellicode&lt;/h2&gt;
-&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 485px; &quot;&gt;
-      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 34%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAA7DAAAOwwHHb6hkAAABpUlEQVQozz2Ry27TUBCG/SxIdYiT2Ln7EtuJ40tipyYNvYoItQQEoQgWRUKCTUGUHUIqYtMlPADvwAKJHTs2PMzH2GlZ/PrmzDkzc/5zFFVzqbc8TDdC010qNY9qw6feDEpq+rCMC9aMkXBUslCjOS7zNypyijmYcP7miquPv3h++kGKPdkMmMweMNl+SJKdSHxCOn9CvrNmFB2RzFbki6dM88dE2YpsvqbvzBiGuyjL5TO+Xf7ly/s/fDr/wTQ7RK35uKM9zMEdHP+uTA7omBN6doblLcp8oxWQ2BbpwCF1Hfq9QJyOUeY7x3y++Mnlu99cvP6OH+Ri25fibTrWTCbnNLsTaZiWuSIu7FW0AS3D3ki3qTU8KnUPRTNc1o/e8ur0K8vlC7Y0u3wnN9gnSO7hCQfDPfzwEFOad60UoxPS7ifonUgUY3RjGRTT6sUot1SL/aNjXp6dEU93paFb3iCc3ifLV/jjAxxpOAwPMNpjsZtd20+FCZasTSfFdmfCDKX41eLAKFqgt0Nu1ze/rFYdtqo2qli7UbFXqbml1Gv+X2sb/gM+E/mMB8SwdwAAAABJRU5ErkJggg==&amp;apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
-  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;vscode intellicode&quot; title=&quot;vscode intellicode&quot; src=&quot;/static/1f084642116ab38f205d4025130b8d0f/44c61/vscode_intellicode.png&quot; srcset=&quot;/static/1f084642116ab38f205d4025130b8d0f/5a46d/vscode_intellicode.png 300w,
-/static/1f084642116ab38f205d4025130b8d0f/44c61/vscode_intellicode.png 485w&quot; sizes=&quot;(max-width: 485px) 100vw, 485px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot;&gt;
-    &lt;/span&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 485px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 34%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAA7DAAAOwwHHb6hkAAABpUlEQVQozz2Ry27TUBCG/SxIdYiT2Ln7EtuJ40tipyYNvYoItQQEoQgWRUKCTUGUHUIqYtMlPADvwAKJHTs2PMzH2GlZ/PrmzDkzc/5zFFVzqbc8TDdC010qNY9qw6feDEpq+rCMC9aMkXBUslCjOS7zNypyijmYcP7miquPv3h++kGKPdkMmMweMNl+SJKdSHxCOn9CvrNmFB2RzFbki6dM88dE2YpsvqbvzBiGuyjL5TO+Xf7ly/s/fDr/wTQ7RK35uKM9zMEdHP+uTA7omBN6doblLcp8oxWQ2BbpwCF1Hfq9QJyOUeY7x3y++Mnlu99cvP6OH+Ri25fibTrWTCbnNLsTaZiWuSIu7FW0AS3D3ki3qTU8KnUPRTNc1o/e8ur0K8vlC7Y0u3wnN9gnSO7hCQfDPfzwEFOad60UoxPS7ifonUgUY3RjGRTT6sUot1SL/aNjXp6dEU93paFb3iCc3ifLV/jjAxxpOAwPMNpjsZtd20+FCZasTSfFdmfCDKX41eLAKFqgt0Nu1ze/rFYdtqo2qli7UbFXqbml1Gv+X2sb/gM+E/mMB8SwdwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;vscode intellicode&quot;
+        title=&quot;vscode intellicode&quot;
+        src=&quot;/static/1f084642116ab38f205d4025130b8d0f/44c61/vscode_intellicode.png&quot;
+        srcset=&quot;/static/1f084642116ab38f205d4025130b8d0f/5a46d/vscode_intellicode.png 300w,
+/static/1f084642116ab38f205d4025130b8d0f/44c61/vscode_intellicode.png 485w&quot;
+        sizes=&quot;(max-width: 485px) 100vw, 485px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;듣기로는 AI가 사용자가 다음에 사용할 코드를 예측하여 자동완성으로 추천해준다는 도구이다. 미묘하게 도움이 되는 거 같기도 하고… 아니기도 하고… 하지만 AI가 추천하는 자동 완성이라는 것 자체가 재미있다.&lt;/p&gt;
 &lt;h1 id=&quot;🛒기타&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%F0%9F%9B%92%EA%B8%B0%ED%83%80&quot; aria-label=&quot;🛒기타 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;🛒기타&lt;/h1&gt;
 &lt;h2 id=&quot;wakatime&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#wakatime&quot; aria-label=&quot;wakatime permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;WakaTime&lt;/h2&gt;
-&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 490px; &quot;&gt;
-      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 33.666666666666664%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAA7DAAAOwwHHb6hkAAABeklEQVQoz11RyW7CMBTMD5RFoiwtBcRaEghbyIYTshTCEmhZD5VatVUPVf//Pn22Kg4cnua9sT0ejyW556HZtlCu9dEg5PNjx4GsTtHuuqJX+B7Z/uddwfOSr4pz0kOlg0TyFplsCclUFsWyQgI+FptvbHY/iOJPzFYfWMRf0O0YbrCHFx4xDQ9wghNYcIQTnqlO6A4CSFyMO1SHc9RaOm4SGXJqgvlnMO+IyfSAwTjCUI+gmUuM7S2GxhKdnovAMBHyMg34hkUOHUj5u7oQLNw3UG1q4HOxJJPQEWNrg5G5JozF7TqhJrgYfW0Gx/ThWCFcOwAzQ/RHM0jJdE5kU21oIrdkOi96mwSZf4IxeRa9Pd0LYd1eE7eB7e6gsxeMaZ2j4exhsS2kHDlKkQjPjmOuUENb9eDNXrE//+Jp+UaHD5iv36GSS4ut6ekRCS8FmmwFg3pjQnFYC0gyHa7UB+KpldoAfOZZNOWJ+HWOLYVdfpn3LeUa2WX+A4Bb4uSNNur1AAAAAElFTkSuQmCC&amp;apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
-  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;wakaTime&quot; title=&quot;wakaTime&quot; src=&quot;/static/cf6af401eb17a42e5e243542d8396661/41d3c/wakatime.png&quot; srcset=&quot;/static/cf6af401eb17a42e5e243542d8396661/5a46d/wakatime.png 300w,
-/static/cf6af401eb17a42e5e243542d8396661/41d3c/wakatime.png 490w&quot; sizes=&quot;(max-width: 490px) 100vw, 490px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot;&gt;
-    &lt;/span&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 490px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 33.666666666666664%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAA7DAAAOwwHHb6hkAAABeklEQVQoz11RyW7CMBTMD5RFoiwtBcRaEghbyIYTshTCEmhZD5VatVUPVf//Pn22Kg4cnua9sT0ejyW556HZtlCu9dEg5PNjx4GsTtHuuqJX+B7Z/uddwfOSr4pz0kOlg0TyFplsCclUFsWyQgI+FptvbHY/iOJPzFYfWMRf0O0YbrCHFx4xDQ9wghNYcIQTnqlO6A4CSFyMO1SHc9RaOm4SGXJqgvlnMO+IyfSAwTjCUI+gmUuM7S2GxhKdnovAMBHyMg34hkUOHUj5u7oQLNw3UG1q4HOxJJPQEWNrg5G5JozF7TqhJrgYfW0Gx/ThWCFcOwAzQ/RHM0jJdE5kU21oIrdkOi96mwSZf4IxeRa9Pd0LYd1eE7eB7e6gsxeMaZ2j4exhsS2kHDlKkQjPjmOuUENb9eDNXrE//+Jp+UaHD5iv36GSS4ut6ekRCS8FmmwFg3pjQnFYC0gyHa7UB+KpldoAfOZZNOWJ+HWOLYVdfpn3LeUa2WX+A4Bb4uSNNur1AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;wakaTime&quot;
+        title=&quot;wakaTime&quot;
+        src=&quot;/static/cf6af401eb17a42e5e243542d8396661/41d3c/wakatime.png&quot;
+        srcset=&quot;/static/cf6af401eb17a42e5e243542d8396661/5a46d/wakatime.png 300w,
+/static/cf6af401eb17a42e5e243542d8396661/41d3c/wakatime.png 490w&quot;
+        sizes=&quot;(max-width: 490px) 100vw, 490px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;순수하게 코딩을 한 &lt;strong&gt;시간&lt;/strong&gt;과 &lt;strong&gt;프로젝트명&lt;/strong&gt;, &lt;strong&gt;개발 언어&lt;/strong&gt; 모두 기록을 하여 보여주는 도구이다. 개발 동기를 부여해주는데 도움이 많이 된다.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;내가 저번 주에 코딩을 5시간 밖에 안 했다고?!&lt;/p&gt;
