@@ -20,6 +20,10 @@
     box-sizing: border-box;
     cursor: pointer;
 
+    &:hover {
+      transform: scale(1.05);
+    }
+
     div {
       display: block;
       padding: 14px 16px 16px 16px;
