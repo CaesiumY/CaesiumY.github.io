@@ -52,6 +52,8 @@ body.light {
   }
 
   .thumbnail {
+    border: 1px solid $hover-gray;
+
     h3 {
       color: $dark-gray;
     }
@@ -59,7 +61,10 @@ body.light {
       color: $middle-gray;
     }
     &:hover {
-      background-color: $hover-gray;
+      // background-color: $hover-gray;
+      transform: scale(1);
+      box-shadow: rgba(9, 132, 227, 0.5) 5px 5px 0px 0px,
+        rgba(116, 185, 255, 0.5) 10px 10px 0px 0px;
     }
   }
 
