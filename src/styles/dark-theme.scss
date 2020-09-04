@@ -61,8 +61,10 @@ body.dark {
       color: $dark-middle-font-color;
     }
     &:hover {
-      // text-shadow: $dark-hover-text-shadow;
-      background-color: $middle-gray;
+      // background-color: $middle-gray;
+      transform: scale(1);
+      box-shadow: rgba($middle-gray, 0.5) 5px 5px 0px 0px,
+        rgba($light-gray, 0.3) 10px 10px 0px 0px;
     }
   }
 
