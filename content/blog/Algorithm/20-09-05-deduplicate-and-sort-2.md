@@ -1,5 +1,5 @@
 ---
-title: [백준10867][C] 중복 빼고 정렬하기 2
+title: '[백준10867][C] 중복 빼고 정렬하기 2'
 date: 2020-09-05 00:09:88
 category: algorithm
 draft: false
