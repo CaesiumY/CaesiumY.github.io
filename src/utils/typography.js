@@ -14,7 +14,7 @@ GitHubTheme.overrideThemeStyles = () => {
     },
 
     'a:hover': {
-      textDecoration: `none`,
+      textDecoration: `underline`,
     },
 
     h1: {
