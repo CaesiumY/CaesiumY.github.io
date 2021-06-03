@@ -1,5 +1,5 @@
 import React from 'react'
-import { graphql } from 'gatsby'
+import { graphql, Link } from 'gatsby'
 
 import { rhythm } from '../utils/typography'
 import * as Lang from '../constants'
@@ -23,6 +23,12 @@ export default ({ data }) => {
       }}
     >
       <div dangerouslySetInnerHTML={{ __html: resume.html }} />
+
+      <div align="center">
+        <Link to={`/`}>
+          <h3>Go back</h3>
+        </Link>
+      </div>
     </div>
   )
 }
