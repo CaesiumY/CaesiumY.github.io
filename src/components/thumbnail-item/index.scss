@@ -12,6 +12,16 @@
   word-break: keep-all;
   transform: scale(0.98);
 
+  .thumbnail-category {
+    text-transform: uppercase;
+    margin: 0.7rem 0;
+    font-weight: 500;
+  }
+
+  h3 {
+    line-height: 1.4;
+  }
+
   p {
     font-size: 90%;
     line-height: 1.4;
@@ -21,6 +31,7 @@
     width: 100%;
     position: relative;
     padding-top: 40%;
+    background: #c5d2d9 no-repeat 50%;
 
     img {
       position: absolute;
@@ -32,11 +43,6 @@
       object-fit: cover;
       object-position: center;
     }
-  }
-
-  .thumbnail-category {
-    color: #333;
-    text-transform: capitalize;
   }
 }
 
