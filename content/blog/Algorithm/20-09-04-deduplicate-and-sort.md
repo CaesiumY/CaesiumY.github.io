@@ -1,7 +1,7 @@
 ---
 title: '[백준10867][C] 중복 빼고 정렬하기 1'
 date: 2020-09-04 23:09:58
-category: Algorithm
+category: algorithm
 draft: false
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: '[js] Fisher Yates Shuffle로 배열 섞기'
 date: 2020-09-12 22:09:77
-category: Algorithm
+category: algorithm
 thumbnail: './images/fisher-yates-shffle-deck.png'
 draft: false
 ---
