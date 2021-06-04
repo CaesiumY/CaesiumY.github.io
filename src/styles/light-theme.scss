@@ -54,6 +54,14 @@ body.light {
   .thumbnail {
     border: 1px solid $hover-gray;
 
+    .image-container {
+      background: $light-background-color no-repeat 50%;
+    }
+
+    .thumbnail-category {
+      color: $light-link-color;
+    }
+
     h3 {
       color: $dark-gray;
     }

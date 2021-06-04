@@ -3,6 +3,10 @@ body.dark {
   text-shadow: $dark-text-shadow;
   color: $dark-light-font-color;
 
+  .top {
+    background: $dark-link-color;
+  }
+
   // home
   .home-header {
     color: $dark-light-font-color;
@@ -54,6 +58,15 @@ body.dark {
 
   .thumbnail {
     border: 2px solid $dark-category-highlight-border-color;
+
+    // .image-container {
+    //   background: $dark-category-text-color no-repeat 50%;
+    // }
+
+    .thumbnail-category {
+      color: $dark-link-color;
+    }
+
     h3 {
       color: $dark-light-font-color;
     }
@@ -61,7 +74,6 @@ body.dark {
       color: $dark-middle-font-color;
     }
     &:hover {
-      // background-color: $middle-gray;
       transform: scale(1);
       box-shadow: rgba($middle-gray, 0.5) 5px 5px 0px 0px,
         rgba($light-gray, 0.3) 10px 10px 0px 0px;
