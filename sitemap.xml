@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 <url> <loc>https://caesiumy.github.io/review/20-12-31-udacity-reactnd-review/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://caesiumy.github.io/development/drag-with-dragula/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://caesiumy.github.io/Algorithm/2020-09-12-fisher-yates-shuffle/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://caesiumy.github.io/Algorithm/20-09-05-deduplicate-and-sort-2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://caesiumy.github.io/Algorithm/20-09-04-deduplicate-and-sort/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://caesiumy.github.io/algorithm/2020-09-12-fisher-yates-shuffle/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://caesiumy.github.io/algorithm/20-09-05-deduplicate-and-sort-2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://caesiumy.github.io/algorithm/20-09-04-deduplicate-and-sort/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://caesiumy.github.io/development/vscode-recommended-extensions/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://caesiumy.github.io/about/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://caesiumy.github.io/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
