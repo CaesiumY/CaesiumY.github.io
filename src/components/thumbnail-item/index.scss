@@ -20,6 +20,7 @@
   .image-container {
     width: 100%;
     position: relative;
+    padding-top: 40%;
 
     img {
       position: absolute;
@@ -29,6 +30,7 @@
       height: 100%;
       display: block;
       object-fit: cover;
+      object-position: center;
     }
   }
 

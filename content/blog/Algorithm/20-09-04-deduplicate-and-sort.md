@@ -11,7 +11,7 @@ https://www.acmicpc.net/problem/10867
 
 # 📖문제 내용
 
-## 문제 
+## 문제
 
 N개의 정수가 주어진다. 이때, N개의 정수를 오름차순으로 정렬하는 프로그램을 작성하시오. 같은 정수는 한 번만 출력한다.
 
@@ -26,6 +26,7 @@ N개의 정수가 주어진다. 이때, N개의 정수를 오름차순으로 정
 ## 예제
 
 ### 예제 입력
+
 > 10
 > 1 4 2 3 1 4 2 3 1 2
 
@@ -46,14 +47,14 @@ int is_include(int *arr, int arr_size, int value);
 void sort(int* arr, int arr_size);
 
 int main(void){
-    int arr_size;          
+    int arr_size;
     scanf("%d", &arr_size); // 배열 크기를 묻는다
-    
-    int arr[arr_size];    
+
+    int arr[arr_size];
     init_array(arr, arr_size); // 배열 초기화
-    
+
     deduplicate_array(arr, &arr_size); // 배열 중복 제거
-    
+
     sort(arr, arr_size); // 배열 정렬
     print_array(arr, arr_size); // 배열 출력
 }
@@ -61,61 +62,61 @@ int main(void){
 void init_array(int* arr, int arr_size) {
     for(int i = 0; i < arr_size; i++) {
         scanf("%d", &arr[i]);
-    }   
+    }
 }
 
 void print_array(int* arr, int arr_size){
     for(int i = 0; i < arr_size; i++)
 		printf("%d ", arr[i]);
 	printf("\n");
-	
+
 }
 
 void deduplicate_array(int* arr, int *arr_size){
     int* temp = malloc(sizeof(int) * *arr_size);
-    int count = 0;    
-    
+    int count = 0;
+
     for(int i = 0; i < *arr_size; i++) {
         if(is_include(temp, count, arr[i]) == 0) {
-            temp[count++] = arr[i];            
+            temp[count++] = arr[i];
         } // 만약 temp가 arr의 값을 가지고 있지 않다면 추가
     }
-    
+
     for(int j = 0; j < count; j++) {
         arr[j] = temp[j];
     } // arr에 temp 값을 복사
-    
+
     *arr_size = count; // 배열 뒷부분은 버리기 위해
-    
+
     free(temp);
 }
 
 int is_include(int *arr, int arr_size, int value) { // 배열이 값을 포함하고 있는지 확인
-    
+
     for(int i = 0; i < arr_size; i++) {
         if(arr[i] == value) {
             return 1;
         }
     }
-    
+
     return 0;
 }
 
 void sort(int* arr, int arr_size){	// 버블 소트 + 중단점
-    int temp;    
+    int temp;
     int count = 0; // 중단점 플래그
-    for(int i = 0; i < arr_size; i++) {  
+    for(int i = 0; i < arr_size; i++) {
         count = 0;
         for(int j = 0; j < arr_size - 1; j++) {
             if(*(arr + j) > *(arr + j + 1)){
                 temp = *(arr + j);
                 *(arr + j) = *(arr + j + 1);
                 *(arr + j + 1) = temp;
-                count++;                
-            }            
+                count++;
+            }
         }
-     if(count == 0) break; 
-    }    
+     if(count == 0) break;
+    }
 }
 ```
 
