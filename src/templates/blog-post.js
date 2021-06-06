@@ -91,7 +91,7 @@ export const pageQuery = graphql`
         date(formatString: "YYYY/MM/DD")
         thumbnail {
           childImageSharp {
-            fixed(width: 800) {
+            fixed(width: 100) {
               src
             }
           }
