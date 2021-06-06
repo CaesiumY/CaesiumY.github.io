@@ -2,11 +2,11 @@
 title: dragula를 이용해 손쉽게 드래그 구현하기
 date: 2020-10-21 18:10:09
 category: development
-thumbnail: './images/2020-10-21/drag-with-dragula/dragula_logo.png'
+thumbnail: './images/2020-10-21/dragula_logo.png'
 draft: false
 ---
 
-![dragula logo](./images/2020-10-21/drag-with-dragula/dragula_logo.png)
+![dragula logo](./images/2020-10-21/dragula_logo.png)
 
 # dragula란?
 
