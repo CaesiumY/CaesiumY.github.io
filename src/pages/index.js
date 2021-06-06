@@ -90,6 +90,11 @@ export const pageQuery = graphql`
             draft
             thumbnail {
               publicURL
+              childImageSharp {
+                fixed(width: 840) {
+                  src
+                }
+              }
             }
           }
         }

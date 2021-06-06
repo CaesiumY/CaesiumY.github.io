@@ -10,7 +10,7 @@ export const ThumbnailItem = ({ node }) => (
       {node.frontmatter.thumbnail && (
         <div className="image-container">
           <img
-            src={node.frontmatter.thumbnail.publicURL}
+            src={node.frontmatter.thumbnail.childImageSharp.fixed.src}
             alt={node.frontmatter.title || node.fields.slug}
           />
         </div>
