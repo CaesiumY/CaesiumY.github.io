@@ -2,6 +2,7 @@
 title: '[백준10867][C] 중복 빼고 정렬하기 2'
 date: 2020-09-05 00:09:88
 category: algorithm
+thumbnail: 'images/20-09-05/boostcourse_review.png/boostcourse_review.png'
 draft: false
 ---
 
@@ -73,7 +74,7 @@ int main() {
 
 # 추가
 
-![boostcourse_review](images/boostcourse_review.png)
+![boostcourse_review](images/20-09-05/boostcourse_review.png/boostcourse_review.png)
 
 나중에 올려주신 풀이를 보니, 오히려 내가 추가로 낸 2번 풀이가 문제 의도였다고 하신다...
 

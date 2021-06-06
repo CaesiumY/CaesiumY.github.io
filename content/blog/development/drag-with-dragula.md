@@ -2,11 +2,11 @@
 title: dragula를 이용해 손쉽게 드래그 구현하기
 date: 2020-10-21 18:10:09
 category: development
-thumbnail: "./assets/drag-with-dragula/dragula_logo.png"
+thumbnail: './images/2020-10-21/drag-with-dragula/dragula_logo.png'
 draft: false
 ---
 
-![dragula logo](./assets/drag-with-dragula/dragula_logo.png)
+![dragula logo](./images/2020-10-21/drag-with-dragula/dragula_logo.png)
 
 # dragula란?
 
@@ -25,6 +25,7 @@ draft: false
 ## 🔨설치
 
 > npm을 사용할 시
+
 ```
 npm install dragula --save
 ```
@@ -32,26 +33,29 @@ npm install dragula --save
 > cdn을 사용할 시
 
 ```html
-<script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/$VERSION/dragula.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/$VERSION/dragula.min.js"></script>
 ```
 
 ### 스타일도 가져와야 한다.
 
 > js 에서 사용한다면
+
 ```js
-import "dragula/dist/dragula.min.css";
+import 'dragula/dist/dragula.min.css'
 ```
 
 > 만약 css에서 사용한다면
+
 ```css
-@import 'node_modules/dragula/dragula'
+@import 'node_modules/dragula/dragula';
 ```
 
 ## 🧵선언하기
 
 ```js
-var drake = dragula(containers, options);
+var drake = dragula(containers, options)
 ```
+
 이렇게 변수에 `dragula`를 담아주면 된다.
 
 ### **끝이다!!** ~~아니다😅~~
@@ -60,16 +64,17 @@ var drake = dragula(containers, options);
 
 `container` 에는 드래그를 원하는 요소들이 담긴 리스트를 넣어주면 된다.
 
->예시) 
+> 예시)
+
 ```js
-dragula([document.querySelector('#left'), document.querySelector('#right')]);
+dragula([document.querySelector('#left'), document.querySelector('#right')])
 ```
 
 또는 동적으로 넣어줄 수도 있다.
 
 ```js
-var drake = dragula(options);
-drake.containers.push(container);
+var drake = dragula(options)
+drake.containers.push(container)
 ```
 
 ### options
@@ -86,6 +91,7 @@ drake.containers.push(container);
 등등...
 
 #### ❗`invalid` 가 자주 쓰여요.
+
 자주 쓰일 것만 같은 `invalid` 옵션의 예제를 들고 왔다.
 
 ```js
@@ -93,6 +99,7 @@ invalid: function (el, handle) {
   return el.tagName === 'A';
 }
 ```
+
 `true`가 반환되면 드래그를 할 수 없게 하는 함수이다.
 
 해당 예시의 뜻은 **anchor태그의 드래그를 막아라**
@@ -110,7 +117,6 @@ invalid: function (el, handle) {
 
 아니면 이번 프로젝트에 쓰인 [예시1](https://github.com/CaesiumY/vue-with-kanban-board/blob/4e130c067f8e2a3d0a99ae4f8fbbe6472559c08c/src/utils/dragger.js#L5)과 [예시2](https://github.com/CaesiumY/vue-with-kanban-board/blob/4e130c067f8e2a3d0a99ae4f8fbbe6472559c08c/src/components/Board.vue#L124)를 보셔도!
 
-
 ## 📡이벤트 리스너를 등록해보자!
 
 그저 드래그만 하면 얼마나 편하고 좋을까... 허나 대부분의 서비스들은 **드래그한 뒤의 상태를 저장**해야 할 필요가 있다.😂
@@ -122,7 +128,7 @@ invalid: function (el, handle) {
 
 ```js
 // 변수명이 drake일 때
-drake.on("drop", (el, target, source, sibling) => {
+drake.on('drop', (el, target, source, sibling) => {
   // el: 드래그하고 있는 요소
   // target: el이 드래그 후 놓아진 리스트 요소
   // sibling: 자리에 놓았을 때, 바로 그 다음 요소
@@ -143,10 +149,7 @@ drake.on("drop", (el, target, source, sibling) => {
 
 다만 자리를 저장하는데 중요한 `sibling`의 기능이 영 탐탁치 않았기에 `setSibling` 함수로 앞과 뒤 요소를 모두 가져오도록 등록해주었다. [링크](https://github.com/CaesiumY/vue-with-kanban-board/blob/4e130c067f8e2a3d0a99ae4f8fbbe6472559c08c/src/utils/dragger.js#L13)
 
-
-
 이외의 이벤트 리스너를 보고 싶다면 [여기로!](https://github.com/bevacqua/dragula#api)
-
 
 ## 🎨드래그를 꾸며보자!
 
@@ -155,13 +158,12 @@ drake.on("drop", (el, target, source, sibling) => {
 [제공해주는 css 파일](https://github.com/bevacqua/dragula/blob/master/dist/dragula.css)을 살펴보는 것도 추천.
 
 - `gu-mirror`는 드래그 도중 마우스 커서에 붙어다니는 요소의 스타일
-  
+
 - `gu-transit`은 드랍될 요소에 생기는 그림자의 스타일
-  
+
 - `gu-unselectable`은 드래그시, 커서가 갈 수 있는 한계(기본 값은 `body`)에 붙는 스타일
 
 - `gu-hide`은 그냥 요소를 숨길 때 쓰는 헬퍼
-
 
 # 😎쓰인 프로젝트
 
@@ -172,9 +174,8 @@ drake.on("drop", (el, target, source, sibling) => {
   <img src="https://github.com/CaesiumY/vue-with-kanban-board/raw/master/screenshots/demo.gif" alt="vue-with-kanban-board">
 </details>
 
-
 # 🌄마무리
 
-이것만 알아도 크게 문제될 것은 없어보인다. 
+이것만 알아도 크게 문제될 것은 없어보인다.
 
 왜냐하면 이 글을 읽는 모두들이 **게으른 천재**들이기에 하나를 알려줘도 열을 알 것이라고 기대하기 때문이다.😝

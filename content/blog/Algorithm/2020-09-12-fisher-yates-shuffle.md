@@ -2,7 +2,7 @@
 title: '[js] Fisher Yates Shuffle로 배열 섞기'
 date: 2020-09-12 22:09:77
 category: algorithm
-thumbnail: './images/fisher-yates-shffle-deck.png'
+thumbnail: './images/20-09-12/fisher-yates-shffle-deck.png'
 draft: false
 ---
 
@@ -113,7 +113,7 @@ function shuffle(array) {
 [카드 덱 셔플하기](https://vue-with-games.netlify.app/9.%20%EB%8D%B1%EC%85%94%ED%94%8C/index.html) 프로젝트에서 쓰였으니 확인해봐도 좋다.
 [코드는 여기에](https://github.com/CaesiumY/Vue-with-Games/tree/master/9.%20%EB%8D%B1%EC%85%94%ED%94%8C)
 
-![card shuffle](images/fisher-yates-shffle-deck.png)
+![card shuffle](images/20-09-12/fisher-yates-shffle-deck.png)
 
 ## 참고 문서
 
