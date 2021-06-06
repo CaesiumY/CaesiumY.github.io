@@ -1,5 +1,5 @@
 ---
-title: 'vscode 확장(extensions) 추천'
+title: 'VSCODE 확장(extensions) 추천'
 date: 2019-05-04 22:09:24
 category: 'development'
 thumbnail: './images/2020-09-01/prettier_image.png'

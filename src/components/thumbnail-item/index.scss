@@ -14,12 +14,13 @@
 
   .thumbnail-category {
     text-transform: uppercase;
-    margin: 0.7rem 0;
     font-weight: 500;
+    margin: 0;
   }
 
   h3 {
     line-height: 1.4;
+    margin: 0.5rem 0;
   }
 
   p {
@@ -32,6 +33,7 @@
     position: relative;
     padding-top: 40%;
     background: #c5d2d9 no-repeat 50%;
+    margin-bottom: 0.4rem;
 
     img {
       position: absolute;
