@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import { TARGET_CLASS } from '../../utils/visible'
+import Image from 'gatsby-image'
 
 import './index.scss'
 
@@ -9,9 +10,14 @@ export const ThumbnailItem = ({ node }) => (
     <div key={node.fields.slug}>
       {node.frontmatter.thumbnail && (
         <div className="image-container">
-          <img
-            src={node.frontmatter.thumbnail.childImageSharp.fixed.src}
+          <Image
+            className="thumbnail-image"
+            fluid={node.frontmatter.thumbnail.childImageSharp.fluid} // TODO: change img tag into gatsby supported image tag & find out difference between fixed & fluid
             alt={node.frontmatter.title || node.fields.slug}
+            title={node.frontmatter.title || node.fields.slug}
+            style={{
+              position: 'absolute',
+            }}
           />
         </div>
       )}

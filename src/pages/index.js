@@ -89,10 +89,12 @@ export const pageQuery = graphql`
             category
             draft
             thumbnail {
-              publicURL
               childImageSharp {
-                fixed(width: 840) {
-                  src
+                fluid(maxWidth: 740) {
+                  ...GatsbyImageSharpFluid
+                }
+                fixed(width: 850) {
+                  ...GatsbyImageSharpFixed
                 }
               }
             }
