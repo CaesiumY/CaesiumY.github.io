@@ -1,4 +1,168 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Caesiumy's BLOG]]></title><description><![CDATA[Caesiumy's Dev Blog]]></description><link>https://caesiumy.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Tue, 08 Jun 2021 13:29:42 GMT</lastBuildDate><item><title><![CDATA[about]]></title><description><![CDATA[# Caesiumy insta
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Caesiumy's BLOG]]></title><description><![CDATA[Caesiumy's Dev Blog]]></description><link>https://caesiumy.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 09 Jun 2021 14:50:28 GMT</lastBuildDate><item><title><![CDATA[🎨브라우저 렌더링 과정 알아보기]]></title><description><![CDATA[…]]></description><link>https://caesiumy.github.io/frontend/21-06-09-browser-rendering-process/</link><guid isPermaLink="false">https://caesiumy.github.io/frontend/21-06-09-browser-rendering-process/</guid><pubDate>Wed, 09 Jun 2021 22:06:55 GMT</pubDate><content:encoded>&lt;h1 id=&quot;렌더링&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%A0%8C%EB%8D%94%EB%A7%81&quot; aria-label=&quot;렌더링 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;🖌렌더링?&lt;/h1&gt;
+&lt;div align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/69cc9df7fc69042278cf5231beac96ca/drawing.gif&quot;&gt;
+&lt;/div&gt;
+&lt;p&gt;평소에 개발 관련이 아니더라도 &lt;em&gt;영상 렌더링&lt;/em&gt;이라든지 &lt;code class=&quot;language-text&quot;&gt;렌더링&lt;/code&gt; 이라는 말을 들어본 적이 있을 것입니다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;렌더링&lt;/code&gt; 이란 쉽게 말해 &lt;strong&gt;화면에 그림을 그리는 행위&lt;/strong&gt;입니다.&lt;/p&gt;
+&lt;p&gt;나아가서&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;브라우저 렌더링&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;HTML&lt;/code&gt; 등을 이용해서 &lt;strong&gt;브라우저에 그림을 그리는 행위&lt;/strong&gt;를 뜻하죠.&lt;/p&gt;
+&lt;h1 id=&quot;렌더링-과정&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%A0%8C%EB%8D%94%EB%A7%81-%EA%B3%BC%EC%A0%95&quot; aria-label=&quot;렌더링 과정 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;🎨렌더링 과정&lt;/h1&gt;
+&lt;p&gt;모든 그림에는 밑그림을 그리고 색을 칠하고, 과정이 필요합니다.
+&lt;del&gt;위의 스폰지밥 짤처럼 원을 그리는 데에도 긴 과정이 필요해요&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;브라우저 렌더링&lt;/code&gt;도 그림을 그리는 것과 마찬가지입니다.&lt;/p&gt;
+&lt;p&gt;자, 준비물을 알아봅시다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HTML 파일&lt;/li&gt;
+&lt;li&gt;CSS 파일&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;이것들을 짜내서 브라우저에 그림을 그려봅시다!&lt;/p&gt;
+&lt;h2 id=&quot;1-object-model-생성&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#1-object-model-%EC%83%9D%EC%84%B1&quot; aria-label=&quot;1 object model 생성 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1. Object-model 생성&lt;/h2&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 665px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 42.66666666666667%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsSAAALEgHS3X78AAACbklEQVQoz2NgMP7P8P+/AgMM3Dnbw8ic+Z8BHTw6W59//1D6g4fHC89cOjlVByT28EwtY/q0+6gK/z9KZQTR+x78Z0s/8p8ZJu7U9pfFse0fW86M2xwMSf+5du+Z5398T/vy28eray6emCwCUrN79xxG44b/DHv2zGa8fbKJcceu+RDNT8435t3cn/X57uHcB7v3LvYCWsMSM+kln1fXdz7X9p/cIDV3TzXUXtxT8PLO0ZKjx47M1wY7BtMjDAyNK+4KLduy2e3BsbyY64erExZu3OqxZfc6qSNnrrKANb0uZpm6Zp/Krt1z/Z6fSEu+daw6ZsLac3Ju3f8FE6d/EpAq+c+1YMMWoasn+6RaFh1jY7hzMPPv3SMFL8+fXyt7/2xbxL0jef8fH898+uBUvhXY9WfKN744U/D/0emqjVjcwzB/407jR6fKzz06mvkOGM6LGG4fLva/fbTM69LxiYJnD/eJPTpVbHvr6o7yA6euJ2868THn7Lm9MbeP1zSfO9wz+8i+CY5LD35w3HDkWeqRc/ejr9x9bzV3bjzrnZMN5deONi27fbI5CJulDNcf/9p85uKtb5dvPrlz8MZ//0dH4ydc3pn07tnx2MlHrn4oO3f5zq/jZ668PH/rfe/ydf3ST06XnrpzIOPdg9N1Cxmensxhvn+8hGn/wSUMRw4tYXh73JNpzaH7/Ifu/edlSPnPfvzS05wjp6+17D56aeHhM7c7T197Vbnl0n8ZZAes2LKB++KJKZJO7f+YMVx36e47OHvZ6f9CV289vnD+0o2n5y/fOX3q3NUD5689mt+3/z8HJJZfMd44nImiHwC+LUvli16f8QAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;dom&quot;
+        title=&quot;dom&quot;
+        src=&quot;/static/d2d1cc118210528da72cc1e2ef152eec/5f4af/dom.png&quot;
+        srcset=&quot;/static/d2d1cc118210528da72cc1e2ef152eec/5a46d/dom.png 300w,
+/static/d2d1cc118210528da72cc1e2ef152eec/0a47e/dom.png 600w,
+/static/d2d1cc118210528da72cc1e2ef152eec/5f4af/dom.png 665w&quot;
+        sizes=&quot;(max-width: 665px) 100vw, 665px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;HTML&lt;/code&gt;로 부터 &lt;code class=&quot;language-text&quot;&gt;DOM(Document Object Model)&lt;/code&gt;을 생성합니다. 대략 위 그림처럼 생겼어요.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 582px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 51.33333333333333%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAAAsSAAALEgHS3X78AAACrElEQVQoz41SXUhTARS+booQ4UvZS9BDP1BQ0EMEQUHUS2FED4GRD4mkLKNRkssphT9kiYtS8KHQoh/oJSqNWTqVdd3mdbt/2737u7t3273uz825ueZw8+e0zepFH/rgwDmHw3fOd85BkDxIbvEWwfieUw6ph2B9Gto1N/QVh2OemZbTQUvTsGi6PRYg2jr1EwPlAAgCUF6C/AEk98siWH2pH2+XX3qysJm08fEJFy8BbuXSs5TbjdmCM+pxOPFFO3QhgClxVqcQveb290gllP8lOqSGUmQ7kHZJphndKJ3JwA4AkOetRMRbqgRM3Uugva1a/eieQt2ZbjhAor1Kj1H1CEdf1Ff3r1SO6j6epdHuN7yxeVAkumqbP6yVbWlw8qamIkyqyCVKkUxY70Voo+ZiIe/Eus7NWxQBYarmV5JW0AOD93dGyLuXo5aGORGtXYxSytdFApMjdYVwhNQmJtqixaI900zi8VsDHJ+efFaj1/W99M22NeBTrXtHLHB4Eg91fMd8AwZbrGnMsnDtJ5O5qqcT/eNksh93JjoMzMJ1hPGEjdnsCgSCIQhHIrCaywLBxTpjROM3aboOYoQSGFRVzfhX2/LrAEHwQnYlAywfWfJIcSyXzYAk+mF1bR1YIW5AzM64ysGHDDjj+4RZxfYxI1ffNw67CtMrB9CD++5IFQXfwi1XCVKMIu3iZ8wmPpywpqus3nQj54+N5BU+RalgtZnPHd2yw2E77LZ745N2bk5nsYenKGfwh0sImRhv6gHyP7B7gjLWRspIq7N4IVpYPrVRkMZzIPoFCIUCBaUghVNo8e/AVobTTrk3sCiTIilZUPLJPW6HzMV55WZ3WvaPmOKXioHeljriDyXnWacQp1leIFlBy3Dhd7SQvrFJOF9S9yqHnO9e33bA37RPvRr/HVl2AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;cssom&quot;
+        title=&quot;cssom&quot;
+        src=&quot;/static/341548d8f4cf8fb4d707a6ce9b8627e8/7c1cd/cssom-tree.png&quot;
+        srcset=&quot;/static/341548d8f4cf8fb4d707a6ce9b8627e8/5a46d/cssom-tree.png 300w,
+/static/341548d8f4cf8fb4d707a6ce9b8627e8/7c1cd/cssom-tree.png 582w&quot;
+        sizes=&quot;(max-width: 582px) 100vw, 582px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;CSS&lt;/code&gt;로 부터 &lt;code class=&quot;language-text&quot;&gt;CSSOM(CSS Object Model)&lt;/code&gt;을 생성합니다. 둘 다 트리 구조로 되어있군요.&lt;/li&gt;
+&lt;li&gt;이렇게 만들어진 각각의 &lt;code class=&quot;language-text&quot;&gt;DOM&lt;/code&gt;과 &lt;code class=&quot;language-text&quot;&gt;CSSOM&lt;/code&gt;은 서로 독립적인 데이터 구조를 갖고 있습니다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;DOM-tree&lt;/code&gt;와 &lt;code class=&quot;language-text&quot;&gt;CSSOM-tree&lt;/code&gt;를 만들기 위해서라도 브라우저에 빨리 &lt;code class=&quot;language-text&quot;&gt;HTML&lt;/code&gt;과 &lt;code class=&quot;language-text&quot;&gt;CSS&lt;/code&gt;를 제공해야겠죠?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;2-render-tree-생성&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#2-render-tree-%EC%83%9D%EC%84%B1&quot; aria-label=&quot;2 render tree 생성 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2. Render Tree 생성&lt;/h2&gt;
+&lt;p&gt;자 이제 만들어 놓은 &lt;code class=&quot;language-text&quot;&gt;DOM&lt;/code&gt;과 &lt;code class=&quot;language-text&quot;&gt;CSSOM&lt;/code&gt;을 합쳐볼 차례입니다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 1150px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 46.666666666666664%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsSAAALEgHS3X78AAACkUlEQVQoz3VQXUhTYRg+001tztLSwixoppSplDdelBQEsatuwwwUE6YozAqdM1D8I0mtTApTFywbiznNLFEcOrdz9uPOjmc7PztnZ39u07RA6yqii/jaWVHe9MAHz/N+Dw/v+0BQHAC4BVkHU3Jyz1xO5zVu6ZX5rO0T3PqzhP7tAYKKK9dOV966fYrXu2hNKojeT4H24wdIOCEGbm9jbN0K6C5I5ufI8uNKerVlfHxGGw8ECa+L3Sslue0pgo0NG+zfyiizUkmYOxR5w0CkGJwQbTrlkoTRh6juUGZVtxfpGCRsIwrW+aQm5Ggb085O5T6dB8dsFrUsaFfqvdgrqRn/cvwdEivkHN1qn1VZu2p8fpW09BgQWCcj4D4d4dRcgkJIczrQQAI3w+a56M2XTg/Z7lntnHOg8AOE2Bum1meqA5b6IdqLXcfIoNdFbqy50ekBEu7ReP3Rt5jHSxD+T2o3ydpRcmPxz/Gtgt14Rzyzu6N1iIt7bXayjfvraenXp1mxQMkyGj2P06EVxzpDod6dnvIGTjhv8WW+hyN5k/oFMdR6ryGpqbE+taS4KDM/X3r4YvmFND5A88acYYSJE7oP2JGFJeshF+Y+Fx8n8X8vpqmjI2pDZpwmF0glwsKTEmGcC8pKC4T7l8iIvyyR+IBwfgeI6dDnUSb4cdZBblUTvrAsEt1SU7GfUspULQGROjH0P1RVVUFyufyvXqTDBSs47FlCTYTWFr0ZRnu7IliXTrsSySkaBaLwmkobQ9se5ZtAsoVjs5doLnvShCc27+wf+Bd8o7Y20eEc7hevBYkKI02fpQI7Q24mOob7tvtcZFCP+r8XbzqaHkbszSojE1SYcDNjIp0GfPcrfx1kDbDQL+2RTlz0GRJmAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;render-tree&quot;
+        title=&quot;render-tree&quot;
+        src=&quot;/static/0c389301ba794f3ca7b491572d73971d/33d1d/render-tree-construction.png&quot;
+        srcset=&quot;/static/0c389301ba794f3ca7b491572d73971d/5a46d/render-tree-construction.png 300w,
+/static/0c389301ba794f3ca7b491572d73971d/0a47e/render-tree-construction.png 600w,
+/static/0c389301ba794f3ca7b491572d73971d/33d1d/render-tree-construction.png 1150w&quot;
+        sizes=&quot;(max-width: 1150px) 100vw, 1150px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;위 그림과 같이 &lt;code class=&quot;language-text&quot;&gt;DOM&lt;/code&gt;과 &lt;code class=&quot;language-text&quot;&gt;CSSOM&lt;/code&gt;이 합쳐져 &lt;code class=&quot;language-text&quot;&gt;Render Tree&lt;/code&gt;를 형성합니다.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;이러한 &lt;code class=&quot;language-text&quot;&gt;렌더링 트리&lt;/code&gt;에는 페이지를 렌더링하는 데 필요한 노드만 포함됩니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;blockquote&gt;
+&lt;p&gt;페이지에 표현되지 않는 노드들은 &lt;code class=&quot;language-text&quot;&gt;렌더링 트리&lt;/code&gt;에 &lt;strong&gt;포함되지 않아요!&lt;/strong&gt; ex) 위 그림의 &lt;code class=&quot;language-text&quot;&gt;display: none;&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;하지만&lt;/strong&gt; &lt;code class=&quot;language-text&quot;&gt;visibility: hidden;&lt;/code&gt; 은 보이지는 않아도 공간을 차지하기 때문에 &lt;code class=&quot;language-text&quot;&gt;렌더링 트리&lt;/code&gt;에 &lt;strong&gt;포함됩니다!&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;레이아웃-계산하기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83-%EA%B3%84%EC%82%B0%ED%95%98%EA%B8%B0&quot; aria-label=&quot;레이아웃 계산하기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;레이아웃 계산하기&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;렌더링 트리&lt;/code&gt;가 완성되었으니 이제 공간을 가늠해볼 차례입니다. 그림으로 치면 밑그림 정도죠.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 616px; &quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 45.666666666666664%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsSAAALEgHS3X78AAABXUlEQVQoz62SaU/CQBCG+///iDEmxi8eGI/IBw4RGA6XUii9KPQGBFqOTsdtQSUaNTG+ybOzmew82WxW6ABcBo7ddsejOgdSnJHJGYHnumBZFoidDjDGwDRNsG0brOEQxocYRp2ff25Vq2fCAJoWRluae1MKJ3OKpnPavCwoiSJKs1gsKAgCCsOQNptN1qM4Jkr3b6zXWdtgbCBc3+YUVS7TQCrELbjH2uMVFp7KWJE9LHWGmIc+3pTbOJnNkc8gJklWD0mItqnQ9X0mXJyfaP3GKbHKMTaLR+TK5wTNAuVFn4o9n0r9Cd01DPKCWXaLJEm+gpiKybFtUagBaKqmUFcSUep1SR5IJKsa6VbA8bOqmg5Fq/W78LDu9zuh44jCbDrV9n2kX3Io+dT/EPJF2b1zHOMPSYe+g2e7FzLB932L/ime5ymCYRgPq9VKWS6XEv8avb+QznKHqut67hUCB6ahbfdIkgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;layout&quot;
+        title=&quot;layout&quot;
+        src=&quot;/static/a31ee7ea688ce56e1cc519201506fefb/40040/layout-viewport.png&quot;
+        srcset=&quot;/static/a31ee7ea688ce56e1cc519201506fefb/5a46d/layout-viewport.png 300w,
+/static/a31ee7ea688ce56e1cc519201506fefb/0a47e/layout-viewport.png 600w,
+/static/a31ee7ea688ce56e1cc519201506fefb/40040/layout-viewport.png 616w&quot;
+        sizes=&quot;(max-width: 616px) 100vw, 616px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;위 그림에서처럼 &lt;code class=&quot;language-text&quot;&gt;뷰포트&lt;/code&gt;를 내부에서 &lt;code class=&quot;language-text&quot;&gt;렌더링 트리&lt;/code&gt;가 가진 &lt;code class=&quot;language-text&quot;&gt;노드&lt;/code&gt;들의 위치를 계산합니다.&lt;/p&gt;
+&lt;h2 id=&quot;페인팅or-래스터화&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%ED%8E%98%EC%9D%B8%ED%8C%85or-%EB%9E%98%EC%8A%A4%ED%84%B0%ED%99%94&quot; aria-label=&quot;페인팅or 래스터화 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;페인팅(or 래스터화)&lt;/h2&gt;
+&lt;p&gt;자 모든 것이 준비되었으니 이제 그림을 그릴 일만 남았네요!&lt;/p&gt;
+&lt;div align=&quot;center&quot;&gt;
+  &lt;img src=&quot;/58863bf1b0b453857aa0a3e390eac3c6/painting.gif&quot;&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;시간이 가장 많이 걸리는 부분입니다. 이제 메인이니까요.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;그릴 그림이 얼마나 복잡하느냐, 얼마나 많으냐에 따라 시간이 천차만별입니다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;CSS&lt;/code&gt;파일의 크기가 크거나, 색이 다채롭거나, 계산해야하는 그림자 같은 게 있으면 더 길어지겠죠?&lt;/li&gt;
+&lt;li&gt;반대의 경우에는 시간이 더 빨라집니다!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;🧹정리&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%F0%9F%A7%B9%EC%A0%95%EB%A6%AC&quot; aria-label=&quot;🧹정리 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;🧹정리&lt;/h1&gt;
+&lt;p&gt;자, 마지막으로 정리를 해봅시다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;처음에 &lt;code class=&quot;language-text&quot;&gt;HTML&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;CSS&lt;/code&gt;를 받아와서 &lt;code class=&quot;language-text&quot;&gt;DOM&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;CSSOM&lt;/code&gt; 트리를 만들었습니다.&lt;/li&gt;
+&lt;li&gt;이렇게 만들어진 &lt;code class=&quot;language-text&quot;&gt;DOM&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;CSSOM&lt;/code&gt;를 합쳐 &lt;code class=&quot;language-text&quot;&gt;Render Tree&lt;/code&gt;를 만들어냅니다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Render Tree&lt;/code&gt;의 &lt;code class=&quot;language-text&quot;&gt;노드&lt;/code&gt;를 순회하며 &lt;code class=&quot;language-text&quot;&gt;뷰포트&lt;/code&gt; 내에 차지할 공간을 계산합니다.&lt;/li&gt;
+&lt;li&gt;이제 &lt;code class=&quot;language-text&quot;&gt;노드&lt;/code&gt;들을 화면에 페인트 하면 됩니다!&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;간단해보이지만 &lt;code class=&quot;language-text&quot;&gt;DOM&lt;/code&gt;이나 &lt;code class=&quot;language-text&quot;&gt;CSSOM&lt;/code&gt;이 수정되기라도 하면 전부 처음부터 반복해야 합니다.&lt;/p&gt;
+&lt;h2 id=&quot;이러한-과정을-전부-반복하는-건-낭비같아요-최적화-방법은-없나요&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%9D%B4%EB%9F%AC%ED%95%9C-%EA%B3%BC%EC%A0%95%EC%9D%84-%EC%A0%84%EB%B6%80-%EB%B0%98%EB%B3%B5%ED%95%98%EB%8A%94-%EA%B1%B4-%EB%82%AD%EB%B9%84%EA%B0%99%EC%95%84%EC%9A%94-%EC%B5%9C%EC%A0%81%ED%99%94-%EB%B0%A9%EB%B2%95%EC%9D%80-%EC%97%86%EB%82%98%EC%9A%94&quot; aria-label=&quot;이러한 과정을 전부 반복하는 건 낭비같아요 최적화 방법은 없나요 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;❓이러한 과정을 전부 반복하는 건 낭비같아요. 최적화 방법은 없나요?&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path&quot;&gt;주요 렌더링 최적화 작업&lt;/a&gt;이라는 게 있으니 찾아보시면 도움이 될 겁니다!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;어때요 참 쉽죠?&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;참고자료&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%B0%B8%EA%B3%A0%EC%9E%90%EB%A3%8C&quot; aria-label=&quot;참고자료 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;📚참고자료&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://developers.google.com/web/fundamentals/performance/critical-rendering-path/constructing-the-object-model&quot;&gt;Object-Model 생성&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction&quot;&gt;렌더링 트리, 레이아웃, 페인트&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[about]]></title><description><![CDATA[# Caesiumy insta
 facebook
 blog
 followers Steadiness makes an Icon🌠 🛴A passionate and patient Front-end Engineer. 😅Unfortunately, I’m on a…]]></description><link>https://caesiumy.github.io/resume-en/</link><guid isPermaLink="false">https://caesiumy.github.io/resume-en/</guid><pubDate>Thu, 03 Jun 2021 23:20:13 GMT</pubDate><content:encoded>&lt;h1 id=&quot;-caesiumy&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#-caesiumy&quot; aria-label=&quot; caesiumy permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;# Caesiumy&lt;/h1&gt;
