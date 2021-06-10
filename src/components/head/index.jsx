@@ -11,13 +11,17 @@ export function Head({ description, lang, meta, keywords, title, thumbnail }) {
         const metaDescription =
           description || data.site.siteMetadata.description
         const metaThumbnail = thumbnail || data.site.siteMetadata.thumbnail
+        const metaTitle =
+          title === data.site.siteMetadata.title
+            ? null
+            : `%s | ${data.site.siteMetadata.title}`
         return (
           <Helmet
             htmlAttributes={{
               lang,
             }}
             title={title}
-            titleTemplate={`%s | ${data.site.siteMetadata.title}`}
+            titleTemplate={metaTitle}
             meta={[
               {
                 name: `description`,
