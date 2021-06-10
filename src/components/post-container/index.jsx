@@ -1,8 +1,7 @@
 import React from 'react'
 
+import './index.scss'
+
 export const PostContainer = ({ html }) => (
-  <div
-    style={{ wordBreak: 'keep-all' }}
-    dangerouslySetInnerHTML={{ __html: html }}
-  />
+  <div className="post-container" dangerouslySetInnerHTML={{ __html: html }} />
 )

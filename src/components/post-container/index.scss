@@ -1,0 +1,17 @@
+.post-container {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  letter-spacing: -0.004em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  p {
+    margin: 1rem 0;
+  }
+}

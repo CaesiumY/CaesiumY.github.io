@@ -36,7 +36,7 @@ GitHubTheme.overrideThemeStyles = () => {
     },
 
     li: {
-      marginBottom: '2px',
+      margin: '18px 0',
     },
   }
 }
