@@ -1,4 +1,163 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Caesiumy's BLOG]]></title><description><![CDATA[Caesiumy's Dev Blog]]></description><link>https://caesiumy.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 19 Jun 2021 13:45:50 GMT</lastBuildDate><item><title><![CDATA[[JS] 알아두면 쓸데있는 🔭Intersection Observer]]></title><description><![CDATA[0. Intersection Observer 를 해석한다면 의 역할을 알기 전에 뜻을 먼저 알고 가보는 건 어떠실까요? Intersection은 Inter + section 으로, ‘교차로’, ‘서로 만나는 지점’ 을 뜻합니다. Observer…]]></description><link>https://caesiumy.github.io/javascript/21-06-19-intersection-observer/</link><guid isPermaLink="false">https://caesiumy.github.io/javascript/21-06-19-intersection-observer/</guid><pubDate>Sat, 19 Jun 2021 20:06:04 GMT</pubDate><content:encoded>&lt;p&gt;&lt;span
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Caesiumy's BLOG]]></title><description><![CDATA[Caesiumy's Dev Blog]]></description><link>https://caesiumy.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 06 Aug 2021 16:36:59 GMT</lastBuildDate><item><title><![CDATA[📘[개발 서적] 클린 코드를 읽고]]></title><description><![CDATA[…]]></description><link>https://caesiumy.github.io/review/clean-code-review/</link><guid isPermaLink="false">https://caesiumy.github.io/review/clean-code-review/</guid><pubDate>Thu, 05 Aug 2021 23:08:23 GMT</pubDate><content:encoded>&lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 1200px; margin: 36px auto;&quot;&gt;
+      &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 118.66666666666667%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAYABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAECBf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIQAxAAAAHurIopkNA//8QAGBABAAMBAAAAAAAAAAAAAAAAAAERQUL/2gAIAQEAAQUC20OkNpD/xAAUEQEAAAAAAAAAAAAAAAAAAAAg/9oACAEDAQE/AR//xAAUEQEAAAAAAAAAAAAAAAAAAAAg/9oACAECAQE/AR//xAAUEAEAAAAAAAAAAAAAAAAAAAAw/9oACAEBAAY/Ah//xAAbEAADAAMBAQAAAAAAAAAAAAAAAREhMXEQYf/aAAgBAQABPyF3ieGqpNvgzQzwNjBH/9oADAMBAAIAAwAAABCbzzz/xAAUEQEAAAAAAAAAAAAAAAAAAAAg/9oACAEDAQE/EB//xAAUEQEAAAAAAAAAAAAAAAAAAAAg/9oACAECAQE/EB//xAAcEAEAAgMBAQEAAAAAAAAAAAABABEhMUGBUWH/2gAIAQEAAT8QRdPh24s+RDRS8lvww324jNo+TTUMi4pEcPYER3P/2Q==&apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
+  &lt;img class=&quot;gatsby-resp-image-image&quot; alt=&quot;book&quot; title=&quot;book&quot; src=&quot;/static/7222e95f3717f77d5f3ed287711f1d64/e5166/book.jpg&quot; srcset=&quot;/static/7222e95f3717f77d5f3ed287711f1d64/f93b5/book.jpg 300w,
+/static/7222e95f3717f77d5f3ed287711f1d64/b4294/book.jpg 600w,
+/static/7222e95f3717f77d5f3ed287711f1d64/e5166/book.jpg 1200w,
+/static/7222e95f3717f77d5f3ed287711f1d64/d9c39/book.jpg 1800w,
+/static/7222e95f3717f77d5f3ed287711f1d64/4d3af/book.jpg 2362w&quot; sizes=&quot;(max-width: 1200px) 100vw, 1200px&quot; style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot; loading=&quot;lazy&quot;&gt;
+    &lt;/span&gt;
+&lt;h1 id=&quot;1-클린-코드란&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#1-%ED%81%B4%EB%A6%B0-%EC%BD%94%EB%93%9C%EB%9E%80&quot; aria-label=&quot;1 클린 코드란 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1. 클린 코드란&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;클린 코드 (Clean Code)&lt;/code&gt; 란 무엇일까? 영어 해석 그대로 &lt;strong&gt;깔끔한 코드&lt;/strong&gt;, &lt;strong&gt;깨끗한 코드&lt;/strong&gt; 라는 뜻이다. 그럼 깔끔한 코드란 무엇일까? 이 질문에 자신만의 답이 나오지 않는다면 이 책을 꼭 읽어봐야 한다. 자신만의 답이 나오더라도 읽어봐야 한다.&lt;/p&gt;
+&lt;p&gt;분명 자신이 쓴 코드인데 며칠이 지나면 알아보지 못해서 이 파일 저 파일 옮겨다니며 고생했던 경험이라면 개발자인 이상 모두가 가진 경험일 것이다.&lt;/p&gt;
+&lt;p&gt;또한 함수의 로직을 짜며 옆에 주석으로 주절주절 설명을 써놓은 경험도 있을 것이다.&lt;/p&gt;
+&lt;p&gt;한참을 거슬러 올라가 코딩 뉴비 시절일 때는 변수와 함수의 식별자명을 &lt;code class=&quot;language-text&quot;&gt;a&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;b&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;aa&lt;/code&gt; 이런 식으로 지을 때도 있을 것이다. &lt;del&gt;아직도 이러면 안 된다!!&lt;/del&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;클린 코드는 이러한 경험을 줄여줌으로써 더 좋은 가독성과 빠른 이해를 돕는다.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;2-클린-코드를-읽게-된-계기&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#2-%ED%81%B4%EB%A6%B0-%EC%BD%94%EB%93%9C%EB%A5%BC-%EC%9D%BD%EA%B2%8C-%EB%90%9C-%EA%B3%84%EA%B8%B0&quot; aria-label=&quot;2 클린 코드를 읽게 된 계기 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2. 클린 코드를 읽게 된 계기&lt;/h1&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 1127px; margin: 36px auto;&quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 38.33333333333333%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAIAAAB2/0i6AAAACXBIWXMAAA7DAAAOwwHHb6hkAAABVklEQVQY002RbU/CMBSFS7d7uzdHQGDCZA4XgRBQHDJwzIgxQfbBEQO+JX7E//8XvCvTeHJybpv2aW9TJlQQQEahCWHoSDZ1PDJyl020DCQJsigyL4UYd2zesBWnXDqxWdNWvCr6dWjX4Ixch2aFAKGoWOJYUsjAFfiDe4/z9mzYGvf68SRcxv5ln3cdEXbEwBXDUwwcrNk4cOHah34Lxh641fyUvAVk3/v9Jtss75fpev359j69i9m0DV9z9tBlr6FyG2B8QVN4CeFpCB8RzANkJdQkHMdxmqZhGEZRFATBaDRy2q4XdEbjq/HNxDv3uakJ28y7JMDQDljR9m63y7JstVpR0kFJksym02SR7LbbzXO2iBdHpomqfCYFgCy/sKZpnHMh30Cp67plWUKKxrRKKUnAA/gPZ0D/JOizCqlScnMheRuCV4PAAe8YWhVolKFqgW38AGD3KWCzejlVAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;네이버 오픈 클래스&quot;
+        title=&quot;네이버 오픈 클래스&quot;
+        src=&quot;/static/174d1562517f098231753585c328d368/dcccd/naver_open_class.png&quot;
+        srcset=&quot;/static/174d1562517f098231753585c328d368/5a46d/naver_open_class.png 300w,
+/static/174d1562517f098231753585c328d368/0a47e/naver_open_class.png 600w,
+/static/174d1562517f098231753585c328d368/dcccd/naver_open_class.png 1127w&quot;
+        sizes=&quot;(max-width: 1127px) 100vw, 1127px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;작년 20년도에 진행했던 &lt;code class=&quot;language-text&quot;&gt;네이버 개발자 공채 오픈 클래스&lt;/code&gt; 에서 이런 질문이 올라왔었다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;개발자로서 꼭 읽어야 하는 책이 있다면?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;기억나는 답변이 2개인데 그 중 하나는&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;학부 시절에 배운 전공 서적을 다시 읽어보세요.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;나머지 하나는&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;클린 코드&lt;/strong&gt;를 꼭 읽어보세요.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;평소에도 깨끗한 코드, 깔끔한 아키텍처에 관심이 많았던 나는 그날 곧바로 클린 코드를 주문했다.&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;전공 서적은 이미 후배들 다 줘버렸다…&lt;/del&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;자바 개발자가 아니라 저자가 경고한대로 챕터2가 너무 어렵긴 했다… 다른 언어 개발자라면(나처럼) 2장은 빠르게 훑어도 될 거 같다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;3-🧹깨끗한-코드&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#3-%F0%9F%A7%B9%EA%B9%A8%EB%81%97%ED%95%9C-%EC%BD%94%EB%93%9C&quot; aria-label=&quot;3 🧹깨끗한 코드 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;3. 🧹깨끗한 코드&lt;/h1&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 597px; margin: 36px auto;&quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 42.66666666666667%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAIAAAC9o5sfAAAACXBIWXMAAAsSAAALEgHS3X78AAABqklEQVQozzWRj27aMBDGeY9pS0li+2IbJ/6TYsdOQkICBUbZaIW6TpX2/k8xM63S6XQ66fvu0+8WV1B7EDesD0z+vjy/XU7jYWaay8dM2VTWjNdKsJSqsrJGy6JcYQypazSBdCEAtUDPVO6cO2erSbYr74WTdsjdmNVtJRqrRMZsLVvvam4kiWLrNBTZIk64SDVBpmvKp30z77ed6zvb92E79HpoWRuqEMaN/36c5t3Q9g1CiQ+PZUUX8XoB2QB8AqE5ZbVkalUxoqSsykJxkHVppKi14AIoRZRhTJaNN/8vI1gmxQMn2ZoWp7fX44/Tz912avadd0P0kNwKrhjk6CHKMEowSbURd3FcSsCG5BynEsjb9fn1/RamdheqTRN61zll1xWRqvZNG4KhFS+K5Wb026lbGCBb4HsTemV+2f64tnaex8thPEVgxoxz6Btb5cI3ei2NZjx4q4n/jL2MwKbb1Y/d5fx0fTlrhq1TADjPE5R/jXgQZBh/Qzi5x/7XZYQRX0XIktL85Xra+HWr5Mef90gyWX6BIo3eJBak9/oc4jJHSb/x3td/AfIEa0p7dA1XAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;프리티어가 필요해&quot;
+        title=&quot;프리티어가 필요해&quot;
+        src=&quot;/static/2d14c5b044ac03d8e8dec445480ab3f2/17602/need_prettier.png&quot;
+        srcset=&quot;/static/2d14c5b044ac03d8e8dec445480ab3f2/5a46d/need_prettier.png 300w,
+/static/2d14c5b044ac03d8e8dec445480ab3f2/17602/need_prettier.png 597w&quot;
+        sizes=&quot;(max-width: 597px) 100vw, 597px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;사실 많은 사람들이 클린 코드를 정리해두었고, 공교롭게도 나는 중복을 싫어하는 개발자라 그들과 같은 설명이나 해석을 하고 싶은 맘이 없다.&lt;/p&gt;
+&lt;p&gt;그래서 클린 코드의 마지막 챕터 &lt;code class=&quot;language-text&quot;&gt;휴리스틱&lt;/code&gt;처럼 간단명료하게 이것만큼은 지켜줬으면 하는 규칙들을 나열해 보기로 했다.&lt;/p&gt;
+&lt;h2 id=&quot;식별자의-이름은-중요하다&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%8B%9D%EB%B3%84%EC%9E%90%EC%9D%98-%EC%9D%B4%EB%A6%84%EC%9D%80-%EC%A4%91%EC%9A%94%ED%95%98%EB%8B%A4&quot; aria-label=&quot;식별자의 이름은 중요하다 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;식별자의 이름은 중요하다&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;많은 개발자들이 순간을 귀찮아해서 변수나 함수명 같은 식별자를 단순하고도 짧게 지어버린다. 이건 기피해야할 행동이다.&lt;/li&gt;
+&lt;li&gt;게임 캐릭터 이름은 한참 생각하면서 식별자의 이름을 대충 짓는 건 있어서는 안 된다.
+식별자의 이름을 숙고해서 짓자. 실제로 많은 숙련된 개발자들은 변수명을 짓는데 많은 고민을 한다고 한다.&lt;/li&gt;
+&lt;li&gt;만약 식별자의 이름이 너무 길어지거나, 제대로 목표를 가지고 있지 않다면 그 변수 또는 함수는 대체로 잘못 설계되었을 가능성이 크다는 것을 내포하고 있는 셈이다.&lt;/li&gt;
+&lt;li&gt;주석을 달아야만 설명이 되는 이름도 수정해야한다. 이름과 로직 그 자체가 설명이 되어야 한다.&lt;/li&gt;
+&lt;li&gt;조직 내 컨벤션이 있다면 꼭 지키도록 하자.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;camelCase&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;PascalCase&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;snake_case&lt;/code&gt; 등의 각 언어별 기법을 잘 지키자.&lt;/li&gt;
+&lt;li&gt;나중에 이 식별자를 찾기 용이하게 지어야 한다.&lt;/li&gt;
+&lt;li&gt;자신만이 아는 숫자나 상수는 반드시 변수로 만들어 이름을 지어주자.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;로직으로-설명되는-함수&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%A1%9C%EC%A7%81%EC%9C%BC%EB%A1%9C-%EC%84%A4%EB%AA%85%EB%90%98%EB%8A%94-%ED%95%A8%EC%88%98&quot; aria-label=&quot;로직으로 설명되는 함수 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;로직으로 설명되는 함수&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;단일 책임 원칙&lt;/code&gt;을 기억하자. 함수의 이름이 복잡해진다면 원칙을 깨고 있는 것이다.&lt;/li&gt;
+&lt;li&gt;매개 변수는 적을 수록 좋다.&lt;/li&gt;
+&lt;li&gt;매개 변수로 &lt;code class=&quot;language-text&quot;&gt;boolean&lt;/code&gt; 타입을 넘겨야 한다면 잘못된 로직을 가지고 있을 가능성이 크다. 함수를 쪼개라.&lt;/li&gt;
+&lt;li&gt;최대한 잘게 쪼개고, 이해하기 쉬운 이름을 붙여라.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Call by Reference&lt;/code&gt;를 조심하고, 부수 효과를 피해라.&lt;/li&gt;
+&lt;li&gt;중복을 없애라.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;코드는-주석을-이긴다&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%BD%94%EB%93%9C%EB%8A%94-%EC%A3%BC%EC%84%9D%EC%9D%84-%EC%9D%B4%EA%B8%B4%EB%8B%A4&quot; aria-label=&quot;코드는 주석을 이긴다 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;코드는 주석을 이긴다&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;주석이 꼭 필요한 상황을 만들지 마라.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Comment&lt;/code&gt;는 코멘트(주석)일뿐 코드가 아니다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;읽어-내려가는-형식&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%9D%BD%EC%96%B4-%EB%82%B4%EB%A0%A4%EA%B0%80%EB%8A%94-%ED%98%95%EC%8B%9D&quot; aria-label=&quot;읽어 내려가는 형식 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;읽어 내려가는 형식&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;위에서부터 자연스럽게 읽으며 이해되는 코드를 짜야 한다.&lt;/li&gt;
+&lt;li&gt;파트를 나누는 적절한 개행은 가독성을 크게 높인다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;피할-수-없는-오류-처리&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%ED%94%BC%ED%95%A0-%EC%88%98-%EC%97%86%EB%8A%94-%EC%98%A4%EB%A5%98-%EC%B2%98%EB%A6%AC&quot; aria-label=&quot;피할 수 없는 오류 처리 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;피할 수 없는 오류 처리&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;null&lt;/code&gt;을 반환하지도 전달하지도 마라.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;try-catch&lt;/code&gt; 문과 친해져라.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;기타&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B8%B0%ED%83%80&quot; aria-label=&quot;기타 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;기타&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;중첩이 깊어진다면 문제가 커지고 있는 것이다.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;테스트&lt;/code&gt;를 진심으로 생각해라.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;나만의-규칙&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%82%98%EB%A7%8C%EC%9D%98-%EA%B7%9C%EC%B9%99&quot; aria-label=&quot;나만의 규칙 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;나만의 규칙&lt;/h2&gt;
+&lt;p&gt;기억나는 중요한 규칙들은 위와 같다. 변수명과 함수 파트가 길어보이는 건 착각이다. 모두 중요하다. 단지 내가 저 두 개에 더 정성을 쏟아서 그렇다.&lt;/p&gt;
+&lt;p&gt;나도 나름 나만의 규칙을 가지고 있었다. 함수명과 컴포넌트명은 두 단어 이상으로, 숫자는 꼭 상수로 선언하여 이름을 붙여주기, 변수는 변수끼리 함수는 함수끼리 묶어주기, 매개변수로 &lt;code class=&quot;language-text&quot;&gt;boolean&lt;/code&gt;을 전해주지 않기, 주석 피하기 등등&lt;/p&gt;
+&lt;p&gt;이 책을 보고 바뀌게 된 나만의 규칙도 있다. 예를 들어 &lt;code class=&quot;language-text&quot;&gt;Person&lt;/code&gt;의 &lt;code class=&quot;language-text&quot;&gt;interface&lt;/code&gt;를 작성한다고 할 때… &lt;code class=&quot;language-text&quot;&gt;IPerson&lt;/code&gt; 이런 식으로 예전에 많이 지었었다. 허나 책에 따르면 안티패턴이라고 한다. 다른 것들도 있다. &lt;code class=&quot;language-text&quot;&gt;LayoutComponent&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;CarClass&lt;/code&gt; 처럼 뒤에 성격을 붙여주었는데, 이것또한 안티패턴이었다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;이제부터 고쳐나가면 된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;4-에필로그&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#4-%EC%97%90%ED%95%84%EB%A1%9C%EA%B7%B8&quot; aria-label=&quot;4 에필로그 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;4. 에필로그&lt;/h1&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 598px; margin: 36px auto;&quot;
+    &gt;
+      &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 46%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAJABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMBBP/EABUBAQEAAAAAAAAAAAAAAAAAAAAC/9oADAMBAAIQAxAAAAHhlLakD//EABkQAAEFAAAAAAAAAAAAAAAAAAIAARESIP/aAAgBAQABBQIjsnjP/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAFxABAAMAAAAAAAAAAAAAAAAAASAhcf/aAAgBAQAGPwK1dl//xAAZEAACAwEAAAAAAAAAAAAAAAABEQAgITH/2gAIAQEAAT8hMufxoC4VX//aAAwDAQACAAMAAAAQJw//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/ED//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/ED//xAAbEAACAQUAAAAAAAAAAAAAAAABEQAgMVFxof/aAAgBAQABPxBCerkrMRMLRL7T/9k=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;청소를 미루면&quot;
+        title=&quot;청소를 미루면&quot;
+        src=&quot;/static/afb7a44cf71899d7776e9d641a60f360/fdf7c/house_on_fire.jpg&quot;
+        srcset=&quot;/static/afb7a44cf71899d7776e9d641a60f360/f93b5/house_on_fire.jpg 300w,
+/static/afb7a44cf71899d7776e9d641a60f360/fdf7c/house_on_fire.jpg 598w&quot;
+        sizes=&quot;(max-width: 598px) 100vw, 598px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;정말 개발자 모두가 읽어봐야 할 책이라는 생각이 든다. 나는 동아리를 운영하며 많은 클린하지 않은 코드들을 보았었다. 이러한 코드들은 유지보수를 힘들게 할 뿐더러, 오류를 일으키는 잠재적 주범이다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;학생들의 오류를 잡아주며 무슨 의도로 이렇게 짰는지 많이 물어보곤 했다…&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;이 책에서 빠지지 않는 명언이 있다. 바로&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;신은 디테일함에 깃든다.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;인데, 어떤 클린 코드 관련 글을 보든 빠지지 않는 격언이다.&lt;/p&gt;
+&lt;p&gt;여기에 &lt;code class=&quot;language-text&quot;&gt;리팩토링&lt;/code&gt;의 저자의 말도 인용하고 싶다.&lt;/p&gt;
+&lt;p&gt;기계가 이해할수 있는 코드는 바보라도 작성할수 있지만, &lt;strong&gt;인간이 이해할수 있는 코드는 실력있는 프로그래머만이 작성할수 있다.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;우리는 &lt;strong&gt;‘제 컴퓨터에서는 돌아가는데요’&lt;/strong&gt; 라고 변명하는 개발자를 어떤 시선으로 바라보는지 알고 있다. 부디 자기 자신을 &lt;strong&gt;‘제 머리로는 이해되는데요’&lt;/strong&gt; 라고 변명하는 사람으로 만들지 말자.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;개발자를 위한 교양 서적이 아니다. 작정하고 공략해야하는 책이다!&lt;/p&gt;
+&lt;/blockquote&gt;</content:encoded></item><item><title><![CDATA[[JS] 알아두면 쓸데있는 🔭Intersection Observer]]></title><description><![CDATA[0. Intersection Observer 를 해석한다면 의 역할을 알기 전에 뜻을 먼저 알고 가보는 건 어떠실까요? Intersection은 Inter + section 으로, ‘교차로’, ‘서로 만나는 지점’ 을 뜻합니다. Observer…]]></description><link>https://caesiumy.github.io/javascript/21-06-19-intersection-observer/</link><guid isPermaLink="false">https://caesiumy.github.io/javascript/21-06-19-intersection-observer/</guid><pubDate>Sat, 19 Jun 2021 20:06:04 GMT</pubDate><content:encoded>&lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
       style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 1103px; margin: 36px auto;&quot;
     &gt;
