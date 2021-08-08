@@ -8,6 +8,7 @@ module.exports = {
     github: `caesiumy`, // Your GitHub account
     facebook: `mn0658`, // Your Facebook account
     instagram: `caesium_y`,
+    linkedin: `chang-sik-yoon-120757217`,
   },
   thumbnail: `https://caesiumy.github.io/og_image.png`, // Add your thumbnail
   icon: `content/assets/felog.png`, // Add your favicon
