@@ -22,7 +22,7 @@ export const ThumbnailItem = ({ node }) => (
         </div>
       )}
 
-      <p className="thumbnail-category">{node.frontmatter.category || ''} </p>
+      <p className="thumbnail-category">{node.frontmatter.category || ''}</p>
       <h3>{node.frontmatter.title || node.fields.slug}</h3>
       <p>{node.frontmatter.date || ''}</p>
       <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
