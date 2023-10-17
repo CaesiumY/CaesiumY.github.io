@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="ko" className={`${pretendardFont.variable}`}>
       <body>
         <Header />
-        <main>{children}</main>
+        <main className="h-[300vh]">{children}</main>
       </body>
     </html>
   );
