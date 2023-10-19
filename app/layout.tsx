@@ -1,7 +1,7 @@
-import { pretendardFont } from "@/style/fonts/font-pretendard";
+import Header from "@/components/header/Header";
+import { pretendardFont } from "@/lib/fonts/font-pretendard";
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/header/Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
