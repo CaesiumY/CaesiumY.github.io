@@ -1,5 +1,6 @@
-import { Search } from "lucide-react";
+import { Command, Search } from "lucide-react";
 import Link from "next/link";
+import { CommandMenu } from "./command-menu";
 
 const NavLinks = [
   {
@@ -14,7 +15,7 @@ const NavLinks = [
 
 const Header = () => {
   return (
-    <header className="sticky top-0  backdrop-blur-md">
+    <header className="backdrop-blur-md">
       <div className="navbar mx-auto max-w-7xl p-4">
         <div className="navbar-start">
           <Link href={"/"} className="btn btn-square btn-ghost">
@@ -33,11 +34,7 @@ const Header = () => {
                 </li>
               ))}
             </ul>
-            <button className="btn flex flex-row gap-2 active:scale-90">
-              <Search size={16} />
-              <p className="font-medium">Search</p>
-              <kbd className="kbd kbd-sm bg-white">⌘ K</kbd>
-            </button>
+            <CommandMenu />
           </nav>
         </div>
       </div>
