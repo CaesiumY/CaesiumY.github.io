@@ -1,4 +1,3 @@
-import { Command, Search } from "lucide-react";
 import Link from "next/link";
 import { CommandMenu } from "./command-menu";
 

@@ -35,7 +35,11 @@ interface ModalBackdropProps extends HTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 }
 
-const ModalClose = ({ children, className, ...props }: ModalBackdropProps) => {
+const ModalBackdrop = ({
+  children,
+  className,
+  ...props
+}: ModalBackdropProps) => {
   return (
     <form method="dialog" className="modal-backdrop">
       <button className={cn(className)} {...props}>
@@ -45,4 +49,4 @@ const ModalClose = ({ children, className, ...props }: ModalBackdropProps) => {
   );
 };
 
-export { Modal, ModalContent, ModalClose };
+export { Modal, ModalContent, ModalBackdrop };
