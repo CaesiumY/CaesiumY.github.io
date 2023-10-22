@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { CommandMenu } from "./command-menu";
+import { cookies } from "next/headers";
+import { getOS } from "@/lib/utils";
 
 const NavLinks = [
   {
@@ -13,6 +15,11 @@ const NavLinks = [
 ];
 
 const Header = () => {
+  const cookieStore = cookies();
+  const userOS = cookieStore.get("os")?.value as
+    | ReturnType<typeof getOS>
+    | undefined;
+
   return (
     <header className="backdrop-blur-md">
       <div className="navbar mx-auto max-w-7xl p-4">
@@ -33,7 +40,7 @@ const Header = () => {
                 </li>
               ))}
             </ul>
-            <CommandMenu />
+            <CommandMenu userOS={userOS} />
           </nav>
         </div>
       </div>

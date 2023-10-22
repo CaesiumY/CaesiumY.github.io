@@ -1,11 +1,15 @@
 "use client";
 
-import { Search } from "lucide-react";
-import { Modal, ModalBackdrop, ModalContent } from "../ui/modal";
-import { useEffect, useState } from "react";
 import { getOS } from "@/lib/utils";
+import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Modal, ModalBackdrop, ModalContent } from "../ui/modal";
 
-const CommandMenu = () => {
+interface CommandMenuProps {
+  userOS?: ReturnType<typeof getOS>;
+}
+
+const CommandMenu = ({ userOS }: CommandMenuProps) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -29,7 +33,7 @@ const CommandMenu = () => {
 
   return (
     <>
-      <CommandMenuTrigger onClick={() => setOpen(true)} />
+      <CommandMenuTrigger onClick={() => setOpen(true)} userOS={userOS} />
 
       <Modal open={open} className="h-screen">
         <ModalContent>hello</ModalContent>
@@ -41,26 +45,24 @@ const CommandMenu = () => {
 
 interface CommandMenuTriggerProps {
   onClick: () => void;
+  userOS?: ReturnType<typeof getOS>;
 }
 
-const CommandMenuTrigger = ({ onClick }: CommandMenuTriggerProps) => {
-  const [commandShortcut, setCommandShortcut] = useState("");
+const CommandMenuTrigger = ({ onClick, userOS }: CommandMenuTriggerProps) => {
+  const getCommandShortcut = () => {
+    const os = getOS(userOS);
 
-  useEffect(() => {
-    const userOS = getOS();
-
-    switch (userOS) {
+    switch (os) {
       case "mac":
-        setCommandShortcut("⌘ K");
-        break;
+        return "⌘ K";
       case "windows":
-        setCommandShortcut("Ctrl K");
-        break;
+        return "Ctrl K";
       default:
-        setCommandShortcut("");
-        break;
+        return "";
     }
-  }, []);
+  };
+
+  const commandShortcut = getCommandShortcut();
 
   return (
     <button

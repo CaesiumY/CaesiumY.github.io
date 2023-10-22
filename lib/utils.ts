@@ -5,10 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const getOS = () => {
-  const { userAgent } = navigator;
-
-  if (/android/i.test(userAgent)) return "android";
+export const getOS = (userAgent = navigator.userAgent) => {
+  if (/android/i.test(userAgent)) return "Android";
   if (/iPad|iPhone|iPod/.test(userAgent)) return "ios";
   if (/Mac/.test(userAgent)) return "mac";
   if (/Windows/.test(userAgent)) return "windows";
