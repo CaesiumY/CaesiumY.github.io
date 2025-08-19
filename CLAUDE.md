@@ -12,7 +12,7 @@ Caesiumy's personal blog website, currently migrating from Gatsby to Astro.
 - **Path**: `./astro/`  
 - **Branch**: `version-astro-1.0`
 - **Framework**: Astro v5 (SSG)
-- **Content**: Markdown/MDX blog & about pages
+- **Content**: Markdown/MDX blog & about pages (in `astro/content/`)
 
 ### Legacy Version (Gatsby)  
 - **Path**: `./gatsby-legacy/`
@@ -24,10 +24,10 @@ Caesiumy's personal blog website, currently migrating from Gatsby to Astro.
 ### Astro (Current Active)
 ```bash
 cd astro/
-npm install          # Install dependencies
-npm run dev          # Dev server (localhost:4321)
-npm run build        # Production build
-npm run preview      # Preview build
+pnpm install          # Install dependencies
+pnpm run dev          # Dev server (localhost:4321)
+pnpm run build        # Production build
+pnpm run preview      # Preview build
 ```
 
 ### Gatsby Legacy
@@ -44,8 +44,8 @@ npm run deploy       # Deploy to GitHub Pages
 ## Content Management
 
 ### Astro Content Collections
-- **Blog**: `astro/src/content/blog/` (Markdown/MDX)
-- **About**: `astro/src/content/about/` (Markdown/MDX)
+- **Blog**: `astro/content/blog/` (Markdown/MDX)
+- **About**: `astro/content/about/` (Markdown/MDX)
 - **Schema**: Type definitions in `astro/src/content.config.ts`
 
 ### Frontmatter Structure
@@ -60,10 +60,25 @@ heroImage: "/image.jpg"   # Optional
 ## Architecture
 
 ### Astro Structure
-- **Content Collections**: Type-safe content management (`blog`, `about`)
-- **Components**: `.astro` file-based components
+- **Content Collections**: Type-safe content management (`blog`, `about`) in `content/`
+- **Components**: `.astro` file-based components in `src/components/`
 - **Layouts**: Page templates in `src/layouts/`
 - **Routing**: File-system based routing (`src/pages/`)
+- **Configuration**: Content schema in `src/content.config.ts`
+
+**Directory Structure**:
+```
+astro/
+├── content/           # Content files (separate from code)
+│   ├── blog/         # Blog posts (Markdown/MDX)
+│   └── about/        # About pages (Markdown/MDX)
+├── src/              # Source code only
+│   ├── components/   # Reusable components
+│   ├── layouts/      # Page templates
+│   ├── pages/        # Route-based pages
+│   └── content.config.ts  # Content schema definitions
+└── public/           # Static assets
+```
 
 ### Legacy Gatsby Structure  
 - **GraphQL**: Data query layer
@@ -98,5 +113,6 @@ Gatsby → Astro migration in progress:
 - ✅ Basic blog structure complete
 - ✅ Content Collections configured
 - ✅ About page structure created
+- ✅ Content directory restructured (moved outside src/)
 - 🔄 Content migration ongoing
 - 🔄 Design/styling in progress
