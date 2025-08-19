@@ -1,12 +1,12 @@
 ---
 import { getCollection, render } from "astro:content";
-import PostLayout from '../layouts/BlogPost.astro';
+import ArticleLayout from '../layouts/ArticleLayout.astro';
 
 const abouts = await getCollection('about');
 const about = abouts[0];
 const { Content } = await render(about);
 ---
 
-<PostLayout {...about.data}>
+<ArticleLayout {...about.data}>
 	<Content />
-</PostLayout>
+</ArticleLayout>

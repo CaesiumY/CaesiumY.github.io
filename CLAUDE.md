@@ -25,9 +25,9 @@ Caesiumy's personal blog website, currently migrating from Gatsby to Astro.
 ```bash
 cd astro/
 pnpm install          # Install dependencies
-pnpm run dev          # Dev server (localhost:4321)
-pnpm run build        # Production build
-pnpm run preview      # Preview build
+pnpm dev          # Dev server (localhost:4321)
+pnpm build        # Production build
+pnpm preview      # Preview build
 ```
 
 ### Gatsby Legacy
