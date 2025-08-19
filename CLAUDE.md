@@ -66,6 +66,12 @@ heroImage: "/image.jpg"   # Optional
 - **Routing**: File-system based routing (`src/pages/`)
 - **Configuration**: Content schema in `src/content.config.ts`
 
+### Frontend Development Guidelines
+- **Design Guidelines**: `astro/docs/frontend-design-guideline.md`
+  - **When to use**: Follow when creating/refactoring frontend components, hooks, or UI logic
+  - **Key areas**: Readability (naming, abstraction), Predictability (return types), Cohesion (feature organization), Coupling (state management)
+  - **Apply for**: Component abstractions, form validation, state hooks, conditional rendering, magic numbers
+
 **Directory Structure**:
 ```
 astro/
