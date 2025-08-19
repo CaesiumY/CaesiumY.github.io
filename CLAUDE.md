@@ -31,15 +31,7 @@ pnpm preview      # Preview build
 ```
 
 ### Gatsby Legacy
-```bash
-cd gatsby-legacy/
-npm install
-npm run dev          # Dev server
-npm run build        # Production build
-npm run lint         # Run ESLint
-npm run format       # Prettier formatting
-npm run deploy       # Deploy to GitHub Pages
-```
+
 
 ## Content Management
 

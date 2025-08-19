@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
-import ArticleLayout from '../layouts/ArticleLayout.astro';
+import ArticleLayout from '../domains/blog/layouts/ArticleLayout.astro';
 
 const abouts = await getCollection('about');
 const about = abouts[0];
