@@ -48,8 +48,11 @@ const posts = (await getCollection('blog')).sort(
 				font-size: 2.369rem;
 			}
 			ul li img {
-				margin-bottom: 0.5rem;
+				width: 100%;
+				aspect-ratio: 2 / 1;
+				object-fit: cover;
 				border-radius: 12px;
+				margin-bottom: 0.5rem;
 			}
 			ul li a {
 				display: block;
