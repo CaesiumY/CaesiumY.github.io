@@ -122,3 +122,9 @@ Gatsby → Astro migration in progress:
 - ✅ Content directory restructured (moved outside src/)
 - 🔄 Content migration ongoing
 - 🔄 Design/styling in progress
+
+## Testing Guidelines
+
+- **Build Testing**: Use `pnpm run build` to test production builds
+- **Dev Server**: DO NOT run `pnpm run dev` during testing - only use for development when explicitly requested
+- **Preview**: Use `pnpm run preview` to test built site if needed
