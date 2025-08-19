@@ -92,10 +92,10 @@ const posts = (await getCollection('blog')).sort(
 			<section>
 				<ul>
 					{
-						posts.map((post) => (
+						posts.map((post, index) => (
 							<li>
 								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && <Image width={1020} height={510} src={post.data.heroImage} alt={post.data.title} format="webp" />}
+									{post.data.heroImage && <Image width={1020} height={510} src={post.data.heroImage} alt={post.data.title} format="webp" loading={index < 3 ? "eager" : "lazy"} />}
 									<h4 class="title">{post.data.title}</h4>
 									<p class="date">
 										<FormattedDate date={post.data.pubDate} />
