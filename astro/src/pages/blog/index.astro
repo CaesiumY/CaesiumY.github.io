@@ -7,9 +7,9 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import FormattedDate from '../../shared/components/FormattedDate.astro';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = (await getCollection('blog'))
+	.filter(post => import.meta.env.DEV || !post.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 ---
 
@@ -66,6 +66,24 @@ const posts = (await getCollection('blog')).sort(
 				margin: 0;
 				color: rgb(var(--gray));
 			}
+			.draft-badge {
+				display: inline-block;
+				background: #ff6b35;
+				color: white;
+				font-size: 0.75rem;
+				font-weight: 600;
+				padding: 0.25rem 0.5rem;
+				border-radius: 4px;
+				margin-left: 0.5rem;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+			}
+			.draft-post {
+				opacity: 0.7;
+			}
+			.draft-post img {
+				filter: grayscale(30%);
+			}
 			ul li a:hover h4,
 			ul li a:hover .date {
 				color: rgb(var(--accent));
@@ -97,10 +115,13 @@ const posts = (await getCollection('blog')).sort(
 				<ul>
 					{
 						posts.map((post, index) => (
-							<li>
+							<li class={post.data.draft ? "draft-post" : ""}>
 								<a href={`/blog/${post.id}/`}>
 									{post.data.heroImage && <Image width={1020} height={510} src={post.data.heroImage} alt={post.data.title} format="webp" loading={index < 3 ? "eager" : "lazy"} />}
-									<h4 class="title">{post.data.title}</h4>
+									<h4 class="title">
+										{post.data.title}
+										{post.data.draft && <span class="draft-badge">Draft</span>}
+									</h4>
 									<p class="date">
 										<FormattedDate date={post.data.pubDate} />
 									</p>
