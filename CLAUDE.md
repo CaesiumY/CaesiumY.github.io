@@ -8,10 +8,17 @@ Caesiumy's personal blog website, currently migrating from Gatsby to Astro.
 
 ## Project Structure
 
-### Current Active Version (Astro)
+### Current Active Version (AstroPaper)
+- **Path**: `./astro-paper/`  
+- **Branch**: `version-astro-paper`
+- **Framework**: Astro v5.12.0 (SSG) + AstroPaper v5.5.0 template
+- **Content**: Markdown blog posts (in `astro-paper/src/data/blog/`)
+
+### Migration Version (Astro)
 - **Path**: `./astro/`  
 - **Branch**: `version-astro-1.0`
 - **Framework**: Astro v5 (SSG)
+- **Status**: Migrating to AstroPaper
 - **Content**: Markdown/MDX blog & about pages (in `astro/content/`)
 
 ### Legacy Version (Gatsby)  
@@ -21,13 +28,24 @@ Caesiumy's personal blog website, currently migrating from Gatsby to Astro.
 
 ## Development Commands
 
-### Astro (Current Active)
+### AstroPaper (Current Active)
+```bash
+cd astro-paper/
+pnpm install          # Install dependencies
+pnpm dev              # Dev server (localhost:4321)
+pnpm build            # Production build with Pagefind
+pnpm preview          # Preview build
+pnpm format           # Code formatting (Prettier)
+pnpm lint             # ESLint linting
+```
+
+### Astro (Migration in Progress)
 ```bash
 cd astro/
 pnpm install          # Install dependencies
-pnpm dev          # Dev server (localhost:4321)
-pnpm build        # Production build
-pnpm preview      # Preview build
+pnpm dev              # Dev server (localhost:4321)
+pnpm build            # Production build
+pnpm preview          # Preview build
 ```
 
 ### Gatsby Legacy
@@ -107,13 +125,14 @@ astro/
 
 ## Migration Status
 
-Gatsby → Astro migration in progress:
-- ✅ Basic blog structure complete
-- ✅ Content Collections configured
-- ✅ About page structure created
-- ✅ Content directory restructured (moved outside src/)
-- 🔄 Content migration ongoing
-- 🔄 Design/styling in progress
+Gatsby → Astro → AstroPaper migration:
+- ✅ Gatsby legacy (complete)
+- ✅ Basic Astro structure (complete)
+- ✅ Content Collections setup (complete)  
+- ✅ AstroPaper template adoption (in progress)
+- 🔄 AstroPaper customization in progress
+- 🔄 Content migration in progress
+- 🔄 SEO & performance optimization in progress
 
 ## Testing Guidelines
 
