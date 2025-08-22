@@ -19,26 +19,20 @@ interface Social {
 export const SOCIALS: Social[] = [
   {
     name: "GitHub",
-    href: "https://github.com/satnaing/astro-paper",
-    linkTitle: `${SITE.title} on GitHub`,
+    href: "https://github.com/caesiumy",
+    linkTitle: "Caesiumy의 GitHub 프로필 보기",
     icon: IconGitHub,
   },
   {
-    name: "X",
-    href: "https://x.com/username",
-    linkTitle: `${SITE.title} on X`,
-    icon: IconBrandX,
-  },
-  {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/username/",
-    linkTitle: `${SITE.title} on LinkedIn`,
+    href: "https://linkedin.com/in/chang-sik-yoon-120757217",
+    linkTitle: "Caesiumy의 LinkedIn 프로필 보기",
     icon: IconLinkedin,
   },
   {
     name: "Mail",
-    href: "mailto:yourmail@gmail.com",
-    linkTitle: `Send an email to ${SITE.title}`,
+    href: "mailto:caesiumy@gmail.com",
+    linkTitle: "Caesiumy에게 이메일 보내기",
     icon: IconMail,
   },
 ] as const;

@@ -1,23 +1,23 @@
 export const SITE = {
-  website: "https://astro-paper.pages.dev/", // replace this with your deployed domain
-  author: "Sat Naing",
-  profile: "https://satnaing.dev/",
-  desc: "A minimal, responsive and SEO-friendly Astro blog theme.",
-  title: "AstroPaper",
-  ogImage: "astropaper-og.jpg",
+  website: "https://caesiumy.github.io/", // replace this with your deployed domain
+  author: "Caesiumy",
+  profile: "https://github.com/caesiumy",
+  desc: "🌍영문과에서 출발해 💻컴퓨터공학으로 도착하는 혼종 👨‍💻개발자의 기술 블로그",
+  title: "Caesiumy's BLOG",
+  ogImage: "caesiumy-og.jpg",
   lightAndDarkMode: true,
-  postPerIndex: 4,
-  postPerPage: 4,
+  postPerIndex: 6,
+  postPerPage: 8,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
   showArchives: true,
   showBackButton: true, // show back button in post detail
   editPost: {
-    enabled: true,
-    text: "Edit page",
-    url: "https://github.com/satnaing/astro-paper/edit/main/",
+    enabled: false, // 수정 기능 비활성화
+    text: "GitHub에서 수정하기",
+    url: "https://github.com/CaesiumY/CaesiumY.github.io/edit/main/astro-paper/src/data/blog/",
   },
   dynamicOgImage: true,
   dir: "ltr", // "rtl" | "auto"
-  lang: "en", // html lang code. Set this empty and default will be "en"
-  timezone: "Asia/Bangkok", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  lang: "ko", // html lang code. Set this empty and default will be "en"
+  timezone: "Asia/Seoul", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 } as const;
