@@ -1,8 +1,15 @@
-import satori from "satori";
+import satori, { type SatoriOptions } from "satori";
 import { SITE } from "@/config";
-import loadGoogleFonts from "../loadGoogleFont";
+import loadPretendardFonts from "../loadLocalFont";
 
 export default async () => {
+  const satoriOptions: SatoriOptions = {
+    width: 1200,
+    height: 630,
+    embedFont: true,
+    fonts: await loadPretendardFonts(),
+  };
+
   return satori(
     {
       type: "div",
@@ -118,11 +125,6 @@ export default async () => {
         ],
       },
     },
-    {
-      width: 1200,
-      height: 630,
-      embedFont: true,
-      fonts: await loadGoogleFonts(SITE.title + SITE.desc + SITE.website),
-    }
+    satoriOptions
   );
 };

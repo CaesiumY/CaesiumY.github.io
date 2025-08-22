@@ -44,36 +44,40 @@ Dynamic OG image of AstroPaper includes _the blog post title_, _author name_ and
 
 ### Issue Non-Latin Characters
 
-Titles with non-latin characters won't display properly out of the box. To resolve this, we have to replace `fontsConfig` inside `loadGoogleFont.ts` with your preferred font.
+Titles with non-latin characters won't display properly out of the box. To resolve this, you have to modify the font configuration inside `loadLocalFont.ts` with your preferred font files.
 
-```ts file=src/utils/loadGoogleFont.ts
-async function loadGoogleFonts(
-  text: string
+```ts file=src/utils/loadLocalFont.ts
+async function loadPretendardFonts(
+  _text: string
 ): Promise<
   Array<{ name: string; data: ArrayBuffer; weight: number; style: string }>
 > {
-  const fontsConfig = [
-    {
-      name: "Noto Sans JP",
-      font: "Noto+Sans+JP",
-      weight: 400,
-      style: "normal",
-    },
-    {
-      name: "Noto Sans JP",
-      font: "Noto+Sans+JP:wght@700",
-      weight: 700,
-      style: "normal",
-    },
-    { name: "Noto Sans", font: "Noto+Sans", weight: 400, style: "normal" },
-    {
-      name: "Noto Sans",
-      font: "Noto+Sans:wght@700",
-      weight: 700,
-      style: "normal",
-    },
-  ];
-  // ...
+  const regularFontPath = path.join(process.cwd(), "src/assets/fonts/YourFont-Regular.otf");
+  const boldFontPath = path.join(process.cwd(), "src/assets/fonts/YourFont-Bold.otf");
+  
+  try {
+    const regularBuffer = fs.readFileSync(regularFontPath);
+    const boldBuffer = fs.readFileSync(boldFontPath);
+    
+    const fonts = [
+      {
+        name: "Your Font",
+        data: regularBuffer.buffer.slice(regularBuffer.byteOffset, regularBuffer.byteOffset + regularBuffer.byteLength) as ArrayBuffer,
+        weight: 400,
+        style: "normal",
+      },
+      {
+        name: "Your Font", 
+        data: boldBuffer.buffer.slice(boldBuffer.byteOffset, boldBuffer.byteOffset + boldBuffer.byteLength) as ArrayBuffer,
+        weight: 700,
+        style: "normal",
+      },
+    ];
+
+    return fonts;
+  } catch {
+    throw new Error("Font files not found");
+  }
 }
 ```
 
