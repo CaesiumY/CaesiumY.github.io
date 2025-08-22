@@ -22,6 +22,7 @@ export default async (post: CollectionEntry<"blog">) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          wordBreak: "keep-all",
         },
         children: [
           {

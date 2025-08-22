@@ -21,6 +21,7 @@ export default async () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          wordBreak: "keep-all",
         },
         children: [
           {
