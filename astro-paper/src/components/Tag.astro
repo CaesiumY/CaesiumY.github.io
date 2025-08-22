@@ -1,5 +1,4 @@
 ---
-
 export interface Props {
   tag: string;
   tagName: string;
@@ -23,7 +22,6 @@ const { tag, tagName, size = "sm" } = Astro.props;
       { "text-sm": size === "sm" },
     ]}
   >
-      
     <span># {tagName}</span>
   </a>
 </li>
