@@ -7,14 +7,14 @@ slug: browser-rendering-process-analysis
 featured: true
 draft: false
 tags: ["browser", "rendering", "dom", "cssom", "performance", "frontend"]
-ogImage: "./browser-rendering-process/render-tree-construction.png"
+ogImage: "./render-tree-construction.png"
 description: "DOM 생성부터 화면 출력까지, 브라우저의 렌더링 파이프라인 심화 이해"
 ---
 
 # 🖌렌더링?
 
 <div align="center">
-  <img src="./browser-rendering-process/drawing.gif" />
+  <img src="./drawing.gif" />
 </div>
 
 평소에 개발 관련이 아니더라도 *영상 렌더링*이라든지 `렌더링` 이라는 말을 들어본 적이 있을 것입니다.
@@ -41,11 +41,11 @@ description: "DOM 생성부터 화면 출력까지, 브라우저의 렌더링 �
 
 ## 1. Object-model 생성
 
-![dom](./browser-rendering-process/dom.png)
+![dom](./dom.png)
 
 - `HTML`로 부터 `DOM(Document Object Model)`을 생성합니다. 대략 위 그림처럼 생겼어요.
 
-![cssom](./browser-rendering-process/cssom-tree.png)
+![cssom](./cssom-tree.png)
 
 - `CSS`로 부터 `CSSOM(CSS Object Model)`을 생성합니다. 둘 다 트리 구조로 되어있군요.
 
@@ -57,7 +57,7 @@ description: "DOM 생성부터 화면 출력까지, 브라우저의 렌더링 �
 
 자 이제 만들어 놓은 `DOM`과 `CSSOM`을 합쳐볼 차례입니다.
 
-![render-tree](./browser-rendering-process/render-tree-construction.png)
+![render-tree](./render-tree-construction.png)
 
 - 위 그림과 같이 `DOM`과 `CSSOM`이 합쳐져 `Render Tree`를 형성합니다.
 
@@ -69,7 +69,7 @@ description: "DOM 생성부터 화면 출력까지, 브라우저의 렌더링 �
 
 `렌더링 트리`가 완성되었으니 이제 공간을 가늠해볼 차례입니다. 그림으로 치면 밑그림 정도죠.
 
-![layout](./browser-rendering-process/layout-viewport.png)
+![layout](./layout-viewport.png)
 
 위 그림에서처럼 `뷰포트` 내부에서 `렌더링 트리`가 가진 `노드`들의 위치를 계산합니다.
 
@@ -78,7 +78,7 @@ description: "DOM 생성부터 화면 출력까지, 브라우저의 렌더링 �
 자 모든 것이 준비되었으니 이제 그림을 그릴 일만 남았네요!
 
 <div align="center">
-  <img src="./browser-rendering-process/painting.gif" />
+  <img src="./painting.gif" />
 </div>
 
 - 시간이 가장 많이 걸리는 부분입니다. 이제 메인이니까요.

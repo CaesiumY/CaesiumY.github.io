@@ -7,11 +7,11 @@ slug: clean-code-book-review
 featured: true
 draft: false
 tags: ["review", "book", "clean-code", "programming", "development", "best-practices"]
-ogImage: "./clean-code-review/book_cut.png"
+ogImage: "./book_cut.png"
 description: "로버트 마틴의 '클린 코드' 서적 리뷰와 실무 적용 경험담"
 ---
 
-<img src="./clean-code-review/book.jpg" width="50%" height="50%" />
+<img src="./book.jpg" width="50%" height="50%" />
 
 # 1. 클린 코드란
 
@@ -27,7 +27,7 @@ description: "로버트 마틴의 '클린 코드' 서적 리뷰와 실무 적용
 
 # 2. 클린 코드를 읽게 된 계기
 
-![네이버 오픈 클래스](./clean-code-review/naver_open_class.png)
+![네이버 오픈 클래스](./naver_open_class.png)
 
 작년 20년도에 진행했던 `네이버 개발자 공채 오픈 클래스` 에서 이런 질문이 올라왔었다.
 
@@ -49,7 +49,7 @@ description: "로버트 마틴의 '클린 코드' 서적 리뷰와 실무 적용
 
 # 3. 🧹깨끗한 코드
 
-![프리티어가 필요해](./clean-code-review/need_prettier.png)
+![프리티어가 필요해](./need_prettier.png)
 
 사실 많은 사람들이 클린 코드를 정리해두었고, 공교롭게도 나는 중복을 싫어하는 개발자라 그들과 같은 설명이나 해석을 하고 싶은 맘이 없다.
 
