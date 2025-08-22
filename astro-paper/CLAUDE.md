@@ -41,24 +41,24 @@ pnpm sync         # Astro type sync
 
 ```
 astro-paper/
+├── contents/            # Content files
+│   └── blog/           # Blog posts (Markdown)
 ├── src/
-│   ├── components/       # Reusable components
-│   ├── data/
-│   │   └── blog/        # Blog posts (Markdown)
-│   ├── layouts/         # Page layouts
-│   ├── pages/           # File-based routing
-│   ├── styles/          # Global CSS
-│   ├── utils/           # Utility functions
-│   ├── config.ts        # Site configuration
+│   ├── components/     # Reusable components
+│   ├── layouts/        # Page layouts
+│   ├── pages/          # File-based routing
+│   ├── styles/         # Global CSS
+│   ├── utils/          # Utility functions
+│   ├── config.ts       # Site configuration
 │   └── content.config.ts # Content schema definitions
-├── public/              # Static assets
-└── astro.config.ts      # Astro configuration
+├── public/             # Static assets
+└── astro.config.ts     # Astro configuration
 ```
 
 ## Content Management
 
 ### Blog Posts
-- **Location**: `src/data/blog/`
+- **Location**: `contents/blog/`
 - **Format**: Markdown/MDX
 - **Frontmatter Schema**:
 ```yaml

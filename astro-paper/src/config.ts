@@ -14,7 +14,7 @@ export const SITE = {
   editPost: {
     enabled: false, // 수정 기능 비활성화
     text: "GitHub에서 수정하기",
-    url: "https://github.com/CaesiumY/CaesiumY.github.io/edit/main/astro-paper/src/data/blog/",
+    url: "https://github.com/CaesiumY/CaesiumY.github.io/edit/main/astro-paper/contents/blog/",
   },
   dynamicOgImage: true,
   dir: "ltr", // "rtl" | "auto"

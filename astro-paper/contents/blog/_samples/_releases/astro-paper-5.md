@@ -81,7 +81,7 @@ The project structure has been reorganized. The `src/config.ts` file now only co
 
 ## Other notable changes
 
-- The blog posts directory has been updated from `src/content/blog/` to `src/data/blog/`.
+- The blog posts directory has been updated from `src/content/blog/` to `contents/blog/`.
 - Collection definitions file (`src/content/config.ts`) is now replaced with `src/content.config.ts`.
 - Various dependencies have been upgraded for improved performance and security.
 - Removed `IBM Plex Mono` font and switched to the default system mono font.

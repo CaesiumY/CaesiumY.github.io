@@ -49,14 +49,14 @@ Inside of AstroPaper, you'll see the following folders and files:
 │   └── astropaper-og.jpg
 │   └── favicon.svg
 │   └── toggle-theme.js
+├── contents/
+│   └── blog/
+│       └── some-blog-posts.md
 ├── src/
 │   ├── assets/
 │   │   └── icons/
 │   │   └── images/
 │   ├── components/
-│   ├── data/
-│   │   └── blog/
-│   │       └── some-blog-posts.md
 │   ├── layouts/
 │   └── pages/
 │   └── styles/
@@ -71,16 +71,16 @@ Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page
 
 Any static assets, like images, can be placed in the `public/` directory.
 
-All blog posts are stored in `src/data/blog` directory.
+All blog posts are stored in `contents/blog` directory.
 
 ## 📖 Documentation
 
 Documentation can be read in two formats\_ _markdown_ & _blog post_.
 
-- Configuration - [markdown](src/data/blog/how-to-configure-astropaper-theme.md) | [blog post](https://astro-paper.pages.dev/posts/how-to-configure-astropaper-theme/)
-- Add Posts - [markdown](src/data/blog/adding-new-post.md) | [blog post](https://astro-paper.pages.dev/posts/adding-new-posts-in-astropaper-theme/)
-- Customize Color Schemes - [markdown](src/data/blog/customizing-astropaper-theme-color-schemes.md) | [blog post](https://astro-paper.pages.dev/posts/customizing-astropaper-theme-color-schemes/)
-- Predefined Color Schemes - [markdown](src/data/blog/predefined-color-schemes.md) | [blog post](https://astro-paper.pages.dev/posts/predefined-color-schemes/)
+- Configuration - [markdown](contents/blog/_samples/how-to-configure-astropaper-theme.md) | [blog post](https://astro-paper.pages.dev/posts/how-to-configure-astropaper-theme/)
+- Add Posts - [markdown](contents/blog/_samples/adding-new-post.md) | [blog post](https://astro-paper.pages.dev/posts/adding-new-posts-in-astropaper-theme/)
+- Customize Color Schemes - [markdown](contents/blog/_samples/customizing-astropaper-theme-color-schemes.md) | [blog post](https://astro-paper.pages.dev/posts/customizing-astropaper-theme-color-schemes/)
+- Predefined Color Schemes - [markdown](contents/blog/_samples/predefined-color-schemes.md) | [blog post](https://astro-paper.pages.dev/posts/predefined-color-schemes/)
 
 ## 💻 Tech Stack
 

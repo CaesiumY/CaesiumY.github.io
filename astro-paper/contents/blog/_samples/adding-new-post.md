@@ -29,23 +29,23 @@ Here are some rules/recommendations, tips & ticks for creating new posts in Astr
 
 ## Creating a Blog Post
 
-To write a new blog post, create a markdown file inside the `src/data/blog/` directory.
+To write a new blog post, create a markdown file inside the `contents/blog/` directory.
 
-> Prior to AstroPaper v5.1.0, all blog posts had to be in `src/data/blog/`, meaning you couldn't organize them into subdirectories.
+> Prior to AstroPaper v5.1.0, all blog posts had to be in `contents/blog/`, meaning you couldn't organize them into subdirectories.
 
 Starting from AstroPaper v5.1.0, you can now organize blog posts into subdirectories, making it easier to manage your content.
 
-For example, if you want to group posts under `2025`, you can place them in `src/data/blog/2025/`. This also affects the post URL, so `src/data/blog/2025/example-post.md` will be available at `/posts/2025/example-post`.
+For example, if you want to group posts under `2025`, you can place them in `contents/blog/2025/`. This also affects the post URL, so `contents/blog/2025/example-post.md` will be available at `/posts/2025/example-post`.
 
 If you don’t want subdirectories to affect the post URL, just prefix the folder name with an underscore `_`.
 
 ```bash
 # Example: blog post structure and URLs
-src/data/blog/very-first-post.md          -> mysite.com/posts/very-first-post
-src/data/blog/2025/example-post.md        -> mysite.com/posts/2025/example-post
-src/data/blog/_2026/another-post.md       -> mysite.com/posts/another-post
-src/data/blog/docs/_legacy/how-to.md      -> mysite.com/posts/docs/how-to
-src/data/blog/Example Dir/Dummy Post.md   -> mysite.com/posts/example-dir/dummy-post
+contents/blog/very-first-post.md          -> mysite.com/posts/very-first-post
+contents/blog/2025/example-post.md        -> mysite.com/posts/2025/example-post
+contents/blog/_2026/another-post.md       -> mysite.com/posts/another-post
+contents/blog/docs/_legacy/how-to.md      -> mysite.com/posts/docs/how-to
+contents/blog/Example Dir/Dummy Post.md   -> mysite.com/posts/example-dir/dummy-post
 ```
 
 > 💡 Tip: You can override a blog post’s slug in the frontmatter as well. See the next section for more details.
@@ -100,7 +100,7 @@ export const blogSchema = z.object({
 
 Here is the sample frontmatter for a post.
 
-```yaml file="src/data/blog/sample-post.md"
+```yaml file="contents/blog/sample-post.md"
 ---
 title: The title of the post
 author: your name
