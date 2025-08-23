@@ -23,13 +23,5 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Temporary migration files
-migration-script.js
-fix-image-paths.js
-plan.md
-phase.md
-package.json
-package-lock.json
-
 # Logs
 *.log
