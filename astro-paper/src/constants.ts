@@ -30,7 +30,7 @@ export const SOCIALS: Social[] = [
   },
   {
     name: "Mail",
-    href: "mailto:caesiumy@gmail.com",
+    href: "mailto:dbs2636@gmail.com",
     linkTitle: "Caesiumy에게 이메일 보내기",
     icon: IconMail,
   },
