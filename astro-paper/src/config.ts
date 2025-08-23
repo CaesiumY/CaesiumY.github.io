@@ -4,7 +4,7 @@ export const SITE = {
   profile: "https://github.com/caesiumy",
   desc: "🌍영문과에서 출발해 💻컴퓨터공학으로 도착하는 혼종 👨‍💻개발자의 기술 블로그",
   title: "Caesiumy's BLOG",
-  ogImage: "caesiumy-og.jpg",
+  ogImage: "og.png",
   lightAndDarkMode: true,
   postPerIndex: 6,
   postPerPage: 8,
