@@ -13,9 +13,7 @@ description: "DOM 생성부터 화면 출력까지, 브라우저의 렌더링 �
 
 # 🖌렌더링?
 
-<div align="center">
-  <img src="./drawing.gif" />
-</div>
+![drawing](./drawing.gif)
 
 평소에 개발 관련이 아니더라도 *영상 렌더링*이라든지 `렌더링` 이라는 말을 들어본 적이 있을 것입니다.
 
@@ -77,9 +75,7 @@ description: "DOM 생성부터 화면 출력까지, 브라우저의 렌더링 �
 
 자 모든 것이 준비되었으니 이제 그림을 그릴 일만 남았네요!
 
-<div align="center">
-  <img src="./painting.gif" />
-</div>
+![painting](./painting.gif)
 
 - 시간이 가장 많이 걸리는 부분입니다. 이제 메인이니까요.
 

@@ -71,8 +71,23 @@ draft: false             # Default: false
 tags: ["tag1", "tag2"]   # Optional
 ```
 
+### Blog Images
+- **⚠️ IMPORTANT**: Blog post images must be located in the same directory as the blog post markdown file
+- **Structure**: `contents/blog/[post-folder]/[image-file]`
+- **Example**:
+  ```
+  contents/blog/
+  └── my-blog-post/
+      ├── index.md        # Blog post content
+      ├── hero-image.png  # Post images
+      └── diagram.jpg     # Additional images
+  ```
+- **Usage in Markdown**: Use relative paths `![alt text](./image.png)`
+- **❌ DO NOT**: Place blog images in `public/` folder - this bypasses Astro's image optimization
+- **✅ Benefits**: Automatic WebP conversion, srcset generation, compression, and caching
+
 ### Static Assets
-- **Images**: `public/assets/` or `src/assets/images/`
+- **Images**: `public/assets/` or `src/assets/images/` (for site-wide assets only)
 - **Icons**: `src/assets/icons/`
 - **Favicon**: `public/favicon.svg`
 
@@ -131,6 +146,8 @@ PUBLIC_GOOGLE_SITE_VERIFICATION=your-google-site-verification-value
 - SEO-friendly titles and descriptions
 - Proper tag categorization
 - Provide image alt text
+- Use markdown image syntax (not HTML `<img>` tags) for Astro optimization
+- Place images in same directory as markdown files for proper processing
 
 ## Key Features
 
