@@ -36,7 +36,7 @@ const { page, tagName } = Astro.props;
   <Main
     pageTitle={[`Tag:`, `${tagName}`]}
     titleTransition={tag}
-    pageDesc={`All the articles with the tag "${tagName}".`}
+    pageDesc={`"${tagName}" 태그가 포함된 모든 글입니다.`}
   >
     <h1 slot="title" transition:name={tag}>{`Tag:${tag}`}</h1>
     <ul>
