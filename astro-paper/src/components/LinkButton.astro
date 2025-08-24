@@ -1,4 +1,6 @@
 ---
+import { cn } from "@/utils/cn";
+
 export interface Props {
   id?: string;
   href: string;
@@ -26,7 +28,7 @@ const isExternalLink =
   disabled ? (
     <span
       id={id}
-      class:list={["group inline-block", className]}
+      class={cn("group inline-block", className)}
       title={title}
       aria-disabled={disabled}
     >
@@ -36,7 +38,7 @@ const isExternalLink =
     <a
       id={id}
       {href}
-      class:list={["group inline-block hover:text-accent", className]}
+      class={cn("group inline-block hover:text-accent", className)}
       aria-label={ariaLabel}
       title={title}
       target={isExternalLink ? "_blank" : undefined}
