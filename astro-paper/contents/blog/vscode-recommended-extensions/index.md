@@ -4,7 +4,7 @@ author: Caesiumy
 pubDatetime: 2019-05-04T10:00:00Z
 modDatetime: 2024-01-21T10:00:00Z
 slug: vscode-recommended-extensions
-featured: true
+featured: false
 draft: false
 tags: ["vscode", "development", "productivity", "extensions", "tools"]
 ogImage: "./vscode_icon.png"

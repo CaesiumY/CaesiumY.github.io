@@ -4,7 +4,7 @@ author: Caesiumy
 pubDatetime: 2021-08-23T15:00:00Z
 modDatetime: 2021-08-23T15:00:00Z
 slug: javascript-promise-async-await-guide
-featured: true
+featured: false
 draft: false
 tags: ["javascript", "promise", "async-await", "asynchronous", "es6", "tutorial", "parallel"]
 ogImage: "./promise_thumbnail.png"

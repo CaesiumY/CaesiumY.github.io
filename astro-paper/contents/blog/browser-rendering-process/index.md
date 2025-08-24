@@ -4,7 +4,7 @@ author: Caesiumy
 pubDatetime: 2021-06-09T09:00:00Z
 modDatetime: 2021-06-09T09:00:00Z
 slug: browser-rendering-process-analysis
-featured: true
+featured: false
 draft: false
 tags: ["browser", "rendering", "dom", "cssom", "performance", "frontend"]
 ogImage: "./render-tree-construction.png"
