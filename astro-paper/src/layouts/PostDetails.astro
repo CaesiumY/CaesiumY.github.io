@@ -9,6 +9,7 @@ import EditPost from "@/components/EditPost.astro";
 import ShareLinks from "@/components/ShareLinks.astro";
 import BackButton from "@/components/BackButton.astro";
 import BackToTopButton from "@/components/BackToTopButton.astro";
+import DraftBadge from "@/components/DraftBadge.astro";
 import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
@@ -33,6 +34,7 @@ const {
   timezone,
   tags,
   hideEditPost,
+  draft,
 } = post.data;
 
 const { Content } = await render(post);
@@ -95,9 +97,10 @@ const nextPost =
   >
     <h1
       transition:name={slugifyStr(title)}
-      class="inline-block text-2xl font-bold text-accent sm:text-3xl"
+      class="flex items-center text-2xl font-bold text-accent sm:text-3xl"
     >
-      {title}
+      {draft && <DraftBadge size="md" class="me-3" />}
+      <span>{title}</span>
     </h1>
     <div class="my-2 flex items-center gap-2">
       <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />

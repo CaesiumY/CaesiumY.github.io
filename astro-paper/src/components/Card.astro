@@ -3,6 +3,7 @@ import { slugifyStr } from "@/utils/slugify";
 import type { CollectionEntry } from "astro:content";
 import { getPath } from "@/utils/getPath";
 import Datetime from "./Datetime.astro";
+import DraftBadge from "./DraftBadge.astro";
 
 export interface Props extends CollectionEntry<"blog"> {
   variant?: "h2" | "h3";
@@ -10,11 +11,11 @@ export interface Props extends CollectionEntry<"blog"> {
 
 const { variant = "h2", data, id, filePath } = Astro.props;
 
-const { title, description, pubDatetime, modDatetime, timezone } = data;
+const { title, description, pubDatetime, modDatetime, timezone, draft } = data;
 
 const headerProps = {
   style: { viewTransitionName: slugifyStr(title) },
-  class: "text-lg font-medium decoration-dashed hover:underline",
+  class: "flex items-center text-lg font-medium decoration-dashed hover:underline",
 };
 ---
 
@@ -25,9 +26,15 @@ const headerProps = {
   >
     {
       variant === "h2" ? (
-        <h2 {...headerProps}>{title}</h2>
+        <h2 {...headerProps}>
+          {draft && <DraftBadge class="me-2" />}
+          <span>{title}</span>
+        </h2>
       ) : (
-        <h3 {...headerProps}>{title}</h3>
+        <h3 {...headerProps}>
+          {draft && <DraftBadge class="me-2" />}
+          <span>{title}</span>
+        </h3>
       )
     }
   </a>

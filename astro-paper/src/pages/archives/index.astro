@@ -13,7 +13,8 @@ if (!SITE.showArchives) {
   return Astro.redirect("/404");
 }
 
-const posts = await getCollection("blog", ({ data }) => !data.draft);
+// 모든 포스트를 가져오고, getPostsByGroupCondition에서 필터링 적용
+const posts = await getCollection("blog");
 
 const months = [
   "1월",

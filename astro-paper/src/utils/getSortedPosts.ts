@@ -1,9 +1,9 @@
 import type { CollectionEntry } from "astro:content";
-import postFilter from "./postFilter";
+import { isPostVisible } from "./postVisibility";
 
 const getSortedPosts = (posts: CollectionEntry<"blog">[]) => {
   return posts
-    .filter(postFilter)
+    .filter(isPostVisible)
     .sort(
       (a, b) =>
         Math.floor(new Date(b.data.pubDatetime).getTime() / 1000) -

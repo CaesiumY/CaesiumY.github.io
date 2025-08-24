@@ -9,7 +9,8 @@ export interface Props {
 }
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  // 모든 포스트를 가져오고, 개별 포스트에서 가시성 체크는 PostDetails에서 처리
+  const posts = await getCollection("blog");
   const postResult = posts.map(post => ({
     params: { slug: getPath(post.id, post.filePath, false) },
     props: { post },
