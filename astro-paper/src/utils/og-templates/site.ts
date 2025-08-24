@@ -1,13 +1,13 @@
 import satori, { type SatoriOptions } from "satori";
 import { SITE } from "@/config";
-import loadPretendardFonts from "../loadLocalFont";
+import loadOGImageFonts from "../loadLocalFont";
 
 export default async () => {
   const satoriOptions: SatoriOptions = {
     width: 1200,
     height: 630,
     embedFont: true,
-    fonts: await loadPretendardFonts(),
+    fonts: await loadOGImageFonts(),
   };
 
   return satori(

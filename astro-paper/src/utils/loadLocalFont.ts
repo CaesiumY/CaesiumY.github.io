@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import type { Font } from "satori";
 
-async function loadPretendardFonts(): Promise<Font[]> {
+async function loadOGImageFonts(): Promise<Font[]> {
   const regularFontPath = path.join(
     process.cwd(),
     "src/assets/fonts/Pretendard-Regular.otf"
@@ -11,10 +11,15 @@ async function loadPretendardFonts(): Promise<Font[]> {
     process.cwd(),
     "src/assets/fonts/Pretendard-Bold.otf"
   );
+  const emojiFontPath = path.join(
+    process.cwd(),
+    "src/assets/fonts/NotoEmoji-Regular.ttf"
+  );
 
   try {
     const regularBuffer = fs.readFileSync(regularFontPath);
     const boldBuffer = fs.readFileSync(boldFontPath);
+    const emojiBuffer = fs.readFileSync(emojiFontPath);
 
     const regularArrayBuffer = regularBuffer.buffer.slice(
       regularBuffer.byteOffset,
@@ -24,6 +29,11 @@ async function loadPretendardFonts(): Promise<Font[]> {
     const boldArrayBuffer = boldBuffer.buffer.slice(
       boldBuffer.byteOffset,
       boldBuffer.byteOffset + boldBuffer.byteLength
+    );
+
+    const emojiArrayBuffer = emojiBuffer.buffer.slice(
+      emojiBuffer.byteOffset,
+      emojiBuffer.byteOffset + emojiBuffer.byteLength
     );
 
     const fonts: Font[] = [
@@ -39,12 +49,20 @@ async function loadPretendardFonts(): Promise<Font[]> {
         weight: 700 as const,
         style: "normal" as const,
       },
+      {
+        name: "Noto Emoji",
+        data: emojiArrayBuffer as ArrayBuffer,
+        weight: 400 as const,
+        style: "normal" as const,
+      },
     ];
 
     return fonts;
-  } catch {
-    throw new Error("Pretendard OTF font files not found");
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error("Font loading error:", error);
+    throw new Error("Font files not found");
   }
 }
 
-export default loadPretendardFonts;
+export default loadOGImageFonts;

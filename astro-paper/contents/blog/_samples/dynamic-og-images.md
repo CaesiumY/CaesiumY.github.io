@@ -47,7 +47,7 @@ Dynamic OG image of AstroPaper includes _the blog post title_, _author name_ and
 Titles with non-latin characters won't display properly out of the box. To resolve this, you have to modify the font configuration inside `loadLocalFont.ts` with your preferred font files.
 
 ```ts file=src/utils/loadLocalFont.ts
-async function loadPretendardFonts(
+async function loadOGImageFonts(
   _text: string
 ): Promise<
   Array<{ name: string; data: ArrayBuffer; weight: number; style: string }>

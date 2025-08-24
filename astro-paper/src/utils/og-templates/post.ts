@@ -1,6 +1,6 @@
 import satori, { type SatoriOptions } from "satori";
 import { SITE } from "@/config";
-import loadPretendardFonts from "../loadLocalFont";
+import loadOGImageFonts from "../loadLocalFont";
 import type { CollectionEntry } from "astro:content";
 
 export default async (post: CollectionEntry<"blog">) => {
@@ -8,7 +8,7 @@ export default async (post: CollectionEntry<"blog">) => {
     width: 1200,
     height: 630,
     embedFont: true,
-    fonts: await loadPretendardFonts(),
+    fonts: await loadOGImageFonts(),
   };
 
   return satori(
@@ -23,6 +23,7 @@ export default async (post: CollectionEntry<"blog">) => {
           alignItems: "center",
           justifyContent: "center",
           wordBreak: "keep-all",
+          fontFamily: "Pretendard, Noto Emoji",
         },
         children: [
           {
