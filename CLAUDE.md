@@ -142,6 +142,12 @@ PUBLIC_GOOGLE_SITE_VERIFICATION=your-google-site-verification-value
 - ESLint + Prettier usage
 - TypeScript strict mode
 - Conventional Commits compliance
+- **⚠️ IMPORTANT**: Do NOT disable ESLint rules or ignore files without explicit user permission
+- If ESLint errors occur, investigate and fix the root cause rather than bypassing the linter
+- **If ESLint disabling is absolutely necessary:**
+  - Add a detailed comment explaining the reason for disabling
+  - Include the issue in the final response as a "Confirmation Required" item
+  - Example: `// eslint-disable-next-line rule-name -- Reason: [detailed explanation]`
 
 ### Component Development
 - Write reusable components
