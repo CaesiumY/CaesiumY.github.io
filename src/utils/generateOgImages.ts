@@ -4,9 +4,7 @@ import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
 
 async function svgBufferToPngBuffer(svg: string) {
-  return await sharp(Buffer.from(svg))
-    .png()
-    .toBuffer();
+  return await sharp(Buffer.from(svg)).png().toBuffer();
 }
 
 export async function generateOgImageForPost(post: CollectionEntry<"blog">) {

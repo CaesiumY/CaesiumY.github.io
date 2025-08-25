@@ -33,7 +33,7 @@ html[data-theme="dark"] {
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
     "Noto Sans KR", "Malgun Gothic", sans-serif;
   --font-mono:
-    "Goorm Sans Code", "Pretendard Variable", Pretendard, ui-monospace, 
+    "Goorm Sans Code", "Pretendard Variable", Pretendard, ui-monospace,
     SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
 }
 
@@ -61,7 +61,7 @@ html[data-theme="dark"] {
   footer {
     @apply mx-auto max-w-app px-4;
   }
-  
+
   /* Layout 스타일 - Layout.astro에서 이동 */
   html,
   body {

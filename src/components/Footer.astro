@@ -21,18 +21,20 @@ const { noMarginTop = false } = Astro.props;
       <span>Copyright &#169; {currentYear}</span>
       <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
       <span>All rights reserved.</span>
-      {import.meta.env.DEV && (
-        <>
-          <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-          <a 
-            href="/drafts" 
-            class="text-accent hover:underline focus-visible:underline"
-            title="개발 환경에서만 보이는 Draft 포스트"
-          >
-            Drafts
-          </a>
-        </>
-      )}
+      {
+        import.meta.env.DEV && (
+          <>
+            <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+            <a
+              href="/drafts"
+              class="text-accent hover:underline focus-visible:underline"
+              title="개발 환경에서만 보이는 Draft 포스트"
+            >
+              Drafts
+            </a>
+          </>
+        )
+      }
     </div>
   </div>
 </footer>

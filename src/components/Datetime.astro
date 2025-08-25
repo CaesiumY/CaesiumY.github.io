@@ -33,9 +33,10 @@ const datetime = dayjs(isModified ? modDatetime : pubDatetime).tz(
   postTimezone || SITE.timezone
 );
 
-const date = SITE.lang === "ko" 
-  ? datetime.format("YYYY년 M월 D일") // e.g., '2025년 3월 22일'
-  : datetime.format("D MMM, YYYY"); // e.g., '22 Mar, 2025'
+const date =
+  SITE.lang === "ko"
+    ? datetime.format("YYYY년 M월 D일") // e.g., '2025년 3월 22일'
+    : datetime.format("D MMM, YYYY"); // e.g., '22 Mar, 2025'
 ---
 
 <div class:list={["flex items-center gap-x-2 opacity-80", className]}>
