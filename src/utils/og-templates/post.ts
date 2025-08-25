@@ -87,7 +87,7 @@ export default async (post: CollectionEntry<"blog">) => {
                       props: {
                         style: {
                           display: "flex",
-                          justifyContent: "space-between",
+                          justifyContent: "flex-end",
                           width: "100%",
                           marginBottom: "8px",
                           fontSize: 28,
