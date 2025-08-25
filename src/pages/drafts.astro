@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+import Main from "@/layouts/Main.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import { getSortedDraftPosts } from "@/utils/postVisibility";
+import { SITE } from "@/config";
+
+const allPosts = await getCollection("blog");
+const sortedDraftPosts = getSortedDraftPosts(allPosts);
+---
+
+{import.meta.env.PROD && <script>window.location.href = '/';</script>}
+
+<Layout title={`Draft Posts | ${SITE.title}`}>
+  <Header />
+  <Main
+    pageTitle="Draft Posts"
+    pageDesc={`개발 환경에서만 보이는 Draft 포스트들입니다. (총 ${sortedDraftPosts.length}개)`}
+  >
+    {
+      import.meta.env.DEV ? (
+        sortedDraftPosts.length > 0 ? (
+          <ul>
+            {sortedDraftPosts.map(post => (
+              <Card {...post} />
+            ))}
+          </ul>
+        ) : (
+          <p class="text-muted-foreground text-center">
+            Draft 포스트가 없습니다.
+          </p>
+        )
+      ) : (
+        <p class="text-muted-foreground text-center">
+          이 페이지는 개발 환경에서만 접근할 수 있습니다.
+        </p>
+      )
+    }
+  </Main>
+  <Footer />
+</Layout>

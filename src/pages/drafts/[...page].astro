@@ -1,0 +1,59 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Main from "@/layouts/Main.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import Pagination from "@/components/Pagination.astro";
+import { getSortedDraftPosts } from "@/utils/postVisibility";
+import { SITE } from "@/config";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  // 개발 환경에서만 페이지 생성, 프로덕션에서는 빈 배열 반환
+  if (!import.meta.env.DEV) {
+    return [];
+  }
+
+  const allPosts = await getCollection("blog");
+  const sortedDraftPosts = getSortedDraftPosts(allPosts);
+
+  // Draft 포스트가 없어도 빈 배열로 페이지 생성 (접근 가능하도록)
+  return paginate(sortedDraftPosts, { pageSize: SITE.postPerPage });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<Layout title={`Draft Posts | ${SITE.title}`}>
+  <Header />
+  <Main
+    pageTitle="Draft Posts"
+    pageDesc={`개발 환경에서만 보이는 Draft 포스트들입니다. (총 ${page.total}개)`}
+  >
+    {
+      import.meta.env.DEV ? (
+        page.data.length > 0 ? (
+          <ul>
+            {page.data.map(data => (
+              <Card {...data} />
+            ))}
+          </ul>
+        ) : (
+          <p class="text-muted-foreground text-center">
+            Draft 포스트가 없습니다.
+          </p>
+        )
+      ) : (
+        <p class="text-muted-foreground text-center">
+          이 페이지는 개발 환경에서만 접근할 수 있습니다.
+        </p>
+      )
+    }
+  </Main>
+
+  {page.lastPage > 1 && <Pagination {page} />}
+
+  <Footer noMarginTop={page.lastPage > 1} />
+</Layout>

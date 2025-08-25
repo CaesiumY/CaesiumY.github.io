@@ -1,0 +1,104 @@
+---
+import IconCopy from "@/assets/icons/IconCopy.svg";
+import IconCheck from "@/assets/icons/IconCheck.svg";
+---
+
+<div
+  class="flex flex-none flex-col items-center justify-center gap-1 md:items-start"
+>
+  <span class="italic">공유하기</span>
+  <div class="text-center">
+    <button
+      id="copy-url-btn"
+      class="group relative scale-90 rounded-md bg-transparent p-2 transition-all duration-200 hover:rotate-6 hover:bg-accent/10 sm:p-1"
+      title="URL을 클립보드에 복사"
+      aria-label="URL을 클립보드에 복사"
+    >
+      <IconCopy
+        id="copy-icon"
+        class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 transition-all duration-300 group-hover:fill-transparent sm:scale-110"
+      />
+      <IconCheck
+        id="check-icon"
+        class="absolute top-2 left-2 inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 text-green-600 opacity-0 transition-all duration-300 sm:top-1 sm:left-1"
+      />
+    </button>
+    <div
+      id="copy-feedback"
+      class="sr-only mt-1 text-xs text-accent/70 opacity-0 transition-opacity duration-200"
+      aria-live="polite"
+    >
+      복사됨!
+    </div>
+  </div>
+</div>
+
+<script>
+  const copyButton = document.getElementById("copy-url-btn");
+  const feedback = document.getElementById("copy-feedback");
+  const copyIcon = document.getElementById("copy-icon");
+  const checkIcon = document.getElementById("check-icon");
+
+  if (copyButton && feedback && copyIcon && checkIcon) {
+    copyButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        showSuccessIcon();
+      } catch (error) {
+        // Clipboard API 실패시 사용자에게 수동 복사 안내
+        // eslint-disable-next-line no-console -- Reason: 클립보드 API 실패는 사용자 경험에 중요한 정보로 디버깅용으로 필요
+        console.warn("클립보드 API를 사용할 수 없습니다:", error);
+        showFallbackMessage();
+      }
+    });
+
+    function showSuccessIcon() {
+      // 아이콘 전환
+      if (copyIcon) copyIcon.style.opacity = "0";
+      if (checkIcon) checkIcon.style.opacity = "1";
+
+      // 접근성을 위한 텍스트 피드백
+      if (feedback) feedback.style.opacity = "1";
+
+      // 2초 후 원래 상태로 복원
+      setTimeout(() => {
+        if (copyIcon) copyIcon.style.opacity = "0.9";
+        if (checkIcon) checkIcon.style.opacity = "0";
+        if (feedback) feedback.style.opacity = "0";
+      }, 2000);
+    }
+
+    function showFallbackMessage() {
+      // 수동 복사 안내 메시지 표시
+      if (feedback) {
+        feedback.textContent = "Ctrl+C로 복사하세요";
+        feedback.style.opacity = "1";
+
+        // 현재 URL을 선택 상태로 만들기
+        const selection = window.getSelection();
+        const range = document.createRange();
+        const tempElement = document.createElement("span");
+        tempElement.textContent = window.location.href;
+        tempElement.style.position = "absolute";
+        tempElement.style.left = "-9999px";
+        document.body.appendChild(tempElement);
+
+        range.selectNodeContents(tempElement);
+        if (selection) {
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+
+        // 3초 후 정리
+        setTimeout(() => {
+          if (feedback) {
+            feedback.textContent = "링크가 복사되었습니다!";
+            feedback.style.opacity = "0";
+          }
+          document.body.removeChild(tempElement);
+          if (selection) selection.removeAllRanges();
+        }, 3000);
+      }
+    }
+  }
+</script>
