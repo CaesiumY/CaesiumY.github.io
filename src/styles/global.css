@@ -61,6 +61,14 @@ html[data-theme="dark"] {
   footer {
     @apply mx-auto max-w-app px-4;
   }
+  
+  /* Layout 스타일 - Layout.astro에서 이동 */
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 @utility max-w-app {
