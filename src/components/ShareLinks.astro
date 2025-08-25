@@ -36,15 +36,10 @@ import IconCheck from "@/assets/icons/IconCheck.svg";
       try {
         await navigator.clipboard.writeText(window.location.href);
         showSuccessIcon();
-      } catch {
-        // 클립보드 API를 사용할 수 없는 경우 폴백 사용
-        const textArea = document.createElement('textarea');
-        textArea.value = window.location.href;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        showSuccessIcon();
+      } catch (error) {
+        // Clipboard API 실패시 사용자에게 수동 복사 안내
+        console.warn('클립보드 API를 사용할 수 없습니다:', error);
+        showFallbackMessage();
       }
     });
     
@@ -62,6 +57,39 @@ import IconCheck from "@/assets/icons/IconCheck.svg";
         if (checkIcon) checkIcon.style.opacity = '0';
         if (feedback) feedback.style.opacity = '0';
       }, 2000);
+    }
+    
+    function showFallbackMessage() {
+      // 수동 복사 안내 메시지 표시
+      if (feedback) {
+        feedback.textContent = 'Ctrl+C로 복사하세요';
+        feedback.style.opacity = '1';
+        
+        // 현재 URL을 선택 상태로 만들기
+        const selection = window.getSelection();
+        const range = document.createRange();
+        const tempElement = document.createElement('span');
+        tempElement.textContent = window.location.href;
+        tempElement.style.position = 'absolute';
+        tempElement.style.left = '-9999px';
+        document.body.appendChild(tempElement);
+        
+        range.selectNodeContents(tempElement);
+        if (selection) {
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+        
+        // 3초 후 정리
+        setTimeout(() => {
+          if (feedback) {
+            feedback.textContent = '링크가 복사되었습니다!';
+            feedback.style.opacity = '0';
+          }
+          document.body.removeChild(tempElement);
+          if (selection) selection.removeAllRanges();
+        }, 3000);
+      }
     }
   }
 </script>
