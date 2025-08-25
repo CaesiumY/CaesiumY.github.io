@@ -1,6 +1,9 @@
 ---
 import { ClientRouter } from "astro:transitions";
-import { PUBLIC_GOOGLE_SITE_VERIFICATION, PUBLIC_GOOGLE_ANALYTICS_ID } from "astro:env/client";
+import {
+  PUBLIC_GOOGLE_SITE_VERIFICATION,
+  PUBLIC_GOOGLE_ANALYTICS_ID,
+} from "astro:env/client";
 import { SITE } from "@/config";
 import "@/styles/global.css";
 
@@ -143,12 +146,14 @@ const structuredData = {
       // include Google Analytics gtag script
       PUBLIC_GOOGLE_ANALYTICS_ID && (
         <>
-          <!-- Google tag (gtag.js) -->
-          <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${PUBLIC_GOOGLE_ANALYTICS_ID}`}></script>
+          {/* Google tag (gtag.js) */}
+          <script
+            is:inline
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${PUBLIC_GOOGLE_ANALYTICS_ID}`}
+          />
+          <script is:inline src="/gtag-init.js" />
           <script is:inline define:vars={{ GA_ID: PUBLIC_GOOGLE_ANALYTICS_ID }}>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(...args){dataLayer.push(args);}
-            gtag('js', new Date());
             gtag('config', GA_ID);
           </script>
         </>
