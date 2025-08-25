@@ -6,8 +6,6 @@ import "@/styles/global.css";
 
 export interface Props {
   title?: string;
-  author?: string;
-  profile?: string;
   description?: string;
   ogImage?: string;
   canonicalURL?: string;
@@ -18,8 +16,6 @@ export interface Props {
 
 const {
   title = SITE.title,
-  author = SITE.author,
-  profile = SITE.profile,
   description = SITE.desc,
   ogImage = SITE.ogImage ? `/${SITE.ogImage}` : "/og.png",
   canonicalURL = new URL(Astro.url.pathname, Astro.url),
@@ -37,13 +33,6 @@ const structuredData = {
   image: `${socialImageURL}`,
   datePublished: `${pubDatetime?.toISOString()}`,
   ...(modDatetime && { dateModified: modDatetime.toISOString() }),
-  author: [
-    {
-      "@type": "Person",
-      name: `${author}`,
-      ...(profile && { url: profile }),
-    },
-  ],
 };
 ---
 
@@ -73,7 +62,6 @@ const structuredData = {
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="author" content={author} />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph / Facebook -->

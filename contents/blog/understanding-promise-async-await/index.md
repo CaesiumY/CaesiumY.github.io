@@ -1,6 +1,5 @@
 ---
 title: "[JS] 🚀Promise와 Async/Await 완전 이해: 병렬로 비동기 데이터 한 번에 받아오기"
-author: Caesiumy
 pubDatetime: 2021-08-23T15:00:00Z
 modDatetime: 2021-08-23T15:00:00Z
 slug: javascript-promise-async-await-guide

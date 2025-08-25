@@ -96,31 +96,6 @@ export default async (post: CollectionEntry<"blog">) => {
                           {
                             type: "span",
                             props: {
-                              children: [
-                                "by ",
-                                {
-                                  type: "span",
-                                  props: {
-                                    style: { color: "transparent" },
-                                    children: '"',
-                                  },
-                                },
-                                {
-                                  type: "span",
-                                  props: {
-                                    style: {
-                                      overflow: "hidden",
-                                      fontWeight: "bold",
-                                    },
-                                    children: post.data.author,
-                                  },
-                                },
-                              ],
-                            },
-                          },
-                          {
-                            type: "span",
-                            props: {
                               style: { overflow: "hidden", fontWeight: "bold" },
                               children: SITE.title,
                             },

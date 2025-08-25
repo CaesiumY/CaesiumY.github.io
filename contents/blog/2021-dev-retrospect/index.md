@@ -1,6 +1,5 @@
 ---
 title: "💬 2021년도 개발 회고록"
-author: Caesiumy
 pubDatetime: 2021-12-30T09:00:00Z
 description: "~~프엔(X) 그냥 몬스터(O)~~"
 featured: false

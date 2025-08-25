@@ -1,6 +1,5 @@
 ---
 title: "📖[개발 서적] 클린 코드를 읽고"
-author: Caesiumy
 pubDatetime: 2021-08-05T09:00:00Z
 description: "로버트 C. 마틴의 클린 코드 서적 리뷰"
 featured: false

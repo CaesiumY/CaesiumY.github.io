@@ -1,6 +1,5 @@
 export const SITE = {
   website: "https://caesiumy.github.io/", // replace this with your deployed domain
-  author: "Caesiumy",
   profile: "https://github.com/caesiumy",
   desc: "🌍영문과에서 출발해 💻컴퓨터공학으로 도착하는 혼종 👨‍💻개발자의 기술 블로그",
   title: "Caesiumy's BLOG",

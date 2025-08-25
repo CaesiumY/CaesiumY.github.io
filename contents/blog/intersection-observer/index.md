@@ -1,6 +1,5 @@
 ---
 title: "[JS] 알아두면 쓸데있는 🔍Intersection Observer API 완전 정복"
-author: Caesiumy
 pubDatetime: 2021-06-19T11:00:00Z
 modDatetime: 2021-06-19T11:00:00Z
 slug: intersection-observer-api-guide

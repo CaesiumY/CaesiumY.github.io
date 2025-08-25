@@ -1,6 +1,5 @@
 ---
 title: "유다시티 ⚛리액트 나노디그리 후기"
-author: Caesiumy
 pubDatetime: 2020-12-31T09:00:00Z
 description: "일명 `Udacity React Nanodegree.` 뒤의 `React Nanodegree`는 줄여서 `reactnd`라고들 합니다."
 featured: false

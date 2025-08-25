@@ -1,6 +1,5 @@
 ---
 title: "[백준10867][C] 중복 빼고 정렬하기 2"
-author: Caesiumy
 pubDatetime: 2020-09-05T09:00:00Z
 modDatetime: 2020-09-05T09:00:00Z
 slug: deduplicate-and-sort-algorithm-2

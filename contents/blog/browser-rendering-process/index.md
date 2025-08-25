@@ -1,6 +1,5 @@
 ---
 title: "🎨브라우저 렌더링 과정 완전 분석"
-author: Caesiumy
 pubDatetime: 2021-06-09T09:00:00Z
 modDatetime: 2021-06-09T09:00:00Z
 slug: browser-rendering-process-analysis

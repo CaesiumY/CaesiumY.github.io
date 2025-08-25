@@ -1,6 +1,5 @@
 ---
 title: "VS Code 개발자를 위한 필수 확장 프로그램 추천"
-author: Caesiumy
 pubDatetime: 2019-05-04T10:00:00Z
 modDatetime: 2024-01-21T10:00:00Z
 slug: vscode-recommended-extensions

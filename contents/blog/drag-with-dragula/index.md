@@ -1,6 +1,5 @@
 ---
 title: "Dragula로 손쉬운 드래그 앤 드롭 구현하기"
-author: Caesiumy
 pubDatetime: 2020-10-21T14:00:00Z
 modDatetime: 2020-10-21T14:00:00Z
 slug: dragula-drag-and-drop-implementation

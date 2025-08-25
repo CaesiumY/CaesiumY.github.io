@@ -1,6 +1,5 @@
 ---
 title: "🔍[2021 Dev-Matching: 웹 프론트엔드 개발자] 회고"
-author: Caesiumy
 pubDatetime: 2021-09-05T09:00:00Z
 description: "프로그래머스 Dev-Matching 웹 프론트엔드 개발자 회고"
 featured: false

@@ -1,6 +1,5 @@
 ---
 title: "[js] Fisher Yates Shuffle로 배열 섞기"
-author: Caesiumy
 pubDatetime: 2020-09-12T09:00:00Z
 modDatetime: 2020-09-12T09:00:00Z
 slug: fisher-yates-shuffle-algorithm
