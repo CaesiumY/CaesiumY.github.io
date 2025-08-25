@@ -4,31 +4,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Caesiumy's personal blog website, currently migrating from Gatsby to Astro.
+Caesiumy's personal blog website, fully migrated to AstroPaper template.
 
 ## Project Structure
 
-### Current Active Version (AstroPaper)
+### Active Project (AstroPaper)
 - **Path**: `./astro-paper/`  
 - **Branch**: `version-astro-paper`
 - **Framework**: Astro v5.12.0 (SSG) + AstroPaper v5.5.0 template
-- **Content**: Markdown blog posts (in `astro-paper/src/data/blog/`)
+- **Content**: Markdown blog posts (in `astro-paper/contents/blog/`)
+- **Status**: ✅ Production ready
 
-### Migration Version (Astro)
-- **Path**: `./astro/`  
-- **Branch**: `version-astro-1.0`
-- **Framework**: Astro v5 (SSG)
-- **Status**: Migrating to AstroPaper
-- **Content**: Markdown/MDX blog & about pages (in `astro/content/`)
-
-### Legacy Version (Gatsby)  
-- **Path**: `./gatsby-legacy/`
-- **Framework**: Gatsby v2 (React-based SSG)
-- **Status**: Maintenance mode
+### Legacy History
+- **Previous versions**: Available in Git commit history
+- **Status**: Gatsby and Astro versions cleanly migrated
 
 ## Development Commands
 
-### AstroPaper (Current Active)
+### AstroPaper (Production)
 ```bash
 cd astro-paper/
 pnpm install          # Install dependencies
@@ -39,24 +32,12 @@ pnpm format           # Code formatting (Prettier)
 pnpm lint             # ESLint linting
 ```
 
-### Astro (Migration in Progress)
-```bash
-cd astro/
-pnpm install          # Install dependencies
-pnpm dev              # Dev server (localhost:4321)
-pnpm build            # Production build
-pnpm preview          # Preview build
-```
-
-### Gatsby Legacy
-
 
 ## Content Management
 
-### Astro Content Collections
-- **Blog**: `astro/content/blog/` (Markdown/MDX)
-- **About**: `astro/content/about/` (Markdown/MDX)
-- **Schema**: Type definitions in `astro/src/content.config.ts`
+### AstroPaper Content Collections
+- **Blog**: `astro-paper/contents/blog/` (Markdown)
+- **Schema**: Type definitions in `astro-paper/src/content.config.ts`
 
 ### Frontmatter Structure
 ```yaml
@@ -69,38 +50,27 @@ heroImage: "/image.jpg"   # Optional
 
 ## Architecture
 
-### Astro Structure
-- **Content Collections**: Type-safe content management (`blog`, `about`) in `content/`
+### AstroPaper Structure
+- **Content**: Blog posts and pages in `contents/`
 - **Components**: `.astro` file-based components in `src/components/`
 - **Layouts**: Page templates in `src/layouts/`
 - **Routing**: File-system based routing (`src/pages/`)
 - **Configuration**: Content schema in `src/content.config.ts`
 
-### Frontend Development Guidelines
-- **Design Guidelines**: `astro/docs/frontend-design-guideline.md`
-  - **When to use**: Follow when creating/refactoring frontend components, hooks, or UI logic
-  - **Key areas**: Readability (naming, abstraction), Predictability (return types), Cohesion (feature organization), Coupling (state management)
-  - **Apply for**: Component abstractions, form validation, state hooks, conditional rendering, magic numbers
-
 **Directory Structure**:
 ```
-astro/
-├── content/           # Content files (separate from code)
-│   ├── blog/         # Blog posts (Markdown/MDX)
-│   └── about/        # About pages (Markdown/MDX)
-├── src/              # Source code only
+astro-paper/
+├── contents/          # Content files
+│   └── blog/         # Blog posts (Markdown)
+├── src/              # Source code
 │   ├── components/   # Reusable components
 │   ├── layouts/      # Page templates
 │   ├── pages/        # Route-based pages
-│   └── content.config.ts  # Content schema definitions
-└── public/           # Static assets
+│   ├── styles/       # Global styles
+│   └── utils/        # Utility functions
+├── public/           # Static assets
+└── astro.config.ts   # Astro configuration
 ```
-
-### Legacy Gatsby Structure  
-- **GraphQL**: Data query layer
-- **React Components**: JSX-based component system
-- **Plugin Ecosystem**: Rich plugin functionality
-- **Build Optimization**: Image optimization, code splitting, SEO
 
 ## Deployment
 
@@ -119,20 +89,24 @@ astro/
 
 ### Performance
 - Static Site Generation (SSG)
-- Image optimization (Astro/Gatsby)
+- Image optimization with Sharp
 - Bundle optimization
 - Lighthouse 100 score target
 
 ## Migration Status
 
+✅ **Migration Complete** (2025-08-25)
+
 Gatsby → Astro → AstroPaper migration:
-- ✅ Gatsby legacy (complete)
-- ✅ Basic Astro structure (complete)
-- ✅ Content Collections setup (complete)  
-- ✅ AstroPaper template adoption (in progress)
-- 🔄 AstroPaper customization in progress
-- 🔄 Content migration in progress
-- 🔄 SEO & performance optimization in progress
+- ✅ Gatsby legacy (archived)
+- ✅ Basic Astro structure (archived)
+- ✅ Content Collections setup (complete)
+- ✅ AstroPaper template adoption (complete)
+- ✅ AstroPaper customization (complete)
+- ✅ Content migration (15 posts migrated)
+- ✅ SEO & performance optimization (complete)
+- ✅ Korean localization (complete)
+- ✅ Legacy cleanup (complete)
 
 ## Testing Guidelines
 
