@@ -20,7 +20,16 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
+    remarkPlugins: [
+      [remarkToc, { heading: "(table[ -]of[ -])?contents?|toc|목차" }],
+      [
+        remarkCollapse,
+        {
+          test: /^(Table of contents|목차)$/,
+          summary: "목차 보기",
+        },
+      ],
+    ],
     shikiConfig: {
       // For more themes, visit https://shiki.style/themes
       themes: { light: "min-light", dark: "night-owl" },
