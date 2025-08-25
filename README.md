@@ -10,8 +10,6 @@
 **호스팅**: GitHub Pages  
 **검색**: Pagefind (정적 검색)
 
-<sub><sup>Template by <a href="https://github.com/satnaing/astro-paper">AstroPaper</a></sup></sub>
-
 ## 🚀 개발 시작하기
 
 ```bash
