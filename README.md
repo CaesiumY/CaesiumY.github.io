@@ -86,9 +86,3 @@ tags: ["개발", "블로그"] # 선택사항
 ## 📄 라이센스
 
 이 프로젝트는 [MIT 라이센스](LICENSE)를 따릅니다.
-
----
-
-<div align="center">
-  <p>Built with ❤️ using <a href="https://astro.build">Astro</a> and <a href="https://github.com/satnaing/astro-paper">AstroPaper</a></p>
-</div>
