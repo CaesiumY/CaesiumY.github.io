@@ -77,6 +77,16 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
         working-directory: ${{ env.BUILD_PATH }}
+      - name: Debug Environment Variables
+        run: |
+          echo "=== Environment Variables Debug ==="
+          echo "PUBLIC_GOOGLE_SITE_VERIFICATION: ${PUBLIC_GOOGLE_SITE_VERIFICATION:-'NOT_SET'}"
+          echo "PUBLIC_GOOGLE_ANALYTICS_ID: ${PUBLIC_GOOGLE_ANALYTICS_ID:-'NOT_SET'}"
+          echo "=== End Debug ==="
+        working-directory: ${{ env.BUILD_PATH }}
+        env:
+          PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ secrets.GOOGLE_SITE_VERIFICATION }}
+          PUBLIC_GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
       - name: Build with Astro
         run: |
           ${{ steps.detect-package-manager.outputs.runner }} run build
