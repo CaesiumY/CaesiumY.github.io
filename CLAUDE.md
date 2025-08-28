@@ -149,6 +149,19 @@ PUBLIC_GOOGLE_SITE_VERIFICATION=your-google-site-verification-value
   - Include the issue in the final response as a "Confirmation Required" item
   - Example: `// eslint-disable-next-line rule-name -- Reason: [detailed explanation]`
 
+### Work Verification Guidelines
+- **⚠️ IMPORTANT**: Always verify work by building and checking the `dist/` folder, not just the development server
+- **Build Verification Process**:
+  1. Run `pnpm build` to create production build
+  2. Check the generated files in `dist/` folder
+  3. Verify that all changes are properly reflected in the static output
+  4. Test critical paths and functionality in the built version
+- **Why Build Verification is Critical**:
+  - Development server may not reflect all build-time optimizations
+  - Static site generation (SSG) behavior differs from development mode
+  - Image optimization, bundle splitting, and other build processes only occur during build
+  - Some Astro features and optimizations are build-time only
+
 ### Component Development
 - Write reusable components
 - Define Props types
