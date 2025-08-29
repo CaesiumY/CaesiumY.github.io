@@ -32,5 +32,5 @@ export function getPath(
     return [basePath, slug].join("/");
   }
 
-  return [basePath, ...pathSegments, slug].join("/");
+  return [basePath, ...pathSegments].join("/");
 }
