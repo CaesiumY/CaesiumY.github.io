@@ -11,12 +11,12 @@ export interface Props {
 
 export async function getStaticPaths() {
   const allPosts = await getCollection("blog");
-  
+
   // 프로덕션 빌드에서는 보이지 않는 포스트(draft, 예약 발행)를 필터링
-  const posts = import.meta.env.PROD 
+  const posts = import.meta.env.PROD
     ? allPosts.filter(isPostVisible)
     : allPosts; // 개발 환경에서는 모든 포스트 포함
-  
+
   const postResult = posts.map(post => ({
     params: { slug: getPath(post.id, post.filePath, false) },
     props: { post },
