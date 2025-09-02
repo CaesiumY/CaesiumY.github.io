@@ -169,24 +169,38 @@ const isActive = (path: string) => {
 
 <script is:inline>
   (function () {
-    function bindThemeButton() {
-      const btn = document.querySelector('#theme-btn');
-      if (!btn) return;
-
-      const getMode = () => localStorage.getItem('theme') || 'system';
-      const setAria = (mode) => btn.setAttribute('aria-label', mode);
-
-      setAria(getMode());
-
-      btn.addEventListener('click', () => {
+    // 전역 플래그로 중복 방지
+    if (!window.__themeClickDelegated) {
+      window.__themeClickDelegated = true;
+      
+      // document에 이벤트 위임으로 클릭 리스너 등록 (View Transitions와 무관하게 유지)
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('#theme-btn');
+        if (!btn) return;
+        
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         const next = isDark ? 'light' : 'dark';
         window.__setTheme?.(next);
-        setAria(next);
-      }, { once: false });
+        
+        // 실제 저장된 모드로 aria-label 업데이트 (system 모드 고려)
+        setTimeout(() => {
+          const actualMode = localStorage.getItem('theme') || 'system';
+          btn.setAttribute('aria-label', actualMode);
+        }, 0);
+      });
+      
+      // aria-label 초기화 함수
+      function updateAriaLabel() {
+        const btn = document.querySelector('#theme-btn');
+        if (btn) {
+          const mode = localStorage.getItem('theme') || 'system';
+          btn.setAttribute('aria-label', mode);
+        }
+      }
+      
+      // 초기화 및 페이지 전환 시 aria-label 업데이트
+      updateAriaLabel();
+      document.addEventListener('astro:after-swap', updateAriaLabel);
     }
-
-    bindThemeButton();
-    document.addEventListener('astro:after-swap', bindThemeButton);
   })();
 </script>
