@@ -163,7 +163,71 @@ const structuredData = {
 
     <ClientRouter />
 
-    <script is:inline src="/toggle-theme.js"></script>
+    <script is:inline>
+      (function () {
+        const STORAGE_KEY = "theme";
+        const getStored = () => {
+          try {
+            return localStorage.getItem(STORAGE_KEY);
+          } catch {
+            return null;
+          }
+        };
+        const setStored = v => {
+          try {
+            localStorage.setItem(STORAGE_KEY, v);
+          } catch {}
+        };
+        const prefersDark = () =>
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+        function applyTheme(mode) {
+          const isDark =
+            mode === "dark" ||
+            (mode === "system" || mode == null ? prefersDark() : false);
+          document.documentElement.setAttribute(
+            "data-theme",
+            isDark ? "dark" : "light"
+          );
+          setStored(mode ?? "system");
+
+          const body = document.body;
+          if (body) {
+            const bg = getComputedStyle(body).backgroundColor;
+            const meta = document.querySelector("meta[name='theme-color']");
+            if (meta && bg) meta.setAttribute("content", bg);
+          }
+        }
+
+        const initMode = getStored() || "system";
+        applyTheme(initMode);
+
+        const mql = window.matchMedia
+          ? window.matchMedia("(prefers-color-scheme: dark)")
+          : null;
+        const onSystemChange = () => {
+          if ((getStored() || "system") === "system") applyTheme("system");
+        };
+        if (mql && mql.addEventListener)
+          mql.addEventListener("change", onSystemChange);
+
+        window.__setTheme = mode => applyTheme(mode);
+
+        document.addEventListener("astro:before-swap", event => {
+          const color =
+            document
+              .querySelector("meta[name='theme-color']")
+              ?.getAttribute("content") || "";
+          event.newDocument
+            .querySelector("meta[name='theme-color']")
+            ?.setAttribute("content", color);
+        });
+        document.addEventListener("astro:after-swap", () => {
+          applyTheme(getStored() || "system");
+        });
+      })();
+    </script>
   </head>
   <body>
     <slot />
