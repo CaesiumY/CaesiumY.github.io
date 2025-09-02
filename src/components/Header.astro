@@ -166,3 +166,27 @@ const isActive = (path: string) => {
   // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", toggleNav);
 </script>
+
+<script is:inline>
+  (function () {
+    function bindThemeButton() {
+      const btn = document.querySelector('#theme-btn');
+      if (!btn) return;
+
+      const getMode = () => localStorage.getItem('theme') || 'system';
+      const setAria = (mode) => btn.setAttribute('aria-label', mode);
+
+      setAria(getMode());
+
+      btn.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const next = isDark ? 'light' : 'dark';
+        window.__setTheme?.(next);
+        setAria(next);
+      }, { once: false });
+    }
+
+    bindThemeButton();
+    document.addEventListener('astro:after-swap', bindThemeButton);
+  })();
+</script>
