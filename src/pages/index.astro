@@ -1,12 +1,12 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
-import LinkButton from "@/components/LinkButton.astro";
-import Card from "@/components/Card.astro";
-import Hr from "@/components/Hr.astro";
+import Header from "@/layouts/components/Header.astro";
+import Footer from "@/layouts/components/Footer.astro";
+import Socials from "@/features/social/components/Socials.astro";
+import LinkButton from "@/shared/components/LinkButton.astro";
+import Card from "@/features/blog/components/Card.astro";
+import Hr from "@/shared/components/Hr.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";

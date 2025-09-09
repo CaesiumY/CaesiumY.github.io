@@ -1,15 +1,15 @@
 ---
 import { render, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import Tag from "@/components/Tag.astro";
-import Datetime from "@/components/Datetime.astro";
-import EditPost from "@/components/EditPost.astro";
-import ShareLinks from "@/components/ShareLinks.astro";
-import BackButton from "@/components/BackButton.astro";
-import BackToTopButton from "@/components/BackToTopButton.astro";
-import DraftBadge from "@/components/DraftBadge.astro";
+import Header from "@/layouts/components/Header.astro";
+import Footer from "@/layouts/components/Footer.astro";
+import Tag from "@/features/tags/components/Tag.astro";
+import Datetime from "@/features/blog/components/Datetime.astro";
+import EditPost from "@/features/blog/components/EditPost.astro";
+import ShareLinks from "@/features/blog/components/ShareLinks.astro";
+import BackButton from "@/layouts/components/Navigation/BackButton.astro";
+import BackToTopButton from "@/layouts/components/Navigation/BackToTopButton.astro";
+import DraftBadge from "@/features/blog/components/DraftBadge.astro";
 import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
