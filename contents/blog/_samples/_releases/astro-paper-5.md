@@ -12,7 +12,7 @@ description: "AstroPaper v5: keep the clean look, updates under the hood."
 
 At last, the long-awaited AstroPaper v5 is finally here. AstroPaper v5 keeps the same minimal & clean look, but comes with significant updates under the hood.
 
-![AstroPaper v5](./AstroPaper-v5.png)
+<!-- ![AstroPaper v5](./AstroPaper-v5.png) -->
 
 ## Table of contents
 
