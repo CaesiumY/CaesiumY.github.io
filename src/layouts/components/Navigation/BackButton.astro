@@ -1,5 +1,5 @@
 ---
-import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
+import { Icon } from "astro-icon/components";
 import LinkButton from "@/shared/components/LinkButton.astro";
 import { SITE } from "@/config";
 ---
@@ -12,7 +12,7 @@ import { SITE } from "@/config";
         href="/"
         class="focus-outline mt-8 mb-2 flex items-center hover:text-foreground/75"
       >
-        <IconChevronLeft class="inline-block size-6 rtl:rotate-180" />
+        <Icon name="ph:caret-left" class="inline-block size-6 rtl:rotate-180" size={24} />
         <span>뒤로 가기</span>
       </LinkButton>
     </div>

@@ -8,7 +8,7 @@ import LinkButton from "@/shared/components/LinkButton.astro";
 import Card from "@/features/blog/components/Card.astro";
 import Hr from "@/shared/components/Hr.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
-import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import { Icon } from "astro-icon/components";
 import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
 
@@ -88,7 +88,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     <div class="my-8 text-center">
       <LinkButton href="/posts/">
         All Posts
-        <IconArrowRight class="inline-block rtl:-rotate-180" />
+        <Icon name="ph:arrow-right" class="inline-block rtl:-rotate-180" size={20} />
       </LinkButton>
     </div>
   </main>

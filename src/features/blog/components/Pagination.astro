@@ -1,8 +1,7 @@
 ---
 import type { Page } from "astro";
 import type { CollectionEntry } from "astro:content";
-import IconArrowLeft from "@/assets/icons/IconArrowLeft.svg";
-import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import { Icon } from "astro-icon/components";
 import LinkButton from "@/shared/components/LinkButton.astro";
 
 export interface Props {
@@ -21,7 +20,7 @@ const { page } = Astro.props;
         class:list={["me-4 select-none", { "opacity-50": !page.url.prev }]}
         ariaLabel="이전 페이지"
       >
-        <IconArrowLeft class="inline-block rtl:rotate-180" />
+        <Icon name="ph:arrow-left" class="inline-block rtl:rotate-180" size={20} />
         이전
       </LinkButton>
       {page.currentPage} / {page.lastPage}
@@ -32,7 +31,7 @@ const { page } = Astro.props;
         ariaLabel="다음 페이지"
       >
         다음
-        <IconArrowRight class="inline-block rtl:rotate-180" />
+        <Icon name="ph:arrow-right" class="inline-block rtl:rotate-180" size={20} />
       </LinkButton>
     </nav>
   )

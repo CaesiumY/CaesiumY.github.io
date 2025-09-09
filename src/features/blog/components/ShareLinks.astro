@@ -1,6 +1,5 @@
 ---
-import IconCopy from "@/assets/icons/IconCopy.svg";
-import IconCheck from "@/assets/icons/IconCheck.svg";
+import { Icon } from "astro-icon/components";
 ---
 
 <div
@@ -14,13 +13,17 @@ import IconCheck from "@/assets/icons/IconCheck.svg";
       title="URL을 클립보드에 복사"
       aria-label="URL을 클립보드에 복사"
     >
-      <IconCopy
+      <Icon
+        name="ph:copy"
         id="copy-icon"
         class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 transition-all duration-300 group-hover:fill-transparent sm:scale-110"
+        size={24}
       />
-      <IconCheck
+      <Icon
+        name="ph:check"
         id="check-icon"
         class="absolute top-2 left-2 inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 text-green-600 opacity-0 transition-all duration-300 sm:top-1 sm:left-1"
+        size={24}
       />
     </button>
     <div
