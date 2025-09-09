@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Tag from "@/features/tags/components/Tag.astro";
+import Datetime from "@/features/blog/components/Datetime.astro";
+import EditPost from "@/features/blog/components/EditPost.astro";
+import DraftBadge from "@/features/blog/components/DraftBadge.astro";
+import { slugifyStr } from "@/utils/slugify";
+import { SITE } from "@/config";
+
+export interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+
+const {
+  title,
+  pubDatetime,
+  modDatetime,
+  timezone,
+  tags,
+  hideEditPost,
+  draft,
+} = post.data;
+---
+
+<!-- Post Title -->
+<h1
+  transition:name={slugifyStr(title)}
+  class="flex items-center text-2xl font-bold text-accent sm:text-3xl"
+>
+  {draft && <DraftBadge size="md" class="me-3" />}
+  <span>{title}</span>
+</h1>
+
+<!-- Post Metadata -->
+<div class="my-2 flex items-center gap-2">
+  <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
+  <span
+    aria-hidden="true"
+    class:list={[
+      "max-sm:hidden",
+      { hidden: !SITE.editPost.enabled || hideEditPost },
+    ]}>|</span
+  >
+  <EditPost {hideEditPost} {post} class="max-sm:hidden" />
+</div>
+
+<!-- Article Content Slot -->
+<slot />
+
+<hr class="my-8 border-dashed" />
+
+<!-- Mobile Edit Post Link -->
+<EditPost class="sm:hidden" {hideEditPost} {post} />
+
+<!-- Tags -->
+<ul class="mt-4 mb-8 sm:my-8">
+  {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
+</ul>

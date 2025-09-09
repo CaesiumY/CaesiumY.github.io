@@ -3,17 +3,12 @@ import { render, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/layouts/components/Header.astro";
 import Footer from "@/layouts/components/Footer.astro";
-import Tag from "@/features/tags/components/Tag.astro";
-import Datetime from "@/features/blog/components/Datetime.astro";
-import EditPost from "@/features/blog/components/EditPost.astro";
 import ShareLinks from "@/features/blog/components/ShareLinks.astro";
 import BackButton from "@/layouts/components/Navigation/BackButton.astro";
 import BackToTopButton from "@/layouts/components/Navigation/BackToTopButton.astro";
-import DraftBadge from "@/features/blog/components/DraftBadge.astro";
+import PostMetadata from "@/features/blog/components/PostMetadata.astro";
+import PostNavigation from "@/features/blog/components/PostNavigation.astro";
 import { getPath } from "@/utils/getPath";
-import { slugifyStr } from "@/utils/slugify";
-import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
-import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import { SITE } from "@/config";
 
 export interface Props {
@@ -30,9 +25,6 @@ const {
   canonicalURL,
   pubDatetime,
   modDatetime,
-  timezone,
-  tags,
-  hideEditPost,
   draft,
 } = post.data;
 
@@ -67,19 +59,6 @@ const layoutProps = {
   scrollSmooth: true,
 };
 
-/* ========== Prev/Next Posts ========== */
-
-const allPosts = posts.map(({ data: { title }, id, filePath }) => ({
-  id,
-  title,
-  filePath,
-}));
-
-const currentPostIndex = allPosts.findIndex(a => a.id === post.id);
-
-const prevPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
-const nextPost =
-  currentPostIndex !== allPosts.length ? allPosts[currentPostIndex + 1] : null;
 ---
 
 <Layout {...layoutProps}>
@@ -94,38 +73,14 @@ const nextPost =
     data-pagefind-body={!draft}
     data-pagefind-ignore={draft ? "all" : undefined}
   >
-    <h1
-      transition:name={slugifyStr(title)}
-      class="flex items-center text-2xl font-bold text-accent sm:text-3xl"
-    >
-      {draft && <DraftBadge size="md" class="me-3" />}
-      <span>{title}</span>
-    </h1>
-    <div class="my-2 flex items-center gap-2">
-      <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
-      <span
-        aria-hidden="true"
-        class:list={[
-          "max-sm:hidden",
-          { hidden: !SITE.editPost.enabled || hideEditPost },
-        ]}>|</span
+    <PostMetadata {post}>
+      <article
+        id="article"
+        class="app-prose mx-auto mt-8 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
       >
-      <EditPost {hideEditPost} {post} class="max-sm:hidden" />
-    </div>
-    <article
-      id="article"
-      class="app-prose mx-auto mt-8 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
-    >
-      <Content />
-    </article>
-
-    <hr class="my-8 border-dashed" />
-
-    <EditPost class="sm:hidden" {hideEditPost} {post} />
-
-    <ul class="mt-4 mb-8 sm:my-8">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
-    </ul>
+        <Content />
+      </article>
+    </PostMetadata>
 
     <BackToTopButton />
 
@@ -133,215 +88,22 @@ const nextPost =
 
     <hr class="my-6 border-dashed" />
 
-    <!-- Previous/Next Post Buttons -->
-    <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-      {
-        prevPost && (
-          <a
-            href={getPath(prevPost.id, prevPost.filePath)}
-            class="flex w-full gap-1 hover:opacity-75"
-          >
-            <IconChevronLeft class="inline-block flex-none rtl:rotate-180" />
-            <div>
-              <span>이전 글</span>
-              <div class="text-sm text-accent/85">{prevPost.title}</div>
-            </div>
-          </a>
-        )
-      }
-      {
-        nextPost && (
-          <a
-            href={getPath(nextPost.id, nextPost.filePath)}
-            class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"
-          >
-            <div>
-              <span>다음 글</span>
-              <div class="text-sm text-accent/85">{nextPost.title}</div>
-            </div>
-            <IconChevronRight class="inline-block flex-none rtl:rotate-180" />
-          </a>
-        )
-      }
-    </div>
+    <PostNavigation {posts} currentPostId={post.id} />
   </main>
   <Footer />
 </Layout>
 
-<script is:inline data-astro-rerun>
-  /** Create a progress indicator
-   *  at the top */
-  function createProgressBar() {
-    // Avoid duplicate bars when navigating with client router
-    if (document.getElementById("myBar")) return;
-    // Create the main container div
-    const progressContainer = document.createElement("div");
-    progressContainer.className =
-      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
-    progressContainer.id = "reading-progress-container";
+<script>
+  import { initializeProgressBar } from "@/features/blog/scripts/progressBar";
+  import { addHeadingLinks } from "@/features/blog/scripts/headingLinks";
+  import { attachCopyButtons } from "@/features/blog/scripts/copyButton";
 
-    // Create the progress bar div
-    const progressBar = document.createElement("div");
-    progressBar.className = "progress-bar h-1 w-full bg-accent";
-    progressBar.id = "myBar";
-    // Use transform for GPU-accelerated updates
-    progressBar.style.transformOrigin = "left center";
-    progressBar.style.willChange = "transform";
-    progressBar.style.transform = "scaleX(0)";
-
-    // Append the progress bar to the progress container
-    progressContainer.appendChild(progressBar);
-
-    // Append the progress container to the document body or any other desired parent element
-    document.body.appendChild(progressContainer);
-  }
-  createProgressBar();
-
-  /** Update the progress bar
-   *  when user scrolls */
-  function updateScrollProgress() {
-    let ticking = false;
-    let maxScrollable = 1;
-    const controller = new AbortController();
-    const { signal } = controller;
-
-    function recalcScrollable() {
-      const docEl = document.documentElement;
-      maxScrollable = Math.max(1, docEl.scrollHeight - docEl.clientHeight);
-    }
-
-    function handle() {
-      const docEl = document.documentElement;
-      const winScroll = docEl.scrollTop || document.body.scrollTop || 0;
-      const raw = (winScroll / maxScrollable) * 100;
-      const scrolled = Math.max(0, Math.min(100, raw));
-
-      const myBar = document.getElementById("myBar");
-      if (myBar) {
-        myBar.style.transform = `scaleX(${scrolled / 100})`;
-      }
-    }
-
-    function onScroll() {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          handle();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }
-
-    document.addEventListener("scroll", onScroll, { passive: true, signal });
-    window.addEventListener("resize", () => {
-      recalcScrollable();
-      onScroll();
-    }, { signal });
-    window.addEventListener("load", () => {
-      recalcScrollable();
-      handle();
-    }, { once: true, signal });
-
-    document.addEventListener("astro:before-swap", () => {
-      controller.abort();
-      const container = document.getElementById("reading-progress-container");
-      if (container) container.remove();
-    }, { once: true });
-
-    recalcScrollable();
-    handle();
-  }
-  updateScrollProgress();
-
-  /** Attaches links to headings in the document,
-   *  allowing sharing of sections easily */
-  function addHeadingLinks() {
-    const headings = Array.from(
-      document.querySelectorAll("h2, h3, h4, h5, h6")
-    );
-    for (const heading of headings) {
-      heading.classList.add("group");
-      const link = document.createElement("a");
-      link.className =
-        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
-      link.href = "#" + heading.id;
-
-      const span = document.createElement("span");
-      span.ariaHidden = "true";
-      span.innerText = "#";
-      link.appendChild(span);
-      heading.appendChild(link);
-    }
-  }
+  // Initialize all post detail features
+  initializeProgressBar();
   addHeadingLinks();
-
-  /** Attaches copy buttons to code blocks in the document,
-   * allowing users to copy code easily. */
-  function attachCopyButtons() {
-    const codeBlocks = Array.from(document.querySelectorAll("pre"));
-
-    for (const codeBlock of codeBlocks) {
-      const wrapper = document.createElement("div");
-      wrapper.style.position = "relative";
-
-      // Check if --file-name-offset custom property exists
-      const computedStyle = getComputedStyle(codeBlock);
-      const hasFileNameOffset =
-        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
-
-      // Determine the top positioning class
-      const topClass = hasFileNameOffset
-        ? "top-(--file-name-offset)"
-        : "-top-3";
-
-      const copyButton = document.createElement("button");
-      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted p-1.5 text-foreground hover:bg-accent/10 focus:bg-accent/10 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all duration-200 group`;
-      copyButton.setAttribute("aria-label", "코드 복사");
-      copyButton.setAttribute("title", "코드를 클립보드에 복사");
-
-      // Create copy icon
-      const copyIconHtml = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="copy-icon opacity-90 group-hover:opacity-100 transition-opacity duration-200"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 8m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /><path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2" /></svg>`;
-
-      // Create check icon
-      const checkIconHtml = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="check-icon opacity-0 absolute top-1.5 left-1.5 transition-opacity duration-200 text-green-600"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>`;
-
-      copyButton.innerHTML = copyIconHtml + checkIconHtml;
-      codeBlock.setAttribute("tabindex", "0");
-      codeBlock.appendChild(copyButton);
-
-      // wrap codebock with relative parent element
-      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
-      wrapper.appendChild(codeBlock);
-
-      copyButton.addEventListener("click", async () => {
-        await copyCode(codeBlock, copyButton);
-      });
-    }
-
-    async function copyCode(block, button) {
-      const code = block.querySelector("code");
-      const text = code?.innerText;
-
-      await navigator.clipboard.writeText(text ?? "");
-
-      // visual feedback that task is completed
-      const copyIcon = button.querySelector(".copy-icon");
-      const checkIcon = button.querySelector(".check-icon");
-
-      if (copyIcon && checkIcon) {
-        copyIcon.style.opacity = "0";
-        checkIcon.style.opacity = "1";
-
-        setTimeout(() => {
-          copyIcon.style.opacity = "0.9";
-          checkIcon.style.opacity = "0";
-        }, 700);
-      }
-    }
-  }
   attachCopyButtons();
 
-  /* Go to page start after page swap */
+  // Go to page start after page swap
   document.addEventListener("astro:after-swap", () =>
     window.scrollTo({ left: 0, top: 0, behavior: "instant" })
   );
