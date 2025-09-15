@@ -10,7 +10,7 @@ ogImage: "./dragula_logo.png"
 description: "Dragula 라이브러리를 활용한 직관적인 드래그 앤 드롭 UI 구현 방법과 실제 프로젝트 적용 사례"
 ---
 
-<!-- ![dragula logo](./dragula_logo.png) -->
+![dragula logo](./dragula_logo.png)
 
 # dragula란?
 

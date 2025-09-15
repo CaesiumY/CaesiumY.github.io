@@ -12,7 +12,7 @@ tags:
   - online-course
 ---
 
-<!-- ![certification, 수료증](./certificate.png) -->
+![certification, 수료증](./certificate.png)
 
 # 유다시티 ⚛리액트 나노디그리란?
 
@@ -45,35 +45,35 @@ tags:
 
 ### 1. [my-reads](https://github.com/CaesiumY/reactnd-myreads)
 
-<!-- ![myreads](./myreads.png) -->
+![myreads](./myreads.png)
 
 프로젝트의 요구사항대로 **스스로** 웹 앱을 만드는 과정입니다. 기본적인 스타일은 제공되니, `react` 에만 집중할 수 있습니다. `외부 api`를 가져와서 개발해 `비동기 프로그래밍` 공부에도 도움이 됩니다. 다만 그 요구사항이 꽤 까다로워서 2번 정도 통과가 반려되었습니다... 하하하... 디테일이 필요한 프로젝트입니다.
 
 ### 2. [chirper](https://github.com/CaesiumY/reactnd-chirper)
 
-<!-- ![chirper](./chirper.png) -->
+![chirper](./chirper.png)
 
 `redux`에 대해 배우며 강의자와 같이 만들어나가는 프로젝트입니다. **트위터**를 클론하듯이 만들게 되고, `JSON`과 `DB` 공부에 도움이 됩니다.
 
 ### 3. [would-you-rather?](https://github.com/CaesiumY/reactnd-would-you-rather)
 
-<!-- ![would-you-rather](./would-you-rather.png) -->
+![would-you-rather](./would-you-rather.png)
 
 `reactnd`의 최종 보스라고 표현해도 무방합니다. 그동안 공부해온 리액트 지식을 십분 발휘하여, 스스로 맨바닥부터 하나하나 쌓아올려야 합니다. 스타일 가이드도 없고, 제공되는 템플릿이나 보일러 플레이트 또한 없습니다. 오직 요구사항 뿐입니다.
 
-<!-- ![review](./review.png) -->
+![review](./review.png)
 
 이번엔 한 번에 통과함과 동시에, 멘토로부터 칭찬도 크게 들었습니다😎!
 
 ### 4. [udacifitness](https://github.com/CaesiumY/reactnd-UdaciFitness)
 
-<!-- ![udacifitness](./udacifitness.jpg) -->
+![udacifitness](./udacifitness.jpg)
 
 `react native`를 처음 접하며 강의자와 같이 만들어가는 프로젝트입니다. 어려운 점은 없습니다. `android` 와 `ios` 간의 `UI`, `UX` 차이점을 배울 수 있습니다.
 
 ### 5. [flash cards](https://github.com/CaesiumY/reactnd-mobile-flashcards)
 
-<!-- ![flashcards](./flashcards.jpg) -->
+![flashcards](./flashcards.jpg)
 
 이번에는 마지막 프로젝트이자 스스로 만드는 프로젝트입니다. `would-you-rather` 프로젝트처럼 처음부터 만들어야 하지만, 이러이러하게 만들면 좋다하고 샘플 사진을 보여줍니다. ~~물론 샘플은 칙칙합니다...~~ 여기까지 수업을 착실히 들었다면 어려운 점은 스타일링 뿐일 겁니다.
 

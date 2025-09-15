@@ -38,11 +38,11 @@ description: "DOM 생성부터 화면 출력까지, 브라우저의 렌더링 �
 
 ## 1. Object-model 생성
 
-<!-- ![dom](./dom.png) -->
+![dom](./dom.png)
 
 - `HTML`로 부터 `DOM(Document Object Model)`을 생성합니다. 대략 위 그림처럼 생겼어요.
 
-<!-- ![cssom](./cssom-tree.png) -->
+![cssom](./cssom-tree.png)
 
 - `CSS`로 부터 `CSSOM(CSS Object Model)`을 생성합니다. 둘 다 트리 구조로 되어있군요.
 
@@ -54,7 +54,7 @@ description: "DOM 생성부터 화면 출력까지, 브라우저의 렌더링 �
 
 자 이제 만들어 놓은 `DOM`과 `CSSOM`을 합쳐볼 차례입니다.
 
-<!-- ![render-tree](./render-tree-construction.png) -->
+![render-tree](./render-tree-construction.png)
 
 - 위 그림과 같이 `DOM`과 `CSSOM`이 합쳐져 `Render Tree`를 형성합니다.
 
@@ -66,7 +66,7 @@ description: "DOM 생성부터 화면 출력까지, 브라우저의 렌더링 �
 
 `렌더링 트리`가 완성되었으니 이제 공간을 가늠해볼 차례입니다. 그림으로 치면 밑그림 정도죠.
 
-<!-- ![layout](./layout-viewport.png) -->
+![layout](./layout-viewport.png)
 
 위 그림에서처럼 `뷰포트` 내부에서 `렌더링 트리`가 가진 `노드`들의 위치를 계산합니다.
 
@@ -74,7 +74,7 @@ description: "DOM 생성부터 화면 출력까지, 브라우저의 렌더링 �
 
 자 모든 것이 준비되었으니 이제 그림을 그릴 일만 남았네요!
 
-<!-- <!-- ![painting](./painting.gif) --> -->
+![painting](./painting.gif)
 
 - 시간이 가장 많이 걸리는 부분입니다. 이제 메인이니까요.
 

@@ -11,7 +11,7 @@ tags:
   - management
 ---
 
-<!-- ![trello](./trello_thumbnail.png) -->
+![trello](./trello_thumbnail.png)
 
 # Trello를 통한 개발 여정
 

@@ -10,7 +10,7 @@ ogImage: "./undraw_Contrast_re_hc7k.png"
 description: "무한 스크롤, 지연 로딩, 애니메이션 트리거를 위한 Intersection Observer 실전 가이드"
 ---
 
-<!-- ![thumbnail](./undraw_Contrast_re_hc7k.png) -->
+![thumbnail](./undraw_Contrast_re_hc7k.png)
 
 ## 0. Intersection Observer 를 해석한다면
 
@@ -32,7 +32,7 @@ description: "무한 스크롤, 지연 로딩, 애니메이션 트리거를 위�
 
 여기서 특정한 뷰포트는 **우리가 보는 문서의 테두리**가 될 수도 있고, **특정한 요소**가 될 수도 있습니다.
 
-<!-- ![기생충-선넘는](./기생충선넘네.gif) -->
+![기생충-선넘는](./기생충선넘네.gif)
 
 유명한 영화인 기생충의 한 장면처럼
 이렇게 관리인이(요소가) 선을(뷰포트의 테두리를) 넘는 모습을 바라보는 기우가 바로 `Intersection Observer`인 것입니다!
@@ -43,7 +43,7 @@ description: "무한 스크롤, 지연 로딩, 애니메이션 트리거를 위�
 
 > 게다가 `scroll` 이벤트의 성능 최적화를 위해선 `throttle` 같은 것도 고려를...
 
-<!-- ![선넘네](./둘리선넘네.jpg) -->
+![선넘네](./둘리선넘네.jpg)
 
 ## 2. 사용하기
 
@@ -114,7 +114,7 @@ let options = {
 
 > 이렇게 하면 `Intersection Observer`가 **지금 선을 넘어서 우리가 볼 수 있는 곳에 닿고 있습니다!** 라고 우리에게 친절히 알려줍니다!
 
-<!-- ![선을넘는](./선을넘는.jpg) -->
+![선을넘는](./선을넘는.jpg)
 
 ## 3. 사용처
 

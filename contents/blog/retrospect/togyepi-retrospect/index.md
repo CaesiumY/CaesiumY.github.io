@@ -11,7 +11,7 @@ tags:
   - renewal
 ---
 
-<!-- ![thumbnail](./thumbnail.png) -->
+![thumbnail](./thumbnail.png)
 
 # 결과부터 보여주기
 
@@ -84,7 +84,7 @@ Js에서 **TypeScript**를 사용했습니다.
 
 ## UI 개편
 
-<!-- ![chirper](./chirper.png) -->
+![chirper](./chirper.png)
 
 화면 구성을 완전히 새롭게 했습니다.
 
@@ -153,7 +153,7 @@ Firebase를 통해 서버리스 아키텍처의 장점을 체험할 수 있었�
 
 리뉴얼 후 Lighthouse로 성능을 측정해보았습니다.
 
-<!-- ![lighthouse_result](./lighthouse_result.png) -->
+![lighthouse_result](./lighthouse_result.png)
 
 # 마무리
 

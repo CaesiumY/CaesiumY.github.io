@@ -11,7 +11,7 @@ tags:
   - programmers
 ---
 
-<!-- ![banner](./b_banner.png) -->
+![banner](./b_banner.png)
 
 [<공고 바로가기>](https://programmers.co.kr/competitions/1582)
 

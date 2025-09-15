@@ -13,7 +13,7 @@ description: "AstroPaper Version 3: Elevating Your Web Experience with Astro v3 
 
 We're excited to announce the release of AstroPaper v3, packed with new features, enhancements, and bug fixes to elevate your web development experience. Let's dive into the highlights of this release:
 
-<!-- ![AstroPaper v3](./AstroPaper-v3.png) -->
+![AstroPaper v3](./AstroPaper-v3.png)
 
 ## Table of contents
 
@@ -34,7 +34,7 @@ In the "Recent Section", only non-featured posts will be displayed to avoid dupl
 
 ### Update OG Image Generation Logic
 
-![Example OG Image](https://user-images.githubusercontent.com/40914272/269252964-a0dc6735-80f7-41ed-8e74-4d4d70f96891.png) -->
+![Example OG Image](https://user-images.githubusercontent.com/40914272/269252964-a0dc6735-80f7-41ed-8e74-4d4d70f96891.png)
 
 We've updated the logic for automatic OG image generation, making it even more reliable and efficient. Besides, it now supports special characters in post titles, ensuring accurate, flexible and eye-catching social media previews.
 

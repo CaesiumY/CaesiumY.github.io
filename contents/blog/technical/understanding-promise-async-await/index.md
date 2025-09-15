@@ -10,7 +10,7 @@ ogImage: "./promise_thumbnail.png"
 description: "Promise의 동작 원리부터 Async/Await 패턴까지, JavaScript 비동기 처리 완벽 가이드"
 ---
 
-<!-- ![article_thumbnail](./promise_thumbnail.png) -->
+![article_thumbnail](./promise_thumbnail.png)
 
 > [썸네일 메이커(링크)](https://velog.io/@oneook/%EC%8D%B8%EB%84%A4%EC%9D%BC-%EB%A9%94%EC%9D%B4%EC%BB%A4Thumbnail-Maker-Toy-Project)
 > 잘 만들었으니 다들 가서 확인해보세요!

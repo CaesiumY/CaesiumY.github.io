@@ -77,7 +77,7 @@ int main() {
 
 # 추가
 
-<!-- <!-- ![boostcourse_review](./boostcourse_review.png) --> -->
+![boostcourse_review](./boostcourse_review.png)
 
 나중에 올려주신 풀이를 보니, 오히려 내가 추가로 낸 2번 풀이가 문제 의도였다고 하신다...
 
