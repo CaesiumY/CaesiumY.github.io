@@ -10,8 +10,9 @@ AI가 제목을 분석하여 최적화된 블로그 포스트 구조를 자동 �
 
 ## Arguments
 - **title** (필수) - 블로그 글 제목
-- **--category** - 카테고리 지정 (기본값: technical)
-  - `technical`, `career`, `retrospect`, `project`, `algorithm`, `tools`
+- **--category** - 카테고리 지정 (기본값: technical)  
+  - 기존 카테고리 사용을 권장하나, 콘텐츠 특성에 따라 새 카테고리 생성 가능
+  - **새 카테고리**: 필요시 새 카테고리명 지정 가능 (자동으로 디렉토리 생성)
 - **--tags** - 태그 목록 (쉼표로 구분하여 수동 지정)
 - **--featured** - 주요 글로 설정 (기본값: false)
 - **--draft** - 초안 상태로 생성 (기본값: true)
@@ -136,8 +137,11 @@ ogImage: "./hero-image.png"
 # 기본 사용 - AI가 모든 것을 자동 생성
 /blog-gen "TypeScript 제네릭 마스터하기"
 
-# 카테고리 지정
+# 카테고리 지정 (기존 카테고리)
 /blog-gen "토스 면접 후기와 합격 전략" --category career
+
+# 새 카테고리 생성
+/blog-gen "블록체인 기초 이해하기" --category blockchain
 
 # 주요 글로 생성
 /blog-gen "2024년 프론트엔드 트렌드 총정리" --featured
