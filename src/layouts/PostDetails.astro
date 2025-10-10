@@ -78,6 +78,18 @@ const layoutProps = {
         id="article"
         class="app-prose mx-auto mt-8 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
       >
+        {
+          ogImageUrl && (
+            <img
+              src={ogImageUrl}
+              alt={`${title} 썸네일`}
+              width={1200}
+              height={630}
+              class="w-full h-auto rounded-lg mb-8"
+              loading="lazy"
+            />
+          )
+        }
         <Content />
       </article>
     </PostMetadata>
