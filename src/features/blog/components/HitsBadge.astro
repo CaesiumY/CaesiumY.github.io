@@ -1,0 +1,27 @@
+---
+export interface Props {
+  url: string;
+  class?: string;
+}
+
+const { url, class: className } = Astro.props;
+
+// MyHits 서비스를 위한 URL 인코딩
+const encodedUrl = encodeURIComponent(url);
+
+// MyHits 배지 URL - deprecated된 hits.seeyoufarm.com을 대체하는 현대적인 서비스
+const badgeUrl = `https://myhits.vercel.app/api/hit/${encodedUrl}?color=blue&label=hits&size=small`;
+---
+
+<a
+  href="https://myhits.vercel.app"
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={["inline-flex items-center", className]}
+>
+  <img
+    src={badgeUrl}
+    alt="방문자 수"
+    loading="lazy"
+  />
+</a>

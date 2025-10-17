@@ -4,8 +4,10 @@ import Tag from "@/features/tags/components/Tag.astro";
 import Datetime from "@/features/blog/components/Datetime.astro";
 import EditPost from "@/features/blog/components/EditPost.astro";
 import DraftBadge from "@/features/blog/components/DraftBadge.astro";
+import HitsBadge from "@/features/blog/components/HitsBadge.astro";
 import { slugifyStr } from "@/utils/slugify";
 import { SITE } from "@/config";
+import { getPath } from "@/utils/getPath";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -22,6 +24,10 @@ const {
   hideEditPost,
   draft,
 } = post.data;
+
+// 현재 포스트의 전체 URL 생성 (방문자 배지 추적용)
+const postPath = getPath(post.id, post.filePath);
+const postUrl = new URL(postPath, Astro.site || SITE.website).href;
 ---
 
 <!-- Post Title -->
@@ -34,7 +40,7 @@ const {
 </h1>
 
 <!-- Post Metadata -->
-<div class="my-2 flex items-center gap-2">
+<div class="my-2 flex flex-wrap items-center gap-2">
   <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
   <span
     aria-hidden="true"
@@ -44,6 +50,11 @@ const {
     ]}>|</span
   >
   <EditPost {hideEditPost} {post} class="max-sm:hidden" />
+</div>
+
+<!-- Visitor Counter Badge -->
+<div class="my-2">
+  <HitsBadge url={postUrl} />
 </div>
 
 <!-- Article Content Slot -->
