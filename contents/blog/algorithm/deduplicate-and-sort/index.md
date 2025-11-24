@@ -5,7 +5,7 @@ modDatetime: 2020-09-04T09:00:00Z
 slug: deduplicate-and-sort-algorithm
 featured: false
 draft: false
-tags: ["algorithm", "baekjoon", "c", "sorting", "deduplication", "array"]
+tags: ["algorithm", "coding-test", "c", "sorting", "deduplication", "array"]
 description: "백준 10867번 문제 해결: N개의 정수를 오름차순으로 정렬하되 같은 정수는 한 번만 출력하는 알고리즘 구현"
 ---
 

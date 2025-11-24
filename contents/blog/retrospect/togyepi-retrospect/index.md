@@ -7,7 +7,6 @@ draft: false
 tags:
   - retrospect
   - project
-  - togyepi
   - renewal
 ---
 

@@ -5,7 +5,7 @@ modDatetime: 2020-09-05T09:00:00Z
 slug: deduplicate-and-sort-algorithm-2
 featured: false
 draft: false
-tags: ["algorithm", "baekjoon", "c", "sorting", "optimization"]
+tags: ["algorithm", "coding-test", "c", "sorting", "optimization"]
 description: "백준 10867번 문제의 최적화된 해결 방법: 해시 테이블 개념을 활용한 효율적인 중복 제거 및 정렬"
 ---
 

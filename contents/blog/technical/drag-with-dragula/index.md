@@ -5,7 +5,7 @@ modDatetime: 2020-10-21T14:00:00Z
 slug: dragula-drag-and-drop-implementation
 featured: false
 draft: false
-tags: ["javascript", "dragula", "drag-drop", "ui", "library", "frontend"]
+tags: ["javascript", "web", "drag-drop", "ui", "library", "frontend"]
 ogImage: "./dragula_logo.png"
 description: "Dragula 라이브러리를 활용한 직관적인 드래그 앤 드롭 UI 구현 방법과 실제 프로젝트 적용 사례"
 ---
