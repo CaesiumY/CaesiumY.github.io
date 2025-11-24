@@ -5,7 +5,7 @@ pubDatetime: 2025-10-10T00:00:00Z
 modDatetime: 2025-10-10T00:00:00Z
 featured: true
 draft: false
-tags: ["nextjs", "translation", "react", "beta"]
+tags: ["next-js", "translation", "react", "beta"]
 ---
 
 > 이 문서는 Next.js 16 Beta 공식 블로그 글의 한글 번역입니다.

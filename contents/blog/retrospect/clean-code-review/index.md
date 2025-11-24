@@ -8,7 +8,7 @@ tags:
   - retrospect
   - book
   - clean-code
-  - best-practices
+  - best-practice
 ---
 
 ![book](./book.jpg)
