@@ -5,7 +5,7 @@ modDatetime: 2024-01-21T10:00:00Z
 slug: vscode-recommended-extensions
 featured: false
 draft: false
-tags: ["vscode", "development", "productivity", "extensions", "tools"]
+tags: ["vscode", "development", "productivity", "extension", "tools"]
 ogImage: "./vscode_icon.png"
 description: "개발 생산성을 극대화하는 VS Code 확장 프로그램 모음: 협업, 테마, 편의성 도구 추천"
 ---

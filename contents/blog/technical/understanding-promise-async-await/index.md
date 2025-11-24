@@ -5,7 +5,7 @@ modDatetime: 2021-08-23T15:00:00Z
 slug: javascript-promise-async-await-guide
 featured: false
 draft: false
-tags: ["javascript", "promise", "async-await", "asynchronous", "es6", "tutorial", "parallel"]
+tags: ["javascript", "async", "es6", "tutorial", "parallel"]
 ogImage: "./promise_thumbnail.png"
 description: "Promise의 동작 원리부터 Async/Await 패턴까지, JavaScript 비동기 처리 완벽 가이드"
 ---
