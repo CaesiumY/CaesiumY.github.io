@@ -6,10 +6,10 @@ slug: how-do-i-develop-my-portfolio-and-blog
 featured: false
 draft: true
 tags:
-  - NextJS
-  - TailwindCSS
-  - HeadlessCMS
-  - Blog
+  - nextjs
+  - tailwindcss
+  - headless-cms
+  - blog
 description:
   "EXAMPLE POST: My experience about developing my first portfolio website and a blog
   using NextJS and a headless CMS."
