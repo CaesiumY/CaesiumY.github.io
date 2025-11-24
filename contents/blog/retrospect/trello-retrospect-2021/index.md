@@ -5,7 +5,7 @@ description: "트렐로를 활용한 개발 프로젝트 관리 회고"
 featured: false
 draft: false
 tags:
-  - review
+  - retrospect
   - project
   - trello
   - management

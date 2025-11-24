@@ -5,7 +5,7 @@ description: "프로그래머스 Dev-Matching 웹 프론트엔드 개발자 회�
 featured: false
 draft: false
 tags:
-  - review
+  - retrospect
   - frontend
   - career
   - programmers

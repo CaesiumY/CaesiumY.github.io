@@ -5,7 +5,7 @@ description: "결과 사진이랑 다 깃허브에 올려두었습니다."
 featured: false
 draft: false
 tags:
-  - review
+  - retrospect
   - project
   - togyepi
   - renewal

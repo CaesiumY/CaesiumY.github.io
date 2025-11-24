@@ -5,7 +5,7 @@ description: "로버트 C. 마틴의 클린 코드 서적 리뷰"
 featured: false
 draft: false
 tags:
-  - review
+  - retrospect
   - book
   - clean-code
   - best-practices

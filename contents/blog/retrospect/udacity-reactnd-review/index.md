@@ -5,7 +5,7 @@ description: "일명 `Udacity React Nanodegree.` 뒤의 `React Nanodegree`는 �
 featured: false
 draft: false
 tags:
-  - review
+  - retrospect
   - react
   - udacity
   - education

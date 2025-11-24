@@ -5,7 +5,6 @@ description: "~~프엔(X) 그냥 몬스터(O)~~"
 featured: false
 draft: false
 tags:
-  - review
   - retrospect
   - "2021"
   - career
