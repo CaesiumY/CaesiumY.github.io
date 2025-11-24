@@ -4,6 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/layouts/components/Header.astro";
 import Footer from "@/layouts/components/Footer.astro";
 import ShareLinks from "@/features/blog/components/ShareLinks.astro";
+import Comments from "@/features/blog/components/Comments";
 import BackButton from "@/layouts/components/Navigation/BackButton.astro";
 import BackToTopButton from "@/layouts/components/Navigation/BackToTopButton.astro";
 import PostMetadata from "@/features/blog/components/PostMetadata.astro";
@@ -97,6 +98,8 @@ const layoutProps = {
     <BackToTopButton />
 
     <ShareLinks />
+
+    <Comments client:only="react" />
 
     <hr class="my-6 border-dashed" />
 

@@ -1,3 +1,5 @@
+import type { GiscusProps } from "@giscus/react";
+
 export const SITE = {
   website: "https://caesiumy.dev", // replace this with your deployed domain
   profile: "https://github.com/caesiumy",
@@ -20,3 +22,17 @@ export const SITE = {
   lang: "ko", // html lang code. Set this empty and default will be "en"
   timezone: "Asia/Seoul", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 } as const;
+
+export const GISCUS: GiscusProps = {
+  repo: "CaesiumY/CaesiumY.github.io",
+  repoId: "MDEwOlJlcG9zaXRvcnkxMjcyNzg1NDk=",
+  category: "General",
+  categoryId: "DIC_kwDOB5Yd1c4Cy3Ow",
+  mapping: "pathname",
+  strict: "0",
+  reactionsEnabled: "1",
+  emitMetadata: "0",
+  inputPosition: "top",
+  lang: "ko",
+  loading: "lazy",
+};
