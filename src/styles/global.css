@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./typography.css";
+@import "./print.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
@@ -84,3 +85,4 @@ html[data-theme="dark"] {
 :target {
   scroll-margin-block: 1rem;
 }
+

@@ -117,7 +117,7 @@ AI Agents 협업 코딩과 아키텍처 설계 역량을 바탕으로 팀의 개
 
 ### [마헤 뮤지컬 사이트](https://musical-ticketing.vercel.app/) (2022.04)
 
-- 웹 폰트 최적화 등을 통해 **Lighthouse 성능 점수 100점(All Green)** 달성
+- 웹 폰트 최적화 등을 통해 Lighthouse 성능 점수 100점(All Green) 달성
 
 ---
 
