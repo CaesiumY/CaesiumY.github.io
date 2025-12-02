@@ -47,7 +47,7 @@ AI Agents 협업 코딩과 아키텍처 설계 역량을 바탕으로 팀의 개
 
 ## Experience
 
-### [팀스파르타](https://teamsparta.co/)
+### [팀스파르타](https://nbcamp.spartacodingclub.kr/frontend)
 
 **내배캠 리액트 트랙 튜터 (2023.12 ~ 2025.05, 1년 6개월)**
 
@@ -55,11 +55,11 @@ AI Agents 협업 코딩과 아키텍처 설계 역량을 바탕으로 팀의 개
 - 반복되는 기술적 질문을 줄이기 위해 'VSCode 활용법' 등 실무 기술 특강을 기획 및 진행하여 개발 효율성을 높이는 문화를 전파했습니다.
 - 최신 기술 트렌드를 반영한 프론트엔드 커리큘럼을 기획하고, 실무와 유사한 인턴십 과제 및 평가 지표를 설계했습니다.
 
-### [KC-MIC](https://www.kcmic.co.kr/)
+### [KC-MIC](https://kc-mic.com/)
 
 **프론트엔드 엔지니어 (2022.03 ~ 2023.09, 1년 6개월)**
 
-- 레거시 프론트엔드 환경을 Vite와 RTK로 마이그레이션하는 기술적 도전을 주도하여, **빌드 속도를 70% 단축**하고 팀 전체의 개발 경험(DX)을 혁신했습니다.
+- 레거시 프론트엔드 환경을 Vite와 RTK로 마이그레이션하는 기술적 도전을 주도하여, 빌드 속도를 70% 단축하고 팀 전체의 개발 경험(DX)을 혁신했습니다.
 - Next.js의 서버 컴포넌트(RSC)와 SSR의 역할을 명확히 구분하여, 클라이언트 번들 사이즈를 최소화하고 복잡도를 낮추는 실용적인 렌더링 전략을 수립했습니다.
 - gRPC/Protobuf를 활용한 통신 구현으로, 실시간 다중 접속 시뮬레이터의 데이터 처리 속도를 개선했습니다.
 - SSR 환경에서의 데이터 불일치 문제를 해결하기 위해 TanStack Query로 데이터 정합성과 UI 안정성을 확보했습니다.
@@ -69,11 +69,12 @@ AI Agents 협업 코딩과 아키텍처 설계 역량을 바탕으로 팀의 개
 
 ## Outsourced Projects
 
-### [교육 지원 플랫폼](https://www.chungbook-e.com/) (2025.05 ~ 현재)
+### 교육 지원 플랫폼 유저 및 대시보드 (2025.05 ~ 현재)
+[chungbook-e.com](https://www.chungbook-e.com/)
 
 - Swagger 문서 기반 자동 생성 도구 Orval의 도입으로 API 스키마 생성 및 타입 정의를 자동화하여, API 코드 직접 작성의 비효율을 제거하고 유지보수 생산성을 극대화했습니다.
 - 백엔드 개발 일정에 종속되지 않기 위해 MSW(Mock Service Worker)를 선제적으로 도입, 독립적인 환경을 구축하여 전체 프로젝트 일정을 단축했습니다.
-- AI Agents(Cursor, Claude Code)를 개발 파이프라인에 적극 도입하는 'AI-Native' 워크플로우를 정립하여, **기존 예상 공수 대비 50% 단축**된 기간 내에 목표를 완수했습니다.
+- AI Agents(Cursor, Claude Code)를 개발 파이프라인에 적극 도입하는 'AI-Native' 워크플로우를 정립하여, 기존 예상 공수 대비 50% 단축된 기간 내에 목표를 완수했습니다.
 
 ### 한국 기술 마켓 (2024.05 ~ 현재)
 
@@ -95,12 +96,12 @@ AI Agents 협업 코딩과 아키텍처 설계 역량을 바탕으로 팀의 개
 
 ### 강의
 
-- [프로그래머스] [Next.js와 TypeScript로 만드는 NotionAPI 블로그](https://school.programmers.co.kr/learn/courses/15566) 라이브 코딩 강사 (2022~2023)
+- [프로그래머스] [Next.js & Notion API 라이브 코딩 강사](https://drive.google.com/file/d/1TcAVluxcY4sfIncMkC5CC4-H1orCwcpS/view?usp=sharing) (2022~2023)
   - 실시간 라이브 코딩을 통해 예외 상황 대처 능력과 지식 전달 능력 증명
 
 ### 베타 리더
 
-- 『[모두의 깃 & 깃허브](https://www.yes24.com/Product/Goods/108997582)』, 『[혼자 공부하는 컴퓨터 구조 + 운영체제](https://www.yes24.com/Product/Goods/111378840)』 등 기술 서적 검수 참여
+- 『[모두의 깃 & 깃허브](https://www.yes24.com/Product/Goods/110795446)』, 『[혼자 공부하는 컴퓨터 구조 + 운영체제](https://www.yes24.com/Product/Goods/111378840)』 등 기술 서적 검수 참여
 
 ---
 
@@ -124,7 +125,7 @@ AI Agents 협업 코딩과 아키텍처 설계 역량을 바탕으로 팀의 개
 
 ### 강의/멘토링
 
-- [내공식탁] [프론트엔드 개발자 직무 멘토링](https://gonggam.korea.kr/newsBody.es?mid=a10404000000&newsSeq=18086) (2022)
+- [내공식탁] [프론트엔드 개발자 직무 멘토링](https://linkareer.com/activity/98159) (2022)
 
 ### 네트워킹
 
