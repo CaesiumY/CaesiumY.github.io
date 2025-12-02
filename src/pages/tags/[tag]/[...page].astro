@@ -31,7 +31,12 @@ const { tag } = params;
 const { page, tagName } = Astro.props;
 ---
 
-<Layout title={`Tag: ${tagName} | ${SITE.title}`}>
+<Layout
+  title={`Tag: ${tagName} | ${SITE.title}`}
+  description={`"${tagName}" 태그가 포함된 모든 글입니다. ${tagName} 관련 블로그 포스트를 확인하세요.`}
+  pageType="website"
+  tags={[tagName]}
+>
   <Header />
   <Main
     pageTitle={[`Tag:`, `${tagName}`]}

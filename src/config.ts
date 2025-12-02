@@ -21,6 +21,25 @@ export const SITE = {
   dir: "ltr", // "rtl" | "auto"
   lang: "ko", // html lang code. Set this empty and default will be "en"
   timezone: "Asia/Seoul", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+
+  // 저자 정보
+  author: "윤창식",
+  authorEn: "Chang-sik Yoon",
+  authorDescription:
+    "AI로 생산성을 혁신하고 지식을 연결하는 프론트엔드 엔지니어",
+  social: {
+    github: "https://github.com/caesiumy",
+    linkedin: "https://www.linkedin.com/in/chang-sik-yoon/",
+    email: "dbs2636@gmail.com",
+  },
+  keywords: [
+    "TypeScript",
+    "Next.js",
+    "React",
+    "TailwindCSS",
+    "프론트엔드",
+    "개발 블로그",
+  ],
 } as const;
 
 export const GISCUS: GiscusProps = {
