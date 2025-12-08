@@ -1,197 +1,132 @@
-# /blog-gen - AI 기반 블로그 포스트 생성
-
-## Purpose
-AI가 제목을 분석하여 최적화된 블로그 포스트 구조를 자동 생성합니다. 한글 제목을 영문 슬러그로 변환하고, 관련 태그를 추천하며, 제목의 의미에 맞는 동적 섹션 구조를 생성합니다.
-
-## Usage
-```
-/blog-gen "[제목]" [--category <카테고리>] [--tags <태그>] [--featured] [--draft] [--template <경로>]
-```
-
-## Arguments
-- **title** (필수) - 블로그 글 제목
-- **--category** - 카테고리 지정 (기본값: technical)  
-  - 기존 카테고리 사용을 권장하나, 콘텐츠 특성에 따라 새 카테고리 생성 가능
-  - **새 카테고리**: 필요시 새 카테고리명 지정 가능 (자동으로 디렉토리 생성)
-- **--tags** - 태그 목록 (쉼표로 구분하여 수동 지정)
-- **--featured** - 주요 글로 설정 (기본값: false)
-- **--draft** - 초안 상태로 생성 (기본값: true)
-- **--template** - 참조할 기존 포스트 경로
-
-## Execution Process
-
-### 1. 제목 AI 분석
-- 제목의 의도와 주제 파악
-- 글의 성격 분석 (튜토리얼, 회고, 가이드, 분석 등)
-- 대상 독자층 예측
-- 적절한 글의 구조와 흐름 설계
-
-### 2. 자동 슬러그 생성
-- 한글 제목을 의미있는 영문으로 번역
-- URL-friendly 형식 변환
-- 특수문자 제거, 소문자 변환, 공백을 하이픈으로 변경
-- 예시:
-  ```
-  "React 성능 최적화 완벽 가이드" → "react-performance-optimization-guide"
-  "2024년 개발 회고" → "2024-dev-retrospective" 
-  "스타트업에서 배운 5가지" → "5-lessons-from-startup"
-  ```
-
-### 3. AI 기반 태그 추천
-- 제목에서 핵심 키워드 추출
-- 기존 블로그 포스트의 태그 패턴 학습
-- 카테고리와 제목을 고려한 관련 태그 5-7개 자동 추천
-- 사용자 지정 태그가 있으면 추천 태그 대신 사용
-
-### 4. 동적 섹션 구조 생성
-AI가 제목을 분석하여 완전 맞춤형 섹션 헤더를 생성합니다:
-
-#### 기술 튜토리얼 예시: "Next.js 14 서버 컴포넌트 완벽 가이드"
-```markdown
-## 목차
-## 서버 컴포넌트란 무엇인가?
-## 기존 방식과의 차이점
-## 서버 컴포넌트 기본 사용법
-## 클라이언트 컴포넌트와의 조합
-## 성능 최적화 전략
-## 실전 예제로 배우기
-## 주의사항과 베스트 프랙티스
-## 마무리
-```
-
-#### 회고 글 예시: "토스 면접 후기와 합격 전략"
-```markdown
-## 목차
-## 지원 계기와 준비 과정
-## 서류 전형 통과 비결
-## 기술 면접 경험담
-## 컬쳐 핏 면접 후기
-## 합격을 위한 핵심 포인트
-## 면접에서 배운 것들
-## 예비 지원자들을 위한 조언
-## 마무리
-```
-
-#### 프로젝트 글 예시: "실시간 채팅 앱 개발기"
-```markdown
-## 목차
-## 프로젝트 개요와 목표
-## 기술 스택 선정 이유
-## 아키텍처 설계 과정
-## 핵심 기능 구현
-## 실시간 통신 최적화
-## 배포와 운영 경험
-## 회고와 개선점
-## 마무리
-```
-
-### 5. 파일 생성
-- 폴더 구조: `contents/blog/[category]/[slug]/`
-- `index.md` 파일 생성
-- 이미지 디렉토리 준비
-- 프론트매터 자동 구성
-
-### 6. 날짜 및 시간 설정
-- **⚠️ 중요**: Astro는 미래 날짜의 포스트를 빌드에서 제외합니다
-- **날짜 형식**: ISO 8601 형식 사용 (`YYYY-MM-DDTHH:MM:SSZ`)
-- **시간대**: UTC 기준으로 설정
-- **권장 사항**:
-  - 현재 시간보다 최소 1일 이전 날짜 사용
-  - 예: 오늘이 10월 11일이라면 10월 10일 00:00:00Z로 설정
-  - 이유: 시간대 차이와 서버 시간 차이로 인한 문제 방지
-- **예시**:
-  ```yaml
-  pubDatetime: 2025-10-10T00:00:00Z  # 안전한 과거 날짜
-  modDatetime: 2025-10-10T00:00:00Z
-  ```
-- **문제 해결**: 포스트가 안 보이면 날짜를 1-2일 전으로 조정
-
-## Generated File Structure
-
-```markdown
 ---
-title: "[입력된 제목]"
-description: "[AI가 생성한 한 줄 설명]"
-pubDatetime: [현재 시간]
-modDatetime: [현재 시간]
-slug: "[자동 생성된 영문 슬러그]"
+allowed-tools: [Read, Write, Bash, Glob, TodoWrite]
+argument-hint: "[제목]" [--category 카테고리] [--tags 태그1,태그2] [--featured] [--publish]
+description: AI 기반 블로그 포스트 자동 생성 (제목 분석 → 슬러그/태그/섹션 구조 생성)
+---
+
+## 현재 블로그 구조
+
+!`ls -1 contents/blog/ | grep -v "^\." | grep -v "^_"`
+
+## 기존 태그 패턴
+
+!`grep -rh "^tags:" contents/blog/ --include="*.md" 2>/dev/null | sort | uniq | head -15`
+
+## 기존 글 문체 참조
+
+아래 기존 글의 말투, 문체, 설명 방식을 참고하여 **일관된 톤**으로 작성하세요.
+
+### 회고/후기 스타일
+@contents/blog/career/toss-interview-retrospect/index.md
+
+### 기술 글 스타일
+@contents/blog/ai/custom-commands-instead-of-cli-claude-code/index.md
+
+## 작업
+
+**"$ARGUMENTS"** 제목으로 블로그 포스트를 생성하세요.
+
+### 실행 단계
+
+1. **제목 분석 & 문체 파악**
+   - 글의 성격 파악 (튜토리얼, 회고, 가이드, 분석 등)
+   - 기존 글 문체 참조하여 톤 결정 (존댓말/반말, 이모지, 강조 방식)
+   - 한글 제목 → 영문 슬러그 변환 (URL-friendly: 소문자, 하이픈)
+   - 예: "React 성능 최적화" → `react-performance-optimization`
+
+2. **태그 생성**
+   - 기존 태그 패턴 참조 (소문자 + 하이픈 조합)
+   - 제목과 카테고리 기반 5-7개 태그 추천
+   - `--tags` 옵션이 있으면 해당 태그 사용
+
+3. **섹션 구조 생성**
+   - 글 성격에 맞는 맞춤형 섹션 헤더 생성
+   - 반드시 `## 목차`로 시작, `## 마무리`로 종료
+   - 중간 섹션은 제목 의미에 맞게 동적 생성
+
+4. **파일 생성**
+   - 경로: `contents/blog/[category]/[slug]/index.md`
+   - 카테고리 미지정 시 기본값: `technical`
+   - 새 카테고리면 디렉토리 자동 생성
+
+5. **SEO 리포트 출력**
+
+### 옵션 처리
+
+| 옵션 | 설명 | 기본값 |
+|------|------|--------|
+| `--category` | 카테고리 지정 | technical |
+| `--tags` | 태그 수동 지정 (쉼표 구분) | AI 추천 |
+| `--featured` | 홈 피처드 섹션 표시 | false |
+| `--publish` | 발행 상태로 생성 (draft: false) | draft: true |
+
+### 카테고리 목록
+
+| 카테고리 | 용도 |
+|----------|------|
+| technical | 기술 글, 튜토리얼 |
+| retrospect | 회고, 후기 |
+| career | 면접, 커리어 |
+| algorithm | 알고리즘, 코테 |
+| ai | AI, Claude Code |
+| project | 프로젝트 |
+| tools | 개발 도구 |
+| test | 테스트 |
+| translation | 번역 |
+
+### Frontmatter 템플릿
+
+```yaml
+---
+title: "[제목]"
+description: "[AI 생성 - 120~160자 권장]"
+pubDatetime: [현재 UTC 시간 ISO 8601]
+tags: ["tag1", "tag2", "tag3", "tag4", "tag5"]
 featured: false
 draft: true
-tags: ["ai추천태그1", "ai추천태그2", "ai추천태그3", "ai추천태그4", "ai추천태그5"]
-ogImage: "./hero-image.png"
+ogImage: "./thumbnail.png"
+---
+```
+
+**주의**: `slug` 필드는 사용하지 않음 (파일 경로에서 자동 생성됨)
+
+### 생성될 마크다운 구조
+
+```markdown
+---
+[frontmatter]
 ---
 
 ## 목차
 
-## [AI가 생성한 섹션 1]
+## [AI 생성 섹션 1]
 
-[작성할 내용을 여기에 입력하세요]
+[내용을 작성하세요]
 
-## [AI가 생성한 섹션 2]
+## [AI 생성 섹션 2]
 
-[작성할 내용을 여기에 입력하세요]
-
-## [AI가 생성한 섹션 3]
-
-[작성할 내용을 여기에 입력하세요]
+[내용을 작성하세요]
 
 ...
 
 ## 마무리
 
-[작성할 내용을 여기에 입력하세요]
+[내용을 작성하세요]
 
 ## 참고 자료
 
-- 
+-
 ```
 
-## Usage Examples
+### SEO 리포트 (생성 후 출력)
 
-```bash
-# 기본 사용 - AI가 모든 것을 자동 생성
-/blog-gen "TypeScript 제네릭 마스터하기"
-
-# 카테고리 지정 (기존 카테고리)
-/blog-gen "토스 면접 후기와 합격 전략" --category career
-
-# 새 카테고리 생성
-/blog-gen "블록체인 기초 이해하기" --category blockchain
-
-# 주요 글로 생성
-/blog-gen "2024년 프론트엔드 트렌드 총정리" --featured
-
-# 태그 수동 지정 (AI 추천 대신 사용)
-/blog-gen "Docker 컨테이너 최적화 가이드" --tags "docker,devops,optimization,container"
-
-# 초안이 아닌 발행 상태로 생성
-/blog-gen "React 19 새로운 기능 살펴보기" --no-draft
-
-# 기존 포스트를 템플릿으로 사용
-/blog-gen "Vue 3 성능 최적화" --template "contents/blog/technical/react-optimization"
 ```
-
-## Tool Orchestration
-
-### Primary Tools
-- **Read**: 기존 블로그 포스트 구조 분석, 태그 패턴 학습
-- **Write**: 새 블로그 포스트 파일 생성
-- **Bash**: 폴더 생성 및 파일 시스템 작업
-
-### Process Flow
-1. **Analysis Phase**: Read로 기존 포스트들의 메타데이터와 구조 분석
-2. **AI Processing**: 제목 분석 → 슬러그 생성 → 태그 추천 → 섹션 구조 설계
-3. **Generation Phase**: Write로 완성된 마크다운 파일 생성
-4. **Validation Phase**: 생성된 파일의 프론트매터와 구조 검증
-
-## Quality Assurance
-- 프론트매터가 Astro content schema와 호환되는지 검증
-- 생성된 슬러그의 유일성 확인
-- 이미지 디렉토리와 파일 경로 유효성 검사
-- 마크다운 문법 준수 여부 확인
-
-## Advanced Features
-- **시리즈 연결**: 관련 포스트들을 시리즈로 연결
-- **SEO 최적화**: description 자동 생성
-- **이미지 최적화**: hero-image 플레이스홀더 준비
-- **태그 일관성**: 기존 태그 체계와의 일관성 유지
+📊 SEO 분석 리포트
+─────────────────────────────
+✅ 제목: [제목] (n자)
+✅ 설명: [description] (n자) - 권장: 120-160자
+✅ 태그: n개 - ["tag1", "tag2", ...]
+✅ 파일: contents/blog/[category]/[slug]/index.md
+✅ URL: /posts/[category]/[slug]
+─────────────────────────────
+```
