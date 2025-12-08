@@ -4,7 +4,7 @@ description: "Claude Code, Cursor 등 AI 코딩 도구가 빌드를 실행해도
 pubDatetime: 2025-11-25T00:00:00Z
 modDatetime: 2025-11-25T00:00:00Z
 slug: "nextjs-ai-build-dev-server-isolation"
-featured: false
+featured: true
 draft: false
 tags: ["nextjs", "ai", "claude-code", "dx", "tips"]
 ---
