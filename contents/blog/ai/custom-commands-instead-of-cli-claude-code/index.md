@@ -1,12 +1,11 @@
 ---
 title: "블로그 글 초안을 생성하는 CLI 대신 Custom Slash Commands 만들기 (feat. Claude Code)"
-description: "Claude Code의 Custom Slash Commands 기능을 활용해 블로그 글 초안 생성을 자동화하는 경험 공유"
+description: "Claude Code의 Custom Slash Commands 기능을 활용해 블로그 글 초안 생성을 자동화하는 경험 공유. (추가)Opus 4.5와 함께 더 강력해진 활용법까지."
 pubDatetime: 2025-09-27T12:00:00Z
-modDatetime: 2025-09-27T12:00:00Z
-slug: "custom-commands-instead-of-cli-claude-code"
-featured: true
+modDatetime: 2025-12-08T00:00:00Z
+featured: false
 draft: false
-tags: ["claude-code", "ai"]
+tags: ["claude-code", "ai", "opus-4-5"]
 ---
 
 ## 목차
@@ -94,7 +93,6 @@ Arguments를 잘 사용하면 CLI 도구에서 선택지를 주는 것과 동일
 ```
 > 공식 문서 링크를 제공해도 되나 LLM용 텍스트 복사를 사용해도 된다.
 
-
 이 정도가 될 수 있겠다. 조금 길어보이지만, 이것은 내가 글을 작성하고 있는 상태라 그런 것이고, 실제로는 Plan Mode를 통해 서너 번 질의응답을 거치며 올바른 계획을 세우고 검증할 수 있게 된다.
 
 ### 하지만 결과를 장담할 수 없지 않나요?
@@ -103,6 +101,107 @@ API를 사용해서 결과 객체를 강제하는 것이 아니기에 결과가 
 다행히도 Astro 블로그를 비롯한 여러 마크다운 블로그에서는 프론트매터의 타입 체크를 지원하고 있어 오류를 방지할 수 있다.
 
 나는 `CLAUDE.md`의 문서에 항상 작업 이후에는 타입 체크 및 빌드 검증을 해달라는 내용을 추가해놓는 편이다. 그러면 Claude Code가 잠깐 실수하더라도 빌드에서 걸리는 오류를 보고 스스로 수정할 수 있게 된다.
+
+## Opus 4.5와 함께 커스텀 슬래시 커맨드 더 잘 만들기
+
+> 2025년 12월 업데이트
+
+이 글을 처음 작성한 이후 Opus 4.5가 출시되었다. 커스텀 슬래시 커맨드의 기능 자체는 동일하지만,
+**Opus 4.5의 향상된 이해력과 실행력** 덕분에 공식 문법을 더 정확하게 활용할 수 있게 되었다.
+기존에 단순한 프롬프트 수준으로 사용했다면, 이제는 **YAML frontmatter**와 **변수 치환 문법**을
+제대로 활용해 더 정교한 자동화가 가능해졌다. 이번 기회에 `blog-gen` 커맨드도 대폭 개선했다.
+
+### 공식 YAML Frontmatter 형식
+
+커스텀 슬래시 커맨드 파일 상단에 YAML frontmatter를 추가하면 더 정교한 제어가 가능하다.
+
+| 필드            | 설명                   | 예시                    |
+| --------------- | ---------------------- | ----------------------- |
+| `allowed-tools` | 사용 가능한 도구 제한  | `[Read, Write, Bash]`   |
+| `argument-hint` | 자동완성에 표시될 힌트 | `"[제목]" [--category]` |
+| `description`   | /help에 표시될 설명    | `블로그 포스트 생성`    |
+
+실제 적용 예시:
+```yaml
+---
+allowed-tools: [Read, Write, Bash, Glob, TodoWrite]
+argument-hint: "[제목]" [--category 카테고리] [--tags 태그]
+description: AI 기반 블로그 포스트 자동 생성
+---
+```
+
+`allowed-tools`를 지정하면 해당 커맨드가 사용할 수 있는 도구를 제한할 수 있어
+의도치 않은 동작을 방지할 수 있다.
+
+### 변수 치환 문법
+
+커스텀 슬래시 커맨드의 진정한 힘은 변수 치환에서 나온다.
+동적으로 데이터를 가져오거나, 기존 파일을 참조할 수 있다.
+
+#### $ARGUMENTS - 전체 인자
+명령어에 전달된 모든 인자를 받는다.
+```markdown
+**"$ARGUMENTS"** 제목으로 블로그 포스트를 생성하세요.
+```
+
+#### $1, $2, $3 - 위치 인자
+인자를 개별적으로 받을 때 사용한다.
+```markdown
+PR #$1을 $2 우선순위로 검토하세요.
+```
+
+#### !백틱 - Bash 명령 실행
+명령어 실행 결과가 컨텍스트에 자동 포함된다.
+```markdown
+## 현재 블로그 구조
+!`ls -1 contents/blog/`
+
+## 기존 태그 패턴
+!`grep -rh "^tags:" contents/blog/ | head -15`
+```
+이렇게 하면 커맨드 실행 시점에 실제 블로그 구조와 태그 목록이 Claude에게 전달된다.
+기존에 수동으로 "기존 카테고리를 확인해줘"라고 말할 필요가 없어진 것이다.
+
+#### @파일경로 - 파일 참조
+지정한 파일의 전체 내용이 컨텍스트에 포함된다.
+```markdown
+@contents/blog/career/toss-interview-retrospect/index.md
+```
+
+### 실전 팁: 문체 일관성 유지하기
+
+블로그 글을 AI로 생성할 때 가장 신경 쓰이는 부분이 바로 **문체의 일관성**이다.
+기존에 작성한 글과 톤이 다르면 독자 입장에서 어색하게 느껴질 수 있다.
+
+이 문제를 `@파일경로` 문법으로 해결할 수 있다.
+대표적인 기존 글을 참조하도록 커맨드에 추가하면 된다.
+
+```markdown
+## 기존 글 문체 참조
+
+아래 기존 글의 말투, 문체, 설명 방식을 참고하여 **일관된 톤**으로 작성하세요.
+
+### 회고/후기 스타일
+@contents/blog/career/toss-interview-retrospect/index.md
+
+### 기술 글 스타일
+@contents/blog/ai/custom-commands-instead-of-cli-claude-code/index.md
+```
+
+이렇게 하면 Claude가 기존 글의 존댓말/반말 스타일, 이모지 사용 방식,
+문단 구조 등을 학습하여 일관된 톤으로 새 글을 작성해준다.
+
+### 개선된 blog-gen 커맨드
+
+위 기능들을 모두 적용하여 `blog-gen` 커맨드를 대폭 개선했다.
+기존 197줄에서 132줄로 간결해졌지만, 오히려 기능은 더 강력해졌다.
+
+- ✅ 공식 YAML frontmatter 적용
+- ✅ `!백틱` 으로 블로그 구조/태그 자동 조회
+- ✅ `@파일경로`로 기존 글 문체 참조
+- ✅ SEO 분석 리포트 출력
+
+> 개선된 `blog-gen` 커맨드 전체 내용은 [GitHub 링크](https://github.com/CaesiumY/CaesiumY.github.io/blob/main/.claude/commands/blog-gen.md)에서 확인할 수 있다.
 
 ## CLI vs 커스텀 슬래시 커맨드 비교
 
