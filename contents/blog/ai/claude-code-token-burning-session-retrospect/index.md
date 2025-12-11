@@ -163,7 +163,7 @@ https://caesiumy.dev/posts/ai/claude-code-token-burning-session-retrospect
 
 ---
 
-## Coming Soon
+## 시리즈
 
-- Custom Slash Commands로 비즈니스 로직 티켓 생성하기
-- MCP(Model Context Protocol)로 Figma UI 디자인 그대로 생성하기
+- Custom Slash Commands로 비즈니스 로직 티켓 생성하기 (Coming Soon)
+- [MCP(Model Context Protocol)로 Figma UI 디자인 그대로 생성하기](/posts/ai/mcp-figma-ui-generation/)
