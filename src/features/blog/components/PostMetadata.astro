@@ -33,7 +33,7 @@ const postUrl = new URL(postPath, Astro.site || SITE.website).href;
 <!-- Post Title -->
 <h1
   transition:name={slugifyStr(title)}
-  class="flex items-center text-2xl font-bold text-accent sm:text-3xl"
+  class="flex items-center break-keep text-2xl font-bold text-accent sm:text-3xl"
 >
   {draft && <DraftBadge size="md" class="me-3" />}
   <span>{title}</span>
