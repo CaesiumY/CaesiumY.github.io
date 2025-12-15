@@ -496,4 +496,4 @@ description: Figma 디자인을 분석하여 React 컴포넌트 생성
 ## 시리즈
 
 - 이전: [클로드 코드 토큰 태우기 세션 진행 후기](/posts/ai/claude-code-token-burning-session-retrospect/)
-- 다음: [Claude Code + Linear MCP로 슬랙→티켓→PR 자동화 파이프라인 구축하기](/posts/ai/custom-slash-commands-business-logic-ticket/)
+- 다음: [Claude Code + Linear MCP로 슬랙→티켓→PR 자동화 파이프라인 구축하기](/posts/ai/linear-mcp-slack-ticket-automation/)

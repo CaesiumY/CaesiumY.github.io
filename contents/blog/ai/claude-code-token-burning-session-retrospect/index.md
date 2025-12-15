@@ -165,5 +165,5 @@ https://caesiumy.dev/posts/ai/claude-code-token-burning-session-retrospect
 
 ## 시리즈
 
-- 다음: [Claude Code + Linear MCP로 슬랙→티켓→PR 자동화 파이프라인 구축하기](/posts/ai/custom-slash-commands-business-logic-ticket/)
+- 다음: [Claude Code + Linear MCP로 슬랙→티켓→PR 자동화 파이프라인 구축하기](/posts/ai/linear-mcp-slack-ticket-automation/)
 - 다음: [MCP(Model Context Protocol)로 Figma UI 디자인 그대로 생성하기](/posts/ai/mcp-figma-ui-generation/)

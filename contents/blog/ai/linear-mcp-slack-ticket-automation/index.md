@@ -4,7 +4,7 @@ description: "Custom Slash Commands와 Linear MCP를 활용해 클라이언트 �
 pubDatetime: 2025-12-15T09:00:00Z
 tags: ["claude-code", "ai", "linear", "mcp", "workflow", "automation", "productivity"]
 featured: false
-draft: true
+draft: false
 ---
 
 ## 목차
