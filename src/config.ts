@@ -23,14 +23,14 @@ export const SITE = {
   timezone: "Asia/Seoul", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
   // 저자 정보
-  author: "윤창식",
-  authorEn: "Chang-sik Yoon",
+  author: "리누스 토발즈",
+  authorEn: "Linus Torvalds",
   authorDescription:
     "AI로 생산성을 혁신하고 지식을 연결하는 프론트엔드 엔지니어",
   social: {
-    github: "https://github.com/caesiumy",
-    linkedin: "https://www.linkedin.com/in/chang-sik-yoon/",
-    email: "dbs2636@gmail.com",
+    github: "https://github.com/username",
+    linkedin: "https://www.linkedin.com/in/username/",
+    email: "example@email.com",
   },
   keywords: [
     "TypeScript",
