@@ -15,7 +15,7 @@ export interface Props {
   pubDatetime?: Date;
   modDatetime?: Date | null;
   scrollSmooth?: boolean;
-  pageType?: "website" | "article";
+  pageType?: "website" | "article" | "profile";
   tags?: string[];
 }
 
@@ -58,18 +58,31 @@ const structuredData =
         },
         ...(tags.length > 0 && { keywords: tags.join(", ") }),
       }
-    : {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        name: SITE.title,
-        description: SITE.desc,
-        url: SITE.website,
-        author: {
+    : pageType === "profile"
+      ? {
+          "@context": "https://schema.org",
           "@type": "Person",
           name: SITE.author,
-          url: SITE.profile,
-        },
-      };
+          alternateName: SITE.authorEn,
+          description: SITE.authorDescription,
+          url: `${SITE.website}/about`,
+          image: `${socialImageURL}`,
+          sameAs: [SITE.social.github, SITE.social.linkedin],
+          email: `mailto:${SITE.social.email}`,
+          knowsAbout: SITE.keywords,
+        }
+      : {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: SITE.title,
+          description: SITE.desc,
+          url: SITE.website,
+          author: {
+            "@type": "Person",
+            name: SITE.author,
+            url: SITE.profile,
+          },
+        };
 ---
 
 <!doctype html>

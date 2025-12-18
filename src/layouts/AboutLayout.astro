@@ -19,7 +19,8 @@ const { frontmatter } = Astro.props;
 <Layout
   title={`${frontmatter.title} | ${SITE.title}`}
   description={frontmatter.description || SITE.authorDescription}
-  pageType="website"
+  ogImage="/about/og.png"
+  pageType="profile"
 >
   <Header />
   <Breadcrumb />
