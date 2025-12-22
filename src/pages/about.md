@@ -43,14 +43,14 @@ AI Agents 협업 코딩과 아키텍처 설계 역량을 바탕으로 팀의 개
 
 ## Experience
 
-### [팀스파르타](https://nbcamp.spartacodingclub.kr/frontend)
+### [팀스파르타](https://nbcamp.spartacodingclub.kr/frontend) <span class="text-sm text-gray-500 dark:text-gray-400">코딩 부트캠프 운영 에듀테크 기업</span>
 
 **내배캠 리액트 트랙 튜터 (2023.12 ~ 2025.05, 1년 6개월)**
 
 - 9to9 상주 시스템 내에서 수강생들의 학습 병목을 실시간으로 해결하고, 학습 성취도 기반 맞춤형 라이브 강의를 다수(80+) 진행함으로써 중도 포기율 75% 감소 성과를 달성했습니다.
 - 최신 기술 트렌드를 반영한 프론트엔드 커리큘럼을 기획하고, 실무와 유사한 인턴십 과제 및 평가 지표를 설계했습니다.
 
-### [KC-MIC](https://kc-mic.com/)
+### [KC-MIC](https://kc-mic.com/) <span class="text-sm text-gray-500 dark:text-gray-400">반도체 기업 AI 연구 조직</span>
 
 **프론트엔드 엔지니어 (2022.03 ~ 2023.09, 1년 6개월)**
 
