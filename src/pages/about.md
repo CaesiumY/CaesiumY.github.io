@@ -88,6 +88,7 @@ AI Agents 협업 코딩과 아키텍처 설계 역량을 바탕으로 팀의 개
 
 ### 강의
 
+- [한양대학교] AI 활용 프로그래밍 정규 교과목 강의 진행 (2026)
 - [프로그래머스] [Next.js & Notion API 라이브 코딩 강사](https://drive.google.com/file/d/1TcAVluxcY4sfIncMkC5CC4-H1orCwcpS/view?usp=sharing) (2022~2023)
   - 실시간 라이브 코딩을 통해 예외 상황 대처 능력과 지식 전달 능력 증명
 
