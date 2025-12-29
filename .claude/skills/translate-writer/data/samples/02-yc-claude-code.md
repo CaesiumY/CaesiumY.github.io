@@ -1,0 +1,1 @@
+../../../../../contents/blog/translation/yc-startups-claude-code-translation/index.md

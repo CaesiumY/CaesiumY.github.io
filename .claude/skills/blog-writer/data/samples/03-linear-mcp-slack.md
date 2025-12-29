@@ -1,0 +1,1 @@
+../../../../../contents/blog/ai/linear-mcp-slack-ticket-automation/index.md

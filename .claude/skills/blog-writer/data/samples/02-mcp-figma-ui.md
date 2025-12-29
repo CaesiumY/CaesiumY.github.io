@@ -1,0 +1,1 @@
+../../../../../contents/blog/ai/mcp-figma-ui-generation/index.md

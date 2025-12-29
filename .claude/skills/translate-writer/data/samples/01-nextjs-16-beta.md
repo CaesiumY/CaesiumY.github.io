@@ -1,0 +1,1 @@
+../../../../../contents/blog/translation/nextjs-16-beta-docs-translation/index.md

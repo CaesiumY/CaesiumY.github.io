@@ -1,7 +1,7 @@
 ---
 allowed-tools: [Read, Write, Bash, Glob, TodoWrite, WebFetch, Task]
-argument-hint: <URL 또는 파일경로> [--glossary <용어집경로>] [--review] [--featured] [--publish]
-description: URL 또는 로컬 마크다운 파일을 번역하여 블로그 글 생성 (TL;DR 자동 생성, 용어집 참조)
+argument-hint: <URL 또는 파일경로> [--glossary <용어집경로>] [--skip-review] [--featured] [--publish]
+description: URL 또는 로컬 마크다운 파일을 번역하여 블로그 글 생성 (TL;DR 자동 생성, 용어집 참조, 기본 품질 검토)
 ---
 
 ## 현재 번역 글 목록
@@ -17,14 +17,17 @@ description: URL 또는 로컬 마크다운 파일을 번역하여 블로그 글
 아래 용어집이 존재하면 번역 시 일관된 용어를 사용하세요.
 용어집이 없으면 새로운 기술 용어 발견 시 용어집 업데이트를 제안하세요.
 
-!`cat contents/blog/translation/_glossary.md 2>/dev/null || echo "⚠️ 용어집 없음 - 번역 후 용어집 업데이트 권장"`
+!`cat .claude/skills/translate-writer/data/glossary.md 2>/dev/null || echo "⚠️ 용어집 없음 - 번역 후 용어집 업데이트 권장"`
 
-## 기존 번역 글 문체 참조
+## 스타일 가이드 참조
 
-아래 기존 번역 글의 말투, 문체, 구조를 참고하여 **일관된 톤과 형식**으로 작성하세요.
+아래 스타일 가이드에 정의된 **문체, 번역투 회피 패턴, 용어 규칙**을 따라 번역하세요.
 
-### 번역 글 스타일 레퍼런스
-@contents/blog/translation/nextjs-16-beta-docs-translation/index.md
+@.claude/skills/translate-writer/data/style-guide.md
+
+> **참고**: 스타일 가이드가 비어있거나 `[분석 필요]`가 많으면 아래 샘플 글 참조:
+> - @contents/blog/translation/nextjs-16-beta-docs-translation/index.md (기술 문서 스타일)
+> - @contents/blog/translation/yc-startups-claude-code-translation/index.md (인터뷰 스타일)
 
 ## 작업
 
@@ -78,6 +81,17 @@ description: URL 또는 로컬 마크다운 파일을 번역하여 블로그 글
 - 코드 블록은 원문 유지, 주석은 필요시 번역
 - 원문의 섹션 구조 유지
 
+**번역투 회피 패턴 (스타일 가이드 참조):**
+
+| 번역투 | 자연스러운 표현 |
+|--------|----------------|
+| "~하는 것이 가능하다" | "~할 수 있다" |
+| "~에 의해 ~되다" | 능동태로 변환 |
+| "그것은/이것은" | 주어 구체화 또는 생략 |
+| "~경우" 과다 | "~하면", "~할 때" |
+| "~에 대해" 과다 | 조사로 대체 |
+| "~것이다" 과다 | "~합니다"로 변환 |
+
 **문체 가이드:**
 - 존댓말 사용 (기존 번역 글 참조)
 - 이모지는 원문에 있는 경우에만 사용
@@ -90,7 +104,7 @@ description: URL 또는 로컬 마크다운 파일을 번역하여 블로그 글
 - 참고 자료 섹션에 원문 링크 포함
 - SEO 최적화된 description 생성 (120-160자)
 
-#### 7. 품질 검증 (--review 옵션 시)
+#### 7. 품질 검증 (기본 실행, --skip-review로 생략)
 
 Task 도구로 `translation-reviewer` 에이전트 실행:
 - 번역 정확성 검토
@@ -102,8 +116,8 @@ Task 도구로 `translation-reviewer` 에이전트 실행:
 
 | 옵션 | 설명 | 기본값 |
 |------|------|--------|
-| `--glossary` | 사용할 용어집 경로 | `_glossary.md` |
-| `--review` | 번역 품질 검토 에이전트 실행 | false |
+| `--glossary` | 사용할 용어집 경로 | `glossary.md` |
+| `--skip-review` | 품질 검토 생략 (빠른 작업용) | false |
 | `--featured` | 홈 피처드 섹션 표시 | false |
 | `--publish` | 발행 상태로 생성 (draft: false) | draft: true |
 
