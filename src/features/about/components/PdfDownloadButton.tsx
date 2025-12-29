@@ -2,39 +2,44 @@ export default function PdfDownloadButton() {
   const handlePrint = () => {
     const originalTitle = document.title;
     const originalTheme = document.documentElement.getAttribute("data-theme");
-    let timeoutId = 0;
+    let supported = false;
 
-    const cleanup = () => {
+    const restoreState = () => {
       document.documentElement.setAttribute(
         "data-theme",
         originalTheme ?? "light"
       );
       document.title = originalTitle;
-      window.removeEventListener("afterprint", onAfterPrint);
-      clearTimeout(timeoutId);
-    };
-
-    const onAfterPrint = () => {
-      cleanup();
     };
 
     // 인쇄 준비
     document.title = "윤창식_Resume";
     document.documentElement.setAttribute("data-theme", "light");
-    window.addEventListener("afterprint", onAfterPrint);
+
+    // beforeprint: 다이얼로그 열리기 직전에 발생 → 인쇄 지원됨
+    window.addEventListener(
+      "beforeprint",
+      () => {
+        supported = true;
+      },
+      { once: true }
+    );
+
+    // afterprint: 다이얼로그 닫힌 후 → 상태 복원
+    window.addEventListener("afterprint", restoreState, { once: true });
 
     // 인쇄 실행
     window.print();
 
-    // 500ms 내에 afterprint 이벤트가 발생하지 않으면 미지원으로 판단
-    timeoutId = window.setTimeout(() => {
-      cleanup();
+    // print()가 반환된 시점에 beforeprint가 발생하지 않았으면 미지원
+    if (!supported) {
+      restoreState();
       alert(
         "인쇄 기능이 지원되지 않는 브라우저입니다.\n\n" +
           "Chrome, Safari 등 외부 브라우저에서 열어주세요.\n" +
           "(우측 상단 메뉴 → '외부 브라우저로 열기')"
       );
-    }, 500);
+    }
   };
 
   return (
