@@ -127,8 +127,8 @@ Task 도구로 `translation-reviewer` 에이전트 실행:
 ---
 title: "[원문 제목] 한글 번역"
 description: "[원문 제목] 한글 번역 - [핵심 내용 요약 120-160자]"
-pubDatetime: [현재 UTC 시간 ISO 8601]
-modDatetime: [현재 UTC 시간 ISO 8601]
+pubDatetime: [실제 현재 UTC 시간 - `date -u +"%Y-%m-%dT%H:%M:%SZ"` 명령으로 확인]
+modDatetime: [pubDatetime과 동일]
 tags: ["translation", "[관련-기술-태그]", ...]
 featured: false
 draft: true
@@ -138,6 +138,9 @@ draft: true
 **주의**:
 - `tags`에 반드시 `"translation"` 포함
 - `slug` 필드는 사용하지 않음 (파일 경로에서 자동 생성됨)
+- ⚠️ **날짜 설정**: `pubDatetime`은 반드시 **현재 또는 과거** 시점이어야 합니다
+  - 미래 날짜로 설정하면 Astro 빌드에서 글이 제외됩니다
+  - 날짜 설정 전 `date -u` 명령으로 실제 UTC 시간을 확인하세요
 
 ### 생성될 마크다운 구조
 

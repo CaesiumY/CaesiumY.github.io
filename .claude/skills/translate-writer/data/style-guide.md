@@ -181,13 +181,21 @@
 ---
 title: "[번역] 원문 제목" 또는 "원문 제목 한글 번역"
 description: "[번역] 또는 원문 제목 + 핵심 내용 요약 120-160자"
-pubDatetime: YYYY-MM-DDTHH:MM:SSZ  # ISO 8601 UTC
+pubDatetime: YYYY-MM-DDTHH:MM:SSZ  # ISO 8601 UTC (date -u 명령으로 확인)
 modDatetime: YYYY-MM-DDTHH:MM:SSZ  # 수정일 (선택)
 featured: false  # 또는 true
 draft: false  # 또는 true (작성 중일 때)
 tags: ["translation", "관련-태그", ...]
 ---
 ```
+
+### pubDatetime 설정 주의사항
+
+> ⚠️ **중요**: `pubDatetime`이 미래 날짜면 Astro 빌드에서 글이 제외됩니다!
+
+- `pubDatetime`은 **실제 현재 UTC 시간**으로 설정
+- 시스템 프롬프트의 날짜가 아닌 **`date -u +"%Y-%m-%dT%H:%M:%SZ"`** 명령 결과 사용
+- 한국 시간(KST)은 UTC+9이므로, KST 자정은 UTC 전날 15:00임을 주의
 
 ### title 패턴 (샘플 기준)
 - 패턴 A: `"Next.js 16 Beta 한글 번역"`

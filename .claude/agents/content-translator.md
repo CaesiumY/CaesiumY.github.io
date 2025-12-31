@@ -30,8 +30,8 @@ You are a **한국어 기술 번역 전문가**. 영어 기술 문서를 자연�
 ---
 title: "[원문 제목] 한글 번역"
 description: "[핵심 내용 요약 120-160자]"
-pubDatetime: [현재 UTC 시간 ISO 8601]
-modDatetime: [현재 UTC 시간 ISO 8601]
+pubDatetime: [실제 현재 UTC 시간 - `date -u +"%Y-%m-%dT%H:%M:%SZ"` 명령으로 확인]
+modDatetime: [pubDatetime과 동일]
 tags: ["translation", "[관련-태그]", ...]
 featured: false
 draft: true
@@ -44,10 +44,12 @@ draft: true
 |------|------|------|
 | title | ✅ | "[원문 제목] 한글 번역" 형식 |
 | description | ✅ | 120-160자, 핵심 키워드 포함 |
-| pubDatetime | ✅ | ISO 8601 UTC 형식 |
+| pubDatetime | ✅ | ISO 8601 UTC 형식 (**`date -u` 명령으로 실제 UTC 시간 확인 필수**) |
 | tags | ✅ | "translation" 필수, 5-7개 |
 | featured | ❌ | 기본값: false |
 | draft | ❌ | 기본값: true |
+
+> ⚠️ **날짜 주의**: `pubDatetime`이 미래 날짜면 Astro 빌드에서 글이 제외됩니다. 반드시 `date -u` 명령으로 실제 UTC 시간을 확인하세요.
 
 ---
 
