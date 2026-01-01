@@ -2,6 +2,7 @@
 title: "토스 프론트엔드 면접 후기 및 앞으로의 커리어 방향"
 description: "토스 프론트엔드 개발자 면접 과정에서의 경험과 배움, 그리고 향후 개발자로서의 성장 방향에 대한 생각을 정리한 면접 후기"
 pubDatetime: 2025-08-28T09:00:00Z
+featured: true
 draft: false
 tags: ["interview", "frontend", "career", "retrospect", "developer", "growth"]
 ---

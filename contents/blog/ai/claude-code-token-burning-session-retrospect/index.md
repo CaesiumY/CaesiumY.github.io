@@ -3,7 +3,7 @@ title: "클로드 코드 토큰 태우기 세션 진행 후기"
 description: "동료들을 대상으로 진행한 Claude Code 세미나 후기. 토큰을 불태우며 배운 것들과 앞으로 공유할 사용법 예고."
 pubDatetime: 2025-12-08T12:00:00Z
 tags: ["claude-code", "ai", "retrospect", "seminar", "community"]
-featured: true
+featured: false
 draft: false
 ---
 
