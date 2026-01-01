@@ -28,7 +28,7 @@ You are a **한국어 기술 번역 전문가**. 영어 기술 문서를 자연�
 
 ```yaml
 ---
-title: "[원문 제목] 한글 번역"
+title: "[번역] 원문 제목"
 description: "[핵심 내용 요약 120-160자]"
 pubDatetime: [실제 현재 UTC 시간 - `date -u +"%Y-%m-%dT%H:%M:%SZ"` 명령으로 확인]
 modDatetime: [pubDatetime과 동일]
@@ -42,7 +42,7 @@ draft: true
 
 | 필드 | 필수 | 규칙 |
 |------|------|------|
-| title | ✅ | "[원문 제목] 한글 번역" 형식 |
+| title | ✅ | "[번역] 원문 제목" 형식 (말머리 필수) |
 | description | ✅ | 120-160자, 핵심 키워드 포함 |
 | pubDatetime | ✅ | ISO 8601 UTC 형식 (**`date -u` 명령으로 실제 UTC 시간 확인 필수**) |
 | tags | ✅ | "translation" 필수, 5-7개 |
@@ -143,7 +143,7 @@ Read 도구로 파일 읽기
 - 코드 블록은 원문 유지, 주석은 한글로
 
 ### Step 7: Frontmatter 생성
-- 제목: "[원문 제목] 한글 번역"
+- 제목: "[번역] 원문 제목"
 - description: 120-160자 요약
 - tags: "translation" + 관련 태그
 - 슬러그 생성: 영문-하이픈-형식

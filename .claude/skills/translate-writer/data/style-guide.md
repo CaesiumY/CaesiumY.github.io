@@ -179,7 +179,7 @@
 
 ```yaml
 ---
-title: "[번역] 원문 제목" 또는 "원문 제목 한글 번역"
+title: "[번역] 원문 제목"  # [번역] 말머리 필수
 description: "[번역] 또는 원문 제목 + 핵심 내용 요약 120-160자"
 pubDatetime: YYYY-MM-DDTHH:MM:SSZ  # ISO 8601 UTC (date -u 명령으로 확인)
 modDatetime: YYYY-MM-DDTHH:MM:SSZ  # 수정일 (선택)
@@ -197,9 +197,9 @@ tags: ["translation", "관련-태그", ...]
 - 시스템 프롬프트의 날짜가 아닌 **`date -u +"%Y-%m-%dT%H:%M:%SZ"`** 명령 결과 사용
 - 한국 시간(KST)은 UTC+9이므로, KST 자정은 UTC 전날 15:00임을 주의
 
-### title 패턴 (샘플 기준)
-- 패턴 A: `"Next.js 16 Beta 한글 번역"`
-- 패턴 B: `"[번역] 세 YC 스타트업이 Claude Code로 회사를 구축한 방법"`
+### title 패턴
+- **필수 형식**: `"[번역] 원문 제목"`
+- 예시: `"[번역] Next.js 16 Beta"`, `"[번역] 세 YC 스타트업이 Claude Code로 회사를 구축한 방법"`
 
 ### description 패턴 (샘플 기준)
 - 제목 반복 + 핵심 키워드 나열
@@ -216,7 +216,7 @@ tags: ["translation", "관련-태그", ...]
 ## 6. SEO 최적화
 
 ### 제목
-- 형식: `"[번역] 원문 제목"` 또는 `"원문 제목 한글 번역"`
+- 형식: `"[번역] 원문 제목"` (말머리 필수)
 - 길이: 20-70자
 - 핵심 키워드를 앞쪽에 배치
 

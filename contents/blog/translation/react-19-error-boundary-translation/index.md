@@ -1,5 +1,5 @@
 ---
-title: "React 19에서 달라진 에러 바운더리 동작"
+title: "[번역] React 19에서 달라진 에러 바운더리 동작"
 description: "React 19에서 에러 바운더리 동작이 개선되었습니다. 첫 번째 에러 발생 시 렌더링을 즉시 중단해 중복 로그를 줄이고 리소스 효율성을 높입니다."
 pubDatetime: 2025-12-31T17:00:00Z
 featured: false
