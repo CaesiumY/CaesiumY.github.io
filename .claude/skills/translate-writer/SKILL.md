@@ -1,16 +1,17 @@
 ---
 allowed-tools: [Read, Write, Bash, Glob, TodoWrite, Task, AskUserQuestion, WebFetch]
-argument-hint: <URL 또는 파일경로> [--analyze] [--skip-review]
-description: AI 기반 번역 에이전트 시스템 (스타일 학습 → 자동 번역 → 검토 루프 → 사용자 승인)
+argument-hint: <URL 또는 파일경로> [--mode=quick|thorough|perfect] [--analyze] [--skip-review]
+description: AI 기반 번역 에이전트 시스템 (스타일 학습 → 자동 번역 → 검토 루프 → polish → 사용자 승인)
 ---
 
 ## 번역 글쓰기 에이전트 시스템
 
-4개의 전문 에이전트가 협업하여 자연스러운 한국어 번역을 생성합니다.
+5개의 전문 에이전트가 협업하여 자연스러운 한국어 번역을 생성합니다.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                    사용자 요청 (URL/파일)                         │
+│                    [--mode=quick|thorough|perfect]               │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
@@ -32,20 +33,53 @@ description: AI 기반 번역 에이전트 시스템 (스타일 학습 → 자�
 │  Phase 2: 검토 루프 (translation-reviewer 에이전트)               │
 │  - 10점 만점 평가 (28개 번역투 패턴 체크)                         │
 │  │                                                              │
-│  ├──→ 8점 미만: Translator에게 수정 지시 (최대 3회)               │
+│  ├──→ quick/thorough: 8점 미만 → Translator에게 수정 지시        │
+│  ├──→ perfect: 9점 미만 → Translator에게 수정 지시               │
 │  │                                                              │
-│  └──→ 8점 이상: 사용자 승인 요청                                  │
+│  └──→ 기준 이상: Phase 3으로                                     │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│  Phase 3: 사용자 최종 결정                                        │
+│  Phase 3: Polish 정밀 다듬기 [NEW]                               │
+│  ─────────────────────────────────────────────────────────────  │
+│  [quick 모드: 건너뛰기]                                          │
 │                                                                 │
-│  ✅ 승인: → translation-learner 호출 → 파일 저장                  │
-│  📝 수정 요청: → Translator에게 피드백 전달 → Phase 2로            │
-│  ❌ 거절: → translation-learner (부정 피드백) → 종료               │
+│  1. polish-file 로직으로 문장별 분석                              │
+│  2. 기준 점수 미만 문장 필터링 (thorough: 9.5, perfect: 9.8)      │
+│  3. 사용자 확인: "N개 문장 다듬기 진행?"                          │
+│     - 예 → 순차 개선                                            │
+│     - 나중에 → JSON 저장 후 Phase 4                              │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  Phase 4: 사용자 최종 결정                                        │
+│                                                                 │
+│  ✅ 승인: → Phase 5로                                            │
+│  📝 수정 요청: → 피드백 반영 후 Phase 2로                         │
+│  🔧 추가 다듬기: → Phase 3으로                                    │
+│  ❌ 거절: → translation-learner (부정) → 종료                     │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  Phase 5: 저장 및 학습 (translation-learner)                      │
+│  - 파일 저장                                                     │
+│  - 스타일 가이드 업데이트                                         │
+│  - 피드백 로그 기록                                              │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## 모드별 동작
+
+| 모드 | 검토 기준 | Polish | 소요 시간 | 용도 |
+|------|----------|--------|----------|------|
+| `--mode=quick` | 8점 | 건너뛰기 | 5-10분 | 빠른 참고용 |
+| `--mode=thorough` (기본) | 8점 | 9.5점 미만만 | 15-20분 | 일반 블로그 |
+| `--mode=perfect` | 9점 | 9.8점 미만 전체 | 30분+ | 중요 문서 |
 
 ---
 
@@ -70,6 +104,14 @@ description: AI 기반 번역 에이전트 시스템 (스타일 학습 → 자�
 ## 작업
 
 **"$ARGUMENTS"** 를 한국어로 번역하세요.
+
+### 모드 파싱
+
+1. 인자에서 `--mode=` 추출 (없으면 `thorough`)
+2. 모드별 설정값 적용:
+   - quick: review_threshold=8, skip_polish=true
+   - thorough: review_threshold=8, polish_threshold=9.5
+   - perfect: review_threshold=9, polish_threshold=9.8
 
 ### 실행 단계
 
@@ -100,25 +142,64 @@ Task 도구로 content-translator 에이전트 호출:
 
 #### Phase 2: 검토 루프 (translation-reviewer)
 
-**루프 조건**: 점수 8점 이상 또는 3회 수정 완료
+**루프 조건**:
+- quick/thorough: 점수 8점 이상 또는 3회 수정 완료
+- perfect: 점수 9점 이상 또는 3회 수정 완료
 
 ```
 반복 (최대 3회):
   1. translation-reviewer 에이전트로 평가 (10점 만점)
-  2. 점수 < 8:
+  2. 점수 < 기준:
      - 수정 지시를 content-translator에게 전달
      - 수정된 번역 받기
-  3. 점수 >= 8:
+  3. 점수 >= 기준:
      - 루프 종료
-     - 사용자 승인 요청
+     - Phase 3으로
 ```
 
-**3회 수정 후에도 8점 미만**:
+**3회 수정 후에도 기준 미만**:
 - 사용자에게 상황 보고
 - 현재 점수와 주요 문제점 안내
 - 계속 진행할지 사용자 결정
 
-#### Phase 3: 사용자 최종 결정
+#### Phase 3: Polish 정밀 다듬기 [NEW]
+
+**quick 모드**: 이 단계 건너뛰기 → Phase 4로
+
+**thorough/perfect 모드**:
+
+1. **문장별 분석**: 번역된 파일의 각 문장에 대해 polish-agent (batch 모드) 호출
+   - 문장 추출 (frontmatter, 코드 블록 제외)
+   - 각 문장 점수 및 패턴 분석
+
+2. **필터링**: 기준 점수 미만 문장만 선택
+   - thorough: 9.5점 미만
+   - perfect: 9.8점 미만
+
+3. **사용자 확인** (AskUserQuestion):
+   ```
+   ## Polish 다듬기
+
+   **분석 결과**:
+   - 전체 문장: N개
+   - 평균 점수: X.X/10
+   - 개선 대상 (< Y.Y점): M개
+
+   진행 방법을 선택하세요:
+
+   1. ✅ 지금 다듬기 - M개 문장 순차 개선
+   2. 📄 나중에 - JSON 저장 후 Phase 4로
+   3. ⏭️ 건너뛰기 - 바로 Phase 4로
+   ```
+
+4. **"지금 다듬기" 선택 시**:
+   - 각 문장에 대해 AskUserQuestion으로 옵션 제시
+   - 사용자 선택 시 Edit으로 적용
+   - 진행률 표시: `[3/12] Line 67`
+
+5. **JSON 리포트 저장**: `.claude/polish-reports/[slug]-[timestamp].json`
+
+#### Phase 4: 사용자 최종 결정
 
 AskUserQuestion으로 사용자에게 질문:
 
@@ -128,6 +209,8 @@ AskUserQuestion으로 사용자에게 질문:
 **점수**: X/10
 **원문**: [원문 제목]
 **번역 제목**: [한글 제목]
+**모드**: [quick|thorough|perfect]
+**Polish**: [완료/건너뜀/N개 개선]
 
 [번역 미리보기 또는 전체 내용]
 
@@ -136,19 +219,21 @@ AskUserQuestion으로 사용자에게 질문:
 이 번역을 어떻게 처리할까요?
 
 1. ✅ 승인 - 이대로 저장
-2. 📝 수정 요청 - 피드백 입력 후 수정
-3. ❌ 거절 - 폐기
+2. 📝 수정 요청 - 피드백 입력 후 재번역
+3. 🔧 추가 다듬기 - Phase 3으로 돌아가기
+4. ❌ 거절 - 폐기
 ```
 
 **사용자 선택에 따른 처리**:
 
 | 선택 | 처리 |
 |------|------|
-| ✅ 승인 | translation-learner 호출 (긍정) → 파일 저장 → 완료 |
-| 📝 수정 | 피드백 받기 → translation-learner 호출 → Phase 1로 |
-| ❌ 거절 | translation-learner 호출 (부정) → 종료 |
+| ✅ 승인 | Phase 5로 |
+| 📝 수정 | 피드백 받기 → Phase 1로 |
+| 🔧 추가 다듬기 | Phase 3으로 |
+| ❌ 거절 | translation-learner (부정) → 종료 |
 
-#### Phase 4: 저장 및 학습 (translation-learner)
+#### Phase 5: 저장 및 학습 (translation-learner)
 
 승인된 경우:
 1. `contents/blog/translation/[slug]/index.md` 저장
@@ -168,6 +253,9 @@ AskUserQuestion으로 사용자에게 질문:
 
 | 옵션 | 설명 | 기본값 |
 |------|------|--------|
+| `--mode=quick` | 빠른 번역 (polish 생략) | - |
+| `--mode=thorough` | 일반 번역 (기본값) | ✓ |
+| `--mode=perfect` | 꼼꼼한 번역 (높은 기준) | - |
 | `--analyze` | 강제 스타일 재분석 | false |
 | `--skip-review` | 검토 루프 스킵 (테스트용) | false |
 
@@ -180,16 +268,19 @@ AskUserQuestion으로 사용자에게 질문:
 | translation-style-analyzer | 기존 번역 분석 → 스타일 가이드 생성 | - |
 | content-translator | URL/파일 번역 | - |
 | translation-reviewer | 번역 품질 검토 (28개 패턴) | 10점 만점 |
+| polish-agent | 문장 단위 정밀 분석 (10개 핵심 패턴) | 10점 만점 |
 | translation-learner | 피드백 학습 → 스타일 가이드 업데이트 | - |
 
 ---
 
 ## 기존 커맨드와의 관계
 
-| 커맨드 | 용도 | 학습 |
-|--------|------|------|
-| `/translate-blog` | 단순 번역 (빠른 작업용) | ❌ |
-| `/translate-writer` | 풀 에이전트 시스템 (품질 중심) | ✅ |
+| 커맨드 | 용도 | 학습 | Polish |
+|--------|------|------|--------|
+| `/translate-blog` | 단순 번역 (빠른 작업용) | ❌ | ❌ |
+| `/translate-writer --mode=quick` | 빠른 에이전트 번역 | ✅ | ❌ |
+| `/translate-writer` | 일반 에이전트 번역 | ✅ | ✅ (9.5점 미만) |
+| `/translate-writer --mode=perfect` | 고품질 에이전트 번역 | ✅ | ✅ (9.8점 미만) |
 
 ---
 
@@ -202,13 +293,18 @@ AskUserQuestion으로 사용자에게 질문:
 ✅ 원문: [원문 제목]
 ✅ 번역 제목: [한글 제목]
 ✅ 파일: contents/blog/translation/[slug]/index.md
+✅ 모드: [quick|thorough|perfect]
 ✅ 점수: X/10
 ✅ 상태: draft: true
 
 📊 검토 히스토리:
 - 1차: X점 → 수정
 - 2차: X점 → 통과
-- 사용자 승인: ✅
+
+📝 Polish (thorough/perfect만):
+- 분석 문장: N개
+- 개선 완료: M개
+- 평균 점수 변화: X.X → Y.Y
 
 📚 학습된 내용:
 - [피드백 요약]
@@ -218,6 +314,7 @@ AskUserQuestion으로 사용자에게 질문:
 
 ─────────────────────────────────────
 💡 발행하려면: frontmatter의 draft: false로 변경
+📄 Polish 리포트: .claude/polish-reports/[slug]-[timestamp].json
 ```
 
 ---
@@ -226,7 +323,9 @@ AskUserQuestion으로 사용자에게 질문:
 
 1. **draft: true**: 모든 번역은 초안으로 생성. 발행은 사용자가 직접.
 2. **루프 제한**: Translator↔Reviewer 루프는 최대 3회.
-3. **피드백 축적**: 모든 피드백은 feedback-log.md에 기록.
-4. **용어집 존중**: `glossary.md`의 용어를 우선 참조.
-5. **백업**: style-guide.md 변경 전 항상 style-history/에 백업.
-6. **한국어**: 모든 출력과 번역은 한국어로.
+3. **모드 선택**: 목적에 맞는 모드 선택 안내.
+4. **피드백 축적**: 모든 피드백은 feedback-log.md에 기록.
+5. **용어집 존중**: `glossary.md`의 용어를 우선 참조.
+6. **백업**: style-guide.md 변경 전 항상 style-history/에 백업.
+7. **한국어**: 모든 출력과 번역은 한국어로.
+8. **Polish 리포트**: 학습 및 추적용으로 보존.
