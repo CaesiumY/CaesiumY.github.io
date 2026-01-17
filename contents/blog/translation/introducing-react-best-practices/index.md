@@ -37,7 +37,7 @@ draft: false
 
 **작성자**: Shu Ding (소프트웨어 엔지니어), Andrew Qu (Chief of Software, Vercel)
 
-10년 이상의 React와 Next.js 최적화 경험을 [`react-best-practices`](https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices)에 담았습니다. 이 저장소는 AI 에이전트와 LLM에 최적화된 구조로 만들었습니다.
+10년 이상 React와 Next.js를 최적화한 경험을 [`react-best-practices`](https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices)에 담았습니다. 이 저장소는 AI 에이전트와 LLM을 위해 설계했습니다.
 
 ![React Best Practices 이미지](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Fcontentful%2Fimage%2Fe5382hct74si%2F14aMyBW08k2S4GJM0NsG25%2F7605d0aff8d41f9386cc3e36d39d972a%2Fml.png&w=1920&q=75)
 
