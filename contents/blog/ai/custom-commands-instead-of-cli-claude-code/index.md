@@ -3,7 +3,7 @@ title: "블로그 글 초안을 생성하는 CLI 대신 Custom Slash Commands �
 description: "Claude Code의 Custom Slash Commands 기능을 활용해 블로그 글 초안 생성을 자동화하는 경험 공유. (추가)Opus 4.5와 함께 더 강력해진 활용법까지."
 pubDatetime: 2025-09-27T12:00:00Z
 modDatetime: 2025-12-08T00:00:00Z
-featured: true
+featured: false
 draft: false
 tags: ["claude-code", "ai", "opus-4-5"]
 ---
