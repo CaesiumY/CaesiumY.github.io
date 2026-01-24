@@ -9,6 +9,7 @@ import BackButton from "@/layouts/components/Navigation/BackButton.astro";
 import BackToTopButton from "@/layouts/components/Navigation/BackToTopButton.astro";
 import PostMetadata from "@/features/blog/components/PostMetadata.astro";
 import PostNavigation from "@/features/blog/components/PostNavigation.astro";
+import CopyButtonIcons from "@/features/blog/components/CopyButtonIcons.astro";
 import { getPath } from "@/utils/getPath";
 import { SITE } from "@/config";
 
@@ -107,6 +108,8 @@ const layoutProps = {
     <hr class="my-6 border-dashed" />
 
     <PostNavigation {posts} currentPostId={post.id} />
+
+    <CopyButtonIcons />
   </main>
   <Footer />
 </Layout>

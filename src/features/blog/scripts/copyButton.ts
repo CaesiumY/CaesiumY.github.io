@@ -1,14 +1,17 @@
-// Phosphor icon SVGs
-const copyIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"/></svg>`;
-
-const checkIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256"><path d="m229.66,77.66-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg>`;
-
 /**
- * Create SVG element with custom attributes
+ * Get icon SVG from hidden template
  */
-function createSvgIcon(svgString: string, customClasses: string, width = "16", height = "16"): string {
-  return svgString
-    .replace('<svg', `<svg width="${width}" height="${height}" class="${customClasses}"`);
+function getIconFromTemplate(iconName: "copy" | "check"): SVGElement | null {
+  const template = document.getElementById(
+    "copy-button-icons"
+  ) as HTMLTemplateElement | null;
+  if (!template) {
+    console.warn("Copy button icons template not found");
+    return null;
+  }
+
+  const icon = template.content.querySelector(`[data-icon="${iconName}"]`);
+  return icon?.cloneNode(true) as SVGElement | null;
 }
 
 /**
@@ -37,19 +40,39 @@ export function attachCopyButtons(): void {
     copyButton.setAttribute("aria-label", "코드 복사");
     copyButton.setAttribute("title", "코드를 클립보드에 복사");
 
-    // Create copy icon using Phosphor SVG
-    const copyIconHtml = createSvgIcon(
-      copyIconSvg, 
-      "copy-icon opacity-90 group-hover:opacity-100 transition-opacity duration-200"
-    );
+    // Get icons from hidden template
+    const copyIcon = getIconFromTemplate("copy");
+    const checkIcon = getIconFromTemplate("check");
 
-    // Create check icon using Phosphor SVG
-    const checkIconHtml = createSvgIcon(
-      checkIconSvg,
-      "check-icon opacity-0 absolute top-1.5 left-1.5 transition-opacity duration-200 text-green-600"
-    );
+    if (copyIcon && checkIcon) {
+      // Apply styles to copy icon
+      copyIcon.setAttribute("width", "16");
+      copyIcon.setAttribute("height", "16");
+      copyIcon.classList.add(
+        "copy-icon",
+        "opacity-90",
+        "group-hover:opacity-100",
+        "transition-opacity",
+        "duration-200"
+      );
 
-    copyButton.innerHTML = copyIconHtml + checkIconHtml;
+      // Apply styles to check icon
+      checkIcon.setAttribute("width", "16");
+      checkIcon.setAttribute("height", "16");
+      checkIcon.classList.add(
+        "check-icon",
+        "opacity-0",
+        "absolute",
+        "top-1.5",
+        "left-1.5",
+        "transition-opacity",
+        "duration-200",
+        "text-green-600"
+      );
+
+      copyButton.appendChild(copyIcon);
+      copyButton.appendChild(checkIcon);
+    }
     codeBlock.setAttribute("tabindex", "0");
     codeBlock.appendChild(copyButton);
 
