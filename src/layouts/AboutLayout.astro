@@ -4,7 +4,7 @@ import Footer from "@/layouts/components/Footer.astro";
 import Breadcrumb from "@/layouts/components/Breadcrumb.astro";
 import Layout from "./Layout.astro";
 import { SITE } from "@/config";
-import PdfDownloadButton from "@/features/about/components/PdfDownloadButton";
+import PdfDownloadButton from "@/features/about/components/PdfDownloadButton.astro";
 
 export interface Props {
   frontmatter: {
@@ -32,5 +32,5 @@ const { frontmatter } = Astro.props;
   <Footer />
 
   <!-- PDF 다운로드 플로팅 버튼 -->
-  <PdfDownloadButton client:only="react" />
+  <PdfDownloadButton />
 </Layout>
