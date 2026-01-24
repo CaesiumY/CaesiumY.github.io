@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "file": "contents/blog/translation/intro-to-performance-of-react-server-components/index.md",
+    "analyzed_at": "2026-01-24T12:00:00Z",
+    "total_sentences": 73,
+    "sentences_below_threshold": 23,
+    "average_score": 8.45,
+    "threshold": 9.5
+  },
+  "sentences": [
+    {"id": 1, "line": 39, "original": "React 서버 컴포넌트에 대해 들어보셨나요? React를 매일 사용하지 않더라도 아마 들어봤을 겁니다. 지난 몇 년간 React 커뮤니티에서 가장 뜨거운 주제였으니까요.", "score": 8.7, "patterns": ["#24", "#4"], "status": "pending"},
+    {"id": 2, "line": 41, "original": "가장 멋진 새 기능일 뿐만 아니라, 서버 컴포넌트는 성능 관점에서 자주 거론됩니다. 정말 성능에 좋다고 알려져 있죠.", "score": 8.2, "patterns": ["#24", "#16", "#10"], "status": "pending"},
+    {"id": 3, "line": 43, "original": "주된 약속은 비교적 단순합니다. 더 많은 작업을 서버로 밀어내고, 더 적은 JavaScript를 전송하고, 데이터를 더 일찍 페칭하면 페이지의 초기 로드가 빨라진다는 것입니다.", "score": 7.8, "patterns": ["#5", "#4", "#22", "#8"], "status": "pending"},
+    {"id": 4, "line": 45, "original": "참고로 이 글은 40분 분량의 전체 조사를 React를 사용하지 않는 독자를 위해 짧게 요약한 버전입니다.", "score": 8.5, "patterns": ["#22", "#4", "#14"], "status": "pending"},
+    {"id": 5, "line": 49, "original": "여기서 문제는 서버 컴포넌트를 독립적으로 사용해서 측정할 수 없다는 점입니다.", "score": 8.8, "patterns": ["#5", "#4"], "status": "pending"},
+    {"id": 6, "line": 51, "original": "서버 컴포넌트는 매우 복잡한 기술이며, 일부 최신 번들러와 프레임워크에 깊이 통합되어 있어서 직접 구현하기는 거의 불가능합니다.", "score": 8.4, "patterns": ["#24", "#1", "#6"], "status": "pending"},
+    {"id": 7, "line": 53, "original": "게다가 이해하기 쉬운 기능도 아닙니다. 특히 성능 관점에서 이해하려면 React가 평소 어떻게 렌더링하고 데이터를 페칭하는지 명확히 알고 있어야 합니다.", "score": 8.3, "patterns": ["#24", "#22", "#5"], "status": "pending"},
+    {"id": 8, "line": 55, "original": "클라이언트와 서버 모두에서요! 여기서 재미있는 점이 있습니다. 서버 렌더링이라는 개념은 이미 있습니다!", "score": 7.9, "patterns": ["#5", "#4", "#9"], "status": "pending"},
+    {"id": 9, "line": 57, "original": "이 모든 것을 조사하기 위해 여러 클라이언트 사이드 라우트와 클라이언트 사이드 데이터 페칭을 가진 단일 페이지 앱(SPA)을 만들었습니다.", "score": 8.1, "patterns": ["#24", "#22", "#14"], "status": "pending"},
+    {"id": 14, "line": 75, "original": "먼저 클라이언트 사이드 렌더링입니다. 세대에 따라 클라이언트 사이드 렌더링이 기본 React 경험이거나 심지어 기본 웹 경험일 수도 있습니다.", "score": 7.8, "patterns": ["#1", "#6", "#22"], "status": "pending"},
+    {"id": 19, "line": 117, "original": "React 자체가 App 진입점 컴포넌트를 DOM 노드로 변환합니다. 그런 다음 id로 빈 div를 찾습니다. 그리고 생성된 요소를 빈 div에 주입합니다.", "score": 8.1, "patterns": ["#5", "#19"], "status": "pending"},
+    {"id": 32, "line": 191, "original": "React의 서버 사이드 렌더링(SSR)과 정적 사이트 생성(SSG) 시대에 오신 것을 환영합니다.", "score": 8.2, "patterns": ["#4", "#5"], "status": "pending"},
+    {"id": 33, "line": 193, "original": "클라이언트 사이드 렌더링 프로젝트에서 정확히 이렇게 하면 서버 사이드 렌더링 프로젝트가 됩니다.", "score": 8.0, "patterns": ["#5", "#7"], "status": "pending"},
+    {"id": 36, "line": 201, "original": "하지만 여전히 동일한 JavaScript를 정확히 같은 방식으로 다운로드, 컴파일, 실행해야 합니다.", "score": 8.3, "patterns": ["#5", "#6"], "status": "pending"},
+    {"id": 38, "line": 205, "original": "또한 그림에서 LCP 마크만 이동했습니다. '사이드바 항목'과 '메시지'는 구조적으로 정확히 같은 위치에 있습니다.", "score": 8.2, "patterns": ["#9", "#5"], "status": "pending"},
+    {"id": 44, "line": 232, "original": "비인터랙티브 구간은 제쳐두고, 사이드바와 메시지 표시 시간에 변화가 없는 것도 문제입니다.", "score": 8.2, "patterns": ["#4", "#22"], "status": "pending"},
+    {"id": 47, "line": 266, "original": "그런 다음 해당 데이터를 HTML 코드에 주입하는 여러 마법을 부리고, 앱에서 그 데이터를 추출해 초기화합니다.", "score": 8.3, "patterns": ["#22", "#4"], "status": "pending"},
+    {"id": 48, "line": 275, "original": "이제 이전에 동적이었던 항목을 포함한 전체 페이지가 CSS 다운로드가 완료되자마자 보입니다.", "score": 8.4, "patterns": ["#7", "#5"], "status": "pending"},
+    {"id": 52, "line": 290, "original": "하지만 사이드바와 메시지 항목은 이제 훨씬 빨리 나타납니다. 4.9초에서 1.78초로요.", "score": 7.6, "patterns": ["#9", "#15", "#18", "#22"], "status": "pending"},
+    {"id": 57, "line": 309, "original": "기본적으로 클라이언트 사이드 렌더링에 있는 것과 정확히 동일한 데이터 페칭 구조를 복제하되 서버에서 하는 겁니다.", "score": 8.1, "patterns": ["#7", "#22"], "status": "pending"},
+    {"id": 59, "line": 315, "original": "이를 위해 React는 단순한 동기 renderToString을 포기해야 합니다.", "score": 7.7, "patterns": ["#5", "#7", "#22", "#24"], "status": "pending"},
+    {"id": 62, "line": 331, "original": "수치는 인상적입니다. 어떤 이유로 함께 병합되었습니다.", "score": 6.8, "patterns": ["#4", "#5", "#10", "#18", "#24"], "status": "pending"},
+    {"id": 70, "line": 363, "original": "데이터 페칭이 포함될 때만 서버 컴포넌트의 성능 이점을 볼 수 있습니다.", "score": 7.4, "patterns": ["#5", "#14", "#15", "#22", "#24"], "status": "pending"}
+  ],
+  "progress": {
+    "completed": 0,
+    "total": 23
+  },
+  "common_patterns": {
+    "#5": {"name": "장황한 표현/~라는 것을 알 수 있다", "count": 18},
+    "#22": {"name": "소유격 ~의 과다", "count": 15},
+    "#24": {"name": "~에 대해 과다", "count": 10},
+    "#4": {"name": "지시대명사 과다", "count": 9},
+    "#19": {"name": "그리고 문장 시작", "count": 5}
+  }
+}
