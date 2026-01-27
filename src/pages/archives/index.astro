@@ -1,11 +1,11 @@
 ---
-import { getCollection } from "astro:content";
 import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/layouts/components/Header.astro";
 import Footer from "@/layouts/components/Footer.astro";
-import Card from "@/features/blog/components/Card.astro";
-import getPostsByGroupCondition from "@/utils/getPostsByGroupCondition";
+import ProjectCard from "@/features/projects/components/ProjectCard.astro";
+import { projects } from "@/data/projects";
+import { fetchProjectOgImage } from "@/utils/fetchOgImage";
 import { SITE } from "@/config";
 
 // Redirect to 404 page if `showArchives` config is false
@@ -13,71 +13,32 @@ if (!SITE.showArchives) {
   return Astro.redirect("/404");
 }
 
-// 모든 포스트를 가져오고, getPostsByGroupCondition에서 필터링 적용
-const posts = await getCollection("blog");
-
-const months = [
-  "1월",
-  "2월",
-  "3월",
-  "4월",
-  "5월",
-  "6월",
-  "7월",
-  "8월",
-  "9월",
-  "10월",
-  "11월",
-  "12월",
-];
+// 빌드 타임에 모든 프로젝트의 OG 이미지를 fetch
+const projectsWithOgImages = await Promise.all(
+  projects
+    .sort((a, b) => b.date.getTime() - a.date.getTime())
+    .map(async project => ({
+      project,
+      ogImageUrl: await fetchProjectOgImage(project),
+    }))
+);
 ---
 
-<Layout title={`Archives | ${SITE.title}`}>
+<Layout title={`Projects | ${SITE.title}`}>
   <Header />
-  <Main pageTitle="Archives" pageDesc="보관된 모든 글입니다.">
+  <Main pageTitle="Projects" pageDesc="진행한 프로젝트들입니다.">
     {
-      Object.entries(
-        getPostsByGroupCondition(posts, post =>
-          post.data.pubDatetime.getFullYear()
-        )
+      projectsWithOgImages.length > 0 ? (
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {projectsWithOgImages.map(({ project, ogImageUrl }) => (
+            <ProjectCard project={project} ogImageUrl={ogImageUrl} />
+          ))}
+        </div>
+      ) : (
+        <p class="text-center text-foreground/60">
+          아직 등록된 프로젝트가 없습니다.
+        </p>
       )
-        .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
-        .map(([year, yearGroup]) => (
-          <div>
-            <span class="text-2xl font-bold">{year}</span>
-            <sup class="text-sm">{yearGroup.length}</sup>
-            {Object.entries(
-              getPostsByGroupCondition(
-                yearGroup,
-                post => post.data.pubDatetime.getMonth() + 1
-              )
-            )
-              .sort(([monthA], [monthB]) => Number(monthB) - Number(monthA))
-              .map(([month, monthGroup]) => (
-                <div class="flex flex-col sm:flex-row">
-                  <div class="mt-6 min-w-36 text-lg sm:my-6">
-                    <span class="font-bold">{months[Number(month) - 1]}</span>
-                    <sup class="text-xs">{monthGroup.length}</sup>
-                  </div>
-                  <ul>
-                    {monthGroup
-                      .sort(
-                        (a, b) =>
-                          Math.floor(
-                            new Date(b.data.pubDatetime).getTime() / 1000
-                          ) -
-                          Math.floor(
-                            new Date(a.data.pubDatetime).getTime() / 1000
-                          )
-                      )
-                      .map(data => (
-                        <Card {...data} />
-                      ))}
-                  </ul>
-                </div>
-              ))}
-          </div>
-        ))
     }
   </Main>
   <Footer />
