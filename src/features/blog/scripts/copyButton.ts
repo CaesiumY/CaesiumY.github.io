@@ -1,3 +1,7 @@
+/** 피드백 표시 시간 상수 */
+const FEEDBACK_DURATION_SUCCESS_MS = 700;
+const FEEDBACK_DURATION_ERROR_MS = 2000;
+
 /**
  * Get icon SVG from hidden template
  */
@@ -6,7 +10,14 @@ function getIconFromTemplate(iconName: "copy" | "check"): SVGElement | null {
     "copy-button-icons"
   ) as HTMLTemplateElement | null;
   if (!template) {
-    console.warn("Copy button icons template not found");
+    if (import.meta.env.DEV) {
+      // eslint-disable-next-line no-console -- DEV 모드 전용 디버깅 경고
+      console.warn(
+        "Copy button icons template not found. " +
+          "Ensure <template id='copy-button-icons'> exists in the DOM " +
+          "with data-icon='copy' and data-icon='check' SVGs."
+      );
+    }
     return null;
   }
 
@@ -19,7 +30,10 @@ function getIconFromTemplate(iconName: "copy" | "check"): SVGElement | null {
  * allowing users to copy code easily.
  */
 export function attachCopyButtons(): void {
-  const codeBlocks = Array.from(document.querySelectorAll("pre"));
+  // 이미 초기화된 코드 블록은 제외 (중복 이벤트 리스너 방지)
+  const codeBlocks = Array.from(
+    document.querySelectorAll("pre:not([data-copy-initialized])")
+  );
 
   for (const codeBlock of codeBlocks) {
     const wrapper = document.createElement("div");
@@ -52,7 +66,7 @@ export function attachCopyButtons(): void {
         "copy-icon",
         "opacity-90",
         "group-hover:opacity-100",
-        "transition-opacity",
+        "transition-all",
         "duration-200"
       );
 
@@ -74,6 +88,7 @@ export function attachCopyButtons(): void {
       copyButton.appendChild(checkIcon);
     }
     codeBlock.setAttribute("tabindex", "0");
+    codeBlock.setAttribute("data-copy-initialized", "true");
     codeBlock.appendChild(copyButton);
 
     // wrap codebock with relative parent element
@@ -93,19 +108,44 @@ async function copyCode(block: Element, button: HTMLButtonElement): Promise<void
   const code = block.querySelector("code");
   const text = code?.textContent || "";
 
-  await navigator.clipboard.writeText(text);
+  try {
+    await navigator.clipboard.writeText(text);
 
-  // visual feedback that task is completed
-  const copyIcon = button.querySelector(".copy-icon") as HTMLElement;
-  const checkIcon = button.querySelector(".check-icon") as HTMLElement;
+    // visual feedback that task is completed
+    const copyIcon = button.querySelector(".copy-icon") as HTMLElement;
+    const checkIcon = button.querySelector(".check-icon") as HTMLElement;
 
-  if (copyIcon && checkIcon) {
-    copyIcon.style.opacity = "0";
-    checkIcon.style.opacity = "1";
+    if (copyIcon && checkIcon) {
+      copyIcon.style.opacity = "0";
+      checkIcon.style.opacity = "1";
 
+      setTimeout(() => {
+        copyIcon.style.opacity = "0.9";
+        checkIcon.style.opacity = "0";
+      }, FEEDBACK_DURATION_SUCCESS_MS);
+    } else {
+      // 아이콘이 없을 때 fallback 피드백
+      button.setAttribute("aria-label", "복사됨!");
+      setTimeout(() => {
+        button.setAttribute("aria-label", "코드 복사");
+      }, FEEDBACK_DURATION_SUCCESS_MS);
+    }
+  } catch {
+    // 클립보드 접근 실패 시 (권한 거부, 비보안 컨텍스트 등)
+    button.setAttribute("aria-label", "복사 실패");
+
+    // 시각적 피드백 - 아이콘 색상 변경
+    const copyIcon = button.querySelector(".copy-icon") as HTMLElement;
+    if (copyIcon) {
+      copyIcon.classList.add("text-red-500");
+    }
+
+    // 단일 타임아웃으로 상태 복원 (경쟁 조건 방지)
     setTimeout(() => {
-      copyIcon.style.opacity = "0.9";
-      checkIcon.style.opacity = "0";
-    }, 700);
+      if (copyIcon) {
+        copyIcon.classList.remove("text-red-500");
+      }
+      button.setAttribute("aria-label", "코드 복사");
+    }, FEEDBACK_DURATION_ERROR_MS);
   }
 }
