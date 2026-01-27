@@ -86,13 +86,13 @@ const isActive = (path: string) => {
                   class:list={[
                     "focus-outline flex justify-center p-3 sm:p-1",
                     {
-                      "active-nav [&>svg]:stroke-accent": isActive("/projects"),
+                      "active-nav [&>svg]:text-accent": isActive("/projects"),
                     },
                   ]}
                   ariaLabel="projects"
                   title="Projects"
                 >
-                  <Icon name="ph:briefcase" class="hidden sm:inline-block" size={20} />
+                  <Icon name="ph:rocket-launch" class="hidden sm:inline-block" size={20} />
                   <span class="sm:sr-only">Projects</span>
                 </LinkButton>
               </li>
@@ -103,7 +103,7 @@ const isActive = (path: string) => {
               href="/search"
               class:list={[
                 "focus-outline flex p-3 sm:p-1",
-                { "[&>svg]:stroke-accent": isActive("/search") },
+                { "active-nav [&>svg]:text-accent": isActive("/search") },
               ]}
               ariaLabel="search"
               title="Search"
@@ -117,7 +117,7 @@ const isActive = (path: string) => {
               <li class="col-span-1 flex items-center justify-center">
                 <button
                   id="theme-btn"
-                  class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent"
+                  class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:text-accent"
                   title="라이트/다크 모드 전환"
                   aria-label="auto"
                   aria-live="polite"
