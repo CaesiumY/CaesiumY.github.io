@@ -79,14 +79,14 @@ const isActive = (path: string) => {
             </a>
           </li>
           {
-            SITE.showArchives && (
+            SITE.showProjects && (
               <li class="col-span-2">
                 <LinkButton
-                  href="/archives"
+                  href="/projects"
                   class:list={[
                     "focus-outline flex justify-center p-3 sm:p-1",
                     {
-                      "active-nav [&>svg]:stroke-accent": isActive("/archives"),
+                      "active-nav [&>svg]:stroke-accent": isActive("/projects"),
                     },
                   ]}
                   ariaLabel="projects"

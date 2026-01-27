@@ -10,7 +10,7 @@ export const SITE = {
   postPerIndex: 6,
   postPerPage: 8,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
-  showArchives: true,
+  showProjects: true,
   showBackButton: true, // show back button in post detail
   editPost: {
     enabled: false, // 수정 기능 비활성화

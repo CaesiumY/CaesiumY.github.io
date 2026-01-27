@@ -24,7 +24,7 @@ export default defineConfig({
       },
     }),
     sitemap({
-      filter: page => SITE.showArchives || !page.endsWith("/archives"),
+      filter: page => SITE.showProjects || !page.endsWith("/projects"),
     }),
   ],
   markdown: {

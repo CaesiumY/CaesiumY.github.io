@@ -8,8 +8,8 @@ import { projects } from "@/data/projects";
 import { fetchProjectOgImage } from "@/utils/fetchOgImage";
 import { SITE } from "@/config";
 
-// Redirect to 404 page if `showArchives` config is false
-if (!SITE.showArchives) {
+// Redirect to 404 page if `showProjects` config is false
+if (!SITE.showProjects) {
   return Astro.redirect("/404");
 }
 
