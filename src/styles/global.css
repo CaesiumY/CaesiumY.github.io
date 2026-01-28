@@ -90,10 +90,10 @@ html[data-theme="dark"] {
    Mobile Menu Animation System
    =========================================== */
 
-/* 모바일 전용 애니메이션 */
+/* 모바일 전용 애니메이션 - max-width 내부에서만 정의 */
 @media (max-width: 639px) {
   /* 메뉴 컨테이너 슬라이드 다운 */
-  #menu-items {
+  [data-menu-items] {
     max-height: 0;
     margin-top: 0;
     opacity: 0;
@@ -104,61 +104,45 @@ html[data-theme="dark"] {
       opacity 200ms ease-out;
   }
 
-  #menu-items.mobile-menu-visible {
+  [data-menu-items].mobile-menu-visible {
     max-height: 80vh; /* 뷰포트 기반으로 메뉴 항목 추가에도 안전 */
     margin-top: 1rem;
     opacity: 1;
   }
 
-  /* 메뉴 아이템 스태거 - CSS 변수로 무한 확장 가능 */
-  #menu-items > li {
+  /* 메뉴 아이템 스태거 애니메이션 */
+  .mobile-menu-item {
     opacity: 0;
     transform: translateY(-10px);
     transition:
       opacity 200ms ease-out,
       transform 200ms ease-out;
-    transition-delay: calc(var(--stagger-index, 0) * 50ms);
   }
 
-  #menu-items.mobile-menu-visible > li {
+  [data-menu-items].mobile-menu-visible .mobile-menu-item {
     opacity: 1;
     transform: translateY(0);
   }
 
-  /* 스태거 인덱스 설정 */
-  #menu-items > li:nth-child(1) { --stagger-index: 0; }
-  #menu-items > li:nth-child(2) { --stagger-index: 1; }
-  #menu-items > li:nth-child(3) { --stagger-index: 2; }
-  #menu-items > li:nth-child(4) { --stagger-index: 3; }
-  #menu-items > li:nth-child(5) { --stagger-index: 4; }
-  #menu-items > li:nth-child(6) { --stagger-index: 5; }
-  #menu-items > li:nth-child(7) { --stagger-index: 6; }
-  #menu-items > li:nth-child(8) { --stagger-index: 7; }
-}
-
-/* 데스크톱에서 애니메이션 완전 리셋 */
-@media (min-width: 640px) {
-  #menu-items,
-  #menu-items > li {
-    max-height: none !important;
-    opacity: 1 !important;
-    overflow: visible !important;
-    transform: none !important;
-    transition: none !important;
-    transition-delay: 0ms !important;
-  }
+  /* 스태거 인덱스 설정 - 클래스 기반 */
+  .mobile-menu-item[data-stagger="0"] { transition-delay: 0ms; }
+  .mobile-menu-item[data-stagger="1"] { transition-delay: 50ms; }
+  .mobile-menu-item[data-stagger="2"] { transition-delay: 100ms; }
+  .mobile-menu-item[data-stagger="3"] { transition-delay: 150ms; }
+  .mobile-menu-item[data-stagger="4"] { transition-delay: 200ms; }
+  .mobile-menu-item[data-stagger="5"] { transition-delay: 250ms; }
 }
 
 /* 햄버거 → X 아이콘 애니메이션 */
-#menu-btn {
+[data-menu-btn] {
   /* 아이콘들을 겹치기 위한 기준 */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#menu-icon,
-#close-icon {
+[data-menu-icon],
+[data-close-icon] {
   /* 24px 아이콘 기준 중앙 (아이콘 크기의 절반) */
   transform-origin: 12px 12px;
   transition:
@@ -166,13 +150,13 @@ html[data-theme="dark"] {
     opacity 200ms ease-out;
 }
 
-#menu-icon {
+[data-menu-icon] {
   transform: scale(1) rotate(0deg);
   opacity: 1;
 }
 
 /* close-icon: 같은 위치에 겹치기 */
-#close-icon {
+[data-close-icon] {
   position: absolute;
   transform: scale(0) rotate(-90deg);
   opacity: 0;
@@ -180,25 +164,25 @@ html[data-theme="dark"] {
 }
 
 /* 메뉴 열림 상태 (aria-expanded 기반) */
-#menu-btn[aria-expanded="true"] #menu-icon {
+[data-menu-btn][aria-expanded="true"] [data-menu-icon] {
   transform: scale(0) rotate(90deg);
   opacity: 0;
 }
 
-#menu-btn[aria-expanded="true"] #close-icon {
+[data-menu-btn][aria-expanded="true"] [data-close-icon] {
   transform: scale(1) rotate(0deg);
   opacity: 1;
   pointer-events: auto;
 }
 
-/* Reduced Motion 지원 */
+/* Reduced Motion 지원 - 파일 끝에 배치하여 소스 순서로 오버라이드 */
 @media (prefers-reduced-motion: reduce) {
-  #menu-items,
-  #menu-items > li,
-  #menu-icon,
-  #close-icon {
-    transition: none !important;
-    transition-delay: 0ms !important;
+  [data-menu-items],
+  .mobile-menu-item,
+  [data-menu-icon],
+  [data-close-icon] {
+    transition: none;
+    transition-delay: 0ms;
   }
 }
 
