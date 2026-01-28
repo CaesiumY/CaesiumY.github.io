@@ -79,23 +79,27 @@ const primaryUrl = liveUrl ?? githubUrl ?? '#';
       }
     </ul>
 
-    <div class="mt-4 flex items-center justify-end border-t border-border pt-4">
-      <a
-        href={githubUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="group/btn flex items-center gap-1 rounded-md px-2 py-1 text-sm text-foreground/80
-               transition-all duration-200
-               hover:-translate-y-0.5 hover:bg-accent/10 hover:text-accent"
-        aria-label={`${title} GitHub 저장소`}
-      >
-        <Icon
-          name="ph:github-logo"
-          size={18}
-          class="transition-transform duration-200 group-hover/btn:rotate-12"
-        />
-        <span class="sr-only sm:not-sr-only">GitHub</span>
-      </a>
-    </div>
+    {
+      githubUrl && (
+        <div class="mt-4 flex items-center justify-end border-t border-border pt-4">
+          <a
+            href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group/btn flex items-center gap-1 rounded-md px-2 py-1 text-sm text-foreground/80
+                   transition-all duration-200
+                   hover:-translate-y-0.5 hover:bg-accent/10 hover:text-accent"
+            aria-label={`${title} GitHub 저장소`}
+          >
+            <Icon
+              name="ph:github-logo"
+              size={18}
+              class="transition-transform duration-200 group-hover/btn:rotate-12"
+            />
+            <span class="sr-only sm:not-sr-only">GitHub</span>
+          </a>
+        </div>
+      )
+    }
   </div>
 </article>

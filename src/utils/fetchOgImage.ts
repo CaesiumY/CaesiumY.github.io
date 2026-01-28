@@ -82,12 +82,17 @@ export async function fetchOgImage(url: string): Promise<string | null> {
 
 /**
  * 프로젝트의 OG 이미지를 가져옵니다.
- * liveUrl → githubUrl 순서로 시도합니다.
+ * ogImage(수동) → liveUrl → githubUrl 순서로 시도합니다.
  */
 export async function fetchProjectOgImage(
   project: Project
 ): Promise<string | null> {
-  // liveUrl이 있으면 먼저 시도
+  // 수동으로 지정된 ogImage가 있으면 바로 반환
+  if (project.ogImage) {
+    return project.ogImage;
+  }
+
+  // liveUrl이 있으면 시도
   if (project.liveUrl) {
     const ogImage = await fetchOgImage(project.liveUrl);
     if (ogImage) {
@@ -96,5 +101,9 @@ export async function fetchProjectOgImage(
   }
 
   // liveUrl에서 못 찾았거나 없으면 GitHub에서 시도
-  return fetchOgImage(project.githubUrl);
+  if (project.githubUrl) {
+    return fetchOgImage(project.githubUrl);
+  }
+
+  return null;
 }
