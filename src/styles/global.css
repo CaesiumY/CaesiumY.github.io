@@ -135,10 +135,15 @@ html[data-theme="dark"] {
 
 /* 햄버거 → X 아이콘 애니메이션 */
 [data-menu-btn] {
-  /* 아이콘들을 겹치기 위한 기준 */
+  /* 아이콘들을 겹치기 위한 기준 (모바일에서만 표시) */
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* 데스크톱에서 숨김 (Tailwind sm:hidden과 동기화) */
+  @media (min-width: 640px) {
+    display: none;
+  }
 }
 
 [data-menu-icon],

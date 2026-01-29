@@ -1,0 +1,13 @@
+---
+// SiteTitle.astro
+// 사이트 제목/로고 렌더링 컴포넌트
+// Zero JS, 순수 정적 렌더링
+import { SITE } from "@/config";
+---
+
+<a
+  href="/"
+  class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+>
+  {SITE.title}
+</a>

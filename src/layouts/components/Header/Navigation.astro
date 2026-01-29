@@ -1,0 +1,149 @@
+---
+// Navigation.astro
+// 네비게이션 컴포넌트 - 모바일 메뉴 버튼 + 메뉴 아이템 + 토글 스크립트 통합
+// 스크립트가 조작하는 모든 DOM 요소가 이 컴포넌트 안에 있어 캡슐화 완성
+// 완전 독립적 - 외부 props 없이 Astro.url에서 직접 현재 경로 계산
+import { Icon } from "astro-icon/components";
+import LinkButton from "@/shared/components/LinkButton.astro";
+import { SITE } from "@/config";
+import ThemeToggle from "./ThemeToggle.astro";
+
+const { pathname } = Astro.url;
+
+// Remove trailing slash from current pathname if exists
+const currentPath =
+  pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
+
+const isActive = (path: string) => {
+  const currentPathArray = currentPath.split("/").filter(p => p.trim());
+  const pathArray = path.split("/").filter(p => p.trim());
+
+  return currentPath === path || currentPathArray[0] === pathArray[0];
+};
+---
+
+<nav
+  id="nav-menu"
+  class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
+>
+  <!-- 모바일 메뉴 버튼 -->
+  <button
+    data-menu-btn
+    class="focus-outline relative self-end p-2 sm:hidden"
+    aria-label="메뉴 열기"
+    aria-expanded="false"
+    aria-controls="menu-items"
+  >
+    <Icon name="ph:list-bold" data-menu-icon size={24} />
+    <Icon name="ph:x" data-close-icon size={24} />
+  </button>
+
+  <!-- 메뉴 아이템 -->
+  <ul
+    id="menu-items"
+    data-menu-items
+    class:list={[
+      "mt-4 flex w-44 flex-col gap-2",
+      "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
+      "sm:mt-0 sm:flex sm:w-auto sm:flex-row sm:gap-x-5 sm:gap-y-0",
+    ]}
+  >
+    <li class="mobile-menu-item" data-stagger="0">
+      <a href="/posts" class:list={{ "active-nav": isActive("/posts") }}>
+        Posts
+      </a>
+    </li>
+    <li class="mobile-menu-item" data-stagger="1">
+      <a href="/tags" class:list={{ "active-nav": isActive("/tags") }}>
+        Tags
+      </a>
+    </li>
+    <li class="mobile-menu-item" data-stagger="2">
+      <a href="/about" class:list={{ "active-nav": isActive("/about") }}>
+        About
+      </a>
+    </li>
+    {
+      SITE.showProjects && (
+        <li class="mobile-menu-item" data-stagger="3">
+          <LinkButton
+            href="/projects"
+            class:list={[
+              "focus-outline flex justify-center p-3 sm:p-1",
+              {
+                "active-nav [&>svg]:text-accent": isActive("/projects"),
+              },
+            ]}
+            ariaLabel="projects"
+            title="Projects"
+          >
+            <Icon name="ph:rocket-launch" class="hidden sm:inline-block" size={20} />
+            <span class="sm:sr-only">Projects</span>
+          </LinkButton>
+        </li>
+      )
+    }
+    <!-- Search & Theme: 모바일에서 나란히, 데스크톱에서 개별 -->
+    <li class="mobile-menu-item flex items-center justify-center gap-4 sm:contents" data-stagger="4">
+      <LinkButton
+        href="/search"
+        class:list={[
+          "focus-outline flex p-3 sm:p-1",
+          { "active-nav [&>svg]:text-accent": isActive("/search") },
+        ]}
+        ariaLabel="search"
+        title="Search"
+      >
+        <Icon name="ph:magnifying-glass" size={20} />
+        <span class="sr-only">Search</span>
+      </LinkButton>
+      <ThemeToggle />
+    </li>
+  </ul>
+</nav>
+
+<script>
+  function toggleNav() {
+    const menuBtn = document.querySelector<HTMLButtonElement>("[data-menu-btn]");
+    const menuItems = document.querySelector<HTMLUListElement>("[data-menu-items]");
+
+    if (!menuBtn || !menuItems) return;
+
+    // 이벤트 리스너 중복 방지
+    if (menuBtn.dataset.toggleNavSetup) return;
+    menuBtn.dataset.toggleNavSetup = "true";
+
+    menuBtn.addEventListener("click", () => {
+      const isOpen = menuBtn.getAttribute("aria-expanded") === "true";
+      const newState = !isOpen;
+
+      // ARIA 상태 업데이트
+      menuBtn.setAttribute("aria-expanded", String(newState));
+      menuBtn.setAttribute("aria-label", newState ? "메뉴 닫기" : "메뉴 열기");
+
+      // 메뉴 토글 (CSS 애니메이션으로 슬라이드 다운/업)
+      menuItems.classList.toggle("mobile-menu-visible", newState);
+    });
+
+    // 데스크톱 전환 시 메뉴 상태 초기화 (리사이즈 핸들러)
+    // 리스너 등록 (중복 방지)
+    if (!menuBtn.dataset.resizeSetup) {
+      menuBtn.dataset.resizeSetup = "true";
+      const desktopQuery = window.matchMedia("(min-width: 640px)");
+
+      desktopQuery.addEventListener("change", (e: MediaQueryListEvent) => {
+        if (e.matches && menuItems && menuBtn) {
+          // 데스크톱으로 전환: 메뉴 상태 초기화
+          menuItems.classList.remove("mobile-menu-visible");
+          menuBtn.setAttribute("aria-expanded", "false");
+          menuBtn.setAttribute("aria-label", "메뉴 열기");
+        }
+      });
+    }
+  }
+
+  toggleNav();
+
+  // Runs on view transitions navigation
+  document.addEventListener("astro:after-swap", toggleNav);
+</script>
