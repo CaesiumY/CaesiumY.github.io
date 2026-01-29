@@ -47,24 +47,24 @@ const isActive = (path: string) => {
       "sm:mt-0 sm:flex sm:w-auto sm:flex-row sm:gap-x-5 sm:gap-y-0",
     ]}
   >
-    <li class="mobile-menu-item" data-stagger="0">
+    <li class="mobile-menu-item" style="transition-delay: 0ms;">
       <a href="/posts" class:list={{ "active-nav": isActive("/posts") }}>
         Posts
       </a>
     </li>
-    <li class="mobile-menu-item" data-stagger="1">
+    <li class="mobile-menu-item" style="transition-delay: 50ms;">
       <a href="/tags" class:list={{ "active-nav": isActive("/tags") }}>
         Tags
       </a>
     </li>
-    <li class="mobile-menu-item" data-stagger="2">
+    <li class="mobile-menu-item" style="transition-delay: 100ms;">
       <a href="/about" class:list={{ "active-nav": isActive("/about") }}>
         About
       </a>
     </li>
     {
       SITE.showProjects && (
-        <li class="mobile-menu-item" data-stagger="3">
+        <li class="mobile-menu-item" style="transition-delay: 150ms;">
           <LinkButton
             href="/projects"
             class:list={[
@@ -83,7 +83,7 @@ const isActive = (path: string) => {
       )
     }
     <!-- Search & Theme: 모바일에서 나란히, 데스크톱에서 개별 -->
-    <li class="mobile-menu-item flex items-center justify-center gap-4 sm:contents" data-stagger="4">
+    <li class="mobile-menu-item flex items-center justify-center gap-4 sm:contents" style="transition-delay: 200ms;">
       <LinkButton
         href="/search"
         class:list={[
@@ -146,3 +146,105 @@ const isActive = (path: string) => {
   // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", toggleNav);
 </script>
+
+<style>
+  /* ===========================================
+     Mobile Menu Animation System (Scoped)
+     =========================================== */
+
+  /* 모바일 전용 애니메이션 */
+  @media (max-width: 639px) {
+    /* 메뉴 컨테이너 슬라이드 다운 */
+    [data-menu-items] {
+      max-height: 0;
+      margin-top: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition:
+        max-height 300ms ease-out,
+        margin-top 300ms ease-out,
+        opacity 200ms ease-out;
+    }
+
+    :global([data-menu-items].mobile-menu-visible) {
+      max-height: 80vh;
+      margin-top: 1rem;
+      opacity: 1;
+    }
+
+    /* 메뉴 아이템 기본 상태 */
+    .mobile-menu-item {
+      opacity: 0;
+      transform: translateY(-10px);
+      transition:
+        opacity 200ms ease-out,
+        transform 200ms ease-out;
+    }
+
+    :global([data-menu-items].mobile-menu-visible) .mobile-menu-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* 햄버거 → X 아이콘 애니메이션 */
+  [data-menu-btn] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (min-width: 640px) {
+    [data-menu-btn] {
+      display: none;
+    }
+  }
+
+  /*
+   * IMPORTANT: 두 아이콘 모두 :global() 필수
+   * <Icon> 컴포넌트(astro-icon)가 렌더링하는 요소는 scoped CSS 대상에서 제외됨
+   * data-menu-icon과 data-close-icon 모두 동일하게 :global() 처리 필요
+   */
+  :global([data-menu-icon]),
+  :global([data-close-icon]) {
+    transform-origin: 12px 12px;
+    transition:
+      transform 300ms ease-out,
+      opacity 200ms ease-out;
+  }
+
+  :global([data-menu-icon]) {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+
+  :global([data-close-icon]) {
+    position: absolute;
+    transform: scale(0) rotate(-90deg);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* 메뉴 열림 상태 */
+  [data-menu-btn][aria-expanded="true"] :global([data-menu-icon]) {
+    transform: scale(0) rotate(90deg);
+    opacity: 0;
+  }
+
+  [data-menu-btn][aria-expanded="true"] :global([data-close-icon]) {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Reduced Motion 지원 */
+  @media (prefers-reduced-motion: reduce) {
+    [data-menu-items],
+    .mobile-menu-item,
+    :global([data-menu-icon]),
+    :global([data-close-icon]) {
+      transition: none;
+      transition-delay: 0ms;
+    }
+  }
+</style>
