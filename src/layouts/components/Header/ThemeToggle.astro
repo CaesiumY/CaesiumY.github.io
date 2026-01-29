@@ -1,7 +1,6 @@
 ---
 // ThemeToggle.astro
-// 테마 전환 버튼 및 아이콘 컴포넌트
-// HTML/아이콘만 담당 - Script는 부모(Header.astro)에서 관리
+// 테마 전환 버튼 컴포넌트 - 마크업 + 동작 스크립트 완전 캡슐화
 // CRITICAL: dark: variant 필수 - 테마 전환 시 아이콘 회전/스케일 애니메이션
 import { Icon } from "astro-icon/components";
 import { SITE } from "@/config";
@@ -29,3 +28,42 @@ import { SITE } from "@/config";
     </button>
   )
 }
+
+<script is:inline>
+  (function () {
+    // 전역 플래그로 중복 방지
+    if (!window.__themeClickDelegated) {
+      window.__themeClickDelegated = true;
+
+      // document에 이벤트 위임으로 클릭 리스너 등록 (View Transitions와 무관하게 유지)
+      document.addEventListener("click", e => {
+        const btn = e.target.closest("#theme-btn");
+        if (!btn) return;
+
+        const isDark =
+          document.documentElement.getAttribute("data-theme") === "dark";
+        const next = isDark ? "light" : "dark";
+        window.__setTheme?.(next);
+
+        // 실제 저장된 모드로 aria-label 업데이트 (system 모드 고려)
+        setTimeout(() => {
+          const actualMode = localStorage.getItem("theme") || "system";
+          btn.setAttribute("aria-label", actualMode);
+        }, 0);
+      });
+
+      // aria-label 초기화 함수
+      function updateAriaLabel() {
+        const btn = document.querySelector("#theme-btn");
+        if (btn) {
+          const mode = localStorage.getItem("theme") || "system";
+          btn.setAttribute("aria-label", mode);
+        }
+      }
+
+      // 초기화 및 페이지 전환 시 aria-label 업데이트
+      updateAriaLabel();
+      document.addEventListener("astro:after-swap", updateAriaLabel);
+    }
+  })();
+</script>

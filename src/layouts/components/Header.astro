@@ -9,56 +9,11 @@ import Navigation from "./Header/Navigation.astro";
 
 <header>
   <SkipToContent />
-  <div
-    id="nav-container"
-    class="mx-auto flex max-w-app flex-col items-center justify-between sm:flex-row"
-  >
-    <div
-      id="top-nav-wrap"
-      class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6"
-    >
+  <div class="mx-auto flex max-w-app flex-col items-center justify-between sm:flex-row">
+    <div class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6">
       <SiteTitle />
       <Navigation />
     </div>
   </div>
   <Hr />
 </header>
-
-<script is:inline>
-  (function () {
-    // 전역 플래그로 중복 방지
-    if (!window.__themeClickDelegated) {
-      window.__themeClickDelegated = true;
-
-      // document에 이벤트 위임으로 클릭 리스너 등록 (View Transitions와 무관하게 유지)
-      document.addEventListener("click", e => {
-        const btn = e.target.closest("#theme-btn");
-        if (!btn) return;
-
-        const isDark =
-          document.documentElement.getAttribute("data-theme") === "dark";
-        const next = isDark ? "light" : "dark";
-        window.__setTheme?.(next);
-
-        // 실제 저장된 모드로 aria-label 업데이트 (system 모드 고려)
-        setTimeout(() => {
-          const actualMode = localStorage.getItem("theme") || "system";
-          btn.setAttribute("aria-label", actualMode);
-        }, 0);
-      });
-
-      // aria-label 초기화 함수
-      function updateAriaLabel() {
-        const btn = document.querySelector("#theme-btn");
-        if (btn) {
-          const mode = localStorage.getItem("theme") || "system";
-          btn.setAttribute("aria-label", mode);
-        }
-      }
-
-      // 초기화 및 페이지 전환 시 aria-label 업데이트
-      updateAriaLabel();
-      document.addEventListener("astro:after-swap", updateAriaLabel);
-    }
-  })();
-</script>
