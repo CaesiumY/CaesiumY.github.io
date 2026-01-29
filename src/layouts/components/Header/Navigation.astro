@@ -1,8 +1,7 @@
 ---
 // Navigation.astro
 // 네비게이션 컴포넌트 - 모바일 메뉴 버튼 + 메뉴 아이템 + 토글 스크립트 통합
-// 스크립트가 조작하는 모든 DOM 요소가 이 컴포넌트 안에 있어 캡슐화 완성
-// 완전 독립적 - 외부 props 없이 Astro.url에서 직접 현재 경로 계산
+// Sheet 스타일 - 위에서 아래로 슬라이드하되 absolute로 레이아웃 쉬프트 방지
 import { Icon } from "astro-icon/components";
 import LinkButton from "@/shared/components/LinkButton.astro";
 import { SITE } from "@/config";
@@ -10,23 +9,21 @@ import ThemeToggle from "./ThemeToggle.astro";
 
 const { pathname } = Astro.url;
 
-// Remove trailing slash from current pathname if exists
 const currentPath =
   pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
 
 const isActive = (path: string) => {
   const currentPathArray = currentPath.split("/").filter(p => p.trim());
   const pathArray = path.split("/").filter(p => p.trim());
-
   return currentPath === path || currentPathArray[0] === pathArray[0];
 };
 
-// Tailwind 클래스 상수 - 가독성과 재사용성을 위해 추출
 const iconTransition =
   "origin-center transition-all duration-300 ease-out motion-reduce:transition-none";
 
+// 메뉴 아이템 기본 스타일 + 열림 시 staggered 애니메이션
 const menuItemBase =
-  "sm:opacity-100 sm:translate-y-0 opacity-0 -translate-y-2.5 transition-all duration-200 ease-out group-[.mobile-menu-visible]:opacity-100 group-[.mobile-menu-visible]:translate-y-0 motion-reduce:transition-none motion-reduce:delay-0";
+  "sm:opacity-100 sm:translate-y-0 opacity-0 -translate-y-2.5 transition-all duration-200 ease-out motion-reduce:transition-none motion-reduce:delay-0";
 ---
 
 <nav
@@ -63,39 +60,44 @@ const menuItemBase =
     />
   </button>
 
-  <!-- 메뉴 아이템 -->
+  <!-- 메뉴 아이템 - Sheet 스타일 (위에서 아래로 슬라이드, absolute로 레이아웃 쉬프트 방지) -->
   <ul
     id="menu-items"
     data-menu-items
+    data-state="closed"
     class:list={[
-      "group",
-      "mt-4 flex w-44 flex-col gap-2",
-      "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
-      "sm:mt-0 sm:flex sm:w-auto sm:flex-row sm:gap-x-5 sm:gap-y-0",
+      "absolute left-0 right-0 top-full z-40",
+      "mt-4 flex w-full flex-col items-center gap-2 bg-background pb-4 border-b border-border",
+      "origin-top transition-all duration-300 ease-out",
+      "[&>li>a]:block [&>li>a]:w-44 [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent",
+      // 데스크톱: inline flex로 복원
+      "sm:static sm:z-auto sm:mt-0 sm:w-auto sm:flex-row sm:items-center sm:gap-x-5 sm:bg-transparent sm:pb-0 sm:border-none",
+      "sm:[&>li>a]:w-auto sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
+      "motion-reduce:transition-none",
     ]}
   >
-    <li class:list={[menuItemBase, "delay-0"]}>
+    <li class:list={[menuItemBase, "delay-0 sm:delay-0"]}>
       <a href="/posts" class:list={{ "active-nav": isActive("/posts") }}>
         Posts
       </a>
     </li>
-    <li class:list={[menuItemBase, "delay-50"]}>
+    <li class:list={[menuItemBase, "delay-50 sm:delay-0"]}>
       <a href="/tags" class:list={{ "active-nav": isActive("/tags") }}>
         Tags
       </a>
     </li>
-    <li class:list={[menuItemBase, "delay-100"]}>
+    <li class:list={[menuItemBase, "delay-100 sm:delay-0"]}>
       <a href="/about" class:list={{ "active-nav": isActive("/about") }}>
         About
       </a>
     </li>
     {
       SITE.showProjects && (
-        <li class:list={[menuItemBase, "delay-150"]}>
+        <li class:list={[menuItemBase, "delay-150 sm:delay-0"]}>
           <LinkButton
             href="/projects"
             class:list={[
-              "focus-outline flex justify-center p-3 sm:p-1",
+              "focus-outline flex w-44 justify-center p-3 sm:w-auto sm:p-1",
               {
                 "active-nav [&>svg]:text-accent": isActive("/projects"),
               },
@@ -109,8 +111,8 @@ const menuItemBase =
         </li>
       )
     }
-    <!-- Search & Theme: 모바일에서 나란히, 데스크톱에서 개별 -->
-    <li class:list={[menuItemBase, "delay-200", "sm:contents flex items-center justify-center gap-4"]}>
+    <!-- Search & Theme -->
+    <li class:list={[menuItemBase, "delay-200 sm:delay-0", "sm:contents flex items-center justify-center gap-4"]}>
       <LinkButton
         href="/search"
         class:list={[
@@ -135,70 +137,120 @@ const menuItemBase =
 
     if (!menuBtn || !menuItems) return;
 
-    // 이벤트 리스너 중복 방지
     if (menuBtn.dataset.toggleNavSetup) return;
     menuBtn.dataset.toggleNavSetup = "true";
 
-    menuBtn.addEventListener("click", () => {
+    function openMenu() {
+      menuItems?.setAttribute("data-state", "open");
+      menuBtn?.setAttribute("aria-expanded", "true");
+      menuBtn?.setAttribute("aria-label", "메뉴 닫기");
+    }
+
+    function closeMenu() {
+      menuItems?.setAttribute("data-state", "closed");
+      menuBtn?.setAttribute("aria-expanded", "false");
+      menuBtn?.setAttribute("aria-label", "메뉴 열기");
+    }
+
+    // 메뉴 버튼 클릭
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
       const isOpen = menuBtn.getAttribute("aria-expanded") === "true";
-      const newState = !isOpen;
-
-      // ARIA 상태 업데이트
-      menuBtn.setAttribute("aria-expanded", String(newState));
-      menuBtn.setAttribute("aria-label", newState ? "메뉴 닫기" : "메뉴 열기");
-
-      // 메뉴 토글 (CSS 애니메이션으로 슬라이드 다운/업)
-      menuItems.classList.toggle("mobile-menu-visible", newState);
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
 
-    // 데스크톱 전환 시 메뉴 상태 초기화 (리사이즈 핸들러)
-    // 리스너 등록 (중복 방지)
-    if (!menuBtn.dataset.resizeSetup) {
-      menuBtn.dataset.resizeSetup = "true";
-      const desktopQuery = window.matchMedia("(min-width: 640px)");
+    // 외부 클릭 시 닫기
+    document.addEventListener("click", (e) => {
+      const isOpen = menuBtn?.getAttribute("aria-expanded") === "true";
+      if (!isOpen) return;
 
-      desktopQuery.addEventListener("change", (e: MediaQueryListEvent) => {
-        if (e.matches && menuItems && menuBtn) {
-          // 데스크톱으로 전환: 메뉴 상태 초기화
-          menuItems.classList.remove("mobile-menu-visible");
-          menuBtn.setAttribute("aria-expanded", "false");
-          menuBtn.setAttribute("aria-label", "메뉴 열기");
-        }
-      });
-    }
+      const target = e.target as Node;
+      if (!menuItems?.contains(target) && !menuBtn?.contains(target)) {
+        closeMenu();
+      }
+    });
+
+    // Escape 키로 닫기
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && menuBtn?.getAttribute("aria-expanded") === "true") {
+        closeMenu();
+        menuBtn?.focus();
+      }
+    });
+
+    // 데스크톱 전환 시 상태 초기화
+    const desktopQuery = window.matchMedia("(min-width: 640px)");
+    desktopQuery.addEventListener("change", (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        closeMenu();
+      }
+    });
   }
 
   toggleNav();
-
-  // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", toggleNav);
 </script>
 
 <style>
-  /* 모바일 메뉴 슬라이드 애니메이션 (Tailwind로 대체 불가 - max-height 동적 전환) */
-  @media (max-width: 639px) {
+  /* Sheet 닫힌 상태 - 위로 접힘 */
+  [data-menu-items][data-state="closed"] {
+    visibility: hidden;
+    opacity: 0;
+    max-height: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    overflow: hidden;
+    transition:
+      opacity 200ms ease-out,
+      max-height 300ms ease-out,
+      padding-bottom 300ms ease-out,
+      margin-top 300ms ease-out,
+      visibility 0s linear 300ms;
+  }
+
+  /* Sheet 열린 상태 - 아래로 펼침 */
+  [data-menu-items][data-state="open"] {
+    visibility: visible;
+    opacity: 1;
+    max-height: 80vh;
+    transition:
+      opacity 200ms ease-out,
+      max-height 300ms ease-out,
+      padding-bottom 300ms ease-out,
+      margin-top 300ms ease-out,
+      visibility 0s linear 0s;
+  }
+
+  /* 열린 상태에서 메뉴 아이템 표시 */
+  [data-menu-items][data-state="open"] > li {
+    opacity: 1;
+    --tw-translate-y: 0px;
+  }
+
+  /* 데스크톱에서는 항상 표시 */
+  @media (min-width: 640px) {
     [data-menu-items] {
-      max-height: 0;
-      margin-top: 0;
-      opacity: 0;
-      overflow: hidden;
-      transition:
-        max-height 300ms ease-out,
-        margin-top 300ms ease-out,
-        opacity 200ms ease-out;
+      visibility: visible !important;
+      opacity: 1 !important;
+      max-height: none !important;
+      overflow: visible !important;
+      transition: none !important;
     }
 
-    :global([data-menu-items].mobile-menu-visible) {
-      max-height: 80vh;
-      margin-top: 1rem;
-      opacity: 1;
+    [data-menu-items] > li {
+      opacity: 1 !important;
+      --tw-translate-y: 0px !important;
     }
   }
 
-  /* Reduced Motion: 슬라이드 애니메이션 비활성화 */
+  /* Reduced Motion */
   @media (prefers-reduced-motion: reduce) {
     [data-menu-items] {
-      transition: none;
+      transition: none !important;
     }
   }
 </style>
