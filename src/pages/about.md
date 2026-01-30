@@ -17,7 +17,7 @@ Claude Code를 활용한 AI-Native 개발 워크플로우가 특기이며, 아�
 | **LinkedIn** | [linkedin.com/in/chang-sik-yoon](https://www.linkedin.com/in/chang-sik-yoon/) |
 | **Blog**     | [caesiumy.dev](https://caesiumy.dev/)                                         |
 
-**Tech Keywords**: `TypeScript` `Next.js` `React` `TailwindCSS` `Claude Code` `Turborepo` `Orval`
+**Tech Keywords**: `TypeScript` `Next.js` `React` `TailwindCSS` `Claude Code` `Turborepo` `Orval` `UX`
 
 ---
 
@@ -38,22 +38,6 @@ Claude Code를 활용한 AI-Native 개발 워크플로우가 특기이며, 아�
 
 ---
 
-## Skills
-
-### React / Next.js
-
-- Server Component/SSR/CSR 렌더링 전략 최적화 및 Custom Hook 기반 유지보수 설계
-
-### Tools
-
-- Orval 등 코드 제너레이터 도입으로 팀 DX 혁신, 생산성 도구 전파
-
-### UI/UX
-
-- 마이크로카피 기반 사용자 경험 설계, Latency/Layout Shift 기반 개선
-
----
-
 ## Experience
 
 ### [팀스파르타](https://nbcamp.spartacodingclub.kr/frontend) <span class="text-sm text-gray-500 dark:text-gray-400">코딩 부트캠프 운영 에듀테크 기업</span>
@@ -69,10 +53,13 @@ Claude Code를 활용한 AI-Native 개발 워크플로우가 특기이며, 아�
 
 **프론트엔드 엔지니어 (2022.03 ~ 2023.09, 1년 6개월)**
 
-- **빌드 속도 70% 단축**: 3분+ 빌드/불안정 HMR로 인한 몰입도 저해 발견 → 효율성 근거로 Next.js 마이그레이션 주도
-- **렌더링 전략 최적화**: RSC/SSR 역할 구분으로 클라이언트 번들 최소화, 실용적 전략 수립
-- **실시간 데이터 동기화**: gRPC/Protobuf 기반 양방향 통신으로 데이터 정합성 확보
-- **서버 상태 관리**: TanStack Query로 다중 접속 환경 캐싱 최적화, UI 안정성 확보
+- **빌드/레거시 현대화**: CRA→Vite 마이그레이션으로 빌드 70% 단축, 클래스 컴포넌트 함수화
+- **상태관리 최적화**: 복잡한 전역 상태로 인한 불필요 리렌더링 발견 → RTK + 슬라이스 분리로 해결
+- **실시간 데이터 동기화**: gRPC/Protobuf 스트리밍 + 타입 안전성으로 실시간 데이터 동기화
+- **코드 품질 체계화**: 파편화된 CSS 규칙으로 인한 협업 비효율 → 디자인 시스템 + 코드 리뷰 문화로 해결
+- **관리자 대시보드 개발**: BAAS 관리자 대시보드 개발, RHF/Zod 폼 검증 + HEIC/이미지 최적화
+- **사내 블로그 구축**: 비개발자 콘텐츠 관리 필요 → Notion API CMS로 사내 블로그 구축
+- **독자 테마 시스템**: 오픈소스 디자인 시스템 오버라이드로 브랜드 맞춤 UI 구성
 
 ---
 
@@ -83,6 +70,7 @@ Claude Code를 활용한 AI-Native 개발 워크플로우가 특기이며, 아�
 
 - **개발 기간 50% 단축**: Cursor/Claude를 파이프라인 핵심으로 활용, 예상 공수 절반 달성
 - **MSW 기반 선제적 설계**: 비동기 협업 환경에서 API 병목 해결, 스키마 역제안으로 일정 단축
+- **Orval 코드 제너레이터 도입**: API 클라이언트 자동 생성으로 팀 DX 혁신
 - **기술적 갈등 조율**: ID 타입 논쟁에서 의미론적 관점 + JS 숫자 한계 근거로 설득, 데이터 리스크 사전 방지
 
 ### 한국 기술 마켓 (2024.05 ~ 2026.01)
@@ -105,6 +93,7 @@ Claude Code를 활용한 AI-Native 개발 워크플로우가 특기이며, 아�
 ### 강의
 
 - [한양대학교] AI 활용 프로그래밍 정규 교과목 강의 진행 (2026)
+- [오즈코딩스쿨] 프론트엔드 주강사, 실시간 세션 및 AI 특강 진행 (2025.12 ~ 현재)
 - [프로그래머스] [Next.js & Notion API 라이브 코딩 강사](https://drive.google.com/file/d/1TcAVluxcY4sfIncMkC5CC4-H1orCwcpS/view?usp=sharing) (2022~2023)
   - 실시간 라이브 코딩을 통해 예외 상황 대처 능력과 지식 전달 능력 증명
 
