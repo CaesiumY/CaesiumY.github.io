@@ -3,7 +3,7 @@ import type { GiscusProps } from "@giscus/react";
 export const SITE = {
   website: "https://caesiumy.dev", // replace this with your deployed domain
   profile: "https://github.com/caesiumy",
-  desc: "🌍영문과에서 출발해 💻컴퓨터공학으로 도착하는 혼종 👨‍💻개발자의 기술 블로그",
+  desc: "AI 도구와 워크플로우 자동화로 개발자 생산성을 높이는 프론트엔드 엔지니어의 블로그",
   title: "Caesiumy's BLOG",
   ogImage: "og.png",
   lightAndDarkMode: true,
@@ -33,12 +33,14 @@ export const SITE = {
     email: "dbs2636@gmail.com",
   },
   keywords: [
+    "AI",
+    "Claude Code",
     "TypeScript",
     "Next.js",
     "React",
-    "TailwindCSS",
     "프론트엔드",
-    "개발 블로그",
+    "개발 생산성",
+    "자동화",
   ],
 } as const;
 
