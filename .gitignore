@@ -28,3 +28,6 @@ public/pagefind
 
 # oh-my-claudecode state
 .omc/
+# Playwright
+playwright-report/
+test-results/

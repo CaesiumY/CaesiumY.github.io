@@ -10,6 +10,7 @@ import BackToTopButton from "@/layouts/components/Navigation/BackToTopButton.ast
 import PostMetadata from "@/features/blog/components/PostMetadata.astro";
 import PostNavigation from "@/features/blog/components/PostNavigation.astro";
 import CopyButtonIcons from "@/features/blog/components/CopyButtonIcons.astro";
+import ContinueReadingToast from "@/features/blog/components/ContinueReadingToast";
 import { getPath } from "@/utils/getPath";
 import { SITE } from "@/config";
 
@@ -71,6 +72,7 @@ const layoutProps = {
   <BackButton />
   <main
     id="main-content"
+    data-post-slug={post.id}
     class:list={[
       "mx-auto w-full max-w-app px-4 pb-12",
       { "mt-8": !SITE.showBackButton },
@@ -104,6 +106,7 @@ const layoutProps = {
     <ShareLinks />
 
     <Comments client:only="react" />
+    <ContinueReadingToast client:only="react" slug={post.id} />
 
     <hr class="my-6 border-dashed" />
 
@@ -118,14 +121,69 @@ const layoutProps = {
   import { initializeProgressBar } from "@/features/blog/scripts/progressBar";
   import { addHeadingLinks } from "@/features/blog/scripts/headingLinks";
   import { attachCopyButtons } from "@/features/blog/scripts/copyButton";
+  import { initializeScrollSaver } from "@/features/blog/scripts/scrollSaver";
+  import { getScrollPosition } from "@/utils/scrollPosition";
 
-  // Initialize all post detail features
-  initializeProgressBar();
-  addHeadingLinks();
-  attachCopyButtons();
+  // Store cleanup function for current page
+  let currentCleanup: (() => void) | null = null;
 
-  // Go to page start after page swap
-  document.addEventListener("astro:after-swap", () =>
-    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
-  );
+  function initializePostFeatures() {
+    // Initialize all post detail features
+    initializeProgressBar();
+    addHeadingLinks();
+    attachCopyButtons();
+
+    // Clean up previous scroll saver if exists
+    if (currentCleanup) {
+      currentCleanup();
+      currentCleanup = null;
+    }
+
+    // Get slug from data attribute (consistent with React component)
+    const mainContent = document.getElementById('main-content');
+    const slug = mainContent?.dataset.postSlug || '';
+
+    if (slug) {
+      currentCleanup = initializeScrollSaver(slug);
+    }
+  }
+
+  // Run on initial load
+  initializePostFeatures();
+
+  // Run on every View Transition navigation
+  document.addEventListener('astro:page-load', () => {
+    // Only run on post detail pages
+    if (document.getElementById('main-content')?.dataset.postSlug) {
+      initializePostFeatures();
+    }
+  });
+
+  // Handle scroll position on page swap
+  document.addEventListener("astro:before-swap", () => {
+    // Clean up before leaving
+    if (currentCleanup) {
+      currentCleanup();
+      currentCleanup = null;
+    }
+  });
+
+  // Only scroll to top if no saved position exists
+  document.addEventListener("astro:after-swap", () => {
+    const mainEl = document.getElementById('main-content');
+    const currentSlug = mainEl?.dataset.postSlug || '';
+
+    // Only apply scroll logic on post detail pages
+    if (!currentSlug) return;
+
+    const savedPosition = getScrollPosition(currentSlug);
+
+    // 저장된 위치가 있으면 리셋하지 않음 (토스트가 스크롤 복원 담당)
+    if (savedPosition) {
+      return; // 스크롤 리셋 안 함 - 토스트 컴포넌트가 처리
+    }
+
+    // 저장된 위치가 없으면 맨 위로
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" });
+  });
 </script>

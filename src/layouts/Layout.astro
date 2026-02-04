@@ -6,6 +6,7 @@ import {
 } from "astro:env/client";
 import { SITE } from "@/config";
 import "@/styles/global.css";
+import SonnerProvider from "@/components/SonnerProvider";
 
 export interface Props {
   title?: string;
@@ -295,5 +296,6 @@ const structuredData =
   </head>
   <body>
     <slot />
+    <SonnerProvider client:only="react" />
   </body>
 </html>
