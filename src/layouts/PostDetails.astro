@@ -11,7 +11,9 @@ import PostMetadata from "@/features/blog/components/PostMetadata.astro";
 import PostNavigation from "@/features/blog/components/PostNavigation.astro";
 import CopyButtonIcons from "@/features/blog/components/CopyButtonIcons.astro";
 import ContinueReadingToast from "@/features/blog/components/ContinueReadingToast";
+import SeriesList from "@/features/blog/components/SeriesList.astro";
 import { getPath } from "@/utils/getPath";
+import getSeriesPosts from "@/utils/getSeriesPosts";
 import { SITE } from "@/config";
 
 export interface Props {
@@ -30,9 +32,12 @@ const {
   modDatetime,
   draft,
   tags,
+  series,
 } = post.data;
 
 const { Content } = await render(post);
+
+const seriesPosts = series ? getSeriesPosts(posts, series) : [];
 
 let ogImageUrl: string | undefined;
 
@@ -98,6 +103,13 @@ const layoutProps = {
             />
           )
         }
+        {series && seriesPosts.length > 1 && (
+          <SeriesList
+            posts={seriesPosts}
+            currentPostId={post.id}
+            seriesName={series}
+          />
+        )}
         <Content />
       </article>
     </PostMetadata>

@@ -1,0 +1,51 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getPath } from "@/utils/getPath";
+import { Icon } from "astro-icon/components";
+
+export interface Props {
+  posts: CollectionEntry<"blog">[];
+  currentPostId: string;
+  seriesName: string;
+}
+
+const { posts, currentPostId, seriesName } = Astro.props;
+---
+
+<aside
+  class="mb-8 rounded-lg border border-accent/20 bg-accent/5 p-4"
+  aria-label={`${seriesName} 시리즈 목록`}
+  data-pagefind-ignore
+>
+  <div class="mb-3 flex items-center gap-2">
+    <Icon name="ph:list-numbers" class="size-5 text-accent" />
+    <h2 class="text-base font-medium">
+      <span class="text-accent">{seriesName}</span> 시리즈
+    </h2>
+    <span class="text-sm text-accent/60">({posts.length})</span>
+  </div>
+
+  <ol class="space-y-1 text-sm">
+    {posts.map((post, index) => {
+      const isCurrent = post.id === currentPostId;
+      return (
+        <li class="flex items-start gap-2">
+          <span class="w-5 flex-none text-accent/50">{index + 1}.</span>
+          {isCurrent ? (
+            <span class="font-medium text-accent">
+              {post.data.title}
+              <span class="ml-1 text-xs">(현재 글)</span>
+            </span>
+          ) : (
+            <a
+              href={getPath(post.id, post.filePath)}
+              class="text-foreground/80 decoration-dashed underline-offset-2 hover:text-accent hover:underline"
+            >
+              {post.data.title}
+            </a>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+</aside>

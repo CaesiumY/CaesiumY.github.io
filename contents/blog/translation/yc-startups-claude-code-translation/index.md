@@ -6,6 +6,7 @@ modDatetime: 2025-12-18T00:00:00Z
 featured: false
 draft: false
 tags: ["translation", "claude-code", "startup", "ai"]
+series: "Claude 공식 블로그 번역"
 ---
 
 > 이 문서는 Claude 공식 블로그 글 ["How three YC startups built their companies with Claude Code"](https://www.claude.com/blog/building-companies-with-claude-code)의 한글 번역입니다.
