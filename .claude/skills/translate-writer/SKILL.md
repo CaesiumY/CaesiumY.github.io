@@ -140,6 +140,23 @@ Task 도구로 content-translator 에이전트 호출:
 **URL인 경우**: WebFetch로 원문 수집
 **파일인 경우**: Read로 파일 읽기
 
+##### 시리즈 자동 감지 (Phase 1 추가)
+
+번역 전 시리즈 여부를 자동으로 확인합니다:
+
+1. **URL 패턴 매칭**
+   - `claude.com/blog/*` → `series: "Claude 공식 블로그 번역"`
+   - 시리즈 목록: @.claude/skills/translate-writer/data/series.md 참조
+
+2. **Frontmatter에 추가**
+   - 시리즈가 감지되면 Frontmatter에 `series` 필드 자동 추가
+   ```yaml
+   series: "Claude 공식 블로그 번역"  # URL 패턴 매칭 시
+   ```
+
+3. **감지 실패 시**
+   - 시리즈 필드 생략 (기존 동작 유지)
+
 #### Phase 2: 검토 루프 (translation-reviewer)
 
 **루프 조건**:

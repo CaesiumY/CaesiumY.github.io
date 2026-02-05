@@ -259,3 +259,39 @@ tags: ["translation", "관련-태그", ...]
 
 - `01-nextjs-16-beta.md` - Next.js 16 Beta 공식 블로그 번역 (기술 문서 스타일)
 - `02-yc-claude-code.md` - YC 스타트업 Claude Code 활용 사례 번역 (인터뷰/스토리 스타일)
+
+---
+
+## 8. 시리즈 규칙
+
+### 시리즈 목록 참조
+
+@.claude/skills/translate-writer/data/series.md
+
+### 시리즈 감지 규칙
+
+1. **URL 패턴 매칭** (자동)
+   - URL이 위 표의 패턴과 일치하면 해당 시리즈 자동 적용
+
+2. **제목 패턴** (수동 확인)
+   - "Part 1", "Part 2" 등 → 시리즈 가능성 검토
+   - "(1/3)", "(2/3)" 등 → 시리즈 가능성 검토
+
+3. **원문 시리즈** (수동 확인)
+   - 원문에 시리즈 표시가 있으면 동일하게 적용
+
+### Frontmatter 설정
+
+시리즈에 해당하는 경우 Frontmatter에 `series` 필드 추가:
+
+```yaml
+---
+title: "[번역] 글 제목"
+series: "Claude 공식 블로그 번역"  # 해당하는 경우만
+tags: ["translation", ...]
+---
+```
+
+### 새 시리즈 추가 방법
+
+`series.md` 파일의 시리즈 목록 표에 새 행을 추가하세요. 자세한 방법은 해당 파일을 참조하세요.
