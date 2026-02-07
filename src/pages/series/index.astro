@@ -2,26 +2,25 @@
 import { getCollection } from "astro:content";
 import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
-import SeriesItem from "@/features/series/components/SeriesItem.astro";
+import SeriesCard from "@/features/series/components/SeriesCard.astro";
 import Header from "@/layouts/components/Header.astro";
 import Footer from "@/layouts/components/Footer.astro";
-import getUniqueSeries from "@/utils/getUniqueSeries";
+import { getUniqueSeriesWithMeta } from "@/utils/getUniqueSeries";
 import { SITE } from "@/config";
 
 const posts = await getCollection("blog");
-const seriesList = getUniqueSeries(posts);
+const seriesList = getUniqueSeriesWithMeta(posts);
 ---
 
 <Layout title={`Series | ${SITE.title}`}>
   <Header />
   <Main pageTitle="Series" pageDesc="시리즈로 묶인 연재 글 모음입니다.">
-    <ul>
-      {
-        seriesList.map(({ series, seriesName, count }) => (
-          <SeriesItem {series} {seriesName} {count} size="lg" />
-        ))
-      }
-    </ul>
+    <div class="mb-6 text-sm text-foreground/60">
+      총 {seriesList.length}개의 시리즈
+    </div>
+    <div class="space-y-6">
+      {seriesList.map(meta => <SeriesCard {...meta} />)}
+    </div>
   </Main>
   <Footer />
 </Layout>

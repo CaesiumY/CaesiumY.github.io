@@ -1,0 +1,92 @@
+---
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import "dayjs/locale/ko";
+import { Icon } from "astro-icon/components";
+import { SITE } from "@/config";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.locale("ko");
+
+export interface Props {
+  series: string;
+  seriesName: string;
+  count: number;
+  latestUpdate: Date;
+  previewPosts: {
+    title: string;
+    href: string;
+  }[];
+}
+
+const { series, seriesName, count, latestUpdate, previewPosts } = Astro.props;
+
+const formattedDate =
+  SITE.lang === "ko"
+    ? dayjs(latestUpdate).tz(SITE.timezone).format("YYYY년 M월 D일")
+    : dayjs(latestUpdate).tz(SITE.timezone).format("D MMM, YYYY");
+---
+
+<article
+  class="group rounded-lg border border-accent/20 bg-accent/5 p-5 transition-colors hover:border-accent/50"
+  aria-label={`${seriesName} 시리즈 - ${count}개의 글`}
+>
+  <div class="flex items-start justify-between gap-3">
+    <a
+      href={`/series/${series}/`}
+      transition:name={`series-${series}`}
+      class="text-lg font-semibold text-foreground decoration-dashed underline-offset-4 group-hover:text-accent group-hover:underline focus-visible:outline-2 focus-visible:outline-dashed focus-visible:outline-accent sm:text-xl"
+    >
+      <Icon
+        name="ph:stack"
+        class="mr-1 inline-block size-5 align-text-bottom"
+        aria-hidden="true"
+      />
+      {seriesName}
+    </a>
+    <span
+      class="flex-none rounded-full bg-accent/15 px-2.5 py-0.5 text-xs font-medium text-accent"
+    >
+      {count}편
+    </span>
+  </div>
+
+  <div class="mt-2 flex items-center gap-1.5 text-sm text-foreground/60">
+    <Icon name="ph:clock" class="size-4" aria-hidden="true" />
+    <time datetime={latestUpdate.toISOString()}>
+      최근 업데이트: {formattedDate}
+    </time>
+  </div>
+
+  <ol class="mt-3 space-y-1.5 border-t border-accent/10 pt-3 text-sm">
+    {
+      previewPosts.map((post, i) => (
+        <li class="flex items-start gap-2">
+          <span class="w-4 flex-none font-mono text-accent/40">{i + 1}.</span>
+          <a
+            href={post.href}
+            class="line-clamp-1 text-foreground/80 decoration-dashed underline-offset-2 hover:text-accent hover:underline"
+          >
+            {post.title}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+
+  {
+    count > previewPosts.length && (
+      <div class="mt-3 text-right">
+        <a
+          href={`/series/${series}/`}
+          class="inline-flex items-center gap-1 text-sm text-accent hover:underline"
+        >
+          외 {count - previewPosts.length}편 더보기
+          <Icon name="ph:arrow-right" class="size-4" aria-hidden="true" />
+        </a>
+      </div>
+    )
+  }
+</article>
