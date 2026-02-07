@@ -13,13 +13,13 @@ const { posts, currentPostId, seriesName } = Astro.props;
 ---
 
 <aside
-  class="mb-8 rounded-lg border border-accent/20 bg-accent/5 p-4"
+  class="not-prose mb-8 rounded-lg border border-accent/20 bg-accent/5 p-4"
   aria-label={`${seriesName} 시리즈 목록`}
   data-pagefind-ignore
 >
   <div class="mb-3 flex items-center gap-2">
     <Icon name="ph:list-numbers" class="size-5 text-accent" />
-    <h2 class="text-base font-medium">
+    <h2 class="mb-0 text-base font-medium">
       <span class="text-accent">{seriesName}</span> 시리즈
     </h2>
     <span class="text-sm text-accent/60">({posts.length})</span>
