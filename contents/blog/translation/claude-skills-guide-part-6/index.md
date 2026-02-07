@@ -3,6 +3,7 @@ title: "[번역] Claude 스킬 구축 완벽 가이드 - 6부: 리소스와 레�
 description: "공식 문서, 예제 스킬, 도구/유틸리티, 지원 채널, 퀵 체크리스트, YAML frontmatter 레퍼런스 등 스킬 개발에 필요한 모든 리소스를 정리합니다."
 pubDatetime: 2026-02-06T23:19:39Z
 modDatetime: 2026-02-07T00:40:00Z
+ogImage: "./chapter-6-cover.png"
 featured: false
 draft: true
 tags: ["translation", "claude", "skills", "resources", "references", "ai", "anthropic"]

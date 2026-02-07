@@ -6,6 +6,7 @@ modDatetime: 2026-02-06T01:45:12Z
 tags: ["translation", "claude", "skills", "mcp", "ai", "anthropic"]
 series: "Claude 스킬 구축 완벽 가이드"
 originalSource: "../../../temp-translation-source/01-introduction-and-fundamentals.md"
+ogImage: "./chapter-1-cover.png"
 featured: false
 draft: true
 ---

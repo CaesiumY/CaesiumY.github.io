@@ -6,6 +6,7 @@ modDatetime: 2026-02-07T00:00:00Z
 tags: ["translation", "claude", "skills", "testing", "ai", "anthropic"]
 series: "Claude 스킬 구축 완벽 가이드"
 originalSource: "../../../temp-translation-source/03-testing-and-iteration.md"
+ogImage: "./chapter-3-cover.png"
 featured: false
 draft: true
 ---
