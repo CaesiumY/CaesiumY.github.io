@@ -91,9 +91,25 @@ const menuItemBase =
         About
       </a>
     </li>
+    <li class:list={[menuItemBase, "delay-150 sm:delay-0"]}>
+      <LinkButton
+        href="/series"
+        class:list={[
+          "focus-outline flex w-44 justify-center p-3 sm:w-auto sm:p-1",
+          {
+            "active-nav [&>svg]:text-accent": isActive("/series"),
+          },
+        ]}
+        ariaLabel="series"
+        title="Series"
+      >
+        <Icon name="ph:list-numbers" class="hidden sm:inline-block" size={20} />
+        <span class="sm:sr-only">Series</span>
+      </LinkButton>
+    </li>
     {
       SITE.showProjects && (
-        <li class:list={[menuItemBase, "delay-150 sm:delay-0"]}>
+        <li class:list={[menuItemBase, "delay-200 sm:delay-0"]}>
           <LinkButton
             href="/projects"
             class:list={[
@@ -112,7 +128,7 @@ const menuItemBase =
       )
     }
     <!-- Search & Theme -->
-    <li class:list={[menuItemBase, "delay-200 sm:delay-0", "sm:contents flex items-center justify-center gap-4"]}>
+    <li class:list={[menuItemBase, "delay-250 sm:delay-0", "sm:contents flex items-center justify-center gap-4"]}>
       <LinkButton
         href="/search"
         class:list={[
