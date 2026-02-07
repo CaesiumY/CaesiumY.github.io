@@ -72,12 +72,7 @@ draft: false
 
 이 PDF 가이드의 전체 내용을 6부로 나누어 한글로 번역했습니다:
 
-- [1부: 소개와 기본 개념](/posts/translation/claude-skills-guide-part-1/)
-- [2부: 계획과 설계](/posts/translation/claude-skills-guide-part-2/)
-- [3부: 테스트와 반복](/posts/translation/claude-skills-guide-part-3/)
-- [4부: 배포와 공유](/posts/translation/claude-skills-guide-part-4/)
-- [5부: 패턴과 트러블슈팅](/posts/translation/claude-skills-guide-part-5/)
-- [6부: 리소스와 레퍼런스](/posts/translation/claude-skills-guide-part-6/)
+- [시리즈 전체 보기](/series/claude-스킬-구축-완벽-가이드/)
 
 ## 참고 자료
 

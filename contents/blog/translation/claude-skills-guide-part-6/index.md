@@ -196,11 +196,7 @@ metadata: # 선택: 커스텀 필드
 ## 참고 자료
 
 - [The Complete Guide to Building Skills for Claude - 원문 PDF](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf)
-- [Claude 스킬 구축 완벽 가이드 - 1부: 소개와 기본 구조](/posts/claude-skills-guide-part-1/)
-- [Claude 스킬 구축 완벽 가이드 - 2부: description 필드 작성법](/posts/claude-skills-guide-part-2/)
-- [Claude 스킬 구축 완벽 가이드 - 3부: 지시사항 작성 기법](/posts/claude-skills-guide-part-3/)
-- [Claude 스킬 구축 완벽 가이드 - 4부: 도구, 테스트, 배포](/posts/claude-skills-guide-part-4/)
-- [Claude 스킬 구축 완벽 가이드 - 5부: 패턴과 트러블슈팅](/posts/claude-skills-guide-part-5/)
+- [Claude 스킬 구축 완벽 가이드 - 시리즈 전체 보기](/series/claude-스킬-구축-완벽-가이드/)
 - [Anthropic Skills 공식 문서](https://docs.anthropic.com/en/docs/agents-and-tools/skills)
 - [Anthropic Skills API Reference](https://docs.anthropic.com/en/api/skills)
 - [Anthropic Skills GitHub Repository](https://github.com/anthropics/anthropic-cookbook/tree/main/skills)

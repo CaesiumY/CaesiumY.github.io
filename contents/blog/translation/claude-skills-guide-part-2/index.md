@@ -394,5 +394,6 @@ SKILL.md는 핵심 지시사항에 집중하고, 상세한 문서는 `references
 ## 참고 자료
 
 - [The Complete Guide to Building Skills for Claude (PDF)](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) - 원문 PDF
+- [Claude 스킬 구축 완벽 가이드 - 시리즈 전체 보기](/series/claude-스킬-구축-완벽-가이드/)
 - [Anthropic Cookbook - Skills](https://github.com/anthropics/anthropic-cookbook/tree/main/skills) - 스킬 예시 모음
 - [Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents) - Anthropic 엔지니어링 블로그

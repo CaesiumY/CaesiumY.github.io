@@ -157,6 +157,7 @@ GitHub에 공개 저장소를 만들어 스킬을 호스팅합니다. 명확한 
 ## 참고 자료
 
 - [The Complete Guide to Building Skills for Claude (PDF)](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) - 원문 PDF
+- [Claude 스킬 구축 완벽 가이드 - 시리즈 전체 보기](/series/claude-스킬-구축-완벽-가이드/)
 - [Agent Skills Specification](https://github.com/anthropics/agent-skills-spec)
 - [Skills API Quickstart](https://docs.anthropic.com/en/docs/agents-and-tools/skills/quickstart)
 - [Create Custom Skills](https://docs.anthropic.com/en/docs/agents-and-tools/skills/build-skills)

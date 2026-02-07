@@ -288,7 +288,7 @@ name: my-cool-skill
 
 **해결책:**
 
-description 필드를 수정하세요. 좋은 예시와 나쁜 예시는 [2부의 description 필드](/posts/claude-skills-guide-part-2/#description-필드) 섹션을 확인하세요.
+description 필드를 수정하세요. 좋은 예시와 나쁜 예시는 [2부의 description 필드](/posts/translation/claude-skills-guide-part-2/#description-필드) 섹션을 확인하세요.
 
 **빠른 체크리스트:**
 
@@ -420,4 +420,5 @@ CRITICAL: Before calling create_project, verify:
 ## 참고 자료
 
 - [The Complete Guide to Building Skills for Claude (PDF)](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) - 원문 PDF
+- [Claude 스킬 구축 완벽 가이드 - 시리즈 전체 보기](/series/claude-스킬-구축-완벽-가이드/)
 - [Anthropic Cookbook - Skills](https://github.com/anthropics/anthropic-cookbook/tree/main/skills/skills)

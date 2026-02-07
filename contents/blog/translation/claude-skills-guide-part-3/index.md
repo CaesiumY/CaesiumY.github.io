@@ -189,5 +189,6 @@ Then:
 ## 참고 자료
 
 - [The Complete Guide to Building Skills for Claude (PDF)](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) - 원문 PDF
+- [Claude 스킬 구축 완벽 가이드 - 시리즈 전체 보기](/series/claude-스킬-구축-완벽-가이드/)
 - [Claude Skills Documentation](https://docs.anthropic.com/en/docs/agents-and-tools/skills) - 공식 문서
 - [Model Context Protocol](https://modelcontextprotocol.io/) - MCP 공식 사이트
