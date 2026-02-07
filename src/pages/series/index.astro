@@ -12,7 +12,7 @@ const posts = await getCollection("blog");
 const seriesList = getUniqueSeriesWithMeta(posts);
 ---
 
-<Layout title={`Series | ${SITE.title}`}>
+<Layout title={`Series | ${SITE.title}`} ogImage="/series/og.png">
   <Header />
   <Main pageTitle="Series" pageDesc="시리즈로 묶인 연재 글 모음입니다.">
     <div class="mb-6 text-sm text-foreground/60">

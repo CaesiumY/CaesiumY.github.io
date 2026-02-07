@@ -33,6 +33,7 @@ const { page, seriesName } = Astro.props;
 <Layout
   title={`Series: ${seriesName} | ${SITE.title}`}
   description={`"${seriesName}" 시리즈의 모든 글입니다.`}
+  ogImage={`/series/${series}/og.png`}
 >
   <Header />
   <Main
