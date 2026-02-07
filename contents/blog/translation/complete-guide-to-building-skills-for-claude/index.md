@@ -64,6 +64,21 @@ draft: true
 
 완벽한 가이드는 [여기](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf)에서 다운로드할 수 있습니다.
 
+---
+
+*아래 내용은 원문에 없는 역자 추가 내용입니다.*
+
+## 한글 번역 시리즈
+
+이 PDF 가이드의 전체 내용을 6부로 나누어 한글로 번역했습니다:
+
+- [1부: 소개와 기본 개념](/posts/translation/claude-skills-guide-part-1/)
+- [2부: 계획과 설계](/posts/translation/claude-skills-guide-part-2/)
+- [3부: 테스트와 반복](/posts/translation/claude-skills-guide-part-3/)
+- [4부: 배포와 공유](/posts/translation/claude-skills-guide-part-4/)
+- [5부: 패턴과 트러블슈팅](/posts/translation/claude-skills-guide-part-5/)
+- [6부: 리소스와 레퍼런스](/posts/translation/claude-skills-guide-part-6/)
+
 ## 참고 자료
 
 - [A complete guide to building skills for Claude - 원문](https://claude.com/blog/complete-guide-to-building-skills-for-claude)
