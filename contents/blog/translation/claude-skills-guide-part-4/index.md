@@ -5,7 +5,6 @@ pubDatetime: 2026-02-06T21:54:17Z
 modDatetime: 2026-02-06T22:28:31Z
 tags: ["translation", "claude", "skills", "distribution", "ai", "anthropic"]
 series: "Claude 스킬 구축 완벽 가이드"
-originalSource: "../../../temp-translation-source/04-distribution-and-sharing.md"
 ogImage: "./chapter-4-cover.png"
 featured: false
 draft: false

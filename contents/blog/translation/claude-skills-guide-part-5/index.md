@@ -5,7 +5,6 @@ pubDatetime: 2026-02-06T22:39:25Z
 modDatetime: 2026-02-07T00:15:00Z
 tags: ["translation", "claude", "skills", "patterns", "troubleshooting", "ai", "anthropic"]
 series: "Claude 스킬 구축 완벽 가이드"
-originalSource: "../../../temp-translation-source/05-patterns-and-troubleshooting.md"
 ogImage: "./chapter-5-cover.png"
 featured: false
 draft: false

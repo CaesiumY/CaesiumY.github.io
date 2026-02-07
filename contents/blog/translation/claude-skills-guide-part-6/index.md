@@ -8,7 +8,6 @@ featured: false
 draft: false
 tags: ["translation", "claude", "skills", "resources", "references", "ai", "anthropic"]
 series: "Claude 스킬 구축 완벽 가이드"
-originalSource: "../../../temp-translation-source/06-resources-and-references.md"
 ---
 
 > 이 문서는 Anthropic의 ["The Complete Guide to Building Skills for Claude"](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) 중 Part 6의 한글 번역입니다. 원본 PDF를 6부로 나누어 번역하며, 이번 글은 마지막 파트로, 리소스와 레퍼런스를 정리합니다.
