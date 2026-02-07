@@ -5,7 +5,7 @@ pubDatetime: 2026-02-06T23:19:39Z
 modDatetime: 2026-02-07T00:40:00Z
 ogImage: "./chapter-6-cover.png"
 featured: false
-draft: true
+draft: false
 tags: ["translation", "claude", "skills", "resources", "references", "ai", "anthropic"]
 series: "Claude 스킬 구축 완벽 가이드"
 originalSource: "../../../temp-translation-source/06-resources-and-references.md"

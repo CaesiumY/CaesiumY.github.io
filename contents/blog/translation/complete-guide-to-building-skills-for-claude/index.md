@@ -6,7 +6,7 @@ modDatetime: 2026-02-05T07:29:11Z
 tags: ["translation", "claude", "skills", "mcp", "ai", "workflow", "automation"]
 series: "Claude 공식 블로그 번역"
 featured: false
-draft: true
+draft: false
 ---
 
 > 이 문서는 [A complete guide to building skills for Claude](https://claude.com/blog/complete-guide-to-building-skills-for-claude)의 한글 번역입니다.

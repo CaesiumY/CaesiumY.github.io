@@ -8,7 +8,7 @@ series: "Claude 스킬 구축 완벽 가이드"
 originalSource: "../../../temp-translation-source/05-patterns-and-troubleshooting.md"
 ogImage: "./chapter-5-cover.png"
 featured: false
-draft: true
+draft: false
 ---
 
 > 이 글은 Anthropic의 [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) PDF 가이드 중 5부를 번역한 글입니다.
