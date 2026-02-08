@@ -6,7 +6,7 @@ export function addHeadingLinks(): void {
   // 이미 링크가 추가된 헤딩은 제외 (중복 방지)
   const headings = Array.from(
     document.querySelectorAll(
-      "h2:not([data-heading-linked]), h3:not([data-heading-linked]), h4:not([data-heading-linked]), h5:not([data-heading-linked]), h6:not([data-heading-linked])"
+      "h2:not([data-heading-linked]):not([data-no-heading-link]), h3:not([data-heading-linked]):not([data-no-heading-link]), h4:not([data-heading-linked]):not([data-no-heading-link]), h5:not([data-heading-linked]):not([data-no-heading-link]), h6:not([data-heading-linked]):not([data-no-heading-link])"
     )
   );
 

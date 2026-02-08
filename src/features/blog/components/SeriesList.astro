@@ -18,8 +18,8 @@ const { posts, currentPostId, seriesName } = Astro.props;
   data-pagefind-ignore
 >
   <div class="mb-4 flex items-center gap-2">
-    <Icon name="ph:list-numbers" class="size-5 text-accent" />
-    <h2 class="mb-0 text-base font-medium">
+    <Icon name="ph:books" class="size-5 text-accent" />
+    <h2 class="mb-0 text-base font-medium" data-no-heading-link>
       <span class="text-accent">{seriesName}</span> 시리즈
     </h2>
     <span class="text-sm text-accent/60">({posts.length})</span>
