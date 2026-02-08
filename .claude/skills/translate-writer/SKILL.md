@@ -1,12 +1,12 @@
 ---
 allowed-tools: [Read, Write, Bash, Glob, TodoWrite, Task, AskUserQuestion, WebFetch]
 argument-hint: <URL 또는 파일경로> [--mode=quick|thorough|perfect] [--analyze] [--skip-review]
-description: AI 기반 번역 에이전트 시스템 (스타일 학습 → 자동 번역 → 검토 루프 → polish → 사용자 승인)
+description: AI 기반 번역 에이전트 시스템 (스타일 학습 → 자동 번역 → 이중 검증 → polish → 사용자 승인)
 ---
 
 ## 번역 글쓰기 에이전트 시스템
 
-5개의 전문 에이전트가 협업하여 자연스러운 한국어 번역을 생성합니다.
+6개의 전문 에이전트가 협업하여 자연스러운 한국어 번역을 생성합니다.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -30,13 +30,21 @@ description: AI 기반 번역 에이전트 시스템 (스타일 학습 → 자�
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│  Phase 2: 검토 루프 (translation-reviewer 에이전트)               │
-│  - 10점 만점 평가 (28개 번역투 패턴 체크)                         │
+│  Phase 2: 이중 검증 (병렬 실행)                                    │
+│  ┌─────────────────────┬──────────────────────┐                │
+│  │ translation-reviewer │ translation-verifier │                │
+│  │ (한국어 품질)         │ (원문 충실도)         │                │
+│  │ - 28개 번역투 패턴   │ - T1~T10 체크리스트   │                │
+│  │ - 가독성             │ - 원문 대조           │                │
+│  │ - 형식               │ - 기술 정확성         │                │
+│  └──────────┬──────────┴───────────┬──────────┘                │
+│             └──────────┬───────────┘                            │
+│                        ▼                                        │
+│  결과 병합: 두 점수 모두 기준 이상 → Phase 3                      │
 │  │                                                              │
-│  ├──→ quick/thorough: 8점 미만 → Translator에게 수정 지시        │
-│  ├──→ perfect: 9점 미만 → Translator에게 수정 지시               │
-│  │                                                              │
-│  └──→ 기준 이상: Phase 3으로                                     │
+│  ├──→ reviewer만 미달 → 번역투 수정 지시 후 재검증                │
+│  ├──→ verifier만 미달 → 의미 수정 지시 후 재검증                  │
+│  └──→ 둘 다 미달 → 통합 수정 지시 후 재검증                      │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
@@ -57,7 +65,7 @@ description: AI 기반 번역 에이전트 시스템 (스타일 학습 → 자�
 │  Phase 4: 사용자 최종 결정                                        │
 │                                                                 │
 │  ✅ 승인: → Phase 5로                                            │
-│  📝 수정 요청: → 피드백 반영 후 Phase 2로                         │
+│  📝 수정 요청: → 피드백 반영 후 Phase 1로 (재번역 → 이중 검증)     │
 │  🔧 추가 다듬기: → Phase 3으로                                    │
 │  ❌ 거절: → translation-learner (부정) → 종료                     │
 └─────────────────────────────────────────────────────────────────┘
@@ -157,26 +165,38 @@ Task 도구로 content-translator 에이전트 호출:
 3. **감지 실패 시**
    - 시리즈 필드 생략 (기존 동작 유지)
 
-#### Phase 2: 검토 루프 (translation-reviewer)
+#### Phase 2: 이중 검증 (reviewer + verifier 병렬)
 
-**루프 조건**:
-- quick/thorough: 점수 8점 이상 또는 3회 수정 완료
-- perfect: 점수 9점 이상 또는 3회 수정 완료
+**병렬 실행**: 두 에이전트를 Task 도구로 **동시에** 호출합니다.
 
 ```
 반복 (최대 3회):
-  1. translation-reviewer 에이전트로 평가 (10점 만점)
-  2. 점수 < 기준:
-     - 수정 지시를 content-translator에게 전달
-     - 수정된 번역 받기
-  3. 점수 >= 기준:
-     - 루프 종료
-     - Phase 3으로
+  1. 병렬 실행:
+     - translation-reviewer 에이전트: 한국어 품질 평가 (10점 만점)
+     - translation-verifier 에이전트: 원문 충실도 평가 (10점 만점)
+       (원문 URL/파일 + 번역 파일 모두 전달)
+
+  2. 결과 병합:
+     - 두 점수 모두 기준 이상 → Phase 3으로
+     - reviewer만 미달:
+       → reviewer의 번역투 수정 지시를 content-translator에게 전달
+       → 수정 후 재검증
+     - verifier만 미달:
+       → verifier의 의미 오류 수정 지시를 content-translator에게 전달
+       → 수정 후 재검증
+     - 둘 다 미달:
+       → 두 보고서의 수정 지시를 통합하여 content-translator에게 전달
+       → 수정 후 재검증
 ```
+
+**루프 조건**:
+- quick: reviewer 8점 이상 + verifier 8점 이상 또는 3회 수정 완료
+- thorough: reviewer 8점 이상 + verifier 8점 이상 또는 3회 수정 완료
+- perfect: reviewer 9점 이상 + verifier 9점 이상 또는 3회 수정 완료
 
 **3회 수정 후에도 기준 미만**:
 - 사용자에게 상황 보고
-- 현재 점수와 주요 문제점 안내
+- 각 에이전트의 현재 점수와 주요 문제점 안내
 - 계속 진행할지 사용자 결정
 
 #### Phase 3: Polish 정밀 다듬기 [NEW]
@@ -223,7 +243,8 @@ AskUserQuestion으로 사용자에게 질문:
 ```
 ## 번역 검토
 
-**점수**: X/10
+**한국어 품질 점수**: X/10 (reviewer)
+**원문 충실도 점수**: X/10 (verifier)
 **원문**: [원문 제목]
 **번역 제목**: [한글 제목]
 **모드**: [quick|thorough|perfect]
@@ -284,7 +305,8 @@ AskUserQuestion으로 사용자에게 질문:
 |----------|------|----------|
 | translation-style-analyzer | 기존 번역 분석 → 스타일 가이드 생성 | - |
 | content-translator | URL/파일 번역 | - |
-| translation-reviewer | 번역 품질 검토 (28개 패턴) | 10점 만점 |
+| translation-reviewer | 한국어 품질 검토 (28개 패턴) | 10점 만점 |
+| translation-verifier | 원문 충실도 검증 (T1~T10) | 10점 만점 |
 | polish-agent | 문장 단위 정밀 분석 (10개 핵심 패턴) | 10점 만점 |
 | translation-learner | 피드백 학습 → 스타일 가이드 업데이트 | - |
 
@@ -292,12 +314,12 @@ AskUserQuestion으로 사용자에게 질문:
 
 ## 기존 커맨드와의 관계
 
-| 커맨드 | 용도 | 학습 | Polish |
-|--------|------|------|--------|
-| `/translate-blog` | 단순 번역 (빠른 작업용) | ❌ | ❌ |
-| `/translate-writer --mode=quick` | 빠른 에이전트 번역 | ✅ | ❌ |
-| `/translate-writer` | 일반 에이전트 번역 | ✅ | ✅ (9.5점 미만) |
-| `/translate-writer --mode=perfect` | 고품질 에이전트 번역 | ✅ | ✅ (9.8점 미만) |
+| 커맨드 | 용도 | 학습 | Polish | 원문 검증 |
+|--------|------|------|--------|----------|
+| `/translate-blog` | 단순 번역 (빠른 작업용) | ❌ | ❌ | ❌ |
+| `/translate-writer --mode=quick` | 빠른 에이전트 번역 | ✅ | ❌ | ✅ |
+| `/translate-writer` | 일반 에이전트 번역 | ✅ | ✅ (9.5점 미만) | ✅ |
+| `/translate-writer --mode=perfect` | 고품질 에이전트 번역 | ✅ | ✅ (9.8점 미만) | ✅ |
 
 ---
 
@@ -311,12 +333,13 @@ AskUserQuestion으로 사용자에게 질문:
 ✅ 번역 제목: [한글 제목]
 ✅ 파일: contents/blog/translation/[slug]/index.md
 ✅ 모드: [quick|thorough|perfect]
-✅ 점수: X/10
+✅ 한국어 품질 점수: X/10
+✅ 원문 충실도 점수: X/10
 ✅ 상태: draft: true
 
 📊 검토 히스토리:
-- 1차: X점 → 수정
-- 2차: X점 → 통과
+- 1차: 품질 X점 / 충실도 X점 → 수정
+- 2차: 품질 X점 / 충실도 X점 → 통과
 
 📝 Polish (thorough/perfect만):
 - 분석 문장: N개
@@ -339,7 +362,7 @@ AskUserQuestion으로 사용자에게 질문:
 ## 주의사항
 
 1. **draft: true**: 모든 번역은 초안으로 생성. 발행은 사용자가 직접.
-2. **루프 제한**: Translator↔Reviewer 루프는 최대 3회.
+2. **루프 제한**: Translator↔Reviewer+Verifier 이중 검증 루프는 최대 3회.
 3. **모드 선택**: 목적에 맞는 모드 선택 안내.
 4. **피드백 축적**: 모든 피드백은 feedback-log.md에 기록.
 5. **용어집 존중**: `glossary.md`의 용어를 우선 참조.
