@@ -161,10 +161,11 @@ const layoutProps = {
     }
   }
 
-  // Run on initial load
+  // Run on initial load (직접 호출 - 모듈 스크립트 타이밍 보장)
   initializePostFeatures();
 
-  // Run on every View Transition navigation
+  // Run on View Transition navigations (astro:page-load는 초기 로딩에서도 발생할 수 있으나,
+  // 각 초기화 함수에 멱등성 가드가 있으므로 중복 호출에 안전)
   document.addEventListener('astro:page-load', () => {
     // Only run on post detail pages
     if (document.getElementById('main-content')?.dataset.postSlug) {

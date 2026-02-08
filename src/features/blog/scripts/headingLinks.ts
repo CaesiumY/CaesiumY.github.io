@@ -3,11 +3,15 @@
  * allowing sharing of sections easily
  */
 export function addHeadingLinks(): void {
+  // 이미 링크가 추가된 헤딩은 제외 (중복 방지)
   const headings = Array.from(
-    document.querySelectorAll("h2, h3, h4, h5, h6")
+    document.querySelectorAll(
+      "h2:not([data-heading-linked]), h3:not([data-heading-linked]), h4:not([data-heading-linked]), h5:not([data-heading-linked]), h6:not([data-heading-linked])"
+    )
   );
-  
+
   for (const heading of headings) {
+    heading.setAttribute("data-heading-linked", "true");
     heading.classList.add("group");
     const link = document.createElement("a");
     link.className =
