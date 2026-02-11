@@ -17,8 +17,7 @@ export const projects: Project[] = [
     description:
       "AI-Native 워크플로우 기반 교육 지원 서비스. MSW를 활용한 선제적 인터페이스 설계로 개발 기간 50% 단축.",
     liveUrl: "https://www.chungbook-e.com/",
-    ogImage:
-      "https://www.chungbook-e.com/opengraph-image.jpg?e993f9fb9b0e04a9",
+    ogImage: "https://www.chungbook-e.com/opengraph-image.jpg?e993f9fb9b0e04a9",
     techStack: ["Next.js", "TypeScript", "MSW", "AI Agents"],
     date: new Date("2025-05-01"),
     featured: true,
@@ -41,7 +40,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/CaesiumY/CaesiumY.github.io",
     liveUrl: "https://caesiumy.github.io",
     techStack: ["Astro", "TypeScript", "TailwindCSS"],
-    date: new Date("2024-01-01"),
+    date: new Date("2025-12-01"),
     featured: true,
     category: "personal",
   },
