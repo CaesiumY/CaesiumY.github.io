@@ -2,6 +2,7 @@
 title: "Claude Code 서브 에이전트로 AI 기술 면접관 만들기"
 description: "이직 준비가 막막했던 나는 Claude Code의 커스텀 커맨드와 3-에이전트 시스템으로 면접 준비 도구를 만들었다. 이력서 리뷰부터 3명의 AI 면접관이 독립 평가하는 시스템까지."
 pubDatetime: 2026-01-24T00:00:00Z
+featured: true
 draft: false
 tags: ["ai", "claude-code", "interview", "career", "sub-agent", "automation", "custom-commands"]
 ---

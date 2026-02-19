@@ -2,6 +2,7 @@
 title: "AI에게 번역을 시키면서 깨달은 오케스트레이션의 힘"
 description: "왜 AI 하나로는 번역 품질을 보장할 수 없는가? 확증 편향과 앵커링 바이어스 같은 한계를 SoC, 이중 병렬 검증, 피드백 루프로 해결한 6개 전문 에이전트 번역 파이프라인의 아키텍처, 설계 원칙과 트레이드오프를 분석한다."
 pubDatetime: 2026-02-11T03:37:53Z
+featured: true
 draft: false
 tags: ["ai", "claude-code", "multi-agent", "orchestration", "translation", "workflow"]
 ---

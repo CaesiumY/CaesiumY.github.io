@@ -3,7 +3,6 @@ title: "[번역] Next.js 16 Beta"
 description: "Next.js 16 Beta 한글 번역 - Turbopack 안정화, React Compiler 지원, 개선된 캐싱 API 등 주요 기능과 Breaking Changes를 한국어로 상세히 정리"
 pubDatetime: 2025-10-10T00:00:00Z
 modDatetime: 2025-10-10T00:00:00Z
-featured: true
 draft: false
 tags: ["next-js", "translation", "react", "beta"]
 ---
