@@ -1,0 +1,98 @@
+{
+  "metadata": {
+    "file": "contents/blog/translation/migrating-off-nextjs-tanstack-start/index.md",
+    "analyzed_at": "2026-02-19T14:02:46Z",
+    "total_sentences": 112,
+    "sentences_below_threshold": 41,
+    "average_score": 9.28,
+    "threshold": 9.5,
+    "is_translation": true,
+    "source_url": "https://www.inngest.com/blog/migrating-off-nextjs-tanstack-start",
+    "source_title": "Reducing local dev time by 83%: Why we migrated off Next.js",
+    "excluded_sentences": ["S8", "S9", "S10", "S11"],
+    "excluded_reason": "User already reviewed and decided in previous session"
+  },
+  "critical_sentences": [
+    {
+      "id": "S110", "line": 167, "score": 7.4,
+      "text": "아직 이것이 자신에게 맞는지, 언제 해야 하는지, 어떤 대안을 고려해야 하는지 결정하지 못했다면, 아래 참고 가이드를 살펴보세요 (어디까지나 개인 경험 기반입니다!):",
+      "source": "If you still need help deciding if/when this is right for you, or what other alternatives you should consider, here's a quick reference guide (just based on my own experience!):",
+      "patterns": ["#3 지시대명사", "#5 장황"],
+      "best_option": {"text": "전환 시점이나 대안을 아직 결정하지 못했다면, 아래 참고 가이드를 보세요 (제 경험 기반입니다!):", "score": 9.3}
+    },
+    {
+      "id": "S104", "line": 157, "score": 7.6,
+      "text": "한 번에 밀어붙이는 변환 과정은 전통적인 방식으로는 리뷰가 매우 어렵거나 불가능한 거대한 PR을 필연적으로 만들어냅니다.",
+      "source": "On the process front, the rip-the-bandaid-off conversion process necessitates huge PRs that are very hard or impossible to review traditionally.",
+      "patterns": ["#5 장황", "#6 수행하다"],
+      "best_option": {"text": "한 번에 밀어붙이는 변환은 거대한 PR을 만들고, 기존 방식으로는 리뷰가 거의 불가능합니다.", "score": 9.2}
+    },
+    {
+      "id": "S108", "line": 161, "score": 7.7,
+      "text": "이를 고려하면, 변환 전용 엔지니어링에 투자해 점진적으로 전환할 가치는, 위험 회피가 매우 중요한 환경에서만 있다고 봅니다.",
+      "source": "Given this, I'd say it is only worth investing in conversion-specific engineering and cutting over incrementally in very risk averse engineering environments.",
+      "patterns": ["#5 장황"],
+      "best_option": {"text": "이를 보면, 변환 전용 엔지니어링에 투자해 단계적으로 전환할 가치는 위험 회피를 매우 중시하는 환경에서만 있다고 봅니다.", "score": 9.0}
+    },
+    {
+      "id": "S96", "line": 144, "score": 7.8,
+      "text": "서버 사이드 코드가 상당량 있다면, 클라이언트나 서버에 들어가면 안 되는 것이 번들에 포함되는 문제를 언젠가 만나게 됩니다.",
+      "source": "If you've got a significant amount of server-side code you will eventually run into issues where things get bundled into the client or the server that shouldn't.",
+      "patterns": ["#3 지시대명사", "#21 명사화"],
+      "best_option": {"text": "서버 사이드 코드가 많다면, 클라이언트나 서버에 포함되면 안 되는 코드가 번들에 섞이는 문제를 겪게 됩니다.", "score": 9.0}
+    },
+    {
+      "id": "S107", "line": 159, "score": 7.9,
+      "text": "프로덕션 외부에서는 테스트하기 매우 어려운 통합 플로우에서 즉시 롤백이 필요한 이슈가 딱 하나 있었습니다.",
+      "source": "We had exactly one issue that was significant enough to warrant an instant rollback, which was in an integration flow that is very difficult to test outside production.",
+      "patterns": ["#5 장황"],
+      "best_option": {"text": "프로덕션 외부에서 테스트하기 어려운 통합 플로우에서 이슈가 딱 하나 발생해 즉시 롤백했습니다.", "score": 9.1}
+    }
+  ],
+  "important_sentences": [
+    {"id": "S52", "line": 88, "score": 8.2, "text": "개발자 경험이 중요할 때, 기대에 찬 개발자가 중요합니다.", "patterns": ["#4 반복"], "best_option": {"text": "개발자 경험이 중요하다면 열정적인 개발자가 필요합니다.", "score": 9.6}},
+    {"id": "S93", "line": 140, "score": 8.2, "text": "이 프로젝트는 빠르고 비교적 고통 없이 진행되었습니다.", "patterns": ["#9 진행하다"], "best_option": {"text": "이 프로젝트는 빠르고 비교적 순조로웠습니다.", "score": 9.2}},
+    {"id": "S56", "line": 96, "score": 8.3, "text": "**점진적 접근 방식**은 조건부 라우팅과 공유 컴포넌트 라이브러리에서의 조건부 임포트가 필요했는데, 이 라이브러리가 Next.js 유틸리티에 크게 의존했습니다.", "patterns": ["#5 장황", "#7 ~의 과다"], "best_option": {"text": "**점진적 접근 방식**은 조건부 라우팅과 공유 컴포넌트 라이브러리의 조건부 임포트가 필요했습니다. 하지만 이 라이브러리가 Next.js 유틸리티에 크게 의존했습니다.", "score": 9.5}},
+    {"id": "S100", "line": 146, "score": 8.4, "text": "개발 모드와 빌드된 앱 사이에 동작이 다른 경우를 몇 번 겪었습니다.", "patterns": ["#4 ~경우"], "best_option": {"text": "개발 모드와 빌드된 앱의 동작이 달라 몇 번 문제를 겪었습니다.", "score": 9.3}},
+    {"id": "S66", "line": 106, "score": 8.5, "text": "앱 헤드들이 공유 컴포넌트 라이브러리를 통해 서로 참조하는 몇 가지 걸림돌이 있었지만, 그리 나쁘지 않은 임시 타입 해킹으로 빠르게 해결했습니다.", "patterns": ["#2 복잡 구조", "#3 지시대명사"], "best_option": {"text": "앱 헤드 간 상호 참조 문제가 몇 가지 있었지만, 간단한 임시 타입 해킹으로 빠르게 해결했습니다.", "score": 9.6}},
+    {"id": "S109", "line": 165, "score": 8.5, "text": "Tanstack Start로 전환할 준비가 되었다면, 우리의 마이그레이션 결과물은 모두 UI 모노레포에 오픈소스로 공개되어 있습니다:", "patterns": ["#7 ~의"], "best_option": {"text": "Tanstack Start로 전환할 준비가 되었다면, 마이그레이션 결과물은 모두 UI 모노레포에 오픈소스로 공개되어 있습니다:", "score": 9.2}},
+    {"id": "S28", "line": 60, "score": 8.6, "text": "모두가 동의했습니다: 우리 자신의 개발자 경험이 *최악*이라는 것을.", "patterns": ["#10 관료적"], "best_option": {"text": "모두가 동의했습니다: 우리 개발자 경험이 *형편없다*는 것을.", "score": 9.5}},
+    {"id": "S69", "line": 108, "score": 8.6, "text": "프로젝트가 조금 더 길어졌지만, 그래도 엔지니어 1명이 (AI의 도움을 받아) 약 2주 정도의 작업이었습니다.", "patterns": ["#1 수동태", "#7 ~의"], "best_option": {"text": "프로젝트가 조금 더 길어졌지만, AI 도움을 받은 엔지니어 1명이 약 2주면 충분했습니다.", "score": 9.5}},
+    {"id": "S55", "line": 94, "score": 8.7, "text": "인증과 통합은 프로토타이핑 단계에서 정리되었지만, 미지수는 라우트 변환에 드는 노력이었습니다.", "patterns": ["#1 수동태", "#7 ~의"], "best_option": {"text": "인증과 통합은 프로토타이핑 단계에서 처리했지만, 미지수는 라우트 변환에 필요한 노력이었습니다.", "score": 9.5}},
+    {"id": "S20", "line": 50, "score": 8.7, "text": "`\"use client\"` / `\"use server\"` 지시어, 겹겹이 쌓인 캐시 API, RSC와 클라이언트 컴포넌트 사이의 모호한 경계 — 이 모든 것이 시간이 갈수록 마찰을 키워갔습니다.", "patterns": ["#5 소유격", "#10 장황"], "best_option": {"text": "`\"use client\"` / `\"use server\"` 지시어, 겹겹이 쌓인 캐시 API, RSC와 클라이언트 컴포넌트 간의 모호한 경계 — 이 모든 게 시간이 갈수록 마찰을 키웠습니다.", "score": 9.5}},
+    {"id": "S51", "line": 86, "score": 8.8, "text": "앞서 공유한 맥락을 생각하면 의외의 선택처럼 보일 수 있지만, 팀은 이미 Tanstack의 다른 라이브러리를 사용하고 있었고 그 방향성에 대단히 기대가 컸습니다.", "patterns": ["#3 지시대명사", "#10 관료적"], "best_option": {"text": "앞서 공유한 맥락을 보면 의외의 선택처럼 들릴 수 있지만, 팀은 이미 Tanstack의 다른 라이브러리를 사용하고 있었으며 그 방향성에 매우 긍정적이었습니다.", "score": 9.5}},
+    {"id": "S21", "line": 52, "score": 8.8, "text": "프론트엔드에 대부분의 시간을 쓰지 않는 엔지니어들은 기능을 출시하기보다 프레임워크와 싸우는 데 시간을 허비하게 되었습니다.", "patterns": ["#5 어색한 구성"], "best_option": {"text": "프론트엔드에 시간을 많이 쓰지 않는 엔지니어들은 기능을 출시하기보다 프레임워크와 싸우느라 시간을 낭비했습니다.", "score": 9.6}},
+    {"id": "S62", "line": 104, "score": 8.9, "text": "**개발 서버**는 대시보드 라우트의 작은 부분집합만 있어서 여기부터 시작했고, 몇 개를 변환해봤습니다.", "patterns": ["#7 ~의"], "best_option": {"text": "**개발 서버**는 대시보드 라우트의 일부만 있어서 여기서 시작해 몇 가지를 변환했습니다.", "score": 9.5}},
+    {"id": "S16", "line": 48, "score": 8.9, "text": "SPA의 빈 로딩 화면과 네트워크 워터폴에서 벗어나고, 중첩 레이아웃과 스트리밍이 기본으로 지원되며, 단일 프레임워크로 통합한다는 것이었죠.", "patterns": ["#1 피동", "#6 장황"], "best_option": {"text": "SPA의 빈 로딩 화면과 네트워크 워터폴에서 벗어나고, 중첩 레이아웃과 스트리밍을 기본으로 제공하며, 단일 프레임워크로 통합하는 거였죠.", "score": 9.5}}
+  ],
+  "minor_sentences": [
+    {"id": "S22", "line": 56, "score": 9.2, "best_option": {"text": "첫 번째 시도로, RSC 사용을 줄이고 바닐라 서버 컴포넌트는 최소한으로 쓰며 클라이언트 컴포넌트를 주로 사용했습니다.", "score": 9.6}},
+    {"id": "S23", "line": 56, "score": 9.1, "best_option": {"text": "이 방법은 어느 정도 도움이 되었고, 적어도 잠깐은 개발자 경험이 괜찮았습니다.", "score": 9.7}},
+    {"id": "S26", "line": 58, "score": 9.3, "best_option": {"text": "**로컬 개발에서 초기 페이지 로드 시간이 최소 10-12초까지 늘어났습니다.**", "score": 9.7}},
+    {"id": "S27", "line": 58, "score": 9.4, "best_option": {"text": "슬랙에 쏟아진 반응: \"진짜 싫어.\" \"프론트엔드 너무 느려.\"", "score": 9.5}},
+    {"id": "S32", "line": 66, "score": 9.2, "best_option": {"text": "사실 두 번이나 시도했습니다.", "score": 9.8}},
+    {"id": "S36", "line": 68, "score": 9.4, "best_option": {"text": "이로 인해 몇 가지 문제가 발생했고, 안타깝게도 로컬 로드 시간은 평균 겨우 몇 초 줄었을 뿐입니다.", "score": 9.7}},
+    {"id": "S45", "line": 78, "score": 9.3, "best_option": {"text": "하지만 Fresh가 버전 1과 2 사이에 오래 걸린 점이 걱정이었고, Remix가 React Router에 합쳐졌다가 다시 별도 프리뷰 플랫폼으로 분리한 점도 우려되었습니다.", "score": 9.7}},
+    {"id": "S48", "line": 80, "score": 9.4, "best_option": {"text": "세 가지 모두 통과했지만 효과가 제각각이었습니다.", "score": 9.8}},
+    {"id": "S53", "line": 92, "score": 9.3, "best_option": {"text": "다음은 점진적으로 진행할 것인지, 한 번에 밀어붙일 것인지의 선택이었습니다.", "score": 9.6}},
+    {"id": "S54", "line": 94, "score": 9.2, "best_option": {"text": "**전면 전환 방식**은 시간과 리소스에 달린 문제였습니다.", "score": 9.6}},
+    {"id": "S58", "line": 98, "score": 9.4, "best_option": {"text": "결정하려면 일반적인 라우트 변환 작업량을 파악해야 했습니다.", "score": 9.7}},
+    {"id": "S59", "line": 98, "score": 9.1, "best_option": {"text": "변환 비용을 추정하는 유일한 방법은 직접 해보는 것이었습니다.", "score": 9.6}},
+    {"id": "S63", "line": 104, "score": 9.2, "best_option": {"text": "놀랍게도 변환 작업이 충분히 빨라서 계속 진행하여 며칠 만에 모두 완료했습니다.", "score": 9.6}},
+    {"id": "S65", "line": 106, "score": 9.3, "best_option": {"text": "공유 컴포넌트는 Next.js를 사용하는 곳마다 복사본을 만들어 Tanstack 대응 코드로 교체했습니다.", "score": 9.7}},
+    {"id": "S71", "line": 112, "score": 9.3, "best_option": {"text": "로컬 초기 페이지 로드는 거의 2-3초를 넘지 않습니다.", "score": 9.7}},
+    {"id": "S72", "line": 112, "score": 9.2, "best_option": {"text": "그것도 어떤 라우트든 처음 로드할 때만 해당됩니다.", "score": 9.5}},
+    {"id": "S74", "line": 112, "score": 9.1, "best_option": {"text": "Next.js는 모든 라우트의 첫 로드가 느린 것과 다릅니다.", "score": 9.6}},
+    {"id": "S76", "line": 116, "score": 9.3, "best_option": {"text": "이 비교 매트릭스에서 기술적 트레이드오프를 자세히 볼 수 있습니다.", "score": 9.7}},
+    {"id": "S77", "line": 116, "score": 9.2, "best_option": {"text": "핵심 차이는 Next.js의 '관례 우선' 방식을 Tanstack의 명시적 방식으로 바꾼 것입니다.", "score": 9.5}},
+    {"id": "S79", "line": 118, "score": 9.1, "best_option": {"text": "아래 예시를 보면 Next.js의 App Router는 Tanstack Router와 일부 규칙을 공유하지만, Remix를 써본 분이라면 Tanstack과의 유사점을 바로 알아챌 것입니다.", "score": 9.6}},
+    {"id": "S81", "line": 122, "score": 9.4, "best_option": {"text": "서버 사이드 페칭임을 알 수 있는 유일한 단서는 `async/await`입니다.", "score": 9.6}},
+    {"id": "S85", "line": 132, "score": 9.2, "best_option": {"text": "아키텍처와 패턴을 깔끔하고 일관되게 유지하려고, AI는 변환 작업에만 활용했습니다.", "score": 9.6}},
+    {"id": "S86", "line": 132, "score": 9.4, "best_option": {"text": "라우트와 하위 라우트를 변환하고, 서버/클라이언트 데이터 페칭 패턴을 정한 뒤 AI가 그 패턴을 비슷한 라우트에 적용하도록 했습니다.", "score": 9.7}},
+    {"id": "S90", "line": 134, "score": 9.1, "best_option": {"text": "반복 작업을 줄이고 디버깅 시간을 제한해서, 엔지니어 1명이 2주 만에 마이그레이션을 완료했고 최종 병합과 UAT 기간에도 다른 기능 개발에 거의 영향을 주지 않았습니다.", "score": 9.6}}
+  ],
+  "progress": {
+    "completed": 0,
+    "total": 41
+  }
+}

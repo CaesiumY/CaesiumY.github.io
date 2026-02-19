@@ -104,6 +104,46 @@
 | Incremental Static Regeneration (ISR) | 증분 정적 재생성 | |
 | Partial Pre-Rendering (PPR) | 부분 사전 렌더링 | |
 
+### 의역 및 문체 관련 용어
+
+| 원문 | 번역 | 비고 |
+|------|------|------|
+| compelling | 혹할 만한 / 설득력 있는 | 맥락에 따라 선택 |
+| honeymoon period | 달콤한 시간 | 관용구로 번역 |
+| prescriptive | 정해진 / 명시적인 | 기술 문맥에서 주로 "정해진" |
+| risk averse | 보수적인 / 리스크를 꺼리는 | 문맥에 따라 선택 |
+| convention-over-configuration | 관례 우선 | 원문 유지 가능 |
+| brute force (migration context) | 전면 전환 / 한 번에 밀어붙이기 | 마이그레이션 맥락 |
+
+### 프레임워크/라이브러리
+
+| 원문 | 번역 | 비고 |
+|------|------|------|
+| Tanstack Start | Tanstack Start | 프레임워크명 (한글화 불필요) |
+| Deno Fresh | Deno Fresh | 프레임워크명 (한글화 불필요) |
+| React Router | React Router | 프레임워크명 (한글화 불필요) |
+| Remix | Remix | 프레임워크명 (한글화 불필요) |
+
+### 고급 기술 용어
+
+| 원문 | 번역 | 비고 |
+|------|------|------|
+| Deduplication | 중복 제거 | Layout deduplication |
+| Agentic | 에이전트 기반 / 에이전틱 | AI 에이전트 관련 |
+| Sub-agent | 서브에이전트 | |
+| Context Engineering | 컨텍스트 엔지니어링 | |
+| Read-your-writes | read-your-writes | 원문 유지 권장 |
+| Stale-While-Revalidate | SWR 동작 / stale-while-revalidate | |
+| Worktree | 워크트리 | Git 관련 |
+| Headless | 헤드리스 | |
+| Non-deterministic | 비결정적인 | |
+| Skill | 스킬 | Claude Skills 문맥 |
+| Frontmatter | frontmatter | YAML frontmatter |
+| Workflow | 워크플로우 | 작업 흐름 |
+| Instruction | 지시사항 | Skill.md의 내용 |
+| Content Negotiation | 콘텐츠 협상 | HTTP 표준 메커니즘 |
+| Changelog | 변경 내역 | 버전 기록 |
+
 ---
 
 ## 업데이트 기록
@@ -113,6 +153,8 @@
 | 2025-12-18 | 초기 용어집 생성 |
 | 2026-02-06 | "dependency" → "의존성"으로 변경 (한국 개발자 커뮤니티 표준) |
 | 2026-02-07 | "suite" → "모음", "nuance" → "맥락/의미/어감" 추가 (외래어→한국어 선호) |
+| 2026-02-11 | "Content Negotiation" → "콘텐츠 협상", "Changelog" → "변경 내역" 추가 |
+| 2026-02-20 | 의역 관련 용어 추가 ("compelling", "honeymoon period", "prescriptive", "risk averse" 등), 프레임워크 용어 추가 ("Tanstack Start", "Deno Fresh" 등) |
 
 ---
 
