@@ -57,7 +57,7 @@ Inngest에서 DX(개발자 경험)는 알파이자 오메가입니다. 탁월한
 
 하지만 곧 모든 게 느려졌습니다. *정말* 느려졌습니다. **로컬 개발에서 초기 페이지 로드 시간이 최소 10-12초까지 늘어났습니다.** 슬랙에 쏟아진 반응: "진짜 싫어." "프론트엔드가 너무 느려."
 
-우리 개발자 경험이 *형편없었다*는 것을 모두가 동의했습니다.
+이제는 모두가 동의했습니다: 우리 개발자 경험이 *형편없다*는 것을.
 
 ### Turbopack 추가와 Next.js 업그레이드
 
@@ -83,7 +83,7 @@ Turbopack은 사실 그다지 *turbo*하지 않은 것 같았습니다. Next.js 
 
 ![그림 2: 프로토타입에서 배포까지의 마이그레이션 타임라인](https://www.inngest.com/assets/blog/migrating-off-nextjs-tanstack-start/figure-2-migration-timeline.png)
 
-결국 Tanstack Start를 선택했습니다. 앞서 공유한 맥락을 보면 의외의 선택처럼 보일 수 있지만, 팀은 이미 Tanstack의 다른 라이브러리를 사용하고 있었고 그 방향성에 매우 긍정적이었습니다.
+결국 Tanstack Start를 선택했습니다. 앞서 공유한 맥락을 보면 의외의 선택처럼 보일 수 있지만, 팀은 이미 Tanstack의 다른 라이브러리를 사용하고 있었고 그 방향성에 대단히 낙관적이었습니다.
 
 개발자 경험을 중시한다면, 개발자가 쓰고 싶어하는 도구를 고르는 것도 중요합니다.
 
@@ -109,7 +109,7 @@ Next.js 앱 헤드가 두 개 있었습니다. 하나는 개발 서버용, 하�
 
 ## 결과
 
-마이그레이션 후 DX가 *극적으로* 개선되었습니다. 로컬 초기 페이지 로드는 거의 2-3초를 넘지 않습니다. 그것도 **어떤** 라우트든 처음 로드할 때만 해당됩니다. 첫 번째 이후의 라우트는 Tanstack에서 거의 항상 즉시 로드됩니다. Next.js의 모든 라우트 첫 로드가 항상 느렸던 것과 대조됩니다. 슬랙에서의 반응이 완전히 바뀌었습니다: "이렇게 빠를 줄 몰랐어!"
+마이그레이션 후 DX가 *극적으로* 개선되었습니다. 로컬 초기 페이지 로드는 거의 2-3초를 넘지 않습니다. 그것도 **어떤** 라우트든 언제나 처음 로드할 때만 해당됩니다. 첫 번째 이후의 라우트는 Tanstack에서 거의 항상 즉시 로드됩니다. Next.js의 모든 라우트 첫 로드가 항상 느렸던 것과 대조됩니다. 슬랙에서의 반응이 완전히 바뀌었습니다: "이렇게 빠를 줄 몰랐어!"
 
 ### 기술적 트레이드오프
 
@@ -119,9 +119,62 @@ Next.js 앱 헤드가 두 개 있었습니다. 하나는 개발 서버용, 하�
 
 ### Next.js App Router
 
+```jsx
+export default async function RootLayout({
+  params: { environmentSlug },
+  children,
+}: RootLayoutProps) {
+  const env = await getEnv(environmentSlug);
+
+  return (
+    <>
+      <Layout activeEnv={env}>
+        <Env env={env}>
+          <SharedContextProvider>{children}</SharedContextProvider>
+        </Env>
+      </Layout>
+    </>
+  );
+}
+```
+
 레이아웃과 서버 사이드 데이터 페칭이 뒤섞이는 전형적인 패턴입니다. 서버 사이드 페칭임을 알 수 있는 유일한 단서는 `async/await`입니다.
 
 ### Tanstack Router
+
+```jsx
+export const Route = createFileRoute('/_authed/env/$envSlug')({
+  component: EnvLayout,
+  notFoundComponent: NotFound,
+  loader: async ({ params }) => {
+    const env = await getEnvironment({
+      data: { environmentSlug: params.envSlug },
+    });
+
+    if (params.envSlug && !env) {
+      throw notFound({ data: { error: 'Environment not found' } });
+    }
+
+    return {
+      env,
+    };
+  },
+});
+
+function EnvLayout() {
+  const { env } = Route.useLoaderData();
+
+  return (
+    <>
+      <EnvironmentProvider env={env}>
+        <SharedContextProvider>
+          <Outlet />
+        </SharedContextProvider>
+      </EnvironmentProvider>
+    </>
+  );
+}
+```
 
 여기서 `getEnvironment`는 서버에서만 실행되는 `createServerFn`입니다. `useLoaderData` 훅으로 클라이언트 사이드에서 라우트 데이터에 접근합니다. 기본적으로 Remix + [Tanstack 서버 함수](https://tanstack.com/start/latest/docs/framework/react/guide/server-functions)입니다.
 
