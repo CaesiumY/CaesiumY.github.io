@@ -44,6 +44,17 @@ export const projects: Project[] = [
     featured: true,
     category: "personal",
   },
+  {
+    title: "dding-dong",
+    description:
+      "Claude Code 알림 플러그인. 작업 완료·에러·입력 요청 시 사운드 및 OS 알림 제공. AI 음성 합성(TTS) 커스텀 팩 지원.",
+    githubUrl: "https://github.com/CaesiumY/dding-dong",
+    liveUrl: "https://caesiumy.dev/dding-dong/",
+    techStack: ["Claude Code", "Plugin", "Astro", "TTS"],
+    date: new Date("2026-02-28"),
+    featured: true,
+    category: "personal",
+  },
   // 사이드 프로젝트
   {
     title: "Notion API 블로그",
