@@ -12,9 +12,9 @@
     </style>
   </defs>
 
-  <!-- Terminal prompt ">" -->
-  <text class="prompt" x="8" y="98" font-family="monospace, 'Courier New'" font-size="110" font-weight="bold">&gt;</text>
+  <!-- Terminal prompt ">" as path for consistent rendering -->
+  <path class="prompt" d="M12,24 L72,64 L12,104 L12,88 L48,64 L12,40 Z"/>
 
-  <!-- Blinking cursor -->
-  <rect class="cursor" x="88" y="32" width="16" height="68" rx="3"/>
+  <!-- Cursor bar, vertically centered -->
+  <rect class="cursor" x="84" y="24" width="16" height="80" rx="3"/>
 </svg>
