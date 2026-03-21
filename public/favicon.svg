@@ -1,73 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
   <defs>
     <style>
-      .orbit { fill: none; stroke-width: 1.5; opacity: 0.5; }
-      .node-outer { opacity: 0.9; }
-      .node-inner { opacity: 0.85; }
-      .link { stroke-width: 1.2; opacity: 0.4; }
-      .core { }
-      .core-ring { fill: none; stroke-width: 2; }
-
       /* Light mode */
-      .orbit { stroke: #3B82F6; }
-      .node-outer { fill: #3B82F6; }
-      .node-inner { fill: #F59E0B; }
-      .link { stroke: #3B82F6; }
-      .core { fill: #F59E0B; }
-      .core-ring { stroke: #3B82F6; }
+      .prompt { fill: #1e293b; }
+      .cursor { fill: #3B82F6; }
 
       @media (prefers-color-scheme: dark) {
-        .orbit { stroke: #60A5FA; }
-        .node-outer { fill: #60A5FA; }
-        .node-inner { fill: #FBBF24; }
-        .link { stroke: #60A5FA; }
-        .core { fill: #FBBF24; }
-        .core-ring { stroke: #60A5FA; }
+        .prompt { fill: #f1f5f9; }
+        .cursor { fill: #60A5FA; }
       }
     </style>
   </defs>
 
-  <!-- Electron orbits (ellipses at different angles) -->
-  <g transform="translate(64,64)">
-    <!-- Orbit 1: horizontal ellipse -->
-    <ellipse class="orbit" cx="0" cy="0" rx="50" ry="20" transform="rotate(-30)"/>
-    <!-- Orbit 2: tilted ellipse -->
-    <ellipse class="orbit" cx="0" cy="0" rx="50" ry="20" transform="rotate(30)"/>
-    <!-- Orbit 3: steep ellipse -->
-    <ellipse class="orbit" cx="0" cy="0" rx="50" ry="20" transform="rotate(90)"/>
-  </g>
+  <!-- Terminal prompt ">" -->
+  <text class="prompt" x="8" y="98" font-family="monospace, 'Courier New'" font-size="110" font-weight="bold">&gt;</text>
 
-  <!-- Neural network links (connecting core to outer nodes) -->
-  <line class="link" x1="64" y1="64" x2="22" y2="38"/>
-  <line class="link" x1="64" y1="64" x2="106" y2="38"/>
-  <line class="link" x1="64" y1="64" x2="22" y2="90"/>
-  <line class="link" x1="64" y1="64" x2="106" y2="90"/>
-  <line class="link" x1="64" y1="64" x2="64" y2="14"/>
-  <line class="link" x1="64" y1="64" x2="64" y2="114"/>
-
-  <!-- Secondary links between outer nodes -->
-  <line class="link" x1="22" y1="38" x2="64" y2="14"/>
-  <line class="link" x1="64" y1="14" x2="106" y2="38"/>
-  <line class="link" x1="106" y1="38" x2="106" y2="90"/>
-  <line class="link" x1="106" y1="90" x2="64" y2="114"/>
-  <line class="link" x1="64" y1="114" x2="22" y2="90"/>
-  <line class="link" x1="22" y1="90" x2="22" y2="38"/>
-
-  <!-- Core nucleus -->
-  <circle class="core-ring" cx="64" cy="64" r="14"/>
-  <circle class="core" cx="64" cy="64" r="10"/>
-
-  <!-- Outer neural network nodes (on orbit intersections) -->
-  <circle class="node-outer" cx="22" cy="38" r="5"/>
-  <circle class="node-outer" cx="106" cy="38" r="5"/>
-  <circle class="node-outer" cx="64" cy="14" r="5"/>
-  <circle class="node-outer" cx="22" cy="90" r="5"/>
-  <circle class="node-outer" cx="106" cy="90" r="5"/>
-  <circle class="node-outer" cx="64" cy="114" r="5"/>
-
-  <!-- Inner accent nodes (on orbits, closer to center) -->
-  <circle class="node-inner" cx="40" cy="52" r="3"/>
-  <circle class="node-inner" cx="88" cy="52" r="3"/>
-  <circle class="node-inner" cx="40" cy="76" r="3"/>
-  <circle class="node-inner" cx="88" cy="76" r="3"/>
+  <!-- Blinking cursor -->
+  <rect class="cursor" x="88" y="32" width="16" height="68" rx="3"/>
 </svg>
