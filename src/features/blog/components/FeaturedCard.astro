@@ -1,0 +1,66 @@
+---
+import { slugifyStr } from "@/utils/slugify";
+import type { CollectionEntry } from "astro:content";
+import { getPath } from "@/utils/getPath";
+import { getPostThumbnailUrl } from "@/utils/getPostThumbnailUrl";
+import Datetime from "./Datetime.astro";
+import DraftBadge from "./DraftBadge.astro";
+import { Icon } from "astro-icon/components";
+
+export interface Props extends CollectionEntry<"blog"> {
+  index: number;
+}
+
+const { data, id, filePath, index } = Astro.props;
+const { title, description, pubDatetime, modDatetime, timezone, draft } = data;
+
+const thumbnailUrl = getPostThumbnailUrl(Astro.props as CollectionEntry<"blog">);
+const postUrl = getPath(id, filePath);
+---
+
+<article
+  class="group flex flex-col overflow-hidden rounded-lg border border-border bg-background
+         transition-all duration-300
+         hover:-translate-y-1 hover:border-accent/50 hover:shadow-lg"
+>
+  <a
+    href={postUrl}
+    class="block"
+    aria-label={`${title} - 클릭하여 글 읽기`}
+  >
+    {
+      thumbnailUrl ? (
+        <div class="relative aspect-video w-full overflow-hidden">
+          <img
+            src={thumbnailUrl}
+            alt={title}
+            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading={index === 0 ? "eager" : "lazy"}
+            decoding="async"
+          />
+          <div class="absolute inset-0 bg-linear-to-t from-background/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        </div>
+      ) : (
+        <div class="flex aspect-video w-full items-center justify-center bg-accent/5 dark:bg-accent/10" aria-hidden="true">
+          <Icon name="ph:article" size={48} class="text-foreground/20" />
+        </div>
+      )
+    }
+  </a>
+  <div class="flex flex-1 flex-col border-t border-border p-4">
+    <a
+      href={postUrl}
+      class="inline-block text-lg font-medium text-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
+    >
+      <h3
+        style={{ viewTransitionName: slugifyStr(title) }}
+        class="flex items-center text-lg font-medium decoration-dashed hover:underline"
+      >
+        {draft && <DraftBadge class="me-2" />}
+        <span>{title}</span>
+      </h3>
+    </a>
+    <Datetime {pubDatetime} {modDatetime} {timezone} />
+    <p class="mt-1 line-clamp-2 text-sm text-foreground/80">{description}</p>
+  </div>
+</article>
