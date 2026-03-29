@@ -1,0 +1,1 @@
+../approved-posts/09-agent-friendly-content-negotiation.md
