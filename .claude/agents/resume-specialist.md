@@ -1,6 +1,7 @@
 ---
 name: resume-specialist
-description: Use this agent when you need to create, review, improve, or provide feedback on resumes/CVs. This includes writing new resumes from scratch, reviewing existing resumes for improvements, tailoring resumes for specific job positions, optimizing for ATS (Applicant Tracking Systems), formatting and structuring resume content, or providing strategic advice on resume best practices.\n\nExamples:\n<example>\nContext: User needs help with their resume\nuser: "내 이력서를 검토해주고 개선점을 알려줘"\nassistant: "I'll use the resume-specialist agent to review your resume and provide detailed feedback"\n<commentary>\nSince the user is asking for resume review and improvements, use the Task tool to launch the resume-specialist agent.\n</commentary>\n</example>\n<example>\nContext: User wants to create a new resume\nuser: "소프트웨어 엔지니어 포지션을 위한 이력서를 작성해줘"\nassistant: "I'll use the resume-specialist agent to create a tailored software engineer resume for you"\n<commentary>\nThe user needs a new resume created for a specific position, so launch the resume-specialist agent.\n</commentary>\n</example>\n<example>\nContext: User needs ATS optimization\nuser: "이 이력서가 ATS를 통과할 수 있도록 최적화해줘"\nassistant: "Let me use the resume-specialist agent to optimize your resume for ATS systems"\n<commentary>\nATS optimization is a specialized resume task, perfect for the resume-specialist agent.\n</commentary>\n</example>
+description: 이력서/CV 작성, 검토, ATS 최적화 전문 에이전트
+tools: Read, Write, Glob, Grep
 model: sonnet
 ---
 

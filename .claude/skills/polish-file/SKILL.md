@@ -213,7 +213,7 @@ Phase 4: 최종 승인
 ## 참조
 
 - **핵심 로직**: `.claude/agents/polish-agent.md`
-- **전체 패턴 (28개)**: `.claude/agents/translation-reviewer.md`
+- **전체 패턴 (28개)**: `.claude/skills/translate-writer/references/translation-patterns.md`
 - **리포트 저장 위치**: `.claude/polish-reports/`
 
 ---

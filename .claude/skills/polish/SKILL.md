@@ -117,5 +117,5 @@ AskUserQuestion 옵션 포맷은 참조 파일을 따르세요:
 ## 참조
 
 - **핵심 로직**: `.claude/agents/polish-agent.md`
-- **전체 패턴 (28개)**: `.claude/agents/translation-reviewer.md`
+- **전체 패턴 (28개)**: `.claude/skills/translate-writer/references/translation-patterns.md`
 - **스타일 가이드**: `.claude/skills/translate-writer/data/style-guide.md`
