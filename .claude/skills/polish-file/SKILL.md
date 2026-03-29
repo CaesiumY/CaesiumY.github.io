@@ -158,58 +158,16 @@ AskUserQuestion으로 질문:
 
 ### Step 5: 순차 개선 (선택 시)
 
-기준 점수 미만 문장들에 대해 순차적으로:
+기준 점수 미만 문장들에 대해, `/polish` 스킬의 Step 1-3 로직을 따라 순차적으로 개선합니다:
 
-1. 현재 문장 표시 (진행률 포함)
-   ```
-   [3/12] Line 67
-   ```
+1. 진행률 표시: `[3/12] Line 67`
+2. 각 문장에 대해 `/polish` 스킬과 동일한 흐름 실행:
+   - Step 1: polish-agent 호출 (원본이 있으면 원문 함께 전달)
+   - Step 2: 사용자에게 옵션 제시 (AskUserQuestion, 옵션 포맷은 `/polish` 스킬 참조)
+   - Step 3: 선택 적용 (Edit) 또는 건너뛰기
+3. JSON 리포트의 progress 및 status 업데이트
 
-2. **(번역 파일)** 원문 정보 먼저 출력:
-   ```
-   📝 **원문 (English)**
-   > This feature can significantly improve performance
-
-   📝 **현재 번역**
-   > 이 기능을 활용하면 성능을 향상시키는 것이 가능합니다
-
-   ⚠️ **원본 검증**: "significantly" 누락됨
-   ```
-
-3. AskUserQuestion으로 옵션 제시
-   ```json
-   {
-     "questions": [{
-       "question": "어떤 옵션으로 수정할까요?",
-       "header": "문장 선택",
-       "multiSelect": false,
-       "options": [
-         {
-           "label": "A (10.0점)",
-           "description": "이 기능을 쓰면 성능이 크게 좋아집니다 | #1, #10 수정 + 의미 복원 ✅"
-         },
-         {
-           "label": "B (9.8점)",
-           "description": "이 기능으로 성능을 크게 높일 수 있습니다 | #1 수정 + 의미 복원 ✅"
-         },
-         {
-           "label": "현재 유지",
-           "description": "원본 문장 그대로 유지"
-         },
-         {
-           "label": "건너뛰기",
-           "description": "이 문장은 나중에 처리"
-         }
-       ]
-     }]
-   }
-   ```
-
-4. 사용자 선택에 따라:
-   - 옵션 선택: Edit 도구로 파일 수정
-   - 현재 유지/건너뛰기: 다음 문장으로
-
-5. JSON 리포트의 progress 및 status 업데이트
+옵션 포맷 상세: @.claude/skills/polish/references/ask-user-templates.md
 
 ---
 

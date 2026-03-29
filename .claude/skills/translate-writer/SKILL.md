@@ -144,42 +144,19 @@ Task 도구로 content-translator 에이전트 호출:
 - 각 에이전트의 현재 점수와 주요 문제점 안내
 - 계속 진행할지 사용자 결정
 
-#### Phase 3: Polish 정밀 다듬기 [NEW]
+#### Phase 3: Polish 정밀 다듬기
 
 **quick 모드**: 이 단계 건너뛰기 → Phase 4로
 
-**thorough/perfect 모드**:
+**thorough/perfect 모드** — `/polish-file` 스킬의 로직을 따릅니다:
 
-1. **문장별 분석**: 번역된 파일의 각 문장에 대해 polish-agent (batch 모드) 호출
-   - 문장 추출 (frontmatter, 코드 블록 제외)
-   - 각 문장 점수 및 패턴 분석
-
-2. **필터링**: 기준 점수 미만 문장만 선택
-   - thorough: 9.5점 미만
-   - perfect: 9.8점 미만
-
-3. **사용자 확인** (AskUserQuestion):
-   ```
-   ## Polish 다듬기
-
-   **분석 결과**:
-   - 전체 문장: N개
-   - 평균 점수: X.X/10
-   - 개선 대상 (< Y.Y점): M개
-
-   진행 방법을 선택하세요:
-
-   1. ✅ 지금 다듬기 - M개 문장 순차 개선
-   2. 📄 나중에 - JSON 저장 후 Phase 4로
-   3. ⏭️ 건너뛰기 - 바로 Phase 4로
-   ```
-
-4. **"지금 다듬기" 선택 시**:
-   - 각 문장에 대해 AskUserQuestion으로 옵션 제시
-   - 사용자 선택 시 Edit으로 적용
-   - 진행률 표시: `[3/12] Line 67`
-
+1. **문장별 분석**: `/polish-file`의 Step 1-2와 동일 (polish-agent batch 호출)
+2. **필터링**: 기준 점수 미만 문장만 선택 (thorough: 9.5, perfect: 9.8)
+3. **사용자 확인**: "N개 문장 다듬기 진행?" (지금 다듬기 / 나중에 / 건너뛰기)
+4. **순차 개선**: 각 문장에 대해 `/polish` 스킬의 Step 1-3을 따라 실행 (polish-agent → 옵션 제시 → Edit 적용)
 5. **JSON 리포트 저장**: `.claude/polish-reports/[slug]-[timestamp].json`
+
+상세 로직: `/polish-file` 스킬 참조, 개별 문장 다듬기: `/polish` 스킬 참조
 
 #### Phase 4: 사용자 최종 결정
 
@@ -258,14 +235,13 @@ AskUserQuestion으로 사용자에게 질문:
 
 ---
 
-## 기존 커맨드와의 관계
+## 관련 스킬
 
-| 커맨드 | 용도 | 학습 | Polish | 원문 검증 |
-|--------|------|------|--------|----------|
-| `/translate-blog` | 단순 번역 (빠른 작업용) | ❌ | ❌ | ❌ |
-| `/translate-writer --mode=quick` | 빠른 에이전트 번역 | ✅ | ❌ | ✅ |
-| `/translate-writer` | 일반 에이전트 번역 | ✅ | ✅ (9.5점 미만) | ✅ |
-| `/translate-writer --mode=perfect` | 고품질 에이전트 번역 | ✅ | ✅ (9.8점 미만) | ✅ |
+| 스킬 | 용도 |
+|------|------|
+| `/polish` | 개별 문장 다듬기 (translate-writer Phase 3에서 내부 활용) |
+| `/polish-file` | 파일 전체 문장 품질 분석 + 순차 개선 |
+| `/blog-writer` | 원본 한국어 블로그 글 작성 (번역이 아닌 경우) |
 
 ---
 
