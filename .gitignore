@@ -31,3 +31,6 @@ public/pagefind
 # Playwright
 playwright-report/
 test-results/
+
+# skill-creator workspaces (snapshots, eval data)
+.claude/skills/*-workspace/

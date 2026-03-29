@@ -33,6 +33,8 @@
 | Dependency | 의존성 | 종속성이 아닌 의존성 사용 (개발자 커뮤니티 표준) |
 | Suite | 모음 | evaluation suite → 평가 모음, test suite → 테스트 모음 |
 | Nuance | 맥락, 의미, 어감 | 외래어 대신 한국어 표현 사용 |
+| Frontend | 프론트엔드 | ❌ 프런트엔드 → ✅ 프론트엔드 (한국 개발자 커뮤니티 통용 표기) |
+| Compaction | 압축(compaction) | ❌ 컴팩션 → ✅ 압축 (LLM 대화 이력 요약/압축 맥락) |
 
 ### React 관련
 
