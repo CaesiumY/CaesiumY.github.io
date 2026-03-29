@@ -97,6 +97,22 @@ tags: ["tag1", "tag2"]   # Optional
 - **Icons**: `src/assets/icons/`
 - **Favicon**: `public/favicon.svg`
 
+## Skills (Claude Code 스킬 시스템)
+
+`.claude/skills/` 디렉토리에 정의된 스킬들입니다. `/스킬이름`으로 호출합니다.
+
+| 스킬 | 용도 | 에이전트 수 |
+|------|------|------------|
+| `/translate-writer` | 영어 → 한국어 번역 파이프라인 | 6개 |
+| `/polish` | 개별 문장 다듬기 (점수 + 옵션 제시) | 1개 |
+| `/polish-file` | 파일 전체 문장 품질 분석 + 순차 개선 | 1개 |
+| `/blog-writer` | 한국어 블로그 글 작성 | 4개 |
+| `/resume-specialist` | 이력서 작성/검토/ATS 최적화 | 1개 |
+
+- 에이전트 정의: `.claude/agents/`
+- 번역투 28개 패턴: `.claude/skills/translate-writer/references/translation-patterns.md`
+- 스타일 가이드/용어집: `.claude/skills/translate-writer/data/`
+
 ## Styling Guidelines
 
 ### TailwindCSS
