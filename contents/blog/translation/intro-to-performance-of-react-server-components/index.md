@@ -3,7 +3,7 @@ title: "[번역] React 서버 컴포넌트 성능 소개"
 description: "React 서버 컴포넌트의 성능을 CSR, SSR과 비교 분석한 글의 한국어 번역. LCP, 데이터 페칭, 스트리밍 관점에서 각 렌더링 방식의 장단점을 실제 측정 데이터와 함께 설명합니다."
 pubDatetime: 2026-01-17T12:05:00Z
 modDatetime: 2026-01-17T12:05:00Z
-featured: true
+featured: false
 draft: false
 tags: ["translation", "react", "server-components", "performance", "next-js", "ssr"]
 ---
