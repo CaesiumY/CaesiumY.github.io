@@ -55,6 +55,26 @@ export const projects: Project[] = [
     featured: true,
     category: "personal",
   },
+  {
+    title: "agents-md-optimizer",
+    description:
+      "AI 에이전트 컨텍스트 파일(CLAUDE.md 등)을 agents-md 방법론으로 최적화하는 스킬. 발견 가능성 필터와 8가지 Gotcha 마이닝으로 에이전트 성능 향상.",
+    githubUrl: "https://github.com/CaesiumY/agents-md-optimizer",
+    techStack: ["JavaScript", "Claude Code", "Skill"],
+    date: new Date("2026-03-01"),
+    featured: true,
+    category: "personal",
+  },
+  {
+    title: "harness-optimizer",
+    description:
+      "Anthropic의 하네스 설계 원칙 8가지를 기반으로 멀티 에이전트 아키텍처를 평가·개선하는 Claude Code 스킬. 0~100점 건강도 진단 제공.",
+    githubUrl: "https://github.com/CaesiumY/harness-optimizer",
+    techStack: ["JavaScript", "Claude Code", "Skill"],
+    date: new Date("2026-03-01"),
+    featured: true,
+    category: "personal",
+  },
   // 사이드 프로젝트
   {
     title: "Notion API 블로그",
