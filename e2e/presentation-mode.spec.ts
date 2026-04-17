@@ -70,15 +70,21 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
         isAgenda: s.classList.contains("presentation-slide-agenda"),
         isSection: s.classList.contains("presentation-slide-section"),
         isActive: s.classList.contains("is-active"),
+        firstH2Text:
+          s.querySelector(":scope > h2")?.textContent?.trim() ?? null,
       }));
     });
 
     expect(structure.length).toBeGreaterThanOrEqual(3); // title + agenda + 최소 1개 H2
     expect(structure[0]).toMatchObject({ isTitle: true, isActive: true });
     expect(structure[1]).toMatchObject({ isAgenda: true, isActive: false });
-    // 나머지는 모두 섹션 슬라이드
+    // 나머지는 모두 섹션 슬라이드 + "목차" 텍스트가 섹션 h2로 오염되지 않음
     for (let i = 2; i < structure.length; i++) {
       expect(structure[i].isSection).toBe(true);
+      expect(structure[i].firstH2Text).not.toBe("목차");
+      expect(structure[i].firstH2Text?.toLowerCase()).not.toBe(
+        "table of contents"
+      );
     }
   });
 
@@ -112,6 +118,26 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
     expect(agendaStats!.allHaveAgendaClass).toBe(true);
     expect(agendaStats!.allPointerEventsNone).toBe(true);
     expect(agendaStats!.detailsOpen).toBe(true);
+  });
+
+  test("이슈1 회귀 방지: 원본 <h2>목차</h2>가 섹션 슬라이드로 중복 생성되지 않아야 함", async ({
+    page,
+  }) => {
+    await page.goto(TEST_POST_URL);
+    await waitForPresentationButton(page);
+    await page.locator('[data-button="presentation-start"]').click();
+
+    const sectionH2Texts = await page.evaluate(() =>
+      Array.from(
+        document.querySelectorAll(".presentation-slide-section > h2")
+      ).map(h => h.textContent?.trim() ?? "")
+    );
+
+    expect(sectionH2Texts.length).toBeGreaterThan(0);
+    expect(sectionH2Texts).not.toContain("목차");
+    expect(
+      sectionH2Texts.map(t => t.toLowerCase())
+    ).not.toContain("table of contents");
   });
 });
 
@@ -176,6 +202,45 @@ test.describe("프레젠테이션 모드 - 키보드 네비게이션", () => {
         "presentation-start"
     );
     expect(activeIsButton).toBe(true);
+  });
+
+  test("이슈2 회귀 방지: 섹션 내 <details>를 펼친 후에도 키보드 네비가 계속 동작해야 함", async ({
+    page,
+  }) => {
+    // 타이틀(1) → Agenda(2) → 첫 섹션(3)
+    await page.keyboard.press("ArrowRight");
+    await page.keyboard.press("ArrowRight");
+    await expect(page.locator(".presentation-counter")).toHaveText(/^3 \/ /);
+
+    // 활성 섹션 슬라이드 내 <details>를 펼치고 summary에 포커스 (사용자 클릭 시뮬레이션)
+    const setupResult = await page.evaluate(() => {
+      const active = document.querySelector(".presentation-slide.is-active");
+      if (!active) return { hasDetails: false, focused: false };
+      const details = active.querySelector("details");
+      if (!details) return { hasDetails: false, focused: false };
+      details.open = true;
+      const summary = details.querySelector("summary") as HTMLElement | null;
+      summary?.focus();
+      return {
+        hasDetails: true,
+        focused: document.activeElement === summary,
+      };
+    });
+
+    // details가 없는 포스트면 테스트 skip (타 포스트로 변경돼도 안전)
+    if (!setupResult.hasDetails) {
+      test.skip(true, "테스트 포스트에 섹션 내 <details> 없음");
+      return;
+    }
+    expect(setupResult.focused).toBe(true);
+
+    // 이 상태에서 ArrowRight → document 레벨 리스너 덕에 카운터 4/N
+    await page.keyboard.press("ArrowRight");
+    await expect(page.locator(".presentation-counter")).toHaveText(/^4 \/ /);
+
+    // 연속 동작 확인
+    await page.keyboard.press("ArrowRight");
+    await expect(page.locator(".presentation-counter")).toHaveText(/^5 \/ /);
   });
 });
 

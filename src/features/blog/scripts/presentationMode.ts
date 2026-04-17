@@ -9,6 +9,11 @@
  */
 
 const AGENDA_SUMMARY_TEXT = "목차 보기";
+/**
+ * remark-collapse가 유지한 원본 `<h2>목차</h2>`를 섹션 슬라이드에서 제외하기 위한 패턴.
+ * astro.config.ts의 remark-collapse `test` 정규식과 의미 일치.
+ */
+const AGENDA_H2_PATTERN = /^(table of contents|목차)$/i;
 const MIN_SLIDES = 2;
 
 interface PresentationState {
@@ -152,10 +157,15 @@ function openOverlay(triggerButton: HTMLButtonElement): void {
   overlay.focus();
 
   // 이벤트 리스너: 키보드 네비
+  // document 레벨에 부착 — overlay 내부에서 <details>를 펼치면 포커스가 summary로 이동하고,
+  // 슬라이드 이동 후 이전 슬라이드가 display:none되면 포커스가 <body>로 탈출해버림.
+  // 그 이후 keydown은 body → document로만 버블링되어 overlay까지 도달하지 못함.
+  // document에 부착하면 포커스 위치와 무관하게 키 이벤트를 받을 수 있고,
+  // `if (!state) return` 가드가 오버레이 닫힌 상태에서 오작동을 방지함.
   const controller = new AbortController();
   const { signal } = controller;
 
-  overlay.addEventListener(
+  document.addEventListener(
     "keydown",
     event => {
       if (!state) return;
@@ -314,8 +324,14 @@ function buildSlides(): HTMLElement[] {
     slides.push(buildAgendaSlide(agendaDetails));
   }
 
-  const h2s = article.querySelectorAll<HTMLHeadingElement>(":scope > h2");
-  for (const h2 of Array.from(h2s)) {
+  // remark-collapse는 `<h2>목차</h2>`를 DOM에 그대로 둠. Agenda 슬라이드로 이미
+  // 승격됐으므로 여기서는 같은 h2가 섹션 슬라이드로 중복되지 않도록 필터링.
+  // 주의: headingLinks.ts가 각 h2에 `.heading-link` 자식(#)을 이미 붙인 상태라
+  // h2.textContent는 "목차#"처럼 나옴. 순수 heading 텍스트만 추출해야 함.
+  const h2s = Array.from(
+    article.querySelectorAll<HTMLHeadingElement>(":scope > h2")
+  ).filter(h2 => !AGENDA_H2_PATTERN.test(getHeadingText(h2)));
+  for (const h2 of h2s) {
     slides.push(buildSectionSlide(h2));
   }
 
@@ -457,4 +473,15 @@ function isAgendaBlock(el: Element): boolean {
   if (el.tagName !== "DETAILS") return false;
   const summaryText = el.querySelector("summary")?.textContent?.trim();
   return summaryText === AGENDA_SUMMARY_TEXT;
+}
+
+/**
+ * heading의 순수 텍스트만 추출 (headingLinks.ts가 붙인 `.heading-link` 자식 제외).
+ * 이 블로그는 초기화 순서상 addHeadingLinks가 initializePresentationMode보다
+ * 먼저 실행되므로 h2.textContent에 "#"이 이미 포함돼 있다.
+ */
+function getHeadingText(heading: HTMLHeadingElement): string {
+  const clone = heading.cloneNode(true) as HTMLElement;
+  clone.querySelectorAll(".heading-link").forEach(el => el.remove());
+  return clone.textContent?.trim() ?? "";
 }
