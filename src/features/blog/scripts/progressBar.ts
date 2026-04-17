@@ -72,20 +72,32 @@ function updateScrollProgress(): void {
   }
 
   document.addEventListener("scroll", onScroll, { passive: true, signal });
-  window.addEventListener("resize", () => {
-    recalcScrollable();
-    onScroll();
-  }, { signal });
-  window.addEventListener("load", () => {
-    recalcScrollable();
-    handle();
-  }, { once: true, signal });
+  window.addEventListener(
+    "resize",
+    () => {
+      recalcScrollable();
+      onScroll();
+    },
+    { signal }
+  );
+  window.addEventListener(
+    "load",
+    () => {
+      recalcScrollable();
+      handle();
+    },
+    { once: true, signal }
+  );
 
-  document.addEventListener("astro:before-swap", () => {
-    controller.abort();
-    const container = document.getElementById("reading-progress-container");
-    if (container) container.remove();
-  }, { once: true });
+  document.addEventListener(
+    "astro:before-swap",
+    () => {
+      controller.abort();
+      const container = document.getElementById("reading-progress-container");
+      if (container) container.remove();
+    },
+    { once: true }
+  );
 
   recalcScrollable();
   handle();

@@ -15,13 +15,11 @@ const formattedDate = date.toLocaleDateString("ko-KR", {
   month: "long",
 });
 
-const primaryUrl = liveUrl ?? githubUrl ?? '#';
+const primaryUrl = liveUrl ?? githubUrl ?? "#";
 ---
 
 <article
-  class="group flex flex-col overflow-hidden rounded-lg border border-border bg-background
-         transition-all duration-300
-         hover:-translate-y-1 hover:border-accent/50 hover:shadow-lg"
+  class="group flex flex-col overflow-hidden rounded-lg border border-border bg-background transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-lg"
 >
   <a
     href={primaryUrl}
@@ -59,7 +57,9 @@ const primaryUrl = liveUrl ?? githubUrl ?? '#';
       class="group/title"
       aria-label={`${title} 프로젝트 제목 - 클릭하여 사이트 방문`}
     >
-      <h2 class="text-xl font-semibold text-foreground group-hover/title:text-accent group-hover/title:underline">
+      <h2
+        class="text-xl font-semibold text-foreground group-hover/title:text-accent group-hover/title:underline"
+      >
         {title}
       </h2>
     </a>
@@ -86,9 +86,7 @@ const primaryUrl = liveUrl ?? githubUrl ?? '#';
             href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="group/btn flex items-center gap-1 rounded-md px-2 py-1 text-sm text-foreground/80
-                   transition-all duration-200
-                   hover:-translate-y-0.5 hover:bg-accent/10 hover:text-accent"
+            class="group/btn flex items-center gap-1 rounded-md px-2 py-1 text-sm text-foreground/80 transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent/10 hover:text-accent"
             aria-label={`${title} GitHub 저장소`}
           >
             <Icon

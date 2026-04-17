@@ -45,9 +45,7 @@ export function attachCopyButtons(): void {
       computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
 
     // Determine the top positioning class
-    const topClass = hasFileNameOffset
-      ? "top-(--file-name-offset)"
-      : "-top-3";
+    const topClass = hasFileNameOffset ? "top-(--file-name-offset)" : "-top-3";
 
     const copyButton = document.createElement("button");
     copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted p-1.5 text-foreground hover:bg-accent/10 focus:bg-accent/10 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all duration-200 group`;
@@ -104,7 +102,10 @@ export function attachCopyButtons(): void {
 /**
  * Copy code from a code block to clipboard
  */
-async function copyCode(block: Element, button: HTMLButtonElement): Promise<void> {
+async function copyCode(
+  block: Element,
+  button: HTMLButtonElement
+): Promise<void> {
   const code = block.querySelector("code");
   const text = code?.textContent || "";
 
