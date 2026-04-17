@@ -1,0 +1,22 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<!--
+  프레젠테이션 모드 트리거 버튼.
+  - 초기에는 `hidden` 속성으로 렌더되지만 비표시.
+  - src/features/blog/scripts/presentationMode.ts가 슬라이드 가능 여부(H2 ≥ 2개 등)를
+    런타임에 판정해 `button.hidden = false`로 노출한다.
+  - 모바일에서는 `max-sm:hidden`으로 완전히 숨김.
+-->
+<button
+  type="button"
+  data-button="presentation-start"
+  class="flex items-center gap-1.5 p-2 opacity-80 transition-all duration-200 hover:text-accent max-sm:hidden sm:p-1"
+  aria-label="프레젠테이션 모드 시작"
+  title="프레젠테이션 모드 (Shift+P)"
+  aria-keyshortcuts="Shift+P"
+  hidden
+>
+  <Icon name="ph:projector-screen" size={20} />
+</button>

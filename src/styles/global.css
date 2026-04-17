@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./typography.css";
 @import "./print.css";
+@import "./presentation.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
