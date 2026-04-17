@@ -23,6 +23,9 @@
   width: 100%;
   margin: 0 auto;
   display: none;
+  /* tabIndex=-1 + focus() 조합으로 생기는 브라우저 기본 focus ring 제거.
+     활성 슬라이드는 .is-active 클래스와 하단 카운터로 이미 충분히 시각화됨. */
+  outline: none;
 }
 
 .presentation-slide.is-active {

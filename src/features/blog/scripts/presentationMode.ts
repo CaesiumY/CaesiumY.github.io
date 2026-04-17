@@ -8,6 +8,15 @@
  * - View Transitions: astro:before-swap에서 오버레이 강제 정리
  */
 
+/**
+ * remark-collapse가 생성하는 `<summary>` 태그의 텍스트.
+ *
+ * ⚠️ 이 상수는 astro.config.ts의 `remarkCollapse` 플러그인 `summary` 옵션과
+ * **반드시 일치**해야 함. 양쪽이 어긋나면 `<details>` 블록을 찾지 못해 목차 슬라이드가
+ * 조용히 누락됨(에러 없이 H2 섹션들만 렌더). astro.config.ts 수정 시 여기도 함께 갱신 필요.
+ *
+ * 참고 경로: astro.config.ts → markdown.remarkPlugins → remarkCollapse의 `summary` 필드
+ */
 const AGENDA_SUMMARY_TEXT = "목차 보기";
 /**
  * remark-collapse가 유지한 원본 `<h2>목차</h2>`를 섹션 슬라이드에서 제외하기 위한 패턴.
@@ -262,7 +271,6 @@ function handleKeydown(event: KeyboardEvent): void {
       navigate(1);
       break;
     case " ":
-    case "Spacebar":
       event.preventDefault();
       navigate(1);
       break;

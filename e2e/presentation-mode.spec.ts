@@ -135,9 +135,37 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
 
     expect(sectionH2Texts.length).toBeGreaterThan(0);
     expect(sectionH2Texts).not.toContain("목차");
-    expect(
-      sectionH2Texts.map(t => t.toLowerCase())
-    ).not.toContain("table of contents");
+    expect(sectionH2Texts.map(t => t.toLowerCase())).not.toContain(
+      "table of contents"
+    );
+  });
+
+  test("총 슬라이드가 MIN_SLIDES 미만이면 버튼을 눌러도 오버레이가 열리지 않아야 함", async ({
+    page,
+  }) => {
+    // 짧은 포스트 시나리오의 가드 로직 검증.
+    // 페이지 초기화 시점에는 이미 h2가 존재하므로 버튼이 노출되지만,
+    // 이후 DOM이 변형돼 실제 슬라이드 조립 시 개수가 MIN_SLIDES 미만이 되면
+    // openOverlay()의 `if (slides.length < MIN_SLIDES) return` 가드가 동작해야 함.
+    // "버튼 hidden 유지"는 초기 렌더 시점 판단이라 테스트로 재현하기 어렵지만,
+    // 이 가드는 사용자가 겪을 실질적 결과(오버레이 열리지 않음)를 동일하게 보장한다.
+    await page.goto(TEST_POST_URL);
+    await waitForPresentationButton(page);
+
+    // 버튼 클릭 직전에 h2·agenda details 제거 → buildSlides 결과 <MIN_SLIDES
+    await page.evaluate(() => {
+      const article = document.getElementById("article");
+      if (!article) return;
+      article.querySelectorAll(":scope > h2").forEach(h => h.remove());
+      article.querySelectorAll(":scope > details").forEach(d => d.remove());
+    });
+
+    await page.locator('[data-button="presentation-start"]').click();
+    // 오버레이는 DOM에 삽입조차 되지 않아야 함
+    await page.waitForTimeout(300);
+    await expect(page.locator(".presentation-overlay")).toHaveCount(0);
+    // presentation-active 클래스도 붙지 않아야 함
+    await expect(page.locator("body")).not.toHaveClass(/presentation-active/);
   });
 });
 
