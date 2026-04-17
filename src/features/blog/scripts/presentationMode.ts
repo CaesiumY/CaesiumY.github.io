@@ -67,6 +67,7 @@ export function initializePresentationMode(): () => void {
         if (
           tag === "INPUT" ||
           tag === "TEXTAREA" ||
+          tag === "SELECT" ||
           (active as HTMLElement)?.isContentEditable
         ) {
           return;
@@ -130,7 +131,12 @@ function openOverlay(triggerButton: HTMLButtonElement): void {
   overlay.setAttribute("aria-label", "프레젠테이션 모드");
   overlay.tabIndex = -1;
 
-  slides.forEach(slide => overlay.appendChild(slide));
+  slides.forEach(slide => {
+    // section은 기본 focusable이 아니므로 tabIndex=-1로 programmatic focus만 허용.
+    // 슬라이드 전환 시 navigateTo()의 focus() 호출과 쌍을 이뤄 스크린리더 친화 구현.
+    slide.tabIndex = -1;
+    overlay.appendChild(slide);
+  });
 
   const counter = document.createElement("div");
   counter.className = "presentation-counter";
@@ -291,8 +297,11 @@ function navigateTo(index: number): void {
   slides[index].classList.add("is-active");
   state.currentIndex = index;
 
-  // 활성 슬라이드 스크롤 최상단 초기화
+  // 활성 슬라이드 스크롤 최상단 초기화 + 포커스 이동
+  // focus()는 접근성(스크린리더 즉시 새 슬라이드 읽음) + 이슈2 근본 해결(details 내부
+  // 포커스가 매 전환마다 활성 슬라이드로 리셋돼 키 이벤트 경로가 항상 일관됨).
   slides[index].scrollTop = 0;
+  slides[index].focus();
 
   updateCounter();
 }
