@@ -56,10 +56,12 @@
 
 .presentation-slide-title .presentation-description {
   font-size: 1.125rem;
-  max-width: 40rem;
+  max-width: 52rem;
+  width: 100%;
   opacity: 0.85;
   line-height: 1.6;
   word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* 목차 슬라이드: <details> 내부 <summary>를 숨기고 항상 펼침 */
