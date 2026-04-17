@@ -1,0 +1,218 @@
+/* Presentation Mode Overlay
+ * 블로그 포스트를 슬라이드쇼로 전환하는 풀스크린 오버레이.
+ * 슬라이드 순서: [Title] → [Agenda] (있으면) → [H2 Sections]
+ */
+
+.presentation-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--background);
+  color: var(--foreground);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 개별 슬라이드: 활성화된 것만 display:block으로 노출 */
+.presentation-slide {
+  flex: 1;
+  overflow-y: auto;
+  padding: 3rem 2rem 4rem; /* bottom은 카운터 겹침 방지 여유 */
+  max-width: 64rem;
+  width: 100%;
+  margin: 0 auto;
+  display: none;
+  /* tabIndex=-1 + focus() 조합으로 생기는 브라우저 기본 focus ring 제거.
+     활성 슬라이드는 .is-active 클래스와 하단 카운터로 이미 충분히 시각화됨. */
+  outline: none;
+}
+
+.presentation-slide.is-active {
+  display: block;
+}
+
+/* 타이틀 슬라이드: 화면 중앙에 글 제목·메타데이터 배치 */
+.presentation-slide-title.is-active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.presentation-slide-title h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.2;
+  word-break: keep-all;
+  margin: 0;
+}
+
+.presentation-slide-title .presentation-meta {
+  font-size: 1rem;
+  opacity: 0.7;
+  word-break: keep-all;
+}
+
+.presentation-slide-title .presentation-description {
+  font-size: 1.125rem;
+  max-width: 52rem;
+  width: 100%;
+  opacity: 0.85;
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 목차 슬라이드: <details> 내부 <summary>를 숨기고 항상 펼침 */
+.presentation-slide-agenda details > summary {
+  display: none;
+}
+
+.presentation-slide-agenda details {
+  display: block;
+}
+
+/* 목차 슬라이드 헤더: 작성자가 원본 <h2>목차</h2>를 쓰지 않으므로 명시 추가 */
+.presentation-slide-agenda::before {
+  content: "목차";
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  word-break: keep-all;
+}
+
+/* 목차 항목 리스트: 큰 줄간격으로 발표용 가독성 확보 */
+.presentation-slide-agenda ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.presentation-slide-agenda li {
+  padding: 0.5rem 0;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  border-bottom: 1px dashed var(--border);
+}
+
+.presentation-slide-agenda li:last-child {
+  border-bottom: none;
+}
+
+/* 목차 항목 링크: MVP에서는 정적 텍스트로 표시 (클릭 비활성) */
+.presentation-slide-agenda .agenda-link {
+  pointer-events: none;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* H2 섹션 슬라이드: prose 스타일 재사용 + 발표용 폰트 사이즈 */
+.presentation-slide-section {
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.presentation-slide-section h2 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  word-break: keep-all;
+}
+
+.presentation-slide-section h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.presentation-slide-section p {
+  margin-bottom: 1rem;
+}
+
+.presentation-slide-section ul,
+.presentation-slide-section ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.presentation-slide-section li {
+  margin-bottom: 0.5rem;
+}
+
+.presentation-slide-section a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.presentation-slide-section blockquote {
+  border-left: 4px solid var(--accent);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  opacity: 0.85;
+  font-style: italic;
+}
+
+.presentation-slide-section code {
+  background: var(--muted);
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+}
+
+.presentation-slide-section pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.presentation-slide-section pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.presentation-slide-section img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1rem auto;
+  display: block;
+}
+
+/* 하단 진행 카운터: "3 / 12" */
+.presentation-counter {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--foreground);
+  opacity: 0.5;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.75rem;
+  background: var(--background);
+  border-radius: 1rem;
+  pointer-events: none;
+}
+
+/* 오버레이 활성 시 Progress Bar·Back-to-Top 숨김 */
+body.presentation-active #reading-progress-container,
+body.presentation-active [data-button="back-to-top"] {
+  display: none !important;
+}
+
+/* 모션 선호 존중 */
+@media (prefers-reduced-motion: reduce) {
+  .presentation-slide {
+    transition: none !important;
+  }
+}

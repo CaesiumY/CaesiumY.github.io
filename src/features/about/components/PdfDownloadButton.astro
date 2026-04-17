@@ -20,8 +20,7 @@ import { Icon } from "astro-icon/components";
 
     btn.addEventListener("click", function () {
       const originalTitle = document.title;
-      const originalTheme =
-        document.documentElement.getAttribute("data-theme");
+      const originalTheme = document.documentElement.getAttribute("data-theme");
       let supported = false;
 
       const restoreState = () => {

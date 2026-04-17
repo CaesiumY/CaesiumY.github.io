@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { toast } from 'sonner';
-import { getScrollPosition, clearScrollPosition } from '@/utils/scrollPosition';
+import { useEffect, useRef } from "react";
+import { toast } from "sonner";
+import { getScrollPosition, clearScrollPosition } from "@/utils/scrollPosition";
 
 interface Props {
   slug: string;
@@ -22,14 +22,14 @@ export default function ContinueReadingToast({ slug }: Props) {
 
     // Small delay to ensure page is ready
     const timer = setTimeout(() => {
-      toast('이어 읽기', {
+      toast("이어 읽기", {
         description: `지난번에 ${entry.progress}%까지 읽으셨어요`,
         action: {
-          label: '이어서 읽기',
+          label: "이어서 읽기",
           onClick: () => {
             window.scrollTo({
               top: entry.position,
-              behavior: 'smooth'
+              behavior: "smooth",
             });
           },
         },

@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import Tag from "@/features/tags/components/Tag.astro";
 import Datetime from "@/features/blog/components/Datetime.astro";
 import EditPost from "@/features/blog/components/EditPost.astro";
+import PresentationModeButton from "@/features/blog/components/PresentationModeButton.astro";
 import DraftBadge from "@/features/blog/components/DraftBadge.astro";
 import HitsBadge from "@/features/blog/components/HitsBadge.astro";
 import { slugifyStr } from "@/utils/slugify";
@@ -15,15 +16,8 @@ export interface Props {
 
 const { post } = Astro.props;
 
-const {
-  title,
-  pubDatetime,
-  modDatetime,
-  timezone,
-  tags,
-  hideEditPost,
-  draft,
-} = post.data;
+const { title, pubDatetime, modDatetime, timezone, tags, hideEditPost, draft } =
+  post.data;
 
 // 현재 포스트의 전체 URL 생성 (방문자 배지 추적용)
 const postPath = getPath(post.id, post.filePath);
@@ -33,7 +27,7 @@ const postUrl = new URL(postPath, Astro.site || SITE.website).href;
 <!-- Post Title -->
 <h1
   transition:name={slugifyStr(title)}
-  class="flex items-center break-keep text-2xl font-bold text-accent sm:text-3xl"
+  class="flex items-center text-2xl font-bold break-keep text-accent sm:text-3xl"
 >
   {draft && <DraftBadge size="md" class="me-3" />}
   <span>{title}</span>
@@ -50,6 +44,7 @@ const postUrl = new URL(postPath, Astro.site || SITE.website).href;
     ]}>|</span
   >
   <EditPost {hideEditPost} {post} class="max-sm:hidden" />
+  <PresentationModeButton />
 </div>
 
 <!-- Visitor Counter Badge -->

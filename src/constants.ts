@@ -1,4 +1,3 @@
-
 interface Social {
   name: string;
   href: string;

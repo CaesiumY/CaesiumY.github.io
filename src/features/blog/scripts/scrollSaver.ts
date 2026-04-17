@@ -47,7 +47,7 @@ export function initializeScrollSaver(slug: string): () => void {
 
   // 2. visibilitychange - save when tab becomes hidden
   const handleVisibilityChange = () => {
-    if (document.visibilityState === 'hidden') {
+    if (document.visibilityState === "hidden") {
       saveCurrentPosition();
     }
   };
@@ -59,10 +59,10 @@ export function initializeScrollSaver(slug: string): () => void {
   const handleBeforeSwap = () => saveCurrentPosition();
 
   // Register event listeners
-  window.addEventListener('scroll', throttledSave);
-  document.addEventListener('visibilitychange', handleVisibilityChange);
-  window.addEventListener('beforeunload', handleBeforeUnload);
-  document.addEventListener('astro:before-swap', handleBeforeSwap);
+  window.addEventListener("scroll", throttledSave);
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+  window.addEventListener("beforeunload", handleBeforeUnload);
+  document.addEventListener("astro:before-swap", handleBeforeSwap);
 
   // Return cleanup function
   return () => {

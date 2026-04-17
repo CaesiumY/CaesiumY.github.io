@@ -14,20 +14,16 @@ export interface Props extends CollectionEntry<"blog"> {
 const { data, id, filePath, index } = Astro.props;
 const { title, description, pubDatetime, modDatetime, timezone, draft } = data;
 
-const thumbnailUrl = getPostThumbnailUrl(Astro.props as CollectionEntry<"blog">);
+const thumbnailUrl = getPostThumbnailUrl(
+  Astro.props as CollectionEntry<"blog">
+);
 const postUrl = getPath(id, filePath);
 ---
 
 <article
-  class="group flex flex-col overflow-hidden rounded-lg border border-border bg-background
-         transition-all duration-300
-         hover:-translate-y-1 hover:border-accent/50 hover:shadow-lg"
+  class="group flex flex-col overflow-hidden rounded-lg border border-border bg-background transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-lg"
 >
-  <a
-    href={postUrl}
-    class="block"
-    aria-label={`${title} - 클릭하여 글 읽기`}
-  >
+  <a href={postUrl} class="block" aria-label={`${title} - 클릭하여 글 읽기`}>
     {
       thumbnailUrl ? (
         <div class="relative aspect-video w-full overflow-hidden">
@@ -41,7 +37,10 @@ const postUrl = getPath(id, filePath);
           <div class="absolute inset-0 bg-linear-to-t from-background/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         </div>
       ) : (
-        <div class="flex aspect-video w-full items-center justify-center bg-accent/5 dark:bg-accent/10" aria-hidden="true">
+        <div
+          class="flex aspect-video w-full items-center justify-center bg-accent/5 dark:bg-accent/10"
+          aria-hidden="true"
+        >
           <Icon name="ph:article" size={48} class="text-foreground/20" />
         </div>
       )

@@ -69,7 +69,6 @@ const layoutProps = {
   pageType: "article" as const,
   tags,
 };
-
 ---
 
 <Layout {...layoutProps}>
@@ -97,19 +96,21 @@ const layoutProps = {
               alt={`${title} 썸네일`}
               width={1200}
               height={630}
-              class="w-full h-auto rounded-lg mb-8"
+              class="mb-8 h-auto w-full rounded-lg"
               loading="lazy"
               decoding="async"
             />
           )
         }
-        {series && seriesPosts.length > 1 && (
-          <SeriesList
-            posts={seriesPosts}
-            currentPostId={post.id}
-            seriesName={series}
-          />
-        )}
+        {
+          series && seriesPosts.length > 1 && (
+            <SeriesList
+              posts={seriesPosts}
+              currentPostId={post.id}
+              seriesName={series}
+            />
+          )
+        }
         <Content />
       </article>
     </PostMetadata>
@@ -135,6 +136,7 @@ const layoutProps = {
   import { addHeadingLinks } from "@/features/blog/scripts/headingLinks";
   import { attachCopyButtons } from "@/features/blog/scripts/copyButton";
   import { initializeScrollSaver } from "@/features/blog/scripts/scrollSaver";
+  import { initializePresentationMode } from "@/features/blog/scripts/presentationMode";
   import { getScrollPosition } from "@/utils/scrollPosition";
 
   // Store cleanup function for current page
@@ -145,6 +147,7 @@ const layoutProps = {
     initializeProgressBar();
     addHeadingLinks();
     attachCopyButtons();
+    initializePresentationMode();
 
     // Clean up previous scroll saver if exists
     if (currentCleanup) {
@@ -153,8 +156,8 @@ const layoutProps = {
     }
 
     // Get slug from data attribute (consistent with React component)
-    const mainContent = document.getElementById('main-content');
-    const slug = mainContent?.dataset.postSlug || '';
+    const mainContent = document.getElementById("main-content");
+    const slug = mainContent?.dataset.postSlug || "";
 
     if (slug) {
       currentCleanup = initializeScrollSaver(slug);
@@ -166,9 +169,9 @@ const layoutProps = {
 
   // Run on View Transition navigations (astro:page-load는 초기 로딩에서도 발생할 수 있으나,
   // 각 초기화 함수에 멱등성 가드가 있으므로 중복 호출에 안전)
-  document.addEventListener('astro:page-load', () => {
+  document.addEventListener("astro:page-load", () => {
     // Only run on post detail pages
-    if (document.getElementById('main-content')?.dataset.postSlug) {
+    if (document.getElementById("main-content")?.dataset.postSlug) {
       initializePostFeatures();
     }
   });
@@ -184,8 +187,8 @@ const layoutProps = {
 
   // Only scroll to top if no saved position exists
   document.addEventListener("astro:after-swap", () => {
-    const mainEl = document.getElementById('main-content');
-    const currentSlug = mainEl?.dataset.postSlug || '';
+    const mainEl = document.getElementById("main-content");
+    const currentSlug = mainEl?.dataset.postSlug || "";
 
     // Only apply scroll logic on post detail pages
     if (!currentSlug) return;

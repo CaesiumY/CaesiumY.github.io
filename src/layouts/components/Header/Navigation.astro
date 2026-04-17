@@ -52,10 +52,10 @@ const menuItemBase =
       data-close-icon
       size={24}
       class:list={[
-        "absolute pointer-events-none",
+        "pointer-events-none absolute",
         iconTransition,
         "scale-0 -rotate-90 opacity-0",
-        "group-aria-expanded:scale-100 group-aria-expanded:rotate-0 group-aria-expanded:opacity-100 group-aria-expanded:pointer-events-auto",
+        "group-aria-expanded:pointer-events-auto group-aria-expanded:scale-100 group-aria-expanded:rotate-0 group-aria-expanded:opacity-100",
       ]}
     />
   </button>
@@ -66,12 +66,12 @@ const menuItemBase =
     data-menu-items
     data-state="closed"
     class:list={[
-      "absolute left-0 right-0 top-full z-40",
-      "mt-4 flex w-full flex-col items-center gap-2 bg-background pb-4 border-b border-border",
+      "absolute top-full right-0 left-0 z-40",
+      "mt-4 flex w-full flex-col items-center gap-2 border-b border-border bg-background pb-4",
       "origin-top transition-all duration-300 ease-out",
       "[&>li>a]:block [&>li>a]:w-44 [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent",
       // 데스크톱: inline flex로 복원
-      "sm:static sm:z-auto sm:mt-0 sm:w-auto sm:flex-row sm:items-center sm:gap-x-5 sm:bg-transparent sm:pb-0 sm:border-none",
+      "sm:static sm:z-auto sm:mt-0 sm:w-auto sm:flex-row sm:items-center sm:gap-x-5 sm:border-none sm:bg-transparent sm:pb-0",
       "sm:[&>li>a]:w-auto sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
       "motion-reduce:transition-none",
     ]}
@@ -121,14 +121,24 @@ const menuItemBase =
             ariaLabel="projects"
             title="Projects"
           >
-            <Icon name="ph:rocket-launch" class="hidden sm:inline-block" size={20} />
+            <Icon
+              name="ph:rocket-launch"
+              class="hidden sm:inline-block"
+              size={20}
+            />
             <span class="sm:sr-only">Projects</span>
           </LinkButton>
         </li>
       )
     }
     <!-- Search & Theme -->
-    <li class:list={[menuItemBase, "delay-250 sm:delay-0", "sm:contents flex items-center justify-center gap-4"]}>
+    <li
+      class:list={[
+        menuItemBase,
+        "delay-250 sm:delay-0",
+        "flex items-center justify-center gap-4 sm:contents",
+      ]}
+    >
       <LinkButton
         href="/search"
         class:list={[
@@ -148,8 +158,10 @@ const menuItemBase =
 
 <script>
   function toggleNav() {
-    const menuBtn = document.querySelector<HTMLButtonElement>("[data-menu-btn]");
-    const menuItems = document.querySelector<HTMLUListElement>("[data-menu-items]");
+    const menuBtn =
+      document.querySelector<HTMLButtonElement>("[data-menu-btn]");
+    const menuItems =
+      document.querySelector<HTMLUListElement>("[data-menu-items]");
 
     if (!menuBtn || !menuItems) return;
 
@@ -169,7 +181,7 @@ const menuItemBase =
     }
 
     // 메뉴 버튼 클릭
-    menuBtn.addEventListener("click", (e) => {
+    menuBtn.addEventListener("click", e => {
       e.stopPropagation();
       const isOpen = menuBtn.getAttribute("aria-expanded") === "true";
       if (isOpen) {
@@ -180,7 +192,7 @@ const menuItemBase =
     });
 
     // 외부 클릭 시 닫기
-    document.addEventListener("click", (e) => {
+    document.addEventListener("click", e => {
       const isOpen = menuBtn?.getAttribute("aria-expanded") === "true";
       if (!isOpen) return;
 
@@ -191,8 +203,11 @@ const menuItemBase =
     });
 
     // Escape 키로 닫기
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && menuBtn?.getAttribute("aria-expanded") === "true") {
+    document.addEventListener("keydown", e => {
+      if (
+        e.key === "Escape" &&
+        menuBtn?.getAttribute("aria-expanded") === "true"
+      ) {
         closeMenu();
         menuBtn?.focus();
       }

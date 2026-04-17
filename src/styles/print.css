@@ -45,7 +45,8 @@
   footer,
   nav,
   .breadcrumb,
-  #back-to-top {
+  #back-to-top,
+  .presentation-overlay {
     display: none !important;
   }
 
