@@ -37,3 +37,7 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      ci-actions:
+        patterns:
+          - "*"
