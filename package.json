@@ -21,12 +21,12 @@
     "test:debug": "playwright test --debug"
   },
   "dependencies": {
-    "@astrojs/react": "^4.4.2",
+    "@astrojs/react": "^5.0.3",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
     "@giscus/react": "^3.1.0",
     "@tailwindcss/vite": "^4.2.2",
-    "astro": "^5.18.1",
+    "astro": "^6.1.8",
     "astro-icon": "^1.1.5",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.20",
