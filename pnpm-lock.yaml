@@ -12,7 +12,7 @@ overrides:
   minimatch@<3.1.4: 3.1.4
   rollup: '>=4.59.0'
   flatted: '>=3.4.0'
-  undici: '>=6.24.0'
+  undici: ^6.24.0
   anymatch>picomatch: 2.3.2
   micromatch>picomatch: 2.3.2
   tinyglobby>picomatch: 4.0.4
@@ -3033,9 +3033,9 @@ packages:
   undici-types@7.19.2:
     resolution: {integrity: sha512-qYVnV5OEm2AW8cJMCpdV20CDyaN3g0AjDlOGf1OW4iaDEx8MwdtChUp4zu4H0VP3nDRF/8RKWH+IPp9uW0YGZg==}
 
-  undici@8.1.0:
-    resolution: {integrity: sha512-E9MkTS4xXLnRPYqxH2e6Hr2/49e7WFDKczKcCaFH4VaZs2iNvHMqeIkyUAD9vM8kujy9TjVrRlQ5KkdEJxB2pw==}
-    engines: {node: '>=22.19.0'}
+  undici@6.25.0:
+    resolution: {integrity: sha512-ZgpWDC5gmNiuY9CnLVXEH8rl50xhRCuLNA97fAUnKi8RRuV4E6KG31pDTsLVUKnohJE0I3XDrTeEydAXRw47xg==}
+    engines: {node: '>=18.17'}
 
   unicode-trie@2.0.0:
     resolution: {integrity: sha512-x7bc76x0bm4prf1VLg79uhAzKw8DVboClSN5VxJuQ+LKDOVEW9CdH+VY7SP+vX7xCYQqzzgQpFqz15zeLvAtZQ==}
@@ -4819,7 +4819,7 @@ snapshots:
       parse5: 7.3.0
       parse5-htmlparser2-tree-adapter: 7.1.0
       parse5-parser-stream: 7.1.2
-      undici: 8.1.0
+      undici: 6.25.0
       whatwg-mimetype: 4.0.0
 
   chokidar@4.0.3:
@@ -6593,7 +6593,7 @@ snapshots:
 
   undici-types@7.19.2: {}
 
-  undici@8.1.0: {}
+  undici@6.25.0: {}
 
   unicode-trie@2.0.0:
     dependencies:
