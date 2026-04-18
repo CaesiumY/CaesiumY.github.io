@@ -12,26 +12,41 @@ updates:
           - "astro"
           - "astro-*"
           - "@astrojs/*"
+        update-types:
+          - "minor"
+          - "patch"
       react-ecosystem:
         patterns:
           - "react"
           - "react-dom"
           - "@types/react"
           - "@types/react-dom"
+        update-types:
+          - "minor"
+          - "patch"
       tailwind-ecosystem:
         patterns:
           - "tailwindcss"
           - "@tailwindcss/*"
           - "tailwind-merge"
           - "prettier-plugin-tailwindcss"
+        update-types:
+          - "minor"
+          - "patch"
       eslint-ecosystem:
         patterns:
           - "eslint"
           - "eslint-*"
           - "@typescript-eslint/*"
           - "typescript-eslint"
+        update-types:
+          - "minor"
+          - "patch"
       dev-tools:
         dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
 
   - package-ecosystem: "github-actions"
     directory: "/"
