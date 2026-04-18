@@ -2,6 +2,9 @@
   "name": "astro-paper",
   "type": "module",
   "version": "5.5.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
@@ -61,22 +64,22 @@
     "overrides": {
       "astro>svgo": "4.0.1",
       "@iconify/tools>svgo": "3.3.3",
-      "tar": ">=7.5.8",
-      "axios": ">=1.13.5",
+      "tar": "^7.5.8",
+      "axios": "^1.13.5",
       "minimatch@<3.1.4": "3.1.4",
-      "rollup": ">=4.59.0",
-      "flatted": ">=3.4.0",
+      "rollup": "^4.59.0",
+      "flatted": "^3.4.0",
       "undici": "^6.24.0",
       "anymatch>picomatch": "2.3.2",
       "micromatch>picomatch": "2.3.2",
       "tinyglobby>picomatch": "4.0.4",
       "vite>picomatch": "4.0.4",
       "astro>picomatch": "4.0.4",
-      "lodash": ">=4.17.23",
-      "h3": ">=1.15.9",
-      "fast-xml-parser": ">=5.5.7",
-      "smol-toml": ">=1.6.1",
-      "yaml": ">=2.8.3"
+      "lodash": "^4.17.23",
+      "h3": "^1.15.9",
+      "fast-xml-parser": "^5.5.7",
+      "smol-toml": "^1.6.1",
+      "yaml": "^2.8.3"
     }
   }
 }
