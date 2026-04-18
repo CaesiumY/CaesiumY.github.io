@@ -37,3 +37,6 @@ test-results/
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# git worktrees (superpowers:using-git-worktrees 스킬 생성 경로)
+.worktrees/
