@@ -1,0 +1,1 @@
+../../../../../contents/blog/ai/custom-commands-instead-of-cli-claude-code/index.md

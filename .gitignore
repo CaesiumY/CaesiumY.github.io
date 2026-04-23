@@ -40,3 +40,5 @@ test-results/
 
 # git worktrees (superpowers:using-git-worktrees 스킬 생성 경로)
 .worktrees/
+.agents/skills/*-workspace/
+.agents/skills-workspace/
