@@ -530,6 +530,7 @@ function findSummaryIntroSplit(
 ): { separator: Element; firstIntroElement: Element } | null {
   if (!SUMMARY_H2_PATTERN.test(getHeadingText(h2))) return null;
 
+  // details 요소 자체가 아니라, 이후 등장하는 hr을 분리 경계로 인정하기 위한 상태만 추적한다.
   let sawDetails = false;
   let sibling = h2.nextElementSibling;
   while (sibling && sibling.tagName !== "H2") {
@@ -576,11 +577,9 @@ function findFirstIntroElement(startElement: Element | null): Element | null {
 
 function hasMeaningfulSlideContent(element: Element): boolean {
   if (element.textContent?.trim()) return true;
-  return element.querySelector(
+  return !!element.querySelector(
     "img, picture, video, audio, canvas, svg, iframe, table, pre"
-  )
-    ? true
-    : false;
+  );
 }
 
 /**
