@@ -206,6 +206,74 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
     );
   });
 
+  test("제목 없는 도입 슬라이드에서 닫으면 핵심 요약 H2로 스크롤 복귀해야 함", async ({
+    page,
+  }) => {
+    await page.goto(SUMMARY_SPLIT_POST_URL);
+    await waitForPresentationButton(page);
+
+    await page.evaluate(() => {
+      const win = window as unknown as Window & {
+        __presentationScrollTargets: string[];
+      };
+      win.__presentationScrollTargets = [];
+      const originalScrollIntoView = Element.prototype.scrollIntoView;
+      Element.prototype.scrollIntoView = function (
+        this: Element,
+        arg?: boolean | ScrollIntoViewOptions
+      ) {
+        const clone = this.cloneNode(true) as HTMLElement;
+        clone.querySelectorAll(".heading-link").forEach(el => el.remove());
+        win.__presentationScrollTargets.push(clone.textContent?.trim() ?? "");
+        originalScrollIntoView.call(this, arg);
+      };
+    });
+
+    await page.locator('[data-button="presentation-start"]').click();
+
+    const introSlideIndex = await page.evaluate(() => {
+      const slides = Array.from(
+        document.querySelectorAll<HTMLElement>(".presentation-slide")
+      );
+      const summaryIndex = slides.findIndex(
+        slide =>
+          slide.classList.contains("presentation-slide-section") &&
+          slide.querySelector(":scope > h2")?.textContent?.trim() ===
+            "핵심 요약"
+      );
+      const introSlide = slides[summaryIndex + 1];
+      if (!introSlide) return -1;
+      return introSlide.querySelector(":scope > h2") === null
+        ? summaryIndex + 1
+        : -1;
+    });
+
+    expect(introSlideIndex, SUMMARY_SPLIT_STRUCTURE_HINT).toBeGreaterThan(0);
+
+    for (let i = 0; i < introSlideIndex; i += 1) {
+      await page.keyboard.press("ArrowRight");
+    }
+    await expect(page.locator(".presentation-counter")).toHaveText(
+      new RegExp(`^${introSlideIndex + 1} /`)
+    );
+
+    await page.keyboard.press("Escape");
+    await page.waitForFunction(() => {
+      const win = window as unknown as Window & {
+        __presentationScrollTargets?: string[];
+      };
+      return (win.__presentationScrollTargets?.length ?? 0) > 0;
+    });
+
+    const lastScrollTarget = await page.evaluate(() => {
+      const win = window as unknown as Window & {
+        __presentationScrollTargets?: string[];
+      };
+      return win.__presentationScrollTargets?.at(-1) ?? null;
+    });
+    expect(lastScrollTarget).toBe("핵심 요약");
+  });
+
   test("핵심 요약 details가 TL;DR이 아니면 기본으로 열지 않아야 함", async ({
     page,
   }) => {

@@ -31,10 +31,16 @@ const MIN_SLIDES = 2;
 interface PresentationState {
   overlay: HTMLElement;
   slides: HTMLElement[];
+  slideSourceH2s: Array<HTMLHeadingElement | null>;
   currentIndex: number;
   triggerButton: HTMLButtonElement;
   inertedElements: Element[];
   controller: AbortController;
+}
+
+interface BuiltSlides {
+  slides: HTMLElement[];
+  slideSourceH2s: Array<HTMLHeadingElement | null>;
 }
 
 let state: PresentationState | null = null;
@@ -114,7 +120,7 @@ export function initializePresentationMode(): () => void {
 
 /**
  * 실제 조립 가능한 슬라이드 개수를 미리 계산.
- * 타이틀(1) + 목차(0 or 1) + H2 개수.
+ * 타이틀(1) + 목차(0 or 1) + H2 섹션들. 핵심 요약은 도입 본문 분리 여부까지 반영한다.
  */
 function countPotentialSlides(): number {
   const article = document.getElementById("article");
@@ -122,9 +128,16 @@ function countPotentialSlides(): number {
 
   const hasH1 = !!document.querySelector("main h1");
   const hasAgenda = !!findAgendaDetails(article);
-  const h2Count = article.querySelectorAll(":scope > h2").length;
+  const sectionSlideCount = Array.from(
+    article.querySelectorAll<HTMLHeadingElement>(":scope > h2")
+  )
+    .filter(h2 => !AGENDA_H2_PATTERN.test(getHeadingText(h2)))
+    .reduce((count, h2) => {
+      const split = findSummaryIntroSplit(h2);
+      return count + (split?.firstIntroElement ? 2 : 1);
+    }, 0);
 
-  return (hasH1 ? 1 : 0) + (hasAgenda ? 1 : 0) + h2Count;
+  return (hasH1 ? 1 : 0) + (hasAgenda ? 1 : 0) + sectionSlideCount;
 }
 
 /**
@@ -133,7 +146,7 @@ function countPotentialSlides(): number {
 function openOverlay(triggerButton: HTMLButtonElement): void {
   if (state) return; // 이미 열림
 
-  const slides = buildSlides();
+  const { slides, slideSourceH2s } = buildSlides();
   if (slides.length < MIN_SLIDES) return;
 
   const overlay = document.createElement("div");
@@ -198,6 +211,7 @@ function openOverlay(triggerButton: HTMLButtonElement): void {
   state = {
     overlay,
     slides,
+    slideSourceH2s,
     currentIndex: 0,
     triggerButton,
     inertedElements,
@@ -219,30 +233,19 @@ function closeOverlay(): void {
     inertedElements,
     controller,
     currentIndex,
-    slides,
+    slideSourceH2s,
   } = state;
 
   controller.abort();
 
-  // 원래 페이지에서 해당 H2로 스크롤 복귀
-  // (타이틀=0, 목차=1?, 첫 H2 = 1 or 2)
-  const article = document.getElementById("article");
-  if (article) {
-    const h2s = article.querySelectorAll<HTMLHeadingElement>(":scope > h2");
-    // slides 순서: title + (agenda?) + h2들. currentIndex가 H2 섹션인 경우 스크롤.
-    const sectionStartIndex = slides.findIndex(s =>
-      s.classList.contains("presentation-slide-section")
-    );
-    if (sectionStartIndex !== -1 && currentIndex >= sectionStartIndex) {
-      const h2Index = currentIndex - sectionStartIndex;
-      const targetH2 = h2s[h2Index];
-      if (targetH2) {
-        // 스크롤은 overlay 제거 후 다음 tick에 실행 (layout 안정화)
-        requestAnimationFrame(() => {
-          targetH2.scrollIntoView({ block: "start", behavior: "instant" });
-        });
-      }
-    }
+  // 원래 페이지에서 현재 슬라이드가 유래한 H2로 스크롤 복귀.
+  // 합성 도입 슬라이드처럼 H2 하나가 여러 슬라이드를 만들 수 있어 인덱스 산술을 쓰지 않는다.
+  const targetH2 = slideSourceH2s[currentIndex];
+  if (targetH2) {
+    // 스크롤은 overlay 제거 후 다음 tick에 실행 (layout 안정화)
+    requestAnimationFrame(() => {
+      targetH2.scrollIntoView({ block: "start", behavior: "instant" });
+    });
   }
 
   overlay.remove();
@@ -330,18 +333,23 @@ function updateCounter(): void {
 /**
  * 슬라이드 배열 조립.
  */
-function buildSlides(): HTMLElement[] {
+function buildSlides(): BuiltSlides {
   const slides: HTMLElement[] = [];
+  const slideSourceH2s: Array<HTMLHeadingElement | null> = [];
 
   const titleSlide = buildTitleSlide();
-  if (titleSlide) slides.push(titleSlide);
+  if (titleSlide) {
+    slides.push(titleSlide);
+    slideSourceH2s.push(null);
+  }
 
   const article = document.getElementById("article");
-  if (!article) return slides;
+  if (!article) return { slides, slideSourceH2s };
 
   const agendaDetails = findAgendaDetails(article);
   if (agendaDetails) {
     slides.push(buildAgendaSlide(agendaDetails));
+    slideSourceH2s.push(null);
   }
 
   // remark-collapse는 `<h2>목차</h2>`를 DOM에 그대로 둠. Agenda 슬라이드로 이미
@@ -352,10 +360,12 @@ function buildSlides(): HTMLElement[] {
     article.querySelectorAll<HTMLHeadingElement>(":scope > h2")
   ).filter(h2 => !AGENDA_H2_PATTERN.test(getHeadingText(h2)));
   for (const h2 of h2s) {
-    slides.push(...buildSectionSlides(h2));
+    const sectionSlides = buildSectionSlides(h2);
+    slides.push(...sectionSlides);
+    slideSourceH2s.push(...sectionSlides.map(() => h2));
   }
 
-  return slides;
+  return { slides, slideSourceH2s };
 }
 
 /**
