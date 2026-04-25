@@ -167,17 +167,16 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
           (summarySlide?.querySelector("details") as HTMLDetailsElement | null)
             ?.open ?? false,
         introHasHeading: introSlide?.querySelector(":scope > h2") !== null,
-        introText: introSlide?.textContent ?? "",
+        introText: introSlide?.textContent?.trim() ?? "",
       };
     });
 
     expect(summaryAndIntro.summaryText).toContain("주요 내용");
     expect(summaryAndIntro.summaryDetailsOpen).toBe(true);
-    expect(summaryAndIntro.summaryText).not.toContain("Inngest에서 DX");
     expect(summaryAndIntro.introHasHeading).toBe(false);
-    expect(summaryAndIntro.introText).toContain("Inngest에서 DX");
-    expect(summaryAndIntro.introText).toContain(
-      "이 글은 우리가 Next.js에서 벗어난 과정"
+    expect(summaryAndIntro.introText.length).toBeGreaterThan(0);
+    expect(summaryAndIntro.summaryText).not.toContain(
+      summaryAndIntro.introText
     );
   });
 

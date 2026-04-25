@@ -443,15 +443,19 @@ function buildSectionSlides(h2: HTMLHeadingElement): HTMLElement[] {
     return [buildSectionSlide(h2)];
   }
 
-  const summarySlide = buildSectionSlide(h2, {
-    stopBefore: summaryIntroSplit.separator,
-  });
-  openDetails(summarySlide);
   const introSlide = buildSyntheticSectionSlide(
     summaryIntroSplit.firstIntroElement
   );
+  if (!introSlide) {
+    return [buildSectionSlide(h2)];
+  }
 
-  return introSlide ? [summarySlide, introSlide] : [buildSectionSlide(h2)];
+  const summarySlide = buildSectionSlide(h2, {
+    stopBefore: summaryIntroSplit.separator,
+  });
+  openFirstDetails(summarySlide);
+
+  return [summarySlide, introSlide];
 }
 
 /**
@@ -468,22 +472,9 @@ function buildSectionSlide(
   const h2Clone = h2.cloneNode(true) as HTMLHeadingElement;
   slide.appendChild(h2Clone);
 
-  // 형제 노드 순회: 다음 h2를 만나기 전까지 복제
-  let sibling = h2.nextElementSibling;
-  while (
-    sibling &&
-    sibling.tagName !== "H2" &&
-    sibling !== options.stopBefore
-  ) {
-    // 목차 블록은 이미 별도 슬라이드로 처리되므로 제외
-    if (isAgendaBlock(sibling)) {
-      sibling = sibling.nextElementSibling;
-      continue;
-    }
-    const clone = sibling.cloneNode(true) as Element;
-    slide.appendChild(clone);
-    sibling = sibling.nextElementSibling;
-  }
+  appendSiblingClones(slide, h2.nextElementSibling, {
+    stopBefore: options.stopBefore,
+  });
 
   sanitizeSlide(slide);
   return slide;
@@ -493,9 +484,26 @@ function buildSyntheticSectionSlide(startElement: Element): HTMLElement | null {
   const slide = document.createElement("section");
   slide.className = "presentation-slide presentation-slide-section";
 
+  const hasContent = appendSiblingClones(slide, startElement);
+  if (!hasContent) return null;
+
+  sanitizeSlide(slide);
+  return slide;
+}
+
+function appendSiblingClones(
+  slide: HTMLElement,
+  startElement: Element | null,
+  options: { stopBefore?: Element } = {}
+): boolean {
   let hasContent = false;
-  let sibling: Element | null = startElement;
-  while (sibling && sibling.tagName !== "H2") {
+  let sibling = startElement;
+
+  while (
+    sibling &&
+    sibling.tagName !== "H2" &&
+    sibling !== options.stopBefore
+  ) {
     if (isAgendaBlock(sibling)) {
       sibling = sibling.nextElementSibling;
       continue;
@@ -507,16 +515,12 @@ function buildSyntheticSectionSlide(startElement: Element): HTMLElement | null {
     sibling = sibling.nextElementSibling;
   }
 
-  if (!hasContent) return null;
-
-  sanitizeSlide(slide);
-  return slide;
+  return hasContent;
 }
 
-function openDetails(slide: HTMLElement): void {
-  slide.querySelectorAll<HTMLDetailsElement>("details").forEach(details => {
-    details.open = true;
-  });
+function openFirstDetails(slide: HTMLElement): void {
+  const details = slide.querySelector<HTMLDetailsElement>("details");
+  if (details) details.open = true;
 }
 
 function findSummaryIntroSplit(
