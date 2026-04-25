@@ -3,6 +3,9 @@ import { test, expect, type Page } from "@playwright/test";
 // 목차(## 목차)가 있는 번역 포스트 - Agenda 슬라이드 검증 가능
 const TEST_POST_SLUG = "translation/claude-skills-guide-part-4";
 const TEST_POST_URL = `/posts/${TEST_POST_SLUG}`;
+// 핵심 요약 → details → hr → 도입 본문 패턴을 가진 실제 번역 포스트.
+// 별도 fixture를 콘텐츠 컬렉션에 넣지 않기 위해 이 URL을 사용하므로,
+// 슬러그나 문서 구조가 바뀌면 이 테스트도 함께 갱신해야 한다.
 const SUMMARY_SPLIT_POST_URL =
   "/posts/translation/migrating-off-nextjs-tanstack-start";
 
@@ -168,16 +171,87 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
             ?.open ?? false,
         introHasHeading: introSlide?.querySelector(":scope > h2") !== null,
         introText: introSlide?.textContent?.trim() ?? "",
+        introFirstBlockText:
+          introSlide
+            ?.querySelector(
+              ":scope > p, :scope > blockquote, :scope > ul, :scope > ol, :scope > pre, :scope > details, :scope > figure"
+            )
+            ?.textContent?.trim() ?? "",
       };
     });
 
     expect(summaryAndIntro.summaryText).toContain("주요 내용");
     expect(summaryAndIntro.summaryDetailsOpen).toBe(true);
     expect(summaryAndIntro.introHasHeading).toBe(false);
-    expect(summaryAndIntro.introText.length).toBeGreaterThan(0);
+    expect(summaryAndIntro.introText.length).toBeGreaterThan(50);
+    expect(summaryAndIntro.introFirstBlockText.length).toBeGreaterThan(20);
     expect(summaryAndIntro.summaryText).not.toContain(
-      summaryAndIntro.introText
+      summaryAndIntro.introFirstBlockText
     );
+  });
+
+  test("일반 H2 섹션은 제목 없는 슬라이드로 분리되지 않아야 함", async ({
+    page,
+  }) => {
+    await page.goto(TEST_POST_URL);
+    await waitForPresentationButton(page);
+
+    const ordinaryHeadingPair = await page.evaluate(() => {
+      const article = document.getElementById("article");
+      const getHeadingText = (heading: HTMLHeadingElement) => {
+        const clone = heading.cloneNode(true) as HTMLElement;
+        clone.querySelectorAll(".heading-link").forEach(el => el.remove());
+        return clone.textContent?.trim() ?? "";
+      };
+      const headings = Array.from(
+        article?.querySelectorAll<HTMLHeadingElement>(":scope > h2") ?? []
+      ).map(getHeadingText);
+      const headingIndex = headings.findIndex(
+        (text, index) =>
+          text !== "목차" && text !== "핵심 요약" && index < headings.length - 1
+      );
+
+      return headingIndex === -1
+        ? null
+        : {
+            heading: headings[headingIndex],
+            nextHeading: headings[headingIndex + 1],
+          };
+    });
+
+    expect(ordinaryHeadingPair).not.toBeNull();
+
+    await page.locator('[data-button="presentation-start"]').click();
+
+    const ordinarySlide = await page.evaluate(headingPair => {
+      if (!headingPair) return null;
+
+      const sectionSlides = Array.from(
+        document.querySelectorAll<HTMLElement>(".presentation-slide-section")
+      );
+      const targetIndex = sectionSlides.findIndex(
+        slide =>
+          slide.querySelector(":scope > h2")?.textContent?.trim() ===
+          headingPair.heading
+      );
+      const targetSlide = sectionSlides[targetIndex];
+      const nextSlide = sectionSlides[targetIndex + 1];
+
+      return {
+        targetIndex,
+        targetTextLength: targetSlide?.textContent?.trim().length ?? 0,
+        nextHeading:
+          nextSlide?.querySelector(":scope > h2")?.textContent?.trim() ?? null,
+        nextIsTitleless:
+          nextSlide !== undefined &&
+          nextSlide.querySelector(":scope > h2") === null,
+      };
+    }, ordinaryHeadingPair);
+
+    expect(ordinarySlide?.targetIndex).toBeGreaterThanOrEqual(0);
+    expect(ordinarySlide?.targetTextLength).toBeGreaterThan(50);
+    expect(ordinarySlide?.nextHeading).toBe(ordinaryHeadingPair!.nextHeading);
+    expect(ordinarySlide?.nextIsTitleless).toBe(false);
   });
 
   test("총 슬라이드가 MIN_SLIDES 미만이면 버튼을 눌러도 오버레이가 열리지 않아야 함", async ({

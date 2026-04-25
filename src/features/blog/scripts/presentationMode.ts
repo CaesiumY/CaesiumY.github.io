@@ -23,7 +23,7 @@ const AGENDA_SUMMARY_TEXT = "목차 보기";
  * astro.config.ts의 remark-collapse `test` 정규식과 의미 일치.
  */
 const AGENDA_H2_PATTERN = /^(table of contents|목차)$/i;
-const SUMMARY_H2_PATTERN = /^핵심 요약$/i;
+const SUMMARY_H2_PATTERN = /^핵심 요약$/;
 const MIN_SLIDES = 2;
 
 interface PresentationState {
@@ -540,6 +540,7 @@ function findSummaryIntroSplit(
       sawDetails = true;
     }
 
+    // details 없이 등장하는 hr은 일반 구분선일 수 있으므로 분리 기준으로 쓰지 않는다.
     if (sawDetails && sibling.tagName === "HR") {
       const firstIntroElement = findFirstIntroElement(
         sibling.nextElementSibling
