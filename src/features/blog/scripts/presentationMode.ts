@@ -25,6 +25,7 @@ const AGENDA_SUMMARY_TEXT = "목차 보기";
 const AGENDA_H2_PATTERN = /^(table of contents|목차)$/i;
 // 정확히 "핵심 요약"인 H2만 분리 대상으로 삼는다. 이모지나 부제목이 붙으면 일반 섹션으로 둔다.
 const SUMMARY_H2_PATTERN = /^핵심 요약$/;
+const TLDR_SUMMARY_PATTERN = /TL;DR/i;
 const MIN_SLIDES = 2;
 
 interface PresentationState {
@@ -436,7 +437,8 @@ function buildAgendaSlide(sourceDetails: HTMLDetailsElement): HTMLElement {
 /**
  * H2 섹션 슬라이드들: 기본적으로 해당 h2와 "다음 h2 직전까지의 형제 노드"를 복제.
  * 번역 글의 `핵심 요약 → details → hr → 도입 본문` 패턴은 원문 구조를 바꾸지 않고
- * 프레젠테이션 전용 제목 없는 슬라이드로 분리한다.
+ * 프레젠테이션 전용 제목 없는 슬라이드로 분리한다. 도입 본문이 비어 있으면 구분선 뒤를
+ * 버리고 요약 슬라이드만 만든다.
  */
 function buildSectionSlides(h2: HTMLHeadingElement): HTMLElement[] {
   const summaryIntroSplit = findSummaryIntroSplit(h2);
@@ -444,18 +446,22 @@ function buildSectionSlides(h2: HTMLHeadingElement): HTMLElement[] {
     return [buildSectionSlide(h2)];
   }
 
-  const introSlide = buildSyntheticSectionSlide(
-    summaryIntroSplit.firstIntroElement
-  );
-  if (!introSlide) {
-    return [buildSectionSlide(h2)];
-  }
-
   // separator(hr)는 요약과 도입을 나누는 경계일 뿐, 요약 슬라이드에는 포함하지 않는다.
   const summarySlide = buildSectionSlide(h2, {
     stopBefore: summaryIntroSplit.separator,
   });
-  openFirstDetails(summarySlide);
+  openSummaryDetails(summarySlide);
+
+  if (!summaryIntroSplit.firstIntroElement) {
+    return [summarySlide];
+  }
+
+  const introSlide = buildSyntheticSectionSlide(
+    summaryIntroSplit.firstIntroElement
+  );
+  if (!introSlide) {
+    return [summarySlide];
+  }
 
   return [summarySlide, introSlide];
 }
@@ -483,8 +489,8 @@ function buildSectionSlide(
 }
 
 /**
- * 제목 없는 도입 본문 슬라이드. 실질 콘텐츠가 없으면 기존 단일 H2 슬라이드로
- * 폴백할 수 있도록 null을 반환한다.
+ * 제목 없는 도입 본문 슬라이드. 실질 콘텐츠가 없으면 호출부에서 도입 슬라이드를
+ * 생략할 수 있도록 null을 반환한다.
  */
 function buildSyntheticSectionSlide(startElement: Element): HTMLElement | null {
   const slide = document.createElement("section");
@@ -525,15 +531,22 @@ function appendSiblingClones(
   return hasContent;
 }
 
-function openFirstDetails(slide: HTMLElement): void {
-  // 핵심 요약 슬라이드의 첫 details가 TL;DR이라는 현재 번역 글 구조를 전제로 한다.
-  const details = slide.querySelector<HTMLDetailsElement>("details");
+function openSummaryDetails(slide: HTMLElement): void {
+  const detailsElements = Array.from(
+    slide.querySelectorAll<HTMLDetailsElement>(":scope > details")
+  );
+  const details =
+    detailsElements.find(details =>
+      TLDR_SUMMARY_PATTERN.test(
+        details.querySelector(":scope > summary")?.textContent ?? ""
+      )
+    ) ?? detailsElements[0];
   if (details) details.open = true;
 }
 
 function findSummaryIntroSplit(
   h2: HTMLHeadingElement
-): { separator: Element; firstIntroElement: Element } | null {
+): { separator: Element; firstIntroElement: Element | null } | null {
   if (!SUMMARY_H2_PATTERN.test(getHeadingText(h2))) return null;
 
   // details 요소 자체가 아니라, 이후 등장하는 hr을 분리 경계로 인정하기 위한 상태만 추적한다.
@@ -554,10 +567,7 @@ function findSummaryIntroSplit(
       const firstIntroElement = findFirstIntroElement(
         sibling.nextElementSibling
       );
-      if (firstIntroElement) {
-        return { separator: sibling, firstIntroElement };
-      }
-      return null;
+      return { separator: sibling, firstIntroElement };
     }
 
     sibling = sibling.nextElementSibling;

@@ -252,9 +252,12 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
           slide.querySelector(":scope > h2")?.textContent?.trim() ===
           "핵심 요약"
       );
+      const summarySlide = sectionSlides[summaryIndex];
       const nextSlide = sectionSlides[summaryIndex + 1];
 
       return {
+        summaryHasDirectHr:
+          summarySlide?.querySelector(":scope > hr") !== null,
         nextHeading:
           nextSlide?.querySelector(":scope > h2")?.textContent?.trim() ?? null,
         nextIsTitleless:
@@ -263,6 +266,7 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
       };
     });
 
+    expect(slideAfterSummary.summaryHasDirectHr).toBe(false);
     expect(slideAfterSummary.nextIsTitleless).toBe(false);
     expect(slideAfterSummary.nextHeading).not.toBeNull();
   });
