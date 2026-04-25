@@ -168,6 +168,7 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
       const introSlide = sectionSlides[summaryIndex + 1];
 
       return {
+        summaryIndex,
         summaryText: summarySlide?.textContent ?? "",
         summaryDetailsOpen:
           (summarySlide?.querySelector("details") as HTMLDetailsElement | null)
@@ -183,6 +184,7 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
       };
     });
 
+    expect(summaryAndIntro.summaryIndex).toBeGreaterThanOrEqual(0);
     expect(summaryAndIntro.summaryDetailsOpen).toBe(true);
     expect(summaryAndIntro.introHasHeading).toBe(false);
     expect(summaryAndIntro.introText.length).toBeGreaterThan(
@@ -194,6 +196,59 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
     expect(summaryAndIntro.summaryText).not.toContain(
       summaryAndIntro.introFirstBlockText
     );
+  });
+
+  test("핵심 요약 details가 TL;DR이 아니면 기본으로 열지 않아야 함", async ({
+    page,
+  }) => {
+    await page.goto(SUMMARY_SPLIT_POST_URL);
+    await waitForPresentationButton(page);
+
+    const mutated = await page.evaluate(() => {
+      const article = document.getElementById("article");
+      if (!article) return false;
+
+      const getHeadingText = (heading: HTMLHeadingElement) => {
+        const clone = heading.cloneNode(true) as HTMLElement;
+        clone.querySelectorAll(".heading-link").forEach(el => el.remove());
+        return clone.textContent?.trim() ?? "";
+      };
+      const summaryHeading = Array.from(
+        article.querySelectorAll<HTMLHeadingElement>(":scope > h2")
+      ).find(h2 => getHeadingText(h2) === "핵심 요약");
+      const summary = summaryHeading?.nextElementSibling?.querySelector(
+        ":scope > summary"
+      );
+      if (!summary) return false;
+
+      summary.textContent = "요약 보기";
+      return true;
+    });
+    expect(mutated).toBe(true);
+
+    await page.locator('[data-button="presentation-start"]').click();
+
+    const summaryDetailsState = await page.evaluate(() => {
+      const sectionSlides = Array.from(
+        document.querySelectorAll<HTMLElement>(".presentation-slide-section")
+      );
+      const summaryIndex = sectionSlides.findIndex(
+        slide =>
+          slide.querySelector(":scope > h2")?.textContent?.trim() ===
+          "핵심 요약"
+      );
+      const summarySlide = sectionSlides[summaryIndex];
+
+      return {
+        summaryIndex,
+        summaryDetailsOpen:
+          (summarySlide?.querySelector("details") as HTMLDetailsElement | null)
+            ?.open ?? false,
+      };
+    });
+
+    expect(summaryDetailsState.summaryIndex).toBeGreaterThanOrEqual(0);
+    expect(summaryDetailsState.summaryDetailsOpen).toBe(false);
   });
 
   test("핵심 요약 뒤 실질 도입 본문이 없으면 제목 없는 슬라이드를 만들지 않아야 함", async ({

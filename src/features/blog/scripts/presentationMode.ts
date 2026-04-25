@@ -535,12 +535,11 @@ function openSummaryDetails(slide: HTMLElement): void {
   const detailsElements = Array.from(
     slide.querySelectorAll<HTMLDetailsElement>(":scope > details")
   );
-  const details =
-    detailsElements.find(details =>
-      TLDR_SUMMARY_PATTERN.test(
-        details.querySelector(":scope > summary")?.textContent ?? ""
-      )
-    ) ?? detailsElements[0];
+  const details = detailsElements.find(details =>
+    TLDR_SUMMARY_PATTERN.test(
+      details.querySelector(":scope > summary")?.textContent ?? ""
+    )
+  );
   if (details) details.open = true;
 }
 
@@ -563,6 +562,7 @@ function findSummaryIntroSplit(
     }
 
     // details 없이 등장하는 hr은 일반 구분선일 수 있으므로 분리 기준으로 쓰지 않는다.
+    // details 이후 첫 hr만 요약/도입 경계로 인정한다.
     if (sawDetails && sibling.tagName === "HR") {
       const firstIntroElement = findFirstIntroElement(
         sibling.nextElementSibling
