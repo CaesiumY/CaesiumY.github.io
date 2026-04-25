@@ -443,11 +443,11 @@ function buildAgendaSlide(sourceDetails: HTMLDetailsElement): HTMLElement {
 function buildSectionSlides(h2: HTMLHeadingElement): HTMLElement[] {
   const summaryIntroSplit = findSummaryIntroSplit(h2);
   if (!summaryIntroSplit) {
-    return [buildSectionSlide(h2)];
+    return [buildSingleSectionSlide(h2)];
   }
 
   // separator(hr)는 요약과 도입을 나누는 경계일 뿐, 요약 슬라이드에는 포함하지 않는다.
-  const summarySlide = buildSectionSlide(h2, {
+  const summarySlide = buildSingleSectionSlide(h2, {
     stopBefore: summaryIntroSplit.separator,
   });
   openSummaryDetails(summarySlide);
@@ -469,7 +469,7 @@ function buildSectionSlides(h2: HTMLHeadingElement): HTMLElement[] {
 /**
  * H2 섹션 슬라이드: 해당 h2와 "다음 h2 직전까지의 형제 노드"를 복제.
  */
-function buildSectionSlide(
+function buildSingleSectionSlide(
   h2: HTMLHeadingElement,
   options: { stopBefore?: Element } = {}
 ): HTMLElement {
@@ -535,6 +535,10 @@ function appendSiblingClones(
   return hasContent;
 }
 
+/**
+ * 핵심 요약 슬라이드의 직계 details 중 TL;DR summary와 일치하는 항목만 펼친다.
+ * 중첩 details는 현재 번역 글 구조의 핵심 요약 대상이 아니므로 건드리지 않는다.
+ */
 function openSummaryDetails(slide: HTMLElement): void {
   const detailsElements = Array.from(
     slide.querySelectorAll<HTMLDetailsElement>(":scope > details")

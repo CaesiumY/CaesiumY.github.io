@@ -8,7 +8,8 @@ const TEST_POST_URL = `/posts/${TEST_POST_SLUG}`;
 // 슬러그나 문서 구조가 바뀌면 이 테스트도 함께 갱신해야 한다.
 const SUMMARY_SPLIT_POST_URL =
   "/posts/translation/migrating-off-nextjs-tanstack-start";
-// 구조 기반 assertion에서 우연히 짧은 텍스트 조각이 겹치는 false positive를 줄이는 가드.
+// 실제 포스트를 쓰는 구조 기반 assertion에서 false positive를 줄이는 낮은 임계값.
+// 대상 포스트의 도입 본문은 이 값보다 충분히 길어, 구조가 바뀌면 선명하게 실패한다.
 const MIN_INTRO_TEXT_LENGTH = 50;
 const MIN_INTRO_BLOCK_TEXT_LENGTH = 20;
 
