@@ -12,6 +12,8 @@ const SUMMARY_SPLIT_POST_URL =
 // 대상 포스트의 도입 본문은 이 값보다 충분히 길어, 구조가 바뀌면 선명하게 실패한다.
 const MIN_INTRO_TEXT_LENGTH = 50;
 const MIN_INTRO_BLOCK_TEXT_LENGTH = 20;
+const SUMMARY_SPLIT_STRUCTURE_HINT =
+  "SUMMARY_SPLIT_POST_URL의 핵심 요약/details/hr/도입 구조가 바뀌었는지 확인하세요.";
 
 /**
  * 프레젠테이션 버튼이 런타임에 노출될 때까지 대기.
@@ -185,15 +187,20 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
       };
     });
 
-    expect(summaryAndIntro.summaryIndex).toBeGreaterThanOrEqual(0);
+    expect(
+      summaryAndIntro.summaryIndex,
+      SUMMARY_SPLIT_STRUCTURE_HINT
+    ).toBeGreaterThanOrEqual(0);
     expect(summaryAndIntro.summaryDetailsOpen).toBe(true);
     expect(summaryAndIntro.introHasHeading).toBe(false);
-    expect(summaryAndIntro.introText.length).toBeGreaterThan(
-      MIN_INTRO_TEXT_LENGTH
-    );
-    expect(summaryAndIntro.introFirstBlockText.length).toBeGreaterThan(
-      MIN_INTRO_BLOCK_TEXT_LENGTH
-    );
+    expect(
+      summaryAndIntro.introText.length,
+      SUMMARY_SPLIT_STRUCTURE_HINT
+    ).toBeGreaterThan(MIN_INTRO_TEXT_LENGTH);
+    expect(
+      summaryAndIntro.introFirstBlockText.length,
+      SUMMARY_SPLIT_STRUCTURE_HINT
+    ).toBeGreaterThan(MIN_INTRO_BLOCK_TEXT_LENGTH);
     expect(summaryAndIntro.summaryText).not.toContain(
       summaryAndIntro.introFirstBlockText
     );
@@ -222,10 +229,25 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
       );
       if (!summary) return false;
 
-      summary.textContent = "요약 보기";
-      return true;
+      const walker = document.createTreeWalker(summary, NodeFilter.SHOW_TEXT);
+      let fallbackTextNode: Text | null = null;
+      let currentNode = walker.nextNode() as Text | null;
+      while (currentNode) {
+        if (currentNode.textContent?.trim()) {
+          fallbackTextNode ??= currentNode;
+          if (currentNode.textContent.includes("TL;DR")) {
+            currentNode.textContent = "요약 보기";
+            return !summary.textContent?.includes("TL;DR");
+          }
+        }
+        currentNode = walker.nextNode() as Text | null;
+      }
+
+      if (!fallbackTextNode) return false;
+      fallbackTextNode.textContent = "요약 보기";
+      return !summary.textContent?.includes("TL;DR");
     });
-    expect(mutated).toBe(true);
+    expect(mutated, SUMMARY_SPLIT_STRUCTURE_HINT).toBe(true);
 
     await page.locator('[data-button="presentation-start"]').click();
 
@@ -248,7 +270,10 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
       };
     });
 
-    expect(summaryDetailsState.summaryIndex).toBeGreaterThanOrEqual(0);
+    expect(
+      summaryDetailsState.summaryIndex,
+      SUMMARY_SPLIT_STRUCTURE_HINT
+    ).toBeGreaterThanOrEqual(0);
     expect(summaryDetailsState.summaryDetailsOpen).toBe(false);
   });
 
@@ -295,7 +320,7 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
 
       return true;
     });
-    expect(mutated).toBe(true);
+    expect(mutated, SUMMARY_SPLIT_STRUCTURE_HINT).toBe(true);
 
     await page.locator('[data-button="presentation-start"]').click();
 
