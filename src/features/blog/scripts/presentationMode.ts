@@ -23,6 +23,7 @@ const AGENDA_SUMMARY_TEXT = "목차 보기";
  * astro.config.ts의 remark-collapse `test` 정규식과 의미 일치.
  */
 const AGENDA_H2_PATTERN = /^(table of contents|목차)$/i;
+// 정확히 "핵심 요약"인 H2만 분리 대상으로 삼는다. 이모지나 부제목이 붙으면 일반 섹션으로 둔다.
 const SUMMARY_H2_PATTERN = /^핵심 요약$/;
 const MIN_SLIDES = 2;
 
@@ -450,6 +451,7 @@ function buildSectionSlides(h2: HTMLHeadingElement): HTMLElement[] {
     return [buildSectionSlide(h2)];
   }
 
+  // separator(hr)는 요약과 도입을 나누는 경계일 뿐, 요약 슬라이드에는 포함하지 않는다.
   const summarySlide = buildSectionSlide(h2, {
     stopBefore: summaryIntroSplit.separator,
   });
@@ -511,7 +513,7 @@ function appendSiblingClones(
 
     const clone = sibling.cloneNode(true) as Element;
     slide.appendChild(clone);
-    hasContent = true;
+    hasContent ||= hasMeaningfulSlideContent(sibling);
     sibling = sibling.nextElementSibling;
   }
 
@@ -560,12 +562,25 @@ function findSummaryIntroSplit(
 function findFirstIntroElement(startElement: Element | null): Element | null {
   let sibling = startElement;
   while (sibling && sibling.tagName !== "H2") {
-    if (sibling.tagName !== "HR" && !isAgendaBlock(sibling)) {
+    if (
+      sibling.tagName !== "HR" &&
+      !isAgendaBlock(sibling) &&
+      hasMeaningfulSlideContent(sibling)
+    ) {
       return sibling;
     }
     sibling = sibling.nextElementSibling;
   }
   return null;
+}
+
+function hasMeaningfulSlideContent(element: Element): boolean {
+  if (element.textContent?.trim()) return true;
+  return element.querySelector(
+    "img, picture, video, audio, canvas, svg, iframe, table, pre"
+  )
+    ? true
+    : false;
 }
 
 /**

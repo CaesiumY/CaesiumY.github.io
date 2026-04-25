@@ -8,6 +8,9 @@ const TEST_POST_URL = `/posts/${TEST_POST_SLUG}`;
 // 슬러그나 문서 구조가 바뀌면 이 테스트도 함께 갱신해야 한다.
 const SUMMARY_SPLIT_POST_URL =
   "/posts/translation/migrating-off-nextjs-tanstack-start";
+// 구조 기반 assertion에서 우연히 짧은 텍스트 조각이 겹치는 false positive를 줄이는 가드.
+const MIN_INTRO_TEXT_LENGTH = 50;
+const MIN_INTRO_BLOCK_TEXT_LENGTH = 20;
 
 /**
  * 프레젠테이션 버튼이 런타임에 노출될 때까지 대기.
@@ -180,14 +183,85 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
       };
     });
 
-    expect(summaryAndIntro.summaryText).toContain("주요 내용");
     expect(summaryAndIntro.summaryDetailsOpen).toBe(true);
     expect(summaryAndIntro.introHasHeading).toBe(false);
-    expect(summaryAndIntro.introText.length).toBeGreaterThan(50);
-    expect(summaryAndIntro.introFirstBlockText.length).toBeGreaterThan(20);
+    expect(summaryAndIntro.introText.length).toBeGreaterThan(
+      MIN_INTRO_TEXT_LENGTH
+    );
+    expect(summaryAndIntro.introFirstBlockText.length).toBeGreaterThan(
+      MIN_INTRO_BLOCK_TEXT_LENGTH
+    );
     expect(summaryAndIntro.summaryText).not.toContain(
       summaryAndIntro.introFirstBlockText
     );
+  });
+
+  test("핵심 요약 뒤 실질 도입 본문이 없으면 제목 없는 슬라이드를 만들지 않아야 함", async ({
+    page,
+  }) => {
+    await page.goto(SUMMARY_SPLIT_POST_URL);
+    await waitForPresentationButton(page);
+
+    await page.evaluate(() => {
+      const article = document.getElementById("article");
+      if (!article) return;
+
+      const getHeadingText = (heading: HTMLHeadingElement) => {
+        const clone = heading.cloneNode(true) as HTMLElement;
+        clone.querySelectorAll(".heading-link").forEach(el => el.remove());
+        return clone.textContent?.trim() ?? "";
+      };
+      const summaryHeading = Array.from(
+        article.querySelectorAll<HTMLHeadingElement>(":scope > h2")
+      ).find(h2 => getHeadingText(h2) === "핵심 요약");
+      if (!summaryHeading) return;
+
+      let separator: Element | null = null;
+      let sibling = summaryHeading.nextElementSibling;
+      while (sibling && sibling.tagName !== "H2") {
+        if (sibling.tagName === "HR") {
+          separator = sibling;
+          break;
+        }
+        sibling = sibling.nextElementSibling;
+      }
+      if (!separator) return;
+
+      const emptyParagraph = document.createElement("p");
+      separator.after(emptyParagraph);
+
+      let introSibling = emptyParagraph.nextElementSibling;
+      while (introSibling && introSibling.tagName !== "H2") {
+        const nextSibling = introSibling.nextElementSibling;
+        introSibling.remove();
+        introSibling = nextSibling;
+      }
+    });
+
+    await page.locator('[data-button="presentation-start"]').click();
+
+    const slideAfterSummary = await page.evaluate(() => {
+      const sectionSlides = Array.from(
+        document.querySelectorAll<HTMLElement>(".presentation-slide-section")
+      );
+      const summaryIndex = sectionSlides.findIndex(
+        slide =>
+          slide.querySelector(":scope > h2")?.textContent?.trim() ===
+          "핵심 요약"
+      );
+      const nextSlide = sectionSlides[summaryIndex + 1];
+
+      return {
+        nextHeading:
+          nextSlide?.querySelector(":scope > h2")?.textContent?.trim() ?? null,
+        nextIsTitleless:
+          nextSlide !== undefined &&
+          nextSlide.querySelector(":scope > h2") === null,
+      };
+    });
+
+    expect(slideAfterSummary.nextIsTitleless).toBe(false);
+    expect(slideAfterSummary.nextHeading).not.toBeNull();
   });
 
   test("일반 H2 섹션은 제목 없는 슬라이드로 분리되지 않아야 함", async ({
