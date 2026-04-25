@@ -450,7 +450,7 @@ function buildSectionSlides(h2: HTMLHeadingElement): HTMLElement[] {
   const summarySlide = buildSingleSectionSlide(h2, {
     stopBefore: summaryIntroSplit.separator,
   });
-  openSummaryDetails(summarySlide);
+  openTldrDetailsIfPresent(summarySlide);
 
   if (!summaryIntroSplit.firstIntroElement) {
     return [summarySlide];
@@ -489,8 +489,8 @@ function buildSingleSectionSlide(
 }
 
 /**
- * 제목 없는 도입 본문 슬라이드. 실질 콘텐츠가 없으면 호출부에서 도입 슬라이드를
- * 생략할 수 있도록 null을 반환한다.
+ * startElement부터 다음 H2 직전까지를 제목 없는 도입 본문 슬라이드로 만든다.
+ * 실질 콘텐츠가 없으면 호출부에서 도입 슬라이드를 생략할 수 있도록 null을 반환한다.
  */
 function buildSyntheticSectionSlide(startElement: Element): HTMLElement | null {
   const slide = document.createElement("section");
@@ -539,7 +539,7 @@ function appendSiblingClones(
  * 핵심 요약 슬라이드의 직계 details 중 TL;DR summary와 일치하는 항목만 펼친다.
  * 중첩 details는 현재 번역 글 구조의 핵심 요약 대상이 아니므로 건드리지 않는다.
  */
-function openSummaryDetails(slide: HTMLElement): void {
+function openTldrDetailsIfPresent(slide: HTMLElement): void {
   const detailsElements = Array.from(
     slide.querySelectorAll<HTMLDetailsElement>(":scope > details")
   );
@@ -556,7 +556,8 @@ function findSummaryIntroSplit(
 ): { separator: Element; firstIntroElement: Element | null } | null {
   if (!SUMMARY_H2_PATTERN.test(getHeadingText(h2))) return null;
 
-  // 핵심 요약 details 이후 첫 hr만 요약/도입 경계로 인정한다.
+  // details가 하나 이상 등장한 뒤 처음 만나는 hr만 요약/도입 경계로 인정한다.
+  // 여러 details가 있더라도 핵심 요약 블록 전체 뒤의 첫 구분선을 기준으로 분리한다.
   let sawDetails = false;
   let sibling = h2.nextElementSibling;
   while (sibling && sibling.tagName !== "H2") {
@@ -570,7 +571,6 @@ function findSummaryIntroSplit(
     }
 
     // details 없이 등장하는 hr은 일반 구분선일 수 있으므로 분리 기준으로 쓰지 않는다.
-    // details 이후 첫 hr만 요약/도입 경계로 인정한다.
     if (sawDetails && sibling.tagName === "HR") {
       const firstIntroElement = findFirstIntroElement(
         sibling.nextElementSibling
