@@ -482,6 +482,10 @@ function buildSectionSlide(
   return slide;
 }
 
+/**
+ * 제목 없는 도입 본문 슬라이드. 실질 콘텐츠가 없으면 기존 단일 H2 슬라이드로
+ * 폴백할 수 있도록 null을 반환한다.
+ */
 function buildSyntheticSectionSlide(startElement: Element): HTMLElement | null {
   const slide = document.createElement("section");
   slide.className = "presentation-slide presentation-slide-section";
@@ -501,6 +505,7 @@ function appendSiblingClones(
   let hasContent = false;
   let sibling = startElement;
 
+  // H2는 프레젠테이션 섹션의 경계이므로 합성 슬라이드도 다음 H2 앞에서 멈춘다.
   while (
     sibling &&
     sibling.tagName !== "H2" &&
@@ -521,6 +526,7 @@ function appendSiblingClones(
 }
 
 function openFirstDetails(slide: HTMLElement): void {
+  // 핵심 요약 슬라이드의 첫 details가 TL;DR이라는 현재 번역 글 구조를 전제로 한다.
   const details = slide.querySelector<HTMLDetailsElement>("details");
   if (details) details.open = true;
 }
@@ -563,6 +569,7 @@ function findSummaryIntroSplit(
 function findFirstIntroElement(startElement: Element | null): Element | null {
   let sibling = startElement;
   while (sibling && sibling.tagName !== "H2") {
+    // 연속된 hr은 도입 본문이 아니라 구분선으로 보고, H2는 다음 섹션의 경계로 본다.
     if (
       sibling.tagName !== "HR" &&
       !isAgendaBlock(sibling) &&

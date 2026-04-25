@@ -202,9 +202,9 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
     await page.goto(SUMMARY_SPLIT_POST_URL);
     await waitForPresentationButton(page);
 
-    await page.evaluate(() => {
+    const mutated = await page.evaluate(() => {
       const article = document.getElementById("article");
-      if (!article) return;
+      if (!article) return false;
 
       const getHeadingText = (heading: HTMLHeadingElement) => {
         const clone = heading.cloneNode(true) as HTMLElement;
@@ -214,7 +214,7 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
       const summaryHeading = Array.from(
         article.querySelectorAll<HTMLHeadingElement>(":scope > h2")
       ).find(h2 => getHeadingText(h2) === "핵심 요약");
-      if (!summaryHeading) return;
+      if (!summaryHeading) return false;
 
       let separator: Element | null = null;
       let sibling = summaryHeading.nextElementSibling;
@@ -225,7 +225,7 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
         }
         sibling = sibling.nextElementSibling;
       }
-      if (!separator) return;
+      if (!separator) return false;
 
       const emptyParagraph = document.createElement("p");
       separator.after(emptyParagraph);
@@ -236,7 +236,10 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
         introSibling.remove();
         introSibling = nextSibling;
       }
+
+      return true;
     });
+    expect(mutated).toBe(true);
 
     await page.locator('[data-button="presentation-start"]').click();
 
