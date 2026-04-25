@@ -503,6 +503,10 @@ function buildSyntheticSectionSlide(startElement: Element): HTMLElement | null {
   return slide;
 }
 
+/**
+ * startElement부터 섹션 경계까지 형제 노드를 복제해 slide에 추가한다.
+ * 반환값은 실제로 의미 있는 콘텐츠가 하나라도 포함됐는지 여부다.
+ */
 function appendSiblingClones(
   slide: HTMLElement,
   startElement: Element | null,
@@ -535,9 +539,9 @@ function openSummaryDetails(slide: HTMLElement): void {
   const detailsElements = Array.from(
     slide.querySelectorAll<HTMLDetailsElement>(":scope > details")
   );
-  const details = detailsElements.find(details =>
+  const details = detailsElements.find(detailsElement =>
     TLDR_SUMMARY_PATTERN.test(
-      details.querySelector(":scope > summary")?.textContent ?? ""
+      detailsElement.querySelector(":scope > summary")?.textContent ?? ""
     )
   );
   if (details) details.open = true;
@@ -548,7 +552,7 @@ function findSummaryIntroSplit(
 ): { separator: Element; firstIntroElement: Element | null } | null {
   if (!SUMMARY_H2_PATTERN.test(getHeadingText(h2))) return null;
 
-  // details 요소 자체가 아니라, 이후 등장하는 hr을 분리 경계로 인정하기 위한 상태만 추적한다.
+  // 핵심 요약 details 이후 첫 hr만 요약/도입 경계로 인정한다.
   let sawDetails = false;
   let sibling = h2.nextElementSibling;
   while (sibling && sibling.tagName !== "H2") {
