@@ -3,6 +3,8 @@ import { test, expect, type Page } from "@playwright/test";
 // 목차(## 목차)가 있는 번역 포스트 - Agenda 슬라이드 검증 가능
 const TEST_POST_SLUG = "translation/claude-skills-guide-part-4";
 const TEST_POST_URL = `/posts/${TEST_POST_SLUG}`;
+const SUMMARY_SPLIT_POST_URL =
+  "/posts/translation/migrating-off-nextjs-tanstack-start";
 
 /**
  * 프레젠테이션 버튼이 런타임에 노출될 때까지 대기.
@@ -137,6 +139,45 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
     expect(sectionH2Texts).not.toContain("목차");
     expect(sectionH2Texts.map(t => t.toLowerCase())).not.toContain(
       "table of contents"
+    );
+  });
+
+  test("핵심 요약 뒤 도입 본문은 별도 슬라이드로 분리되어야 함", async ({
+    page,
+  }) => {
+    await page.goto(SUMMARY_SPLIT_POST_URL);
+    await waitForPresentationButton(page);
+    await page.locator('[data-button="presentation-start"]').click();
+
+    const summaryAndIntro = await page.evaluate(() => {
+      const sectionSlides = Array.from(
+        document.querySelectorAll<HTMLElement>(".presentation-slide-section")
+      );
+      const summaryIndex = sectionSlides.findIndex(
+        slide =>
+          slide.querySelector(":scope > h2")?.textContent?.trim() ===
+          "핵심 요약"
+      );
+      const summarySlide = sectionSlides[summaryIndex];
+      const introSlide = sectionSlides[summaryIndex + 1];
+
+      return {
+        summaryText: summarySlide?.textContent ?? "",
+        summaryDetailsOpen:
+          (summarySlide?.querySelector("details") as HTMLDetailsElement | null)
+            ?.open ?? false,
+        introHasHeading: introSlide?.querySelector(":scope > h2") !== null,
+        introText: introSlide?.textContent ?? "",
+      };
+    });
+
+    expect(summaryAndIntro.summaryText).toContain("주요 내용");
+    expect(summaryAndIntro.summaryDetailsOpen).toBe(true);
+    expect(summaryAndIntro.summaryText).not.toContain("Inngest에서 DX");
+    expect(summaryAndIntro.introHasHeading).toBe(false);
+    expect(summaryAndIntro.introText).toContain("Inngest에서 DX");
+    expect(summaryAndIntro.introText).toContain(
+      "이 글은 우리가 Next.js에서 벗어난 과정"
     );
   });
 

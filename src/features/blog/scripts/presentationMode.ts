@@ -23,6 +23,7 @@ const AGENDA_SUMMARY_TEXT = "목차 보기";
  * astro.config.ts의 remark-collapse `test` 정규식과 의미 일치.
  */
 const AGENDA_H2_PATTERN = /^(table of contents|목차)$/i;
+const SUMMARY_H2_PATTERN = /^핵심 요약$/i;
 const MIN_SLIDES = 2;
 
 interface PresentationState {
@@ -349,7 +350,7 @@ function buildSlides(): HTMLElement[] {
     article.querySelectorAll<HTMLHeadingElement>(":scope > h2")
   ).filter(h2 => !AGENDA_H2_PATTERN.test(getHeadingText(h2)));
   for (const h2 of h2s) {
-    slides.push(buildSectionSlide(h2));
+    slides.push(...buildSectionSlides(h2));
   }
 
   return slides;
@@ -432,9 +433,34 @@ function buildAgendaSlide(sourceDetails: HTMLDetailsElement): HTMLElement {
 }
 
 /**
+ * H2 섹션 슬라이드들: 기본적으로 해당 h2와 "다음 h2 직전까지의 형제 노드"를 복제.
+ * 번역 글의 `핵심 요약 → details → hr → 도입 본문` 패턴은 원문 구조를 바꾸지 않고
+ * 프레젠테이션 전용 제목 없는 슬라이드로 분리한다.
+ */
+function buildSectionSlides(h2: HTMLHeadingElement): HTMLElement[] {
+  const summaryIntroSplit = findSummaryIntroSplit(h2);
+  if (!summaryIntroSplit) {
+    return [buildSectionSlide(h2)];
+  }
+
+  const summarySlide = buildSectionSlide(h2, {
+    stopBefore: summaryIntroSplit.separator,
+  });
+  openDetails(summarySlide);
+  const introSlide = buildSyntheticSectionSlide(
+    summaryIntroSplit.firstIntroElement
+  );
+
+  return introSlide ? [summarySlide, introSlide] : [buildSectionSlide(h2)];
+}
+
+/**
  * H2 섹션 슬라이드: 해당 h2와 "다음 h2 직전까지의 형제 노드"를 복제.
  */
-function buildSectionSlide(h2: HTMLHeadingElement): HTMLElement {
+function buildSectionSlide(
+  h2: HTMLHeadingElement,
+  options: { stopBefore?: Element } = {}
+): HTMLElement {
   const slide = document.createElement("section");
   slide.className = "presentation-slide presentation-slide-section";
 
@@ -444,7 +470,11 @@ function buildSectionSlide(h2: HTMLHeadingElement): HTMLElement {
 
   // 형제 노드 순회: 다음 h2를 만나기 전까지 복제
   let sibling = h2.nextElementSibling;
-  while (sibling && sibling.tagName !== "H2") {
+  while (
+    sibling &&
+    sibling.tagName !== "H2" &&
+    sibling !== options.stopBefore
+  ) {
     // 목차 블록은 이미 별도 슬라이드로 처리되므로 제외
     if (isAgendaBlock(sibling)) {
       sibling = sibling.nextElementSibling;
@@ -457,6 +487,80 @@ function buildSectionSlide(h2: HTMLHeadingElement): HTMLElement {
 
   sanitizeSlide(slide);
   return slide;
+}
+
+function buildSyntheticSectionSlide(startElement: Element): HTMLElement | null {
+  const slide = document.createElement("section");
+  slide.className = "presentation-slide presentation-slide-section";
+
+  let hasContent = false;
+  let sibling: Element | null = startElement;
+  while (sibling && sibling.tagName !== "H2") {
+    if (isAgendaBlock(sibling)) {
+      sibling = sibling.nextElementSibling;
+      continue;
+    }
+
+    const clone = sibling.cloneNode(true) as Element;
+    slide.appendChild(clone);
+    hasContent = true;
+    sibling = sibling.nextElementSibling;
+  }
+
+  if (!hasContent) return null;
+
+  sanitizeSlide(slide);
+  return slide;
+}
+
+function openDetails(slide: HTMLElement): void {
+  slide.querySelectorAll<HTMLDetailsElement>("details").forEach(details => {
+    details.open = true;
+  });
+}
+
+function findSummaryIntroSplit(
+  h2: HTMLHeadingElement
+): { separator: Element; firstIntroElement: Element } | null {
+  if (!SUMMARY_H2_PATTERN.test(getHeadingText(h2))) return null;
+
+  let sawDetails = false;
+  let sibling = h2.nextElementSibling;
+  while (sibling && sibling.tagName !== "H2") {
+    if (isAgendaBlock(sibling)) {
+      sibling = sibling.nextElementSibling;
+      continue;
+    }
+
+    if (sibling.tagName === "DETAILS") {
+      sawDetails = true;
+    }
+
+    if (sawDetails && sibling.tagName === "HR") {
+      const firstIntroElement = findFirstIntroElement(
+        sibling.nextElementSibling
+      );
+      if (firstIntroElement) {
+        return { separator: sibling, firstIntroElement };
+      }
+      return null;
+    }
+
+    sibling = sibling.nextElementSibling;
+  }
+
+  return null;
+}
+
+function findFirstIntroElement(startElement: Element | null): Element | null {
+  let sibling = startElement;
+  while (sibling && sibling.tagName !== "H2") {
+    if (sibling.tagName !== "HR" && !isAgendaBlock(sibling)) {
+      return sibling;
+    }
+    sibling = sibling.nextElementSibling;
+  }
+  return null;
 }
 
 /**
