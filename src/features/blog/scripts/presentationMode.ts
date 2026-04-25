@@ -23,15 +23,24 @@ const AGENDA_SUMMARY_TEXT = "목차 보기";
  * astro.config.ts의 remark-collapse `test` 정규식과 의미 일치.
  */
 const AGENDA_H2_PATTERN = /^(table of contents|목차)$/i;
+// 정확히 "핵심 요약"인 H2만 분리 대상으로 삼는다. 이모지나 부제목이 붙으면 일반 섹션으로 둔다.
+const SUMMARY_H2_PATTERN = /^핵심 요약$/;
+const TLDR_SUMMARY_PATTERN = /TL;DR/i;
 const MIN_SLIDES = 2;
 
 interface PresentationState {
   overlay: HTMLElement;
   slides: HTMLElement[];
+  slideSourceH2s: Array<HTMLHeadingElement | null>;
   currentIndex: number;
   triggerButton: HTMLButtonElement;
   inertedElements: Element[];
   controller: AbortController;
+}
+
+interface BuiltSlides {
+  slides: HTMLElement[];
+  slideSourceH2s: Array<HTMLHeadingElement | null>;
 }
 
 let state: PresentationState | null = null;
@@ -111,7 +120,7 @@ export function initializePresentationMode(): () => void {
 
 /**
  * 실제 조립 가능한 슬라이드 개수를 미리 계산.
- * 타이틀(1) + 목차(0 or 1) + H2 개수.
+ * 타이틀(1) + 목차(0 or 1) + H2 섹션들. 핵심 요약은 도입 본문 분리 여부까지 반영한다.
  */
 function countPotentialSlides(): number {
   const article = document.getElementById("article");
@@ -119,9 +128,16 @@ function countPotentialSlides(): number {
 
   const hasH1 = !!document.querySelector("main h1");
   const hasAgenda = !!findAgendaDetails(article);
-  const h2Count = article.querySelectorAll(":scope > h2").length;
+  const sectionSlideCount = Array.from(
+    article.querySelectorAll<HTMLHeadingElement>(":scope > h2")
+  )
+    .filter(h2 => !AGENDA_H2_PATTERN.test(getHeadingText(h2)))
+    .reduce((count, h2) => {
+      const split = findSummaryIntroSplit(h2);
+      return count + (split?.firstIntroElement ? 2 : 1);
+    }, 0);
 
-  return (hasH1 ? 1 : 0) + (hasAgenda ? 1 : 0) + h2Count;
+  return (hasH1 ? 1 : 0) + (hasAgenda ? 1 : 0) + sectionSlideCount;
 }
 
 /**
@@ -130,7 +146,7 @@ function countPotentialSlides(): number {
 function openOverlay(triggerButton: HTMLButtonElement): void {
   if (state) return; // 이미 열림
 
-  const slides = buildSlides();
+  const { slides, slideSourceH2s } = buildSlides();
   if (slides.length < MIN_SLIDES) return;
 
   const overlay = document.createElement("div");
@@ -195,6 +211,7 @@ function openOverlay(triggerButton: HTMLButtonElement): void {
   state = {
     overlay,
     slides,
+    slideSourceH2s,
     currentIndex: 0,
     triggerButton,
     inertedElements,
@@ -216,30 +233,19 @@ function closeOverlay(): void {
     inertedElements,
     controller,
     currentIndex,
-    slides,
+    slideSourceH2s,
   } = state;
 
   controller.abort();
 
-  // 원래 페이지에서 해당 H2로 스크롤 복귀
-  // (타이틀=0, 목차=1?, 첫 H2 = 1 or 2)
-  const article = document.getElementById("article");
-  if (article) {
-    const h2s = article.querySelectorAll<HTMLHeadingElement>(":scope > h2");
-    // slides 순서: title + (agenda?) + h2들. currentIndex가 H2 섹션인 경우 스크롤.
-    const sectionStartIndex = slides.findIndex(s =>
-      s.classList.contains("presentation-slide-section")
-    );
-    if (sectionStartIndex !== -1 && currentIndex >= sectionStartIndex) {
-      const h2Index = currentIndex - sectionStartIndex;
-      const targetH2 = h2s[h2Index];
-      if (targetH2) {
-        // 스크롤은 overlay 제거 후 다음 tick에 실행 (layout 안정화)
-        requestAnimationFrame(() => {
-          targetH2.scrollIntoView({ block: "start", behavior: "instant" });
-        });
-      }
-    }
+  // 원래 페이지에서 현재 슬라이드가 유래한 H2로 스크롤 복귀.
+  // 합성 도입 슬라이드처럼 H2 하나가 여러 슬라이드를 만들 수 있어 인덱스 산술을 쓰지 않는다.
+  const targetH2 = slideSourceH2s[currentIndex];
+  if (targetH2) {
+    // 스크롤은 overlay 제거 후 다음 tick에 실행 (layout 안정화)
+    requestAnimationFrame(() => {
+      targetH2.scrollIntoView({ block: "start", behavior: "instant" });
+    });
   }
 
   overlay.remove();
@@ -327,18 +333,23 @@ function updateCounter(): void {
 /**
  * 슬라이드 배열 조립.
  */
-function buildSlides(): HTMLElement[] {
+function buildSlides(): BuiltSlides {
   const slides: HTMLElement[] = [];
+  const slideSourceH2s: Array<HTMLHeadingElement | null> = [];
 
   const titleSlide = buildTitleSlide();
-  if (titleSlide) slides.push(titleSlide);
+  if (titleSlide) {
+    slides.push(titleSlide);
+    slideSourceH2s.push(null);
+  }
 
   const article = document.getElementById("article");
-  if (!article) return slides;
+  if (!article) return { slides, slideSourceH2s };
 
   const agendaDetails = findAgendaDetails(article);
   if (agendaDetails) {
     slides.push(buildAgendaSlide(agendaDetails));
+    slideSourceH2s.push(null);
   }
 
   // remark-collapse는 `<h2>목차</h2>`를 DOM에 그대로 둠. Agenda 슬라이드로 이미
@@ -349,10 +360,12 @@ function buildSlides(): HTMLElement[] {
     article.querySelectorAll<HTMLHeadingElement>(":scope > h2")
   ).filter(h2 => !AGENDA_H2_PATTERN.test(getHeadingText(h2)));
   for (const h2 of h2s) {
-    slides.push(buildSectionSlide(h2));
+    const sectionSlides = buildSectionSlides(h2);
+    slides.push(...sectionSlides);
+    slideSourceH2s.push(...sectionSlides.map(() => h2));
   }
 
-  return slides;
+  return { slides, slideSourceH2s };
 }
 
 /**
@@ -432,9 +445,44 @@ function buildAgendaSlide(sourceDetails: HTMLDetailsElement): HTMLElement {
 }
 
 /**
+ * H2 섹션 슬라이드들: 기본적으로 해당 h2와 "다음 h2 직전까지의 형제 노드"를 복제.
+ * 번역 글의 `핵심 요약 → details → hr → 도입 본문` 패턴은 원문 구조를 바꾸지 않고
+ * 프레젠테이션 전용 제목 없는 슬라이드로 분리한다. 도입 본문이 비어 있으면 구분선 뒤를
+ * 버리고 요약 슬라이드만 만든다.
+ */
+function buildSectionSlides(h2: HTMLHeadingElement): HTMLElement[] {
+  const summaryIntroSplit = findSummaryIntroSplit(h2);
+  if (!summaryIntroSplit) {
+    return [buildSingleSectionSlide(h2)];
+  }
+
+  // separator(hr)는 요약과 도입을 나누는 경계일 뿐, 요약 슬라이드에는 포함하지 않는다.
+  const summarySlide = buildSingleSectionSlide(h2, {
+    stopBefore: summaryIntroSplit.separator,
+  });
+  openTldrDetailsIfPresent(summarySlide);
+
+  if (!summaryIntroSplit.firstIntroElement) {
+    return [summarySlide];
+  }
+
+  const introSlide = buildSyntheticSectionSlide(
+    summaryIntroSplit.firstIntroElement
+  );
+  if (!introSlide) {
+    return [summarySlide];
+  }
+
+  return [summarySlide, introSlide];
+}
+
+/**
  * H2 섹션 슬라이드: 해당 h2와 "다음 h2 직전까지의 형제 노드"를 복제.
  */
-function buildSectionSlide(h2: HTMLHeadingElement): HTMLElement {
+function buildSingleSectionSlide(
+  h2: HTMLHeadingElement,
+  options: { stopBefore?: Element } = {}
+): HTMLElement {
   const slide = document.createElement("section");
   slide.className = "presentation-slide presentation-slide-section";
 
@@ -442,21 +490,131 @@ function buildSectionSlide(h2: HTMLHeadingElement): HTMLElement {
   const h2Clone = h2.cloneNode(true) as HTMLHeadingElement;
   slide.appendChild(h2Clone);
 
-  // 형제 노드 순회: 다음 h2를 만나기 전까지 복제
-  let sibling = h2.nextElementSibling;
-  while (sibling && sibling.tagName !== "H2") {
-    // 목차 블록은 이미 별도 슬라이드로 처리되므로 제외
+  appendSiblingClones(slide, h2.nextElementSibling, {
+    stopBefore: options.stopBefore,
+  });
+
+  sanitizeSlide(slide);
+  return slide;
+}
+
+/**
+ * startElement부터 다음 H2 직전까지를 제목 없는 도입 본문 슬라이드로 만든다.
+ * 실질 콘텐츠가 없으면 호출부에서 도입 슬라이드를 생략할 수 있도록 null을 반환한다.
+ */
+function buildSyntheticSectionSlide(startElement: Element): HTMLElement | null {
+  const slide = document.createElement("section");
+  slide.className = "presentation-slide presentation-slide-section";
+
+  const hasContent = appendSiblingClones(slide, startElement);
+  if (!hasContent) return null;
+
+  sanitizeSlide(slide);
+  return slide;
+}
+
+/**
+ * startElement부터 섹션 경계까지 형제 노드를 복제해 slide에 추가한다.
+ * 반환값은 실제로 의미 있는 콘텐츠가 하나라도 포함됐는지 여부다.
+ */
+function appendSiblingClones(
+  slide: HTMLElement,
+  startElement: Element | null,
+  options: { stopBefore?: Element } = {}
+): boolean {
+  let hasContent = false;
+  let sibling = startElement;
+
+  // H2는 프레젠테이션 섹션의 경계이므로 합성 슬라이드도 다음 H2 앞에서 멈춘다.
+  while (
+    sibling &&
+    sibling.tagName !== "H2" &&
+    sibling !== options.stopBefore
+  ) {
     if (isAgendaBlock(sibling)) {
       sibling = sibling.nextElementSibling;
       continue;
     }
+
     const clone = sibling.cloneNode(true) as Element;
     slide.appendChild(clone);
+    hasContent ||= hasMeaningfulSlideContent(sibling);
     sibling = sibling.nextElementSibling;
   }
 
-  sanitizeSlide(slide);
-  return slide;
+  return hasContent;
+}
+
+/**
+ * 핵심 요약 슬라이드의 직계 details 중 TL;DR summary와 일치하는 항목만 펼친다.
+ * 중첩 details는 현재 번역 글 구조의 핵심 요약 대상이 아니므로 건드리지 않는다.
+ */
+function openTldrDetailsIfPresent(slide: HTMLElement): void {
+  const detailsElements = Array.from(
+    slide.querySelectorAll<HTMLDetailsElement>(":scope > details")
+  );
+  const details = detailsElements.find(detailsElement =>
+    TLDR_SUMMARY_PATTERN.test(
+      detailsElement.querySelector(":scope > summary")?.textContent ?? ""
+    )
+  );
+  if (details) details.open = true;
+}
+
+function findSummaryIntroSplit(
+  h2: HTMLHeadingElement
+): { separator: Element; firstIntroElement: Element | null } | null {
+  if (!SUMMARY_H2_PATTERN.test(getHeadingText(h2))) return null;
+
+  // details가 하나 이상 등장한 뒤 처음 만나는 hr만 요약/도입 경계로 인정한다.
+  // 여러 details가 있더라도 핵심 요약 블록 전체 뒤의 첫 구분선을 기준으로 분리한다.
+  let sawDetails = false;
+  let sibling = h2.nextElementSibling;
+  while (sibling && sibling.tagName !== "H2") {
+    if (isAgendaBlock(sibling)) {
+      sibling = sibling.nextElementSibling;
+      continue;
+    }
+
+    if (sibling.tagName === "DETAILS") {
+      sawDetails = true;
+    }
+
+    // details 없이 등장하는 hr은 일반 구분선일 수 있으므로 분리 기준으로 쓰지 않는다.
+    if (sawDetails && sibling.tagName === "HR") {
+      const firstIntroElement = findFirstIntroElement(
+        sibling.nextElementSibling
+      );
+      return { separator: sibling, firstIntroElement };
+    }
+
+    sibling = sibling.nextElementSibling;
+  }
+
+  return null;
+}
+
+function findFirstIntroElement(startElement: Element | null): Element | null {
+  let sibling = startElement;
+  while (sibling && sibling.tagName !== "H2") {
+    // 연속된 hr은 도입 본문이 아니라 구분선으로 보고, H2는 다음 섹션의 경계로 본다.
+    if (
+      sibling.tagName !== "HR" &&
+      !isAgendaBlock(sibling) &&
+      hasMeaningfulSlideContent(sibling)
+    ) {
+      return sibling;
+    }
+    sibling = sibling.nextElementSibling;
+  }
+  return null;
+}
+
+function hasMeaningfulSlideContent(element: Element): boolean {
+  if (element.textContent?.trim()) return true;
+  return !!element.querySelector(
+    "img, picture, video, audio, canvas, svg, iframe, table, pre"
+  );
 }
 
 /**

@@ -3,6 +3,17 @@ import { test, expect, type Page } from "@playwright/test";
 // 목차(## 목차)가 있는 번역 포스트 - Agenda 슬라이드 검증 가능
 const TEST_POST_SLUG = "translation/claude-skills-guide-part-4";
 const TEST_POST_URL = `/posts/${TEST_POST_SLUG}`;
+// 핵심 요약 → details → hr → 도입 본문 패턴을 가진 실제 번역 포스트.
+// 별도 fixture를 콘텐츠 컬렉션에 넣지 않기 위해 이 URL을 사용하므로,
+// 슬러그나 문서 구조가 바뀌면 이 테스트도 함께 갱신해야 한다.
+const SUMMARY_SPLIT_POST_URL =
+  "/posts/translation/migrating-off-nextjs-tanstack-start";
+// 실제 포스트를 쓰는 구조 기반 assertion에서 false positive를 줄이는 낮은 임계값.
+// 대상 포스트의 도입 본문은 이 값보다 충분히 길어, 구조가 바뀌면 선명하게 실패한다.
+const MIN_INTRO_TEXT_LENGTH = 50;
+const MIN_INTRO_BLOCK_TEXT_LENGTH = 20;
+const SUMMARY_SPLIT_STRUCTURE_HINT =
+  "SUMMARY_SPLIT_POST_URL의 핵심 요약/details/hr/도입 구조가 바뀌었는지 확인하세요.";
 
 /**
  * 프레젠테이션 버튼이 런타임에 노출될 때까지 대기.
@@ -138,6 +149,339 @@ test.describe("프레젠테이션 모드 - 기본 동작", () => {
     expect(sectionH2Texts.map(t => t.toLowerCase())).not.toContain(
       "table of contents"
     );
+  });
+
+  test("핵심 요약 뒤 도입 본문은 별도 슬라이드로 분리되어야 함", async ({
+    page,
+  }) => {
+    await page.goto(SUMMARY_SPLIT_POST_URL);
+    await waitForPresentationButton(page);
+    await page.locator('[data-button="presentation-start"]').click();
+
+    const summaryAndIntro = await page.evaluate(() => {
+      const sectionSlides = Array.from(
+        document.querySelectorAll<HTMLElement>(".presentation-slide-section")
+      );
+      const summaryIndex = sectionSlides.findIndex(
+        slide =>
+          slide.querySelector(":scope > h2")?.textContent?.trim() ===
+          "핵심 요약"
+      );
+      const summarySlide = sectionSlides[summaryIndex];
+      const introSlide = sectionSlides[summaryIndex + 1];
+
+      return {
+        summaryIndex,
+        summaryText: summarySlide?.textContent ?? "",
+        summaryDetailsOpen:
+          (summarySlide?.querySelector("details") as HTMLDetailsElement | null)
+            ?.open ?? false,
+        introHasHeading: introSlide?.querySelector(":scope > h2") !== null,
+        introText: introSlide?.textContent?.trim() ?? "",
+        introFirstBlockText:
+          introSlide
+            ?.querySelector(
+              ":scope > p, :scope > blockquote, :scope > ul, :scope > ol, :scope > pre, :scope > details, :scope > figure"
+            )
+            ?.textContent?.trim() ?? "",
+      };
+    });
+
+    expect(
+      summaryAndIntro.summaryIndex,
+      SUMMARY_SPLIT_STRUCTURE_HINT
+    ).toBeGreaterThanOrEqual(0);
+    expect(summaryAndIntro.summaryDetailsOpen).toBe(true);
+    expect(summaryAndIntro.introHasHeading).toBe(false);
+    expect(
+      summaryAndIntro.introText.length,
+      SUMMARY_SPLIT_STRUCTURE_HINT
+    ).toBeGreaterThan(MIN_INTRO_TEXT_LENGTH);
+    expect(
+      summaryAndIntro.introFirstBlockText.length,
+      SUMMARY_SPLIT_STRUCTURE_HINT
+    ).toBeGreaterThan(MIN_INTRO_BLOCK_TEXT_LENGTH);
+    expect(summaryAndIntro.summaryText).not.toContain(
+      summaryAndIntro.introFirstBlockText
+    );
+  });
+
+  test("제목 없는 도입 슬라이드에서 닫으면 핵심 요약 H2로 스크롤 복귀해야 함", async ({
+    page,
+  }) => {
+    await page.goto(SUMMARY_SPLIT_POST_URL);
+    await waitForPresentationButton(page);
+
+    await page.evaluate(() => {
+      const win = window as unknown as Window & {
+        __presentationScrollTargets: string[];
+      };
+      win.__presentationScrollTargets = [];
+      const originalScrollIntoView = Element.prototype.scrollIntoView;
+      Element.prototype.scrollIntoView = function (
+        this: Element,
+        arg?: boolean | ScrollIntoViewOptions
+      ) {
+        const clone = this.cloneNode(true) as HTMLElement;
+        clone.querySelectorAll(".heading-link").forEach(el => el.remove());
+        win.__presentationScrollTargets.push(clone.textContent?.trim() ?? "");
+        originalScrollIntoView.call(this, arg);
+      };
+    });
+
+    await page.locator('[data-button="presentation-start"]').click();
+
+    const introSlideIndex = await page.evaluate(() => {
+      const slides = Array.from(
+        document.querySelectorAll<HTMLElement>(".presentation-slide")
+      );
+      const summaryIndex = slides.findIndex(
+        slide =>
+          slide.classList.contains("presentation-slide-section") &&
+          slide.querySelector(":scope > h2")?.textContent?.trim() ===
+            "핵심 요약"
+      );
+      const introSlide = slides[summaryIndex + 1];
+      if (!introSlide) return -1;
+      return introSlide.querySelector(":scope > h2") === null
+        ? summaryIndex + 1
+        : -1;
+    });
+
+    expect(introSlideIndex, SUMMARY_SPLIT_STRUCTURE_HINT).toBeGreaterThan(0);
+
+    for (let i = 0; i < introSlideIndex; i += 1) {
+      await page.keyboard.press("ArrowRight");
+    }
+    await expect(page.locator(".presentation-counter")).toHaveText(
+      new RegExp(`^${introSlideIndex + 1} /`)
+    );
+
+    await page.keyboard.press("Escape");
+    await page.waitForFunction(() => {
+      const win = window as unknown as Window & {
+        __presentationScrollTargets?: string[];
+      };
+      return (win.__presentationScrollTargets?.length ?? 0) > 0;
+    });
+
+    const lastScrollTarget = await page.evaluate(() => {
+      const win = window as unknown as Window & {
+        __presentationScrollTargets?: string[];
+      };
+      return win.__presentationScrollTargets?.at(-1) ?? null;
+    });
+    expect(lastScrollTarget).toBe("핵심 요약");
+  });
+
+  test("핵심 요약 details가 TL;DR이 아니면 기본으로 열지 않아야 함", async ({
+    page,
+  }) => {
+    await page.goto(SUMMARY_SPLIT_POST_URL);
+    await waitForPresentationButton(page);
+
+    const mutated = await page.evaluate(() => {
+      const article = document.getElementById("article");
+      if (!article) return false;
+
+      const getHeadingText = (heading: HTMLHeadingElement) => {
+        const clone = heading.cloneNode(true) as HTMLElement;
+        clone.querySelectorAll(".heading-link").forEach(el => el.remove());
+        return clone.textContent?.trim() ?? "";
+      };
+      const summaryHeading = Array.from(
+        article.querySelectorAll<HTMLHeadingElement>(":scope > h2")
+      ).find(h2 => getHeadingText(h2) === "핵심 요약");
+      const summary = summaryHeading?.nextElementSibling?.querySelector(
+        ":scope > summary"
+      );
+      if (!summary) return false;
+
+      const walker = document.createTreeWalker(summary, NodeFilter.SHOW_TEXT);
+      let fallbackTextNode: Text | null = null;
+      let currentNode = walker.nextNode() as Text | null;
+      while (currentNode) {
+        if (currentNode.textContent?.trim()) {
+          fallbackTextNode ??= currentNode;
+          if (currentNode.textContent.includes("TL;DR")) {
+            currentNode.textContent = "요약 보기";
+            return !summary.textContent?.includes("TL;DR");
+          }
+        }
+        currentNode = walker.nextNode() as Text | null;
+      }
+
+      if (!fallbackTextNode) return false;
+      fallbackTextNode.textContent = "요약 보기";
+      return !summary.textContent?.includes("TL;DR");
+    });
+    expect(mutated, SUMMARY_SPLIT_STRUCTURE_HINT).toBe(true);
+
+    await page.locator('[data-button="presentation-start"]').click();
+
+    const summaryDetailsState = await page.evaluate(() => {
+      const sectionSlides = Array.from(
+        document.querySelectorAll<HTMLElement>(".presentation-slide-section")
+      );
+      const summaryIndex = sectionSlides.findIndex(
+        slide =>
+          slide.querySelector(":scope > h2")?.textContent?.trim() ===
+          "핵심 요약"
+      );
+      const summarySlide = sectionSlides[summaryIndex];
+
+      return {
+        summaryIndex,
+        summaryDetailsOpen:
+          (summarySlide?.querySelector("details") as HTMLDetailsElement | null)
+            ?.open ?? false,
+      };
+    });
+
+    expect(
+      summaryDetailsState.summaryIndex,
+      SUMMARY_SPLIT_STRUCTURE_HINT
+    ).toBeGreaterThanOrEqual(0);
+    expect(summaryDetailsState.summaryDetailsOpen).toBe(false);
+  });
+
+  test("핵심 요약 뒤 실질 도입 본문이 없으면 제목 없는 슬라이드를 만들지 않아야 함", async ({
+    page,
+  }) => {
+    await page.goto(SUMMARY_SPLIT_POST_URL);
+    await waitForPresentationButton(page);
+
+    const mutated = await page.evaluate(() => {
+      const article = document.getElementById("article");
+      if (!article) return false;
+
+      const getHeadingText = (heading: HTMLHeadingElement) => {
+        const clone = heading.cloneNode(true) as HTMLElement;
+        clone.querySelectorAll(".heading-link").forEach(el => el.remove());
+        return clone.textContent?.trim() ?? "";
+      };
+      const summaryHeading = Array.from(
+        article.querySelectorAll<HTMLHeadingElement>(":scope > h2")
+      ).find(h2 => getHeadingText(h2) === "핵심 요약");
+      if (!summaryHeading) return false;
+
+      let separator: Element | null = null;
+      let sibling = summaryHeading.nextElementSibling;
+      while (sibling && sibling.tagName !== "H2") {
+        if (sibling.tagName === "HR") {
+          separator = sibling;
+          break;
+        }
+        sibling = sibling.nextElementSibling;
+      }
+      if (!separator) return false;
+
+      const emptyParagraph = document.createElement("p");
+      separator.after(emptyParagraph);
+
+      let introSibling = emptyParagraph.nextElementSibling;
+      while (introSibling && introSibling.tagName !== "H2") {
+        const nextSibling = introSibling.nextElementSibling;
+        introSibling.remove();
+        introSibling = nextSibling;
+      }
+
+      return true;
+    });
+    expect(mutated, SUMMARY_SPLIT_STRUCTURE_HINT).toBe(true);
+
+    await page.locator('[data-button="presentation-start"]').click();
+
+    const slideAfterSummary = await page.evaluate(() => {
+      const sectionSlides = Array.from(
+        document.querySelectorAll<HTMLElement>(".presentation-slide-section")
+      );
+      const summaryIndex = sectionSlides.findIndex(
+        slide =>
+          slide.querySelector(":scope > h2")?.textContent?.trim() ===
+          "핵심 요약"
+      );
+      const summarySlide = sectionSlides[summaryIndex];
+      const nextSlide = sectionSlides[summaryIndex + 1];
+
+      return {
+        summaryHasDirectHr:
+          summarySlide?.querySelector(":scope > hr") !== null,
+        nextHeading:
+          nextSlide?.querySelector(":scope > h2")?.textContent?.trim() ?? null,
+        nextIsTitleless:
+          nextSlide !== undefined &&
+          nextSlide.querySelector(":scope > h2") === null,
+      };
+    });
+
+    expect(slideAfterSummary.summaryHasDirectHr).toBe(false);
+    expect(slideAfterSummary.nextIsTitleless).toBe(false);
+    expect(slideAfterSummary.nextHeading).not.toBeNull();
+  });
+
+  test("일반 H2 섹션은 제목 없는 슬라이드로 분리되지 않아야 함", async ({
+    page,
+  }) => {
+    await page.goto(TEST_POST_URL);
+    await waitForPresentationButton(page);
+
+    const ordinaryHeadingPair = await page.evaluate(() => {
+      const article = document.getElementById("article");
+      const getHeadingText = (heading: HTMLHeadingElement) => {
+        const clone = heading.cloneNode(true) as HTMLElement;
+        clone.querySelectorAll(".heading-link").forEach(el => el.remove());
+        return clone.textContent?.trim() ?? "";
+      };
+      const headings = Array.from(
+        article?.querySelectorAll<HTMLHeadingElement>(":scope > h2") ?? []
+      ).map(getHeadingText);
+      const headingIndex = headings.findIndex(
+        (text, index) =>
+          text !== "목차" && text !== "핵심 요약" && index < headings.length - 1
+      );
+
+      return headingIndex === -1
+        ? null
+        : {
+            heading: headings[headingIndex],
+            nextHeading: headings[headingIndex + 1],
+          };
+    });
+
+    expect(ordinaryHeadingPair).not.toBeNull();
+
+    await page.locator('[data-button="presentation-start"]').click();
+
+    const ordinarySlide = await page.evaluate(headingPair => {
+      if (!headingPair) return null;
+
+      const sectionSlides = Array.from(
+        document.querySelectorAll<HTMLElement>(".presentation-slide-section")
+      );
+      const targetIndex = sectionSlides.findIndex(
+        slide =>
+          slide.querySelector(":scope > h2")?.textContent?.trim() ===
+          headingPair.heading
+      );
+      const targetSlide = sectionSlides[targetIndex];
+      const nextSlide = sectionSlides[targetIndex + 1];
+
+      return {
+        targetIndex,
+        targetTextLength: targetSlide?.textContent?.trim().length ?? 0,
+        nextHeading:
+          nextSlide?.querySelector(":scope > h2")?.textContent?.trim() ?? null,
+        nextIsTitleless:
+          nextSlide !== undefined &&
+          nextSlide.querySelector(":scope > h2") === null,
+      };
+    }, ordinaryHeadingPair);
+
+    expect(ordinarySlide?.targetIndex).toBeGreaterThanOrEqual(0);
+    expect(ordinarySlide?.targetTextLength).toBeGreaterThan(50);
+    expect(ordinarySlide?.nextHeading).toBe(ordinaryHeadingPair!.nextHeading);
+    expect(ordinarySlide?.nextIsTitleless).toBe(false);
   });
 
   test("총 슬라이드가 MIN_SLIDES 미만이면 버튼을 눌러도 오버레이가 열리지 않아야 함", async ({
