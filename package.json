@@ -50,7 +50,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/parser": "^8.58.2",
+    "@typescript-eslint/parser": "^8.59.1",
     "eslint": "^10.2.1",
     "eslint-plugin-astro": "^1.7.0",
     "globals": "^17.5.0",
