@@ -75,6 +75,18 @@ export const projects: Project[] = [
     featured: true,
     category: "personal",
   },
+  {
+    title: "cc-youtube-sub",
+    description:
+      "YouTube 영상 자막을 Claude Code CLI로 실시간 번역해 영상 위에 한국어 오버레이로 보여주는 Tauri 데스크톱 앱. 청크 단위 사전 버퍼링과 SQLite 캐시로 긴 영상도 매끄럽게 처리.",
+    githubUrl: "https://github.com/CaesiumY/cc-youtube-sub",
+    ogImage:
+      "https://raw.githubusercontent.com/CaesiumY/cc-youtube-sub/main/docs/assets/readme/hero.png",
+    techStack: ["Tauri", "Rust", "React", "TypeScript", "Claude Code"],
+    date: new Date("2026-04-07"),
+    featured: true,
+    category: "personal",
+  },
   // 사이드 프로젝트
   {
     title: "Notion API 블로그",
