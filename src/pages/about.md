@@ -57,7 +57,7 @@ AI-Native 개발 워크플로우를 지향하며, 비즈니스 목표 달성을 
 
 ## Freelance Projects
 
-### 교육 지원 플랫폼 <a class="text-sm text-gray-500 dark:text-gray-400" href="https://chungbook-e.com/">chungbook-e.com</a>
+### 교육 지원 플랫폼 <a class="text-sm text-gray-500 dark:text-gray-400" href="https://www.chungbook-e.com/">chungbook-e.com</a>
 
 **유저 페이지 · 관리자 페이지 프론트엔드 개발 (2025.05 ~ 2026.01, 8개월)**
 
