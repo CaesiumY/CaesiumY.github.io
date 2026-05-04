@@ -42,7 +42,7 @@
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.8",
+    "@astrojs/check": "^0.9.9",
     "@iconify-json/ph": "^1.2.2",
     "@pagefind/default-ui": "^1.5.2",
     "@playwright/test": "^1.59.1",
@@ -50,16 +50,16 @@
     "@tailwindcss/typography": "^0.5.19",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/parser": "^8.58.2",
-    "eslint": "^10.2.1",
+    "@typescript-eslint/parser": "^8.59.2",
+    "eslint": "^10.3.0",
     "eslint-plugin-astro": "^1.7.0",
-    "globals": "^17.5.0",
+    "globals": "^17.6.0",
     "pagefind": "^1.5.2",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.7.2",
+    "prettier-plugin-tailwindcss": "^0.8.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.58.2"
+    "typescript-eslint": "^8.59.2"
   },
   "pnpm": {
     "overrides": {
