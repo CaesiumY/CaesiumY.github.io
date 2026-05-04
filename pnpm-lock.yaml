@@ -55,8 +55,8 @@ importers:
         specifier: ^1.11.20
         version: 1.11.20
       es-toolkit:
-        specifier: ^1.45.1
-        version: 1.45.1
+        specifier: ^1.46.1
+        version: 1.46.1
       react:
         specifier: ^19.2.5
         version: 19.2.5
@@ -1552,8 +1552,8 @@ packages:
   es-module-lexer@2.0.0:
     resolution: {integrity: sha512-5POEcUuZybH7IdmGsD8wlf0AI55wMecM9rVBTI/qEAy2c1kTOm3DjFYjrBdI2K3BaJjJYfYFeRtM0t9ssnRuxw==}
 
-  es-toolkit@1.45.1:
-    resolution: {integrity: sha512-/jhoOj/Fx+A+IIyDNOvO3TItGmlMKhtX8ISAHKE90c4b/k1tqaqEZ+uUqfpU8DMnW5cgNJv606zS55jGvza0Xw==}
+  es-toolkit@1.46.1:
+    resolution: {integrity: sha512-5eNtXOs3tbfxXOj04tjjseeWkRWaoCjdEI+96DgwzZoe6c9juL49pXlzAFTI72aWC9Y8p7168g6XIKjh7k6pyQ==}
 
   esbuild@0.27.7:
     resolution: {integrity: sha512-IxpibTjyVnmrIQo5aqNpCgoACA/dTKLTlhMHihVHhdkxKyPO1uBBthumT0rdHmcsk9uMonIWS0m4FljWzILh3w==}
@@ -4621,7 +4621,7 @@ snapshots:
 
   es-module-lexer@2.0.0: {}
 
-  es-toolkit@1.45.1: {}
+  es-toolkit@1.46.1: {}
 
   esbuild@0.27.7:
     optionalDependencies:

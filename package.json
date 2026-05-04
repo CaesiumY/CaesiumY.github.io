@@ -30,7 +30,7 @@
     "astro-icon": "^1.1.5",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.20",
-    "es-toolkit": "^1.45.1",
+    "es-toolkit": "^1.46.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "remark-collapse": "^0.1.2",
