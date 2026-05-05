@@ -24,7 +24,7 @@ AI-Native 개발 워크플로우를 지향하며, 비즈니스 목표 달성을 
 - **멀티 에이전트 파이프라인 설계**: SoC 기반 역할 분리와 이중 병렬 검증으로 6개 에이전트 번역 파이프라인 구축 ([관련 글](https://caesiumy.dev/posts/ai/ai-translation-orchestration))
 - **MCP 기반 개발 환경 통합**: Figma·Linear·Chrome DevTools 연동, 이슈→PR 워크플로우 자동화 ([Figma 연동](https://caesiumy.dev/posts/ai/mcp-figma-ui-generation) | [이슈→PR](https://caesiumy.dev/posts/ai/linear-mcp-slack-ticket-automation))
 - **도메인 특화 에이전트 구축**: 목적별 워크플로우 자동화 — 글 작성, 콘텐츠 검토, 면접 준비 ([관련 글](https://caesiumy.dev/posts/ai/claude-interview-agents))
-- **14주차 강의 슬라이드 자동 생성 파이프라인 구축**: 디자인 시스템 + PRD 기반 콘텐츠 정리 + 스크린샷 비주얼 검증으로 견적 2주 → 실제 3일 완료 ([관련 글](https://caesiumy.dev/posts/ai/ai-playwright-slide-generation-system))
+- **강의 슬라이드 자동 생성 파이프라인 구축**: 디자인 시스템 + PRD 기반 콘텐츠 정리 + 스크린샷 비주얼 검증으로 주어진 2주 → 실제 3일 완수 ([관련 글](https://caesiumy.dev/posts/ai/ai-playwright-slide-generation-system))
 - **오픈소스 Claude Code 알림 플러그인(dding-dong) 설계·배포**: 다중 세션 알림 부재로 인한 컴퓨터 상주 문제를 크로스 플랫폼(macOS/Linux/WSL) 훅 + Qwen Voice 목소리 클론 TTS로 해결, 마켓플레이스·스킬·랜딩 페이지 통합으로 진입 장벽 최소화 ([dding-dong](https://github.com/CaesiumY/dding-dong))
 
 ---
