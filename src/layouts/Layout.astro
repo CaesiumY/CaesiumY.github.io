@@ -18,6 +18,7 @@ export interface Props {
   scrollSmooth?: boolean;
   pageType?: "website" | "article" | "profile";
   tags?: string[];
+  robots?: string;
 }
 
 const {
@@ -30,6 +31,7 @@ const {
   scrollSmooth = false,
   pageType = "website",
   tags = [],
+  robots,
 } = Astro.props;
 
 // 키워드 병합: 페이지별 태그 + 사이트 기본 키워드
@@ -134,6 +136,7 @@ const structuredData =
     <meta name="description" content={description} />
     <meta name="author" content={SITE.author} />
     <meta name="keywords" content={keywords.join(", ")} />
+    {robots && <meta name="robots" content={robots} />}
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph / Facebook -->

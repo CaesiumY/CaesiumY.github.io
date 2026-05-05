@@ -24,7 +24,10 @@ export default defineConfig({
       },
     }),
     sitemap({
-      filter: page => SITE.showProjects || !page.endsWith("/projects"),
+      filter: page =>
+        (SITE.showProjects || !page.endsWith("/projects")) &&
+        !page.endsWith("/portfolio") &&
+        !page.endsWith("/portfolio/"),
     }),
   ],
   markdown: {

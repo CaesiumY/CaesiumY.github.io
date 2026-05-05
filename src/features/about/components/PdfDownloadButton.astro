@@ -2,6 +2,12 @@
 // PDF 인쇄/다운로드 플로팅 버튼
 // React 의존성 없이 순수 Astro + 인라인 스크립트로 구현
 import { Icon } from "astro-icon/components";
+
+export interface Props {
+  fileName?: string;
+}
+
+const { fileName = "윤창식_Resume" } = Astro.props;
 ---
 
 <button
@@ -13,7 +19,7 @@ import { Icon } from "astro-icon/components";
   <Icon name="ph:printer" class="size-6" size={24} />
 </button>
 
-<script is:inline>
+<script is:inline define:vars={{ fileName }}>
   (function () {
     const btn = document.getElementById("pdf-download-btn");
     if (!btn) return;
@@ -32,7 +38,7 @@ import { Icon } from "astro-icon/components";
       };
 
       // 인쇄 준비
-      document.title = "윤창식_Resume";
+      document.title = fileName;
       document.documentElement.setAttribute("data-theme", "light");
 
       // beforeprint: 다이얼로그 열리기 직전에 발생 → 인쇄 지원됨

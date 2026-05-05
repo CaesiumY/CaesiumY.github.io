@@ -1,0 +1,42 @@
+---
+import Header from "@/layouts/components/Header.astro";
+import Footer from "@/layouts/components/Footer.astro";
+import Breadcrumb from "@/layouts/components/Breadcrumb.astro";
+import Layout from "./Layout.astro";
+import { SITE } from "@/config";
+import PdfDownloadButton from "@/features/about/components/PdfDownloadButton.astro";
+
+export interface Props {
+  frontmatter: {
+    title: string;
+    description?: string;
+    robots?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout
+  title={`${frontmatter.title} | ${SITE.title}`}
+  description={frontmatter.description || SITE.authorDescription}
+  ogImage="/about/og.png"
+  pageType="profile"
+  robots={frontmatter.robots}
+>
+  <Header />
+  <Breadcrumb />
+  <main id="main-content">
+    <section
+      id="portfolio"
+      class="app-prose mb-28 max-w-app prose-img:border-0"
+      data-pagefind-ignore="all"
+    >
+      <slot />
+    </section>
+  </main>
+  <Footer />
+
+  <!-- PDF 다운로드 플로팅 버튼 -->
+  <PdfDownloadButton fileName="윤창식_Portfolio" />
+</Layout>
