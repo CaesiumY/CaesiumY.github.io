@@ -87,6 +87,16 @@ export const projects: Project[] = [
     featured: true,
     category: "personal",
   },
+  {
+    title: "rocky-skills",
+    description:
+      "Andy Weir 소설 『Project Hail Mary』의 외계 생명체 Rocky 화법을 LLM 출력 스타일로 패키징한 스킬 모음. 결과 우선·단편적·군더더기 없는 응답으로 출력 토큰을 평균 54% 절감하며, Claude Code·Cursor·Windsurf·Cline·Codex·Gemini CLI 등 6개 플랫폼을 지원한다.",
+    githubUrl: "https://github.com/CaesiumY/rocky-skills",
+    techStack: ["Claude Code", "AI Skills", "Python", "Shell", "PowerShell"],
+    date: new Date("2026-05-05"),
+    featured: true,
+    category: "personal",
+  },
   // 사이드 프로젝트
   {
     title: "Notion API 블로그",
