@@ -24,8 +24,8 @@ AI-Native 개발 워크플로우를 지향하며, 비즈니스 목표 달성을 
 - **멀티 에이전트 파이프라인 설계**: SoC 기반 역할 분리와 이중 병렬 검증으로 6개 에이전트 번역 파이프라인 구축 ([관련 글](https://caesiumy.dev/posts/ai/ai-translation-orchestration))
 - **MCP 기반 개발 환경 통합**: Figma·Linear·Chrome DevTools 연동, 이슈→PR 워크플로우 자동화 ([Figma 연동](https://caesiumy.dev/posts/ai/mcp-figma-ui-generation) | [이슈→PR](https://caesiumy.dev/posts/ai/linear-mcp-slack-ticket-automation))
 - **도메인 특화 에이전트 구축**: 목적별 워크플로우 자동화 — 글 작성, 콘텐츠 검토, 면접 준비 ([관련 글](https://caesiumy.dev/posts/ai/claude-interview-agents))
-- **강의 슬라이드 자동 생성**: 스크립트→PPTX 다단계 파이프라인으로 제작 시간 80% 단축 ([관련 글](https://caesiumy.dev/posts/ai/ai-playwright-slide-generation-system))
-- **Claude Code 플러그인 개발**: 훅 아키텍처 설계, 크로스 플랫폼 알림 자동화, 마켓플레이스 배포 ([dding-dong](https://github.com/CaesiumY/dding-dong))
+- **14주차 강의 슬라이드 자동 생성 파이프라인 구축**: 디자인 시스템 + PRD 기반 콘텐츠 정리 + 스크린샷 비주얼 검증으로 견적 2주 → 실제 3일 완료 ([관련 글](https://caesiumy.dev/posts/ai/ai-playwright-slide-generation-system))
+- **오픈소스 Claude Code 알림 플러그인(dding-dong) 설계·배포**: 다중 세션 알림 부재로 인한 컴퓨터 상주 문제를 크로스 플랫폼(macOS/Linux/WSL) 훅 + Qwen Voice 목소리 클론 TTS로 해결, 마켓플레이스·스킬·랜딩 페이지 통합으로 진입 장벽 최소화 ([dding-dong](https://github.com/CaesiumY/dding-dong))
 
 ---
 
@@ -45,7 +45,7 @@ AI-Native 개발 워크플로우를 지향하며, 비즈니스 목표 달성을 
 
 **프론트엔드 엔지니어 (2022.03 ~ 2023.09, 1년 6개월)**
 
-- **빌드/레거시 현대화**: CRA→Vite 마이그레이션으로 빌드 70% 단축, 클래스 컴포넌트 함수화
+- **CRA(craco)→Vite 마이그레이션 + 클래스→함수형 전환**: 비표준 빌드 환경 정리로 빌드 명령어 70% 단축(실측), Hook 유용성·React 발전 방향 근거로 팀 합의
 - **상태관리 최적화**: 복잡한 전역 상태로 인한 불필요 리렌더링 발견 → RTK + 슬라이스 분리로 해결
 - **실시간 데이터 동기화**: 기존 바이너리 값으로 운영 → gRPC/Protobuf 스트리밍으로 개선하여 타입 안정성과 가독성 확보
 - **코드 품질 체계화**: 파편화된 CSS 규칙으로 인한 협업 비효율 → 디자인 시스템 + 코드 리뷰 문화로 해결
@@ -61,9 +61,7 @@ AI-Native 개발 워크플로우를 지향하며, 비즈니스 목표 달성을 
 
 **유저 페이지 · 관리자 페이지 프론트엔드 개발 (2025.05 ~ 2026.01, 8개월)**
 
-- **개발 기간 50% 단축**: Cursor/Claude를 파이프라인 핵심으로 활용, 예상 공수 절반 달성
-- **MSW 기반 선제적 설계**: 협업 환경에서 API 완성을 기다리는 병목 해결, 스키마 역제안으로 일정 단축
-- **Orval 코드 제너레이터 도입**: 잦은 기획 변경에 대응 필요 → API 클라이언트 자동 생성으로 DX 혁신
+- **AI 기반 개발 파이프라인 도입(MSW 선제 스키마 + Orval/TanStack Query 자동 생성)**: 백엔드 의존성 제거로 예상 개발 공수 2개월 → 1개월 단축, 이후 유지보수 포함 8개월 계약 완수
 - **Linear 기반 진행도 체계화**: 이슈 트래커 도입 + MCP로 AI 기반 티켓 관리, 로드맵 제공으로 클라이언트 반복 문의 해소
 - **근거 기반 기술적 갈등 조율**: ID 타입 논쟁에서 의미론적 관점 + JS 숫자 한계 근거로 설득, 데이터 리스크 사전 방지
 
@@ -75,7 +73,7 @@ AI-Native 개발 워크플로우를 지향하며, 비즈니스 목표 달성을 
 - **Core 패키지 중앙 집중화**: 각 앱의 모노레포 특징 미활용 문제 발견 → 공통 로직 추출로 코드 재사용성 향상
 - **FSD 아키텍처 최적화**: 도입 초기 생산성 저하 발견 → 아키텍처는 목표가 아닌 수단으로 재정의, 커스텀 레이어 구조 적용
 - **선언적 폴백/에러 UI**: Suspense/ErrorBoundary로 컴포넌트 단위 에러 핸들링 및 폴백 UI 적용
-- **AI-Native 개발 환경 구축**: 다중 브랜드 확장 시 반복 개발 병목 발견 → Claude Code 플러그인(kotech-plugin) 제작, 기존 3주 소요 작업을 3일로 단축하는 파이프라인 구축
+- **AI 디자인 시스템 자동화 파이프라인 구축**: SSOT JSON 멱등성·스토리북 검증으로 AI 출력 안정화(20회→2회), 다중 브랜드 신규 출시 3주→3일
 
 ---
 
