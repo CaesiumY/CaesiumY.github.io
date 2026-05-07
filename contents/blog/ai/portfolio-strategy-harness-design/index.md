@@ -4,7 +4,7 @@ description: "포트폴리오 작성에 의사결정 주체를 분리한 4-Phase
 pubDatetime: 2026-05-07T00:00:00Z
 tags: ["ai", "claude-code", "agent", "workflow", "pipeline", "portfolio"]
 draft: false
-featured: false
+featured: true
 ---
 
 ## 목차
