@@ -100,6 +100,10 @@ AI-Native 개발 워크플로우를 지향하며, 비즈니스 목표 달성을 
 
 ## Side Projects
 
+### [ko/design.md](https://www.getdesign.kr/) (2026.05)
+
+- 한국 주요 서비스(토스·배달의민족·원티드 등)의 디자인 시스템을 LLM 프롬프트 컨텍스트용 마크다운 카탈로그로 정리, 한 번의 클릭으로 design.md 전체 복사 지원
+
 ### [dding-dong](https://caesiumy.dev/dding-dong/) (2026.02)
 
 - 크로스 플랫폼(macOS/Linux/WSL) 사운드·OS 알림 및 AI 음성 합성(TTS) 커스텀 팩 시스템 구축

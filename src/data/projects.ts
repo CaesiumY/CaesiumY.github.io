@@ -97,6 +97,17 @@ export const projects: Project[] = [
     featured: true,
     category: "personal",
   },
+  {
+    title: "ko/design.md",
+    description:
+      "한국 주요 서비스(토스·배달의민족·원티드·KRDS 등)의 디자인 시스템을 LLM 프롬프트 컨텍스트용 마크다운으로 정리한 오픈 카탈로그. 한 번의 클릭으로 design.md 전체 복사 지원.",
+    githubUrl: "https://github.com/CaesiumY/ko-design-md",
+    liveUrl: "https://www.getdesign.kr/",
+    techStack: ["TanStack Start", "TypeScript", "Vite", "Satori"],
+    date: new Date("2026-05-10"),
+    featured: true,
+    category: "personal",
+  },
   // 사이드 프로젝트
   {
     title: "Notion API 블로그",
