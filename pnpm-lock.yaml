@@ -19,7 +19,7 @@ overrides:
   astro>picomatch: 4.0.4
   lodash: ^4.17.23
   h3: ^1.15.9
-  fast-xml-parser: ^5.5.7
+  fast-xml-parser: ^5.8.0
   smol-toml: ^1.6.1
   yaml: ^2.8.3
   devalue: ^5.8.1
