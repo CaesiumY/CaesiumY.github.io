@@ -23,6 +23,10 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# Obsidian vault 및 Claudian(Obsidian용 Claude 플러그인) 설정 — contents/ 편집 도구가 생성
+.obsidian/
+.claudian/
+
 # pagefind
 public/pagefind
 
