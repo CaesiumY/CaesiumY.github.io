@@ -23,6 +23,10 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# Obsidian vault & Claudian 설정 (contents/ 편집 도구)
+.obsidian/
+.claudian/
+
 # pagefind
 public/pagefind
 
