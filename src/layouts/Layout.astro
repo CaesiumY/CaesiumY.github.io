@@ -40,7 +40,8 @@ const keywords = tags.length > 0 ? tags : SITE.keywords;
 const socialImageURL = new URL(ogImage, Astro.url);
 
 // noindex 페이지는 검색엔진이 색인하지 않으므로 구조화 데이터를 싣지 않는다
-const noindex = robots?.includes("noindex") ?? false;
+// robots 디렉티브는 대소문자를 구분하지 않으며 none = noindex + nofollow와 동등
+const noindex = /noindex|none/i.test(robots ?? "");
 
 // 페이지 타입에 따른 JSON-LD 구조화 데이터
 const structuredData = noindex
