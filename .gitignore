@@ -46,3 +46,4 @@ test-results/
 .worktrees/
 .agents/skills/*-workspace/
 .agents/skills-workspace/
+.gstack/
