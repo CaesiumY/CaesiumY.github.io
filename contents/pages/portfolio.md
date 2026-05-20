@@ -1,5 +1,4 @@
 ---
-layout: ../layouts/PortfolioLayout.astro
 title: "포트폴리오"
 robots: "noindex, nofollow"
 ---

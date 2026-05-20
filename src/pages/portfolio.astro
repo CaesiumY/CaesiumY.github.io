@@ -1,0 +1,14 @@
+---
+import { getEntry, render } from "astro:content";
+import PortfolioLayout from "@/layouts/PortfolioLayout.astro";
+
+const entry = await getEntry("pages", "portfolio");
+if (!entry) {
+  throw new Error("Content collection entry 'pages/portfolio' not found");
+}
+const { Content } = await render(entry);
+---
+
+<PortfolioLayout frontmatter={entry.data}>
+  <Content />
+</PortfolioLayout>
