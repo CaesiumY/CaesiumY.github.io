@@ -39,9 +39,14 @@ const keywords = tags.length > 0 ? tags : SITE.keywords;
 
 const socialImageURL = new URL(ogImage, Astro.url);
 
+// noindex 페이지는 검색엔진이 색인하지 않으므로 구조화 데이터를 싣지 않는다
+// robots 디렉티브는 대소문자를 구분하지 않으며 none = noindex + nofollow와 동등
+const noindex = /noindex|none/i.test(robots ?? "");
+
 // 페이지 타입에 따른 JSON-LD 구조화 데이터
-const structuredData =
-  pageType === "article"
+const structuredData = noindex
+  ? null
+  : pageType === "article"
     ? {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
@@ -68,6 +73,7 @@ const structuredData =
           name: SITE.author,
           alternateName: SITE.authorEn,
           description: SITE.authorDescription,
+          // 인물의 정규 프로필 페이지(고정값). 현재 페이지 canonical이 아님.
           url: `${SITE.website}/about`,
           image: `${socialImageURL}`,
           sameAs: [SITE.social.github, SITE.social.linkedin],
@@ -187,11 +193,15 @@ const structuredData =
     <meta property="twitter:image" content={socialImageURL} />
 
     <!-- Google JSON-LD Structured data -->
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify(structuredData)}
-    />
+    {
+      structuredData && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(structuredData)}
+        />
+      )
+    }
 
     <!-- Enable RSS feed auto-discovery  -->
     <!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery -->
