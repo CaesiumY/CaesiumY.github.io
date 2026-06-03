@@ -12,6 +12,9 @@ on:
 
 jobs:
   claude-review:
+    # Dependabot이 트리거한 실행은 read-only 토큰이라 secrets(CLAUDE_CODE_OAUTH_TOKEN)에
+    # 접근할 수 없어 인증 단계에서 항상 실패한다. Dependabot PR에서는 이 잡을 건너뛴다.
+    if: github.actor != 'dependabot[bot]'
     # Optional: Filter by PR author
     # if: |
     #   github.event.pull_request.user.login == 'external-contributor' ||
