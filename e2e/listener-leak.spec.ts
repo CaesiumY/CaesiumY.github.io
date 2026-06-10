@@ -1,29 +1,38 @@
 import { test, expect, type Page } from "@playwright/test";
+import { TEST_POST_URL } from "./fixtures/test-posts";
 
 declare global {
   interface Window {
     /** 테스트 스텁: (타겟:타입)별 현재 등록된 리스너 수 스냅샷 */
     __listenerCounts?: () => Record<string, number>;
+    /** 테스트 스텁: astro:page-load 발생 횟수 (풀 로드마다 0으로 리셋) */
+    __pageLoadCount?: number;
+    /** waitForListenerCountsStable의 직전 폴링 샘플 */
+    __lastCountsSample?: string;
   }
 }
 
 const STORAGE_KEY = "blog-scroll-positions";
 
-// 테스트용 블로그 포스트 (continue-reading.spec.ts와 동일 — 이전/다음 글이 있는 긴 글)
-const TEST_POST_SLUG = "ai/claude-code-token-burning-session-retrospect";
-const TEST_POST_URL = `/posts/${TEST_POST_SLUG}`;
-
 /**
  * EventTarget.prototype을 래핑해 영속 타겟(document, MediaQueryList)의
- * 리스너를 Set으로 추적하는 스텁 주입.
+ * 리스너를 Set으로 추적하는 스텁 + astro:page-load 카운터 주입.
  *
  * - getEventListeners는 CDP 전용이라 사용 불가 → window에 카운터 노출 방식
  * - AbortSignal 기반 해제(abort)와 removeEventListener 모두 추적
  * - Set.delete는 멱등이라 abort+remove 중복 해제에도 안전
  * - View Transitions 스왑에서는 window가 유지되므로 스텁과 카운터가 살아남음
+ * - page-load 카운터는 고정 시간 대기 없이 "스왑 완료 + 동기 초기화 완료"를
+ *   결정론적으로 감지하기 위한 신호 (디스패치가 동기라, 폴링이 증가를 관측한
+ *   시점엔 모든 astro:page-load 핸들러 실행이 끝나 있음)
  */
-async function installListenerTracker(page: Page) {
+async function installTestInstrumentation(page: Page) {
   await page.addInitScript(() => {
+    window.__pageLoadCount = 0;
+    document.addEventListener("astro:page-load", () => {
+      window.__pageLoadCount = (window.__pageLoadCount ?? 0) + 1;
+    });
+
     const counts = new Map<string, Set<unknown>>();
 
     const keyFor = (target: EventTarget, type: string): string | null => {
@@ -93,13 +102,45 @@ async function installListenerTracker(page: Page) {
   });
 }
 
-/**
- * View Transitions 스왑 후 astro:page-load 초기화까지 대기.
- * VT 스왑은 Playwright load state와 무관하므로 고정 대기를 사용.
- */
-async function waitForPageSettled(page: Page) {
+/** 초기 풀 로드 후 첫 astro:page-load 발생(동기 초기화 완료)까지 대기 */
+async function waitForInitialPageLoad(page: Page) {
   await page.waitForSelector("main", { state: "visible" });
-  await page.waitForTimeout(800);
+  await page.waitForFunction(() => (window.__pageLoadCount ?? 0) >= 1);
+}
+
+/**
+ * View Transitions 네비게이션을 트리거하고 다음 astro:page-load 완료까지 대기.
+ * 풀 로드가 끼어들면 카운터가 리셋돼 조건이 성립하지 않으므로,
+ * "VT 경로를 탔다"는 사실 자체도 함께 검증된다.
+ */
+async function withViewTransition(page: Page, action: () => Promise<void>) {
+  const before = await page.evaluate(() => window.__pageLoadCount ?? 0);
+  await action();
+  await page.waitForFunction(
+    prev => (window.__pageLoadCount ?? 0) > prev,
+    before
+  );
+}
+
+/**
+ * 추적 카운트가 연속 두 폴링 샘플(150ms 간격)에서 동일해질 때까지 대기.
+ * client:only 아일랜드(React)의 비동기 마운트가 등록하는 리스너까지
+ * 측정 전에 흡수해, 측정 시점 차이로 인한 플레이키를 방지한다.
+ */
+async function waitForListenerCountsStable(page: Page) {
+  await page.evaluate(() => {
+    delete window.__lastCountsSample;
+  });
+  await page.waitForFunction(
+    () => {
+      const current = JSON.stringify(window.__listenerCounts?.() ?? {});
+      const previous = window.__lastCountsSample;
+      window.__lastCountsSample = current;
+      return previous === current;
+    },
+    undefined,
+    { polling: 150 }
+  );
 }
 
 /** 스크롤 가능 높이의 50% 지점으로 즉시 스크롤 (back-to-top 가시성 임계 30% 초과) */
@@ -125,14 +166,31 @@ async function gotoNeighborPost(
   const postPath = new URL(page.url()).pathname;
   const navLink = page.locator("a", { hasText: /이전 글|다음 글/ }).first();
   await expect(navLink).toBeVisible();
-  await navLink.click();
-  await page.waitForURL(url => url.pathname !== postPath);
-  await waitForPageSettled(page);
+  await withViewTransition(page, async () => {
+    await navLink.click();
+    await page.waitForURL(url => url.pathname !== postPath);
+  });
   return { postPath, neighborPath: new URL(page.url()).pathname };
 }
 
+/** 히스토리 이동(뒤로/앞으로)을 VT 스왑으로 수행하고 도착 경로를 확인 */
+async function historyNavigate(
+  page: Page,
+  direction: "back" | "forward",
+  expectedPath: string
+) {
+  await withViewTransition(page, async () => {
+    if (direction === "back") {
+      await page.goBack();
+    } else {
+      await page.goForward();
+    }
+    await page.waitForURL(url => url.pathname === expectedPath);
+  });
+}
+
 test.beforeEach(async ({ page }) => {
-  await installListenerTracker(page);
+  await installTestInstrumentation(page);
   // 풀 로드마다 "이어 읽기" 저장소 초기화 (토스트/스크롤 복원 간섭 차단)
   await page.addInitScript(key => {
     try {
@@ -146,26 +204,25 @@ test.beforeEach(async ({ page }) => {
 test.describe("View Transitions 리스너 수명", () => {
   test("글↔글 왕복 후 영속 타겟 리스너 수가 늘지 않는다", async ({ page }) => {
     await page.goto(TEST_POST_URL);
-    await waitForPageSettled(page);
+    await waitForInitialPageLoad(page);
+
+    // 워밍업 왕복: 베이스라인을 "스왑으로 도착한 테스트 포스트" 상태로 만들어
+    // 본 측정과 동일 조건으로 맞추고, 첫 스왑에서만 발생하는 일회성 등록을 흡수
+    const { postPath, neighborPath } = await gotoNeighborPost(page);
+    await historyNavigate(page, "back", postPath);
+
+    await waitForListenerCountsStable(page);
     const baseline = await page.evaluate(() => window.__listenerCounts!());
 
-    const { postPath, neighborPath } = await gotoNeighborPost(page);
-
-    // 글↔글 왕복 — popstate도 ClientRouter가 가로채 View Transitions 스왑이 됨
+    // 글↔글 왕복 3회 — popstate도 ClientRouter가 가로채 View Transitions 스왑이 됨
     for (let round = 0; round < 3; round++) {
-      await page.goBack();
-      await page.waitForURL(url => url.pathname === postPath);
-      await waitForPageSettled(page);
-
-      if (round < 2) {
-        await page.goForward();
-        await page.waitForURL(url => url.pathname === neighborPath);
-        await waitForPageSettled(page);
-      }
+      await historyNavigate(page, "forward", neighborPath);
+      await historyNavigate(page, "back", postPath);
     }
 
-    // 첫 진입 시점과 동일해야 함 (절대값이 아닌 불변량 비교 —
+    // 베이스라인과 동일해야 함 (절대값이 아닌 불변량 비교 —
     // 다른 컴포넌트가 등록하는 리스너 수와 무관하게 누적만 검출)
+    await waitForListenerCountsStable(page);
     const final = await page.evaluate(() => window.__listenerCounts!());
     expect(final).toEqual(baseline);
   });
@@ -174,7 +231,7 @@ test.describe("View Transitions 리스너 수명", () => {
     page,
   }) => {
     await page.goto(TEST_POST_URL);
-    await waitForPageSettled(page);
+    await waitForInitialPageLoad(page);
 
     const container = page.locator("#btt-btn-container");
     await expect(container).toHaveClass(/opacity-0/);
@@ -198,15 +255,13 @@ test.describe("View Transitions 리스너 수명", () => {
     page,
   }) => {
     await page.goto(TEST_POST_URL);
-    await waitForPageSettled(page);
+    await waitForInitialPageLoad(page);
 
     const { postPath } = await gotoNeighborPost(page);
 
     // 복귀 전 저장소 정리 — "이어 읽기" 토스트가 버튼을 가리지 않도록
     await clearScrollStorage(page);
-    await page.goBack();
-    await page.waitForURL(url => url.pathname === postPath);
-    await waitForPageSettled(page);
+    await historyNavigate(page, "back", postPath);
 
     // 진행률 바 재초기화 확인 (멱등 가드의 리셋 누락 회귀 방지)
     await expect(page.locator("#myBar")).toHaveCount(1);
@@ -228,7 +283,7 @@ test.describe("View Transitions 리스너 수명", () => {
     await context.grantPermissions(["clipboard-read", "clipboard-write"]);
 
     await page.goto(TEST_POST_URL);
-    await waitForPageSettled(page);
+    await waitForInitialPageLoad(page);
 
     // 첫 글: 버튼 동작 확인 (성공/실패 어느 경로든 피드백 opacity=1)
     const feedback = page.locator("#copy-feedback");
@@ -249,7 +304,7 @@ test.describe("모바일 메뉴 (Navigation 리스너 검증)", () => {
 
   test("토글·외부 클릭·Escape 닫기가 왕복 후에도 정상", async ({ page }) => {
     await page.goto(TEST_POST_URL);
-    await waitForPageSettled(page);
+    await waitForInitialPageLoad(page);
 
     const menuBtn = page.locator("[data-menu-btn]");
     const menuItems = page.locator("[data-menu-items]");
@@ -268,9 +323,7 @@ test.describe("모바일 메뉴 (Navigation 리스너 검증)", () => {
 
     // 왕복 후에도 동일 동작 (재바인딩 회귀 방지)
     const { postPath } = await gotoNeighborPost(page);
-    await page.goBack();
-    await page.waitForURL(url => url.pathname === postPath);
-    await waitForPageSettled(page);
+    await historyNavigate(page, "back", postPath);
 
     await menuBtn.click();
     await expect(menuItems).toHaveAttribute("data-state", "open");
