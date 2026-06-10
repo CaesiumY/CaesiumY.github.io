@@ -115,7 +115,10 @@ import { Icon } from "astro-icon/components";
     }
   }
 
-  // 초기 로드 + View Transitions 스왑 모두 커버
+  // 초기 로드 + View Transitions 스왑 모두 커버.
+  // astro:page-load는 초기 로드에도 발생해 직접 호출과 겹치지만(가드가 1회 바인딩 보장),
+  // ClientRouter 부재·로드 타이밍과 무관하게 동작을 보장하는 의도적 이중 경로다.
+  // PostDetails·BackButton과 동일 컨벤션이므로 직접 호출을 제거하지 말 것.
   initShareLinks();
   document.addEventListener("astro:page-load", initShareLinks);
 </script>

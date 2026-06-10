@@ -133,7 +133,9 @@ async function waitForListenerCountsStable(page: Page) {
   });
   await page.waitForFunction(
     () => {
-      const current = JSON.stringify(window.__listenerCounts?.() ?? {});
+      // 스텁 누락 시 ?.()는 "{}"끼리 비교돼 조용히 통과하므로, 측정부와 동일하게
+      // non-null 단언을 써서 시끄럽게 실패하도록 통일
+      const current = JSON.stringify(window.__listenerCounts!());
       const previous = window.__lastCountsSample;
       window.__lastCountsSample = current;
       return previous === current;
