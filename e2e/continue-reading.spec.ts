@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { TEST_POST_SLUG, TEST_POST_URL } from "./fixtures/test-posts";
 
 declare global {
   interface Window {
@@ -11,10 +12,6 @@ declare global {
 }
 
 const STORAGE_KEY = "blog-scroll-positions";
-
-// 테스트용 블로그 포스트 (slug frontmatter 없음 - URL과 localStorage 키 일치)
-const TEST_POST_SLUG = "ai/claude-code-token-burning-session-retrospect";
-const TEST_POST_URL = `/posts/${TEST_POST_SLUG}`;
 
 /**
  * localStorage에 스크롤 위치 저장

@@ -157,28 +157,36 @@ const menuItemBase =
 </nav>
 
 <script>
+  // 핸들러가 클로저 대신 매번 현재 페이지 DOM을 조회하도록 하는 헬퍼.
+  // View Transitions 스왑으로 교체된 옛 노드(detached)를 참조하지 않기 위함.
+  function getMenuElements() {
+    return {
+      menuBtn: document.querySelector<HTMLButtonElement>("[data-menu-btn]"),
+      menuItems: document.querySelector<HTMLUListElement>("[data-menu-items]"),
+    };
+  }
+
+  function openMenu() {
+    const { menuBtn, menuItems } = getMenuElements();
+    menuItems?.setAttribute("data-state", "open");
+    menuBtn?.setAttribute("aria-expanded", "true");
+    menuBtn?.setAttribute("aria-label", "메뉴 닫기");
+  }
+
+  function closeMenu() {
+    const { menuBtn, menuItems } = getMenuElements();
+    menuItems?.setAttribute("data-state", "closed");
+    menuBtn?.setAttribute("aria-expanded", "false");
+    menuBtn?.setAttribute("aria-label", "메뉴 열기");
+  }
+
   function toggleNav() {
-    const menuBtn =
-      document.querySelector<HTMLButtonElement>("[data-menu-btn]");
-    const menuItems =
-      document.querySelector<HTMLUListElement>("[data-menu-items]");
+    const { menuBtn } = getMenuElements();
+    if (!menuBtn) return;
 
-    if (!menuBtn || !menuItems) return;
-
+    // 버튼은 스왑마다 새 DOM으로 교체되므로 dataset 가드가 페이지당 1회 바인딩을 보장
     if (menuBtn.dataset.toggleNavSetup) return;
     menuBtn.dataset.toggleNavSetup = "true";
-
-    function openMenu() {
-      menuItems?.setAttribute("data-state", "open");
-      menuBtn?.setAttribute("aria-expanded", "true");
-      menuBtn?.setAttribute("aria-label", "메뉴 닫기");
-    }
-
-    function closeMenu() {
-      menuItems?.setAttribute("data-state", "closed");
-      menuBtn?.setAttribute("aria-expanded", "false");
-      menuBtn?.setAttribute("aria-label", "메뉴 열기");
-    }
 
     // 메뉴 버튼 클릭
     menuBtn.addEventListener("click", e => {
@@ -190,37 +198,43 @@ const menuItemBase =
         openMenu();
       }
     });
-
-    // 외부 클릭 시 닫기
-    document.addEventListener("click", e => {
-      const isOpen = menuBtn?.getAttribute("aria-expanded") === "true";
-      if (!isOpen) return;
-
-      const target = e.target as Node;
-      if (!menuItems?.contains(target) && !menuBtn?.contains(target)) {
-        closeMenu();
-      }
-    });
-
-    // Escape 키로 닫기
-    document.addEventListener("keydown", e => {
-      if (
-        e.key === "Escape" &&
-        menuBtn?.getAttribute("aria-expanded") === "true"
-      ) {
-        closeMenu();
-        menuBtn?.focus();
-      }
-    });
-
-    // 데스크톱 전환 시 상태 초기화
-    const desktopQuery = window.matchMedia("(min-width: 640px)");
-    desktopQuery.addEventListener("change", (e: MediaQueryListEvent) => {
-      if (e.matches) {
-        closeMenu();
-      }
-    });
   }
+
+  // 아래 리스너들의 타겟(document, MediaQueryList)은 스왑에도 살아남는 영속 객체라,
+  // toggleNav 안에서 등록하면 페이지 전환마다 누적된다. 모듈 스크립트는 세션당
+  // 1회만 실행되므로 최상위에서 한 번만 등록한다.
+
+  // 외부 클릭 시 닫기
+  document.addEventListener("click", e => {
+    const { menuBtn, menuItems } = getMenuElements();
+    const isOpen = menuBtn?.getAttribute("aria-expanded") === "true";
+    if (!isOpen) return;
+
+    const target = e.target as Node;
+    if (!menuItems?.contains(target) && !menuBtn?.contains(target)) {
+      closeMenu();
+    }
+  });
+
+  // Escape 키로 닫기
+  document.addEventListener("keydown", e => {
+    const { menuBtn } = getMenuElements();
+    if (
+      e.key === "Escape" &&
+      menuBtn?.getAttribute("aria-expanded") === "true"
+    ) {
+      closeMenu();
+      menuBtn?.focus();
+    }
+  });
+
+  // 데스크톱 전환 시 상태 초기화
+  const desktopQuery = window.matchMedia("(min-width: 640px)");
+  desktopQuery.addEventListener("change", (e: MediaQueryListEvent) => {
+    if (e.matches) {
+      closeMenu();
+    }
+  });
 
   toggleNav();
   document.addEventListener("astro:after-swap", toggleNav);

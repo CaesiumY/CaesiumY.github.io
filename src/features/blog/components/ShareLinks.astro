@@ -37,12 +37,22 @@ import { Icon } from "astro-icon/components";
 </div>
 
 <script>
-  const copyButton = document.getElementById("copy-url-btn");
-  const feedback = document.getElementById("copy-feedback");
-  const copyIcon = document.getElementById("copy-icon");
-  const checkIcon = document.getElementById("check-icon");
+  // 모듈 스크립트는 세션당 1회만 실행된다. 모듈 스코프에서 요소를 잡아 바인딩하면
+  // View Transitions 스왑 이후의 새 버튼은 리스너가 없고(무반응), 모듈 스코프 참조가
+  // 첫 페이지의 detached 노드를 세션 내내 붙잡는다. 페이지마다 재초기화한다.
+  function initShareLinks() {
+    const copyButton = document.getElementById("copy-url-btn");
+    const feedback = document.getElementById("copy-feedback");
+    const copyIcon = document.getElementById("copy-icon");
+    const checkIcon = document.getElementById("check-icon");
 
-  if (copyButton && feedback && copyIcon && checkIcon) {
+    if (!copyButton || !feedback || !copyIcon || !checkIcon) return;
+
+    // 초기 로드 시 직접 호출 + astro:page-load 이중 실행 대비 (버튼은 스왑마다
+    // 새 DOM이라 가드가 자연 리셋됨)
+    if (copyButton.dataset.copyUrlInitialized) return;
+    copyButton.dataset.copyUrlInitialized = "true";
+
     copyButton.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(window.location.href);
@@ -104,4 +114,11 @@ import { Icon } from "astro-icon/components";
       }
     }
   }
+
+  // 초기 로드 + View Transitions 스왑 모두 커버.
+  // astro:page-load는 초기 로드에도 발생해 직접 호출과 겹치지만(가드가 1회 바인딩 보장),
+  // ClientRouter 부재·로드 타이밍과 무관하게 동작을 보장하는 의도적 이중 경로다.
+  // PostDetails·BackButton과 동일 컨벤션이므로 직접 호출을 제거하지 말 것.
+  initShareLinks();
+  document.addEventListener("astro:page-load", initShareLinks);
 </script>
