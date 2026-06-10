@@ -10,9 +10,10 @@ Caesiumy's personal blog website built with Astro and AstroPaper template. This 
 
 ### AstroPaper Template
 - **Template**: [AstroPaper v5.5.0](https://github.com/satnaing/astro-paper)
-- **Framework**: Astro v5.12.0 (SSG)
-- **Styling**: TailwindCSS v4.1.11
-- **Type Checking**: TypeScript v5.8.3
+- **Framework**: Astro v6 (SSG) — exact versions live in `package.json`
+- **Markdown**: remark/rehype plugins are passed via `markdown.processor: unified({...})` from `@astrojs/markdown-remark` (Astro 6.4+ style, see `astro.config.ts`)
+- **Styling**: TailwindCSS v4
+- **Type Checking**: TypeScript v6
 - **Search**: Pagefind (static search)
 
 ### Core Features
@@ -65,16 +66,19 @@ CaesiumY.github.io/
 
 ### Blog Posts
 - **Location**: `contents/blog/`
-- **Format**: Markdown/MDX
-- **Frontmatter Schema**:
+- **Format**: Markdown (no MDX integration; loader matches `**/[^_]*.md`)
+- **Frontmatter Schema** (source of truth: `src/content.config.ts`):
 ```yaml
-title: "Post title"
-description: "Post description"
-pubDate: 2025-01-01
-updatedDate: 2025-01-02  # Optional
-heroImage: "/hero.jpg"    # Optional
-draft: false             # Default: false
-tags: ["tag1", "tag2"]   # Optional
+title: "Post title"                # Required
+description: "Post description"    # Required
+pubDatetime: 2025-01-01T09:00:00Z  # Required (ISO datetime)
+modDatetime: 2025-01-02T09:00:00Z  # Optional
+featured: false                    # Optional
+draft: false                       # Optional
+tags: ["tag1", "tag2"]             # Default: ["others"]
+ogImage: "./og-image.png"          # Optional (same-folder image or URL string)
+series: "Series name"              # Optional
+canonicalURL: "https://..."        # Optional
 ```
 
 ### Blog Images

@@ -15,7 +15,7 @@
  * **반드시 일치**해야 함. 양쪽이 어긋나면 `<details>` 블록을 찾지 못해 목차 슬라이드가
  * 조용히 누락됨(에러 없이 H2 섹션들만 렌더). astro.config.ts 수정 시 여기도 함께 갱신 필요.
  *
- * 참고 경로: astro.config.ts → markdown.remarkPlugins → remarkCollapse의 `summary` 필드
+ * 참고 경로: astro.config.ts → markdown.processor → unified()의 remarkPlugins → remarkCollapse의 `summary` 필드
  */
 const AGENDA_SUMMARY_TEXT = "목차 보기";
 /**
