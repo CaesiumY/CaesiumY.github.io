@@ -6,6 +6,8 @@ declare global {
       dataThemeAtPrint: string | null;
       titleAtPrint: string;
     }>;
+    /** PdfDownloadButton 위임 리스너 중복 등록 방지 플래그 */
+    __pdfPrintDelegated?: boolean;
   }
 }
 

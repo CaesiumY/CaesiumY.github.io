@@ -39,7 +39,7 @@ const { fileName = "윤창식_Resume" } = Astro.props;
       if (!btn) return;
 
       // 클릭 시점의 버튼에서 페이지별 파일명을 읽음 (About/Portfolio 공용)
-      const fileName = btn.dataset.fileName || "Resume";
+      const fileName = btn.dataset.fileName || "윤창식_Resume";
 
       const originalTitle = document.title;
       const originalTheme = document.documentElement.getAttribute("data-theme");
