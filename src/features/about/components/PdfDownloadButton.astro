@@ -1,6 +1,13 @@
 ---
 // PDF 인쇄/다운로드 플로팅 버튼
 // React 의존성 없이 순수 Astro + 인라인 스크립트로 구현
+//
+// View Transitions(ClientRouter) 대응:
+// 동일한 내용의 인라인 스크립트는 페이지 스왑 후 재실행되지 않으므로,
+// 버튼 엘리먼트에 직접 리스너를 달면 재방문 시 죽은 버튼이 된다.
+// ThemeToggle.astro와 동일하게 document 이벤트 위임 + 전역 플래그 패턴 사용.
+// 파일명은 define:vars 대신 data 속성으로 전달해 스크립트 내용을 정적으로 유지
+// (About/Portfolio 두 페이지가 같은 스크립트를 공유, 세션당 1회만 실행).
 import { Icon } from "astro-icon/components";
 
 export interface Props {
@@ -14,17 +21,26 @@ const { fileName = "윤창식_Resume" } = Astro.props;
   id="pdf-download-btn"
   aria-label="이력서 인쇄/PDF 저장"
   title="이력서 인쇄/PDF 저장"
+  data-file-name={fileName}
   class="fixed right-6 bottom-6 z-50 flex size-14 cursor-pointer items-center justify-center rounded-full bg-accent text-background shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl focus:outline-2 focus:outline-offset-2 focus:outline-accent sm:right-8 sm:bottom-8 print:hidden"
 >
   <Icon name="ph:printer" class="size-6" size={24} />
 </button>
 
-<script is:inline define:vars={{ fileName }}>
+<script is:inline>
   (function () {
-    const btn = document.getElementById("pdf-download-btn");
-    if (!btn) return;
+    // 전역 플래그로 중복 등록 방지 (스크립트가 다시 실행돼도 리스너는 1개)
+    if (window.__pdfPrintDelegated) return;
+    window.__pdfPrintDelegated = true;
 
-    btn.addEventListener("click", function () {
+    // document에 이벤트 위임: 스왑으로 버튼 DOM이 교체되어도 항상 동작
+    document.addEventListener("click", e => {
+      const btn = e.target.closest("#pdf-download-btn");
+      if (!btn) return;
+
+      // 클릭 시점의 버튼에서 페이지별 파일명을 읽음 (About/Portfolio 공용)
+      const fileName = btn.dataset.fileName || "Resume";
+
       const originalTitle = document.title;
       const originalTheme = document.documentElement.getAttribute("data-theme");
       let supported = false;
@@ -37,7 +53,9 @@ const { fileName = "윤창식_Resume" } = Astro.props;
         document.title = originalTitle;
       };
 
-      // 인쇄 준비
+      // 인쇄 준비: 라이트 테마 강제
+      // (window.__setTheme은 localStorage에 모드를 저장하므로 사용 금지 —
+      //  raw setAttribute로 화면만 잠시 바꾸고 원래 속성값으로 되돌린다)
       document.title = fileName;
       document.documentElement.setAttribute("data-theme", "light");
 
