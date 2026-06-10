@@ -1,7 +1,13 @@
+// 같은 페이지에서 직접 호출 + astro:page-load로 이중 호출돼도 scroll/resize 리스너가
+// 중복 등록되지 않도록 하는 가드. astro:before-swap에서 해제돼 다음 페이지에서 재초기화된다.
+let isActive = false;
+
 /**
  * Creates and manages a reading progress indicator at the top of the page
  */
 export function initializeProgressBar(): void {
+  if (isActive) return;
+  isActive = true;
   createProgressBar();
   updateScrollProgress();
 }
@@ -93,6 +99,7 @@ function updateScrollProgress(): void {
     "astro:before-swap",
     () => {
       controller.abort();
+      isActive = false;
       const container = document.getElementById("reading-progress-container");
       if (container) container.remove();
     },
