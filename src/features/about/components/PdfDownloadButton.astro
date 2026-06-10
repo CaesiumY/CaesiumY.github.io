@@ -35,7 +35,8 @@ const { fileName = "윤창식_Resume" } = Astro.props;
 
     // document에 이벤트 위임: 스왑으로 버튼 DOM이 교체되어도 항상 동작
     document.addEventListener("click", e => {
-      const btn = e.target.closest("#pdf-download-btn");
+      // e.target이 Element가 아닐 수 있는 엣지 케이스(document 직접 디스패치 등) 방어
+      const btn = e.target?.closest?.("#pdf-download-btn");
       if (!btn) return;
 
       // 클릭 시점의 버튼에서 페이지별 파일명을 읽음 (About/Portfolio 공용)
