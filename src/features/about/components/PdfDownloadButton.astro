@@ -40,6 +40,9 @@ const { fileName = "윤창식_Resume" } = Astro.props;
       if (!btn) return;
 
       // 클릭 시점의 버튼에서 페이지별 파일명을 읽음 (About/Portfolio 공용)
+      // 폴백 문자열은 Props 기본값·e2e의 RESUME_FILE_NAME과 동기화 유지
+      // (변경 시 세 곳 함께 업데이트. data-file-name은 Props 기본값 덕에
+      //  항상 렌더링되므로 폴백은 안전망일 뿐)
       const fileName = btn.dataset.fileName || "윤창식_Resume";
 
       const originalTitle = document.title;
