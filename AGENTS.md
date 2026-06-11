@@ -1,209 +1,73 @@
 # AGENTS.md
 
-Guide for Codex (Codex.ai/code) when working with code in this repository.
+Guide for Codex (OpenAI Codex) when working with code in this repository.
 
 ## Project Overview
 
-Caesiumy's personal blog website built with Astro and AstroPaper template. This is the production-ready blog at https://caesiumy.github.io/
-
-## Project Information
-
-### AstroPaper Template
-- **Template**: [AstroPaper v5.5.0](https://github.com/satnaing/astro-paper)
-- **Framework**: Astro v5.12.0 (SSG)
-- **Styling**: TailwindCSS v4.1.11
-- **Type Checking**: TypeScript v5.8.3
-- **Search**: Pagefind (static search)
-
-### Core Features
-- ✅ Responsive design (mobile ~ desktop)
-- ✅ Accessibility support (VoiceOver, TalkBack tested)
-- ✅ SEO optimized
-- ✅ Light & dark mode
-- ✅ Fuzzy search functionality
-- ✅ Draft posts & pagination
-- ✅ Sitemap & RSS feed
-- ✅ Dynamic OG image generation
+Caesiumy's personal blog at https://caesiumy.dev — Astro SSG, started from the AstroPaper template and customized since. Blog posts live in `contents/blog/` (not `src/content/`).
 
 ## Development Commands
 
 ```bash
-pnpm install       # Install dependencies
-pnpm dev          # Dev server (localhost:4321)
-pnpm build        # Production build
-pnpm preview      # Build preview
-pnpm format       # Code formatting (Prettier)
-pnpm lint         # ESLint linting
-pnpm sync         # Astro type sync
+pnpm install       # Install dependencies (pnpm 10, Node >= 22)
+pnpm dev           # Dev server (localhost:4321)
+pnpm build         # astro check + astro build + pagefind index + copy to public/
+pnpm preview       # Preview the production build
+pnpm test          # Playwright E2E tests (auto-starts the dev server)
+pnpm lint          # ESLint
+pnpm format        # Prettier write (see the CI & platform gotchas)
+pnpm sync          # Astro type sync
 ```
 
-## Project Structure
+## Design Rules
 
-```
-CaesiumY.github.io/
-├── contents/            # Content files
-│   └── blog/           # Blog posts (Markdown)
-├── src/
-│   ├── components/     # Reusable components
-│   ├── layouts/        # Page layouts
-│   ├── pages/          # File-based routing
-│   ├── styles/         # Global CSS
-│   ├── utils/          # Utility functions
-│   ├── config.ts       # Site configuration
-│   └── content.config.ts # Content schema definitions
-├── public/             # Static assets
-├── dist/               # Build output
-├── node_modules/       # Dependencies
-├── package.json        # Project dependencies
-├── tsconfig.json       # TypeScript configuration
-├── astro.config.ts     # Astro configuration
-├── AGENTS.md          # This file
-└── README.md          # Project documentation
-```
+- ⚠️ IMPORTANT: Blog post images live in the same folder as the post markdown (`contents/blog/<post>/image.png`, referenced as `./image.png`) — never in `public/`, which bypasses Astro image optimization. Use markdown image syntax, not HTML `<img>` tags.
+- ⚠️ IMPORTANT: Never disable ESLint rules or ignore files without explicit user permission — fix the root cause instead. If disabling is truly unavoidable, write `// eslint-disable-next-line <rule> -- Reason: <detailed reason>` and report it as a "Confirmation Required" item in your final response.
+- Verify changes with `pnpm build` and inspect `dist/`, not just the dev server — image optimization, pagefind indexing, and scheduled-post filtering happen only at build time, so dev-only verification can pass while the build is broken.
+- Use Conventional Commits for all commit messages.
 
-## Content Management
+## Gotchas & Landmines
 
-### Blog Posts
-- **Location**: `contents/blog/`
-- **Format**: Markdown/MDX
-- **Frontmatter Schema**:
-```yaml
-title: "Post title"
-description: "Post description"
-pubDate: 2025-01-01
-updatedDate: 2025-01-02  # Optional
-heroImage: "/hero.jpg"    # Optional
-draft: false             # Default: false
-tags: ["tag1", "tag2"]   # Optional
-```
+### View Transitions (ClientRouter)
 
-### Blog Images
-- **⚠️ IMPORTANT**: Blog post images must be located in the same directory as the blog post markdown file
-- **Structure**: `contents/blog/[post-folder]/[image-file]`
-- **Example**:
-  ```
-  contents/blog/
-  └── my-blog-post/
-      ├── index.md        # Blog post content
-      ├── hero-image.png  # Post images
-      └── diagram.jpg     # Additional images
-  ```
-- **Usage in Markdown**: Use relative paths `![alt text](./image.png)`
-- **❌ DO NOT**: Place blog images in `public/` folder - this bypasses Astro's image optimization
-- **✅ Benefits**: Automatic WebP conversion, srcset generation, compression, and caching
+Page navigations swap the DOM without a full reload. Three rules prevent the listener-leak class of bugs (fixed across PR #75/#76, guarded by `e2e/listener-leak.spec.ts`):
 
-### Static Assets
-- **Images**: `public/assets/` or `src/assets/images/` (for site-wide assets only)
-- **Icons**: `src/assets/icons/`
-- **Favicon**: `public/favicon.svg`
+- An inline `<script>` without `data-astro-rerun` runs once per browser session — listeners attached directly to page elements go dead on revisit. Attach to `document` with event delegation plus a global guard flag instead (pattern: `ThemeToggle.astro`, `PdfDownloadButton.astro`).
+- Never add listeners to persistent targets (`document`, `window`, `MediaQueryList`) on every swap — they accumulate. Sanctioned patterns: `data-astro-rerun` + AbortController aborted on `astro:before-swap` (`BackToTopButton.astro`, `progressBar.ts`), or hoist the listener to module top level and query the DOM fresh inside the handler (`Navigation.astro`).
+- Never cache DOM element references in module scope — after a swap they point at a detached tree (this silently broke ShareLinks). Re-initialize on `astro:page-load` with an idempotency guard (`ShareLinks.astro`).
+- When adding a new interactive script, extend `e2e/listener-leak.spec.ts` so the leak invariant covers it.
+
+### Content pipeline
+
+- Posts are plain `.md` only — there is no MDX integration. Files starting with `_` are excluded from the blog collection entirely (loader pattern `**/[^_]*.md`), a stronger exclusion than `draft: true`.
+- Scheduled publishing is build-time only: a post with a future `pubDatetime` stays hidden until a build runs after that time (minus the 15-minute `SITE.scheduledPostMargin`). Without a redeploy it never appears. Dev mode shows drafts.
+- Omitted `tags` defaults to `["others"]`.
+- A `## 목차` heading inside a post triggers remark-toc auto-generation, collapsed under "목차 보기".
+- Add remark/rehype plugins via `markdown.processor: unified({...})` in `astro.config.ts` (Astro 6.4+ style) — the legacy top-level `markdown.remarkPlugins`/`rehypePlugins`/`remarkRehype` keys are deprecated.
+- The frontmatter schema lives in `src/content.config.ts` (`pubDatetime`, `modDatetime`, `ogImage`, `series`, ...) — read it before writing frontmatter; field names differ from upstream AstroPaper docs.
+
+### Build & search
+
+- The build chain is `astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/`. The copied `public/pagefind` is gitignored — search in dev mode only works after at least one local build.
+- Dynamic OG images (satori) require three local font files in `src/assets/fonts/` (Pretendard Regular/Bold, NotoEmoji) — missing fonts throw and fail the build.
+
+### CI & platform
+
+- The merge gate is the single `Code standards & build` job (audit → lint → format check → build → E2E). The `Claude Code Review` workflow is advisory — its failures do not block merges.
+- Windows: after `pnpm format`, `git status` may list files as modified with no real content change (CRLF). Judge with `git diff` and restore false positives with `git checkout`. A fresh Windows checkout can also fail `pnpm format:check` on nearly every file (`endOfLine: "lf"` vs CRLF working copies) — trust the CI verdict and never mass-reformat to "fix" it.
+- Playwright runs against the dev server (port 4321), not the build; CI uses 1 worker with 2 retries. Test fixtures reference real post slugs (`e2e/fixtures/test-posts.ts`) — renaming those posts breaks the suite.
+- `CLAUDE.md` and `AGENTS.md` are mirrors — when editing one, mirror the change to the other. Only the title line, the intro line, and the `## Skills` section may differ; any other divergence fails CI (`node scripts/check-agent-docs-sync.mjs`).
 
 ## Skills (Codex 스킬 시스템)
 
-`.agents/skills/` 디렉토리에 정의된 스킬들입니다. `/스킬이름`으로 호출합니다.
+`.agents/skills/`에 정의된 스킬들입니다. `/스킬이름`으로 호출합니다. Claude Code 전용 스킬(`/portfolio-strategy`, `/agents-md-optimizer`)은 `.claude/skills/`에만 존재합니다 — 아래 목록과 CLAUDE.md의 차이는 의도된 것입니다.
 
-| 스킬 | 용도 | 에이전트 수 |
-|------|------|------------|
-| `/translate-writer` | 영어 → 한국어 번역 파이프라인 | 6개 |
-| `/polish` | 개별 문장 다듬기 (점수 + 옵션 제시) | 1개 |
-| `/polish-file` | 파일 전체 문장 품질 분석 + 순차 개선 | 1개 |
-| `/blog-writer` | 한국어 블로그 글 작성 | 4개 |
-| `/resume-specialist` | 이력서 작성/검토/ATS 최적화 | 1개 |
+- `/translate-writer` — 영어 → 한국어 번역 파이프라인 (에이전트 6개)
+- `/blog-writer` — 한국어 블로그 글 작성 (에이전트 4개)
+- `/polish`, `/polish-file` — 개별 문장 / 파일 전체 다듬기
+- `/resume-specialist` — 이력서 작성·검토·ATS 최적화
+- 역할 프롬프트 정의: `.agents/agents/` · 번역 스타일 가이드/용어집: `.agents/skills/translate-writer/data/`
 
-- 역할 프롬프트 정의: `.agents/agents/`
-- 번역투 28개 패턴: `.agents/skills/translate-writer/references/translation-patterns.md`
-- 스타일 가이드/용어집: `.agents/skills/translate-writer/data/`
+## Environment
 
-## Styling Guidelines
-
-### TailwindCSS
-- Uses TailwindCSS v4
-- Typography plugin enabled
-- Dark mode support (`dark:` prefix)
-
-### Component Development
-- Prefer Astro components (.astro)
-- TypeScript support
-- Accessibility considerations (ARIA, semantic HTML)
-
-## SEO & Performance
-
-### SEO Optimization
-- Automatic sitemap generation
-- RSS feed support
-- Dynamic OG image generation
-- Meta tag optimization
-
-### Performance Optimization
-- Astro Island Architecture
-- Image optimization (Sharp)
-- Code splitting
-- Lighthouse score: 100 target
-
-## Deployment
-
-### Build Process
-1. `astro check` - Type checking
-2. `astro build` - Production build
-3. `pagefind` - Search index generation
-4. Static files generation (`dist/`)
-
-### Environment Variables (Optional)
-```bash
-PUBLIC_GOOGLE_SITE_VERIFICATION=your-google-site-verification-value
-```
-
-## Development Guidelines
-
-### Code Quality
-- ESLint + Prettier usage
-- TypeScript strict mode
-- Conventional Commits compliance
-- **⚠️ IMPORTANT**: Do NOT disable ESLint rules or ignore files without explicit user permission
-- If ESLint errors occur, investigate and fix the root cause rather than bypassing the linter
-- **If ESLint disabling is absolutely necessary:**
-  - Add a detailed comment explaining the reason for disabling
-  - Include the issue in the final response as a "Confirmation Required" item
-  - Example: `// eslint-disable-next-line rule-name -- Reason: [detailed explanation]`
-
-### Work Verification Guidelines
-- **⚠️ IMPORTANT**: Always verify work by building and checking the `dist/` folder, not just the development server
-- **Build Verification Process**:
-  1. Run `pnpm build` to create production build
-  2. Check the generated files in `dist/` folder
-  3. Verify that all changes are properly reflected in the static output
-  4. Test critical paths and functionality in the built version
-- **Why Build Verification is Critical**:
-  - Development server may not reflect all build-time optimizations
-  - Static site generation (SSG) behavior differs from development mode
-  - Image optimization, bundle splitting, and other build processes only occur during build
-  - Some Astro features and optimizations are build-time only
-
-### Component Development
-- Write reusable components
-- Define Props types
-- Follow accessibility guidelines
-
-### Content Writing
-- SEO-friendly titles and descriptions
-- Proper tag categorization
-- Provide image alt text
-- Use markdown image syntax (not HTML `<img>` tags) for Astro optimization
-- Place images in same directory as markdown files for proper processing
-
-## Key Features
-
-### Accessibility
-- Keyboard navigation support
-- Screen reader compatibility
-- Sufficient color contrast
-- ARIA labels provided
-
-### Search Functionality
-- Static search via Pagefind
-- Fuzzy search support
-- Real-time search results
-
-### Dark Mode
-- System preference detection
-- Toggle button provided
-- Settings stored in localStorage
+Optional env vars (schema in `astro.config.ts`): `PUBLIC_GOOGLE_SITE_VERIFICATION`, `PUBLIC_GOOGLE_ANALYTICS_ID`.

@@ -2,13 +2,22 @@ name: Claude Code Review
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    # synchronize(푸시마다 재리뷰)는 의도적으로 제외 — PR #78에서 푸시마다
+    # 전체 재리뷰가 돌며 8라운드 nit 루프(라운드 간 상호 모순 포함)를 만들었다.
+    # 자동 리뷰는 PR 오픈/드래프트 해제 시 1회. 이후 재리뷰가 필요하면
+    # PR 코멘트에서 @claude를 멘션한다 (claude.yml이 처리).
+    types: [opened, ready_for_review]
     # Optional: Only run on specific file changes
     # paths:
     #   - "src/**/*.ts"
     #   - "src/**/*.tsx"
     #   - "src/**/*.js"
     #   - "src/**/*.jsx"
+
+# 같은 PR에서 리뷰 실행이 겹치면 이전 실행을 취소하고 최신만 유지
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
   claude-review:
