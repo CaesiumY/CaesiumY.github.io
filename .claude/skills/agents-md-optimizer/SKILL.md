@@ -54,8 +54,14 @@ Read the target file. Collect line statistics.
 # Search in common skill installation paths
 SCRIPT_PATH=$(find ~/.claude/skills ~/.codex/skills ~/.cursor/skills ~/skills 2>/dev/null -path "*/agents-md-optimizer/scripts/line-count.mjs" | head -1)
 if [ -z "$SCRIPT_PATH" ]; then
-  # Fallback: search in current directory
-  SCRIPT_PATH=$(find . -path "*/agents-md-optimizer/scripts/line-count.mjs" 2>/dev/null | head -1)
+  # Fallback: check known relative paths first before running a heavy find
+  if [ -f "./.claude/skills/agents-md-optimizer/scripts/line-count.mjs" ]; then
+    SCRIPT_PATH="./.claude/skills/agents-md-optimizer/scripts/line-count.mjs"
+  elif [ -f "./.agents/skills/agents-md-optimizer/scripts/line-count.mjs" ]; then
+    SCRIPT_PATH="./.agents/skills/agents-md-optimizer/scripts/line-count.mjs"
+  else
+    SCRIPT_PATH=$(find . -name "node_modules" -prune -o -path "*/agents-md-optimizer/scripts/line-count.mjs" -print 2>/dev/null | head -1)
+  fi
 fi
 ```
 

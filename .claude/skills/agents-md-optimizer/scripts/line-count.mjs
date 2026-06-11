@@ -34,7 +34,8 @@ try {
 
 // Split on \r?\n: CRLF checkouts (Windows core.autocrlf) leave a trailing \r
 // that breaks the heading regex below — `.` never matches \r, so `$` fails.
-const lines = content.split(/\r?\n/);
+// Strip the final newline first so totalLines matches `wc -l`.
+const lines = content.replace(/\r?\n$/, "").split(/\r?\n/);
 const totalLines = lines.length;
 const nonEmptyLines = lines.filter(l => l.trim().length > 0).length;
 
@@ -75,7 +76,8 @@ for (let i = 0; i < lines.length; i++) {
     if (level >= 2) {
       if (currentSection) {
         currentSection.endLine = i;
-        currentSection.lines = currentSection.endLine - currentSection.startLine;
+        // startLine..endLine is inclusive, so +1
+        currentSection.lines = currentSection.endLine - currentSection.startLine + 1;
         sections.push(currentSection);
       }
       currentSection = {
@@ -94,7 +96,8 @@ for (let i = 0; i < lines.length; i++) {
 // Close last section
 if (currentSection) {
   currentSection.endLine = totalLines;
-  currentSection.lines = currentSection.endLine - currentSection.startLine;
+  // startLine..endLine is inclusive, so +1
+  currentSection.lines = currentSection.endLine - currentSection.startLine + 1;
   sections.push(currentSection);
 }
 
