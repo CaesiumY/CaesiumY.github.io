@@ -144,7 +144,9 @@ if (problems.length > 0) {
     `agent-docs-sync: CLAUDE.md and AGENTS.md have drifted (${problems.length} problem(s)).\n` +
       `Allowed differences are only the title line, the intro line, and the Skills section.\n\n` +
       problems.map(p => `* ${p}`).join("\n\n") +
-      `\n\nFix: mirror the edit to both files (see the "manual mirrors" note in CLAUDE.md).\n`
+      `\n\nFix: mirror the edit to both files (see the "manual mirrors" note in CLAUDE.md).\n` +
+      `Tip: reports are positional — a single inserted/removed line cascades through the rest\n` +
+      `of its section, so diff the first named section directly to find the root edit.\n`
   );
   process.exit(1);
 }

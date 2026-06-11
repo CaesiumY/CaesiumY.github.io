@@ -15,7 +15,7 @@ pnpm build         # astro check + astro build + pagefind index + copy to public
 pnpm preview       # Preview the production build
 pnpm test          # Playwright E2E tests (auto-starts the dev server)
 pnpm lint          # ESLint
-pnpm format        # Prettier write (see Windows gotcha below)
+pnpm format        # Prettier write (see the CI & platform gotchas)
 pnpm sync          # Astro type sync
 ```
 
