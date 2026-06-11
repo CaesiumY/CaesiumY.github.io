@@ -60,16 +60,24 @@ function readSections(filePath) {
 }
 
 function compareLines(label, expected, actual) {
+  // Positional comparison (no LCS): one inserted line marks the rest of the
+  // section as differing. The cap below keeps such reports readable.
   const max = Math.max(expected.length, actual.length);
+  const mismatches = [];
   for (let i = 0; i < max; i++) {
-    if (expected[i] !== actual[i]) {
-      problems.push(
-        `${label} — line ${i + 1} of the section differs:\n` +
-          `  CLAUDE.md (expected mirror): ${expected[i] ?? "<missing>"}\n` +
-          `  AGENTS.md (actual)         : ${actual[i] ?? "<missing>"}`
-      );
-      return; // first divergence per section is enough to act on
-    }
+    if (expected[i] !== actual[i]) mismatches.push(i);
+  }
+  for (const i of mismatches.slice(0, 3)) {
+    problems.push(
+      `${label} — line ${i + 1} of the section differs:\n` +
+        `  CLAUDE.md (expected mirror): ${expected[i] ?? "<missing>"}\n` +
+        `  AGENTS.md (actual)         : ${actual[i] ?? "<missing>"}`
+    );
+  }
+  if (mismatches.length > 3) {
+    problems.push(
+      `${label} — ${mismatches.length - 3} more differing line(s) in this section (showing first 3).`
+    );
   }
 }
 
@@ -116,7 +124,10 @@ if (claude.length !== agents.length) {
           `Skills heading mismatch: expected "${SKILLS_HEADING_PAIR[1]}", found "${a.heading}".`
         );
       }
-      continue; // Skills body is tool-specific by design
+      // Skills body is tool-specific by design: the skill list, the intro
+      // sentence, and .claude/ vs .agents/ paths may all differ here. Keep
+      // the exemption confined to this one section — do not widen it.
+      continue;
     }
     if (c.heading !== a.heading) {
       problems.push(

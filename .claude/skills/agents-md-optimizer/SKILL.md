@@ -4,6 +4,16 @@ description: "Optimize agent context files (AGENTS.md, CLAUDE.md, .cursorrules, 
 allowed-tools: [Bash, Read, Write, Edit, Glob, Grep, AskUserQuestion]
 ---
 
+<!--
+  Vendored from https://github.com/CaesiumY/agents-md-optimizer
+  Local patches not yet upstreamed (battle-tested in PR #78):
+    - scripts/line-count.mjs: CRLF-safe split, trailing-newline strip,
+      inclusive +1 section line counts, bounds/fence/H1 convention comments
+    - SKILL.md (this file): script resolution prefers the project-local
+      vendored copy; find fallback prunes node_modules
+  When syncing from upstream, upstream these first or re-apply them.
+-->
+
 # Agents-MD Optimizer
 
 Optimize agent context files (CLAUDE.md, AGENTS.md, .cursorrules, etc.) by applying the discoverability filter: remove information agents can discover from code, keep only non-discoverable operational knowledge (gotchas, landmines, non-standard conventions), and mine source code for undocumented gotchas.
