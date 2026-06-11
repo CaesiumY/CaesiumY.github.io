@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Guide for Codex (Codex.ai/code) when working with code in this repository.
+Guide for Codex (OpenAI Codex) when working with code in this repository.
 
 ## Project Overview
 

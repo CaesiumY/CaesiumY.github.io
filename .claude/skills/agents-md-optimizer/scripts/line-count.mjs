@@ -50,7 +50,8 @@ let tableLines = 0;
 for (let i = 0; i < lines.length; i++) {
   const line = lines[i];
 
-  // Track code blocks
+  // Track code blocks. Fence delimiter lines (```) are themselves counted
+  // in codeBlockLines, so the stat includes delimiters, not just content.
   if (line.trimStart().startsWith('```')) {
     inCodeBlock = !inCodeBlock;
     codeBlockLines++;
@@ -75,6 +76,8 @@ for (let i = 0; i < lines.length; i++) {
   const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
   if (headingMatch) {
     const level = headingMatch[1].length;
+    // Level-1 (# Title) is intentionally not tracked as a section — it's the
+    // document title. Matches the `grep -c '^##'` fallback in SKILL.md.
     if (level >= 2) {
       if (currentSection) {
         currentSection.endLine = i;
