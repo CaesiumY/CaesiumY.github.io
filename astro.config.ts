@@ -1,4 +1,5 @@
 import { defineConfig, envField } from "astro/config";
+import { unified } from "@astrojs/markdown-remark";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
@@ -31,16 +32,20 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    remarkPlugins: [
-      [remarkToc, { heading: "(table[ -]of[ -])?contents?|toc|목차" }],
-      [
-        remarkCollapse,
-        {
-          test: /^(Table of contents|목차)$/,
-          summary: "목차 보기",
-        },
+    // remark/rehype 플러그인은 Astro 6.4부터 unified() 프로세서로 전달해야 함.
+    // (markdown.remarkPlugins/rehypePlugins/remarkRehype는 deprecated)
+    processor: unified({
+      remarkPlugins: [
+        [remarkToc, { heading: "(table[ -]of[ -])?contents?|toc|목차" }],
+        [
+          remarkCollapse,
+          {
+            test: /^(Table of contents|목차)$/,
+            summary: "목차 보기",
+          },
+        ],
       ],
-    ],
+    }),
     shikiConfig: {
       // For more themes, visit https://shiki.style/themes
       themes: { light: "min-light", dark: "night-owl" },

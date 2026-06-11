@@ -39,10 +39,11 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 
 ### Content pipeline
 
-- Markdown files starting with `_` are excluded from the blog collection entirely (loader pattern `**/[^_]*.md`) — a stronger exclusion than `draft: true`.
+- Posts are plain `.md` only — there is no MDX integration. Files starting with `_` are excluded from the blog collection entirely (loader pattern `**/[^_]*.md`), a stronger exclusion than `draft: true`.
 - Scheduled publishing is build-time only: a post with a future `pubDatetime` stays hidden until a build runs after that time (minus the 15-minute `SITE.scheduledPostMargin`). Without a redeploy it never appears. Dev mode shows drafts.
 - Omitted `tags` defaults to `["others"]`.
 - A `## 목차` heading inside a post triggers remark-toc auto-generation, collapsed under "목차 보기".
+- Add remark/rehype plugins via `markdown.processor: unified({...})` in `astro.config.ts` (Astro 6.4+ style) — the legacy top-level `markdown.remarkPlugins`/`rehypePlugins`/`remarkRehype` keys are deprecated.
 - The frontmatter schema lives in `src/content.config.ts` (`pubDatetime`, `modDatetime`, `ogImage`, `series`, ...) — read it before writing frontmatter; field names differ from upstream AstroPaper docs.
 
 ### Build & search
