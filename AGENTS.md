@@ -60,7 +60,7 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 
 ## Skills (Codex 스킬 시스템)
 
-`.agents/skills/`에 정의된 스킬들입니다. `/스킬이름`으로 호출합니다.
+`.agents/skills/`에 정의된 스킬들입니다. `/스킬이름`으로 호출합니다. Claude Code 전용 스킬(`/portfolio-strategy`, `/agents-md-optimizer`)은 `.claude/skills/`에만 존재합니다 — 아래 목록과 CLAUDE.md의 차이는 의도된 것입니다.
 
 - `/translate-writer` — 영어 → 한국어 번역 파이프라인 (에이전트 6개)
 - `/blog-writer` — 한국어 블로그 글 작성 (에이전트 4개)
