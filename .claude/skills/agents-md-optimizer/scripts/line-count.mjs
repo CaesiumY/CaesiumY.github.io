@@ -39,6 +39,8 @@ const lines = content.replace(/\r?\n$/, "").split(/\r?\n/);
 const totalLines = lines.length;
 const nonEmptyLines = lines.filter(l => l.trim().length > 0).length;
 
+// Section bounds convention: startLine/endLine are 1-indexed and inclusive
+// (startLine = the heading line, endLine = the last line before the next heading or EOF).
 const sections = [];
 let currentSection = null;
 let inCodeBlock = false;

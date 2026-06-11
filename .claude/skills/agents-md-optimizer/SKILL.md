@@ -51,15 +51,17 @@ Read the target file. Collect line statistics.
 **Script Location**: Find the line-count script by searching for it:
 
 ```bash
-# Search in common skill installation paths
-SCRIPT_PATH=$(find ~/.claude/skills ~/.codex/skills ~/.cursor/skills ~/skills 2>/dev/null -path "*/agents-md-optimizer/scripts/line-count.mjs" | head -1)
-if [ -z "$SCRIPT_PATH" ]; then
-  # Fallback: check known relative paths first before running a heavy find
-  if [ -f "./.claude/skills/agents-md-optimizer/scripts/line-count.mjs" ]; then
-    SCRIPT_PATH="./.claude/skills/agents-md-optimizer/scripts/line-count.mjs"
-  elif [ -f "./.agents/skills/agents-md-optimizer/scripts/line-count.mjs" ]; then
-    SCRIPT_PATH="./.agents/skills/agents-md-optimizer/scripts/line-count.mjs"
-  else
+# Project-local vendored copy takes precedence over global installs
+# (a stale global version must not shadow the patched local one)
+if [ -f "./.claude/skills/agents-md-optimizer/scripts/line-count.mjs" ]; then
+  SCRIPT_PATH="./.claude/skills/agents-md-optimizer/scripts/line-count.mjs"
+elif [ -f "./.agents/skills/agents-md-optimizer/scripts/line-count.mjs" ]; then
+  SCRIPT_PATH="./.agents/skills/agents-md-optimizer/scripts/line-count.mjs"
+else
+  # Search common global skill installation paths
+  SCRIPT_PATH=$(find ~/.claude/skills ~/.codex/skills ~/.cursor/skills ~/skills 2>/dev/null -path "*/agents-md-optimizer/scripts/line-count.mjs" | head -1)
+  if [ -z "$SCRIPT_PATH" ]; then
+    # Last resort: search the project tree, skipping node_modules
     SCRIPT_PATH=$(find . -name "node_modules" -prune -o -path "*/agents-md-optimizer/scripts/line-count.mjs" -print 2>/dev/null | head -1)
   fi
 fi

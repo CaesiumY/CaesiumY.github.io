@@ -56,6 +56,7 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 - The merge gate is the single `Code standards & build` job (audit → lint → format check → build → E2E). The `Claude Code Review` workflow is advisory — its failures do not block merges.
 - Windows: after `pnpm format`, `git status` may list files as modified with no real content change (CRLF). Judge with `git diff` and restore false positives with `git checkout`.
 - Playwright runs against the dev server (port 4321), not the build; CI uses 1 worker with 2 retries. Test fixtures reference real post slugs (`e2e/fixtures/test-posts.ts`) — renaming those posts breaks the suite.
+- `CLAUDE.md` and `AGENTS.md` are manual mirrors (tool-name/path substitutions only, no sync tooling) — when editing one, mirror the change to the other.
 
 ## Skills (Claude Code 스킬 시스템)
 
