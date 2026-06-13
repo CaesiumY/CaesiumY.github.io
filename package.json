@@ -27,7 +27,7 @@
     "@astrojs/sitemap": "^3.7.3",
     "@giscus/react": "^3.1.0",
     "@tailwindcss/vite": "^4.3.0",
-    "astro": "~6.4.3",
+    "astro": "~6.4.5",
     "astro-icon": "^1.1.5",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.21",
@@ -48,8 +48,8 @@
     "@pagefind/default-ui": "^1.5.2",
     "@playwright/test": "^1.60.0",
     "@shikijs/transformers": "^4.2.0",
-    "@tailwindcss/typography": "^0.5.19",
-    "@types/react": "^19.2.16",
+    "@tailwindcss/typography": "^0.5.20",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/parser": "^8.60.1",
     "eslint": "^10.4.1",
@@ -82,7 +82,8 @@
       "smol-toml": "^1.6.1",
       "yaml": "^2.8.3",
       "devalue": "^5.8.1",
-      "fast-uri": "^3.1.2"
+      "fast-uri": "^3.1.2",
+      "esbuild": ">=0.28.1"
     }
   }
 }
