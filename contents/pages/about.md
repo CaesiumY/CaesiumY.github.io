@@ -92,7 +92,7 @@ AI-Native 기반의 개발 워크플로우를 지향하며, 비즈니스 목표 
 - [한솔제지] 생성형 AI 실무 교육 (2026.05)
 - [한양대학교] AI 활용 프로그래밍 정규 교과목 강의 진행 (2026)
 - [오즈코딩스쿨] 프론트엔드 주강사, 실시간 세션 및 AI 특강 진행 (2025.12 ~ 2026.06)
-- [프로그래머스] [Next.js & Notion API 라이브 코딩 강사](https://drive.google.com/file/d/1TcAVluxcY4sfIncMkC5CC4-H1orCwcpS/view?usp=sharing) (2022~2023)
+- [프로그래머스] Next.js & Notion API 라이브 코딩 강사 (2022~2023)
 
 ### 베타 리더
 
