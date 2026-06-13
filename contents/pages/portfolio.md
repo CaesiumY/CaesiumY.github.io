@@ -5,6 +5,16 @@ robots: "noindex, nofollow"
 
 # 포트폴리오
 
+## 지원동기) AIM Intelligence
+
+%% 1. 네이버 클라우드 코딩 테스트 후기 %%
+
+%% 2. kotech 보안 검사 후기 %%
+
+%% OpenAI Startup Meetup Seoul에서 발표를 보고 %%
+
+%% 내가 기여할 수 있는 부분 %%
+
 ## 합류 시 발휘 가능한 역량
 
 | 핵심 역량                                  | 관련 기술·경험                                                              | 근거 케이스    |
