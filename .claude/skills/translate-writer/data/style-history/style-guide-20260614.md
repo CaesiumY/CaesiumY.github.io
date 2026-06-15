@@ -71,8 +71,6 @@
 | "기울어집니다" | "치우쳐 있습니다" | ❌ 한쪽으로 기울어집니다 → ✅ 한쪽으로 치우쳐 있습니다 |
 | "보여줍니다" (과다) | 문맥에 맞는 동사 | ❌ 결과를 보여줍니다 → ✅ 결과를 내보냅니다/담습니다 |
 | "접근하다" (과다) | "얻다", "접근하다" (상황에 맞게) | ❌ 마크다운에 접근할 수 있다 → ✅ 마크다운을 얻을 수 있다 |
-| 음차 명사 + 동작 표현 (framework magic) | 함축을 풀어 설명 | ❌ "프레임워크 매직" → ✅ "프레임워크가 뒤에서 부리는 '마법'" / 대안: "암묵적 동작" |
-| Konglish 피동 (are type-checked) | 능동적 한국어 표현 | ❌ "타입 체크됩니다" → ✅ "타입 검사를 거칩니다" |
 
 ### 의역(Paraphrasing)과 격언체 다루기
 
@@ -85,29 +83,6 @@
 | "prescriptive" (기술 문맥) | "정해진", "명시적인", "규정된" (문맥에 따라) | ❌ prescriptive data loader approach → ✅ 정해진 데이터 로딩 방식 |
 | 부정 조건문 (risk averse only) | 부정→긍정 역발상 의역 | ❌ only worth... in risk averse environments → ✅ 극도로 보수적인 환경에서만 (먼저 대다수는 아니라고 명시) |
 | 단축형 표현 (brute force migration) | 문맥에 맞는 한글 숙어 | ❌ brute force approach → ✅ 한 번에 밀어붙이기 |
-
-### 의미 강도 및 충실도 정정 패턴 (사례 분석 스타일)
-
-| 원문 패턴 | 지양 | 권장 | 이유 |
-|-----------|------|------|------|
-| "It also helps that ~" (부가 요인) | "무엇보다 ~여야 했습니다" (필수 조건으로 격상) | "게다가 ~점도 한몫했습니다" | 강도 보존: "also helps"는 부가적 기여, 필수 조건이 아님 |
-| "as a side effect" | 본문에서 생략 또는 격상 | "덤으로" | 부수적 이득 뉘앙스 보존 |
-| "Next.js alone" | 단순 "Next.js" | "오롯이 Next.js 몫" | "alone"의 배타성/단독 의미 살리기 |
-| "stuck on [tech]" | "~를 사용하다" | "~에 발이 묶여" | 부정적 구속 의미 보존 |
-| "everywhere else" (전면적 범위) | "이득 없는 화면"으로 축소 | "그 외 나머지 모든 곳" | 전면적 범위를 축소하지 말 것 |
-| 강조어 nothing/just/every | 강조어 탈락 | 그대로 보존 | ❌ "변경이 없었다" → ✅ "아무것도 변하지 않았다. 단지 모든 의존성을 걷어냈을 뿐" |
-| 수량 표현 ("the following" + N개) | 도입부에서 항목 수 오기 | 실제 불릿 수와 일치 확인 | "다섯 가지"로 소개 → 본문에 다섯 항목이 있는지 검증 필수 |
-
-### 구어·관용 표현 (사례 분석 스타일)
-
-| 원문 | 번역 | 비고 |
-|------|------|------|
-| "served us well. Then it didn't." (펀치라인 헤딩) | "제 역할을 다했다. 그러다 아니게 됐다." | 대구 구조 유지, 단문 대비로 긴장감 살리기 |
-| war room | 워룸(war room) | 긴급 대응 상황실, 원문 병기 |
-| dogfood | 내부에서 직접 사용해보다 / 도그푸딩 | 동사로 쓸 때 풀어쓰기 권장 |
-| editor's note "(Ed: ...)" | "(편집자 주: ...)" | 블로그 편집자 주석 |
-| "expensive tax on every iteration" | "매 반복마다 물리는 아주 비싼 세금" | "expensive"의 강조(아주 비싼) 보존, 비유 그대로 유지 |
-| sponsor | 후원 | 외래어 "스폰서"보다 한국어 선호, 한 문서 내 일관 적용 |
 
 ### 외래어 대신 한국어 선호 패턴
 
@@ -463,7 +438,6 @@ tags: ["translation", "관련-태그", ...]
 | 2026-02-07 | Part 6 승인 (phase 2+3 후) | "커스터마이징"→"수정해서 쓸", "식별"→"정리/파악", 체크리스트 항목 간결화, "지속적으로"→"계속", "레포지토리"→"저장소", "활용하세요"→"쓰세요" 패턴 추가 |
 | 2026-02-11 | Making agent-friendly pages 번역 승인 | "보여줍니다" 동사 선택, "접근하다" 문맥 구분, 관계절→동격 표현 명확화, 역주 추가 규칙 추가 |
 | 2026-02-20 | Inngest: Migrating off Next.js 번역 승인 | 의역(paraphrasing) 전략, 격언체 다루기, 비유 표현 번역, 부정 조건 역발상 표현, 형용사 축약 패턴 추가 |
-| 2026-06-15 | Railway: Moving Frontend Off Next.js 승인 | framework magic 음차 회피, "타입 체크됩니다"→"타입 검사를 거칩니다" 능동화, also-helps 과장 정정, "as a side effect"→"덤으로", 수량 일치 검증, 강조어 보존, 구어·관용 표현(war room/dogfood) 패턴 추가, sponsor→후원 |
 
 ---
 
@@ -481,7 +455,6 @@ tags: ["translation", "관련-태그", ...]
 - `08-claude-skills-guide-part-6.md` - Claude 스킬 구축 완벽 가이드 Part 6 번역 (리소스/레퍼런스 스타일)
 - `09-agent-friendly-content-negotiation.md` - Making agent-friendly pages with content negotiation 번역 (기술 설명 스타일)
 - `10-inngest-migrating-off-nextjs-tanstack-start.md` - Reducing local dev time by 83%: Why we migrated off Next.js 번역 (사례 분석 스타일)
-- `11-railway-frontend-off-nextjs.md` - Railway 프론트엔드 Next.js 탈출 사례 (사례 분석 스타일)
 
 ---
 
@@ -521,4 +494,4 @@ tags: ["translation", ...]
 
 ---
 
-✅ **마지막 업데이트**: 2026-06-15 KST
+✅ **마지막 업데이트**: 2026-02-20 14:00 KST

@@ -1,0 +1,91 @@
+{
+  "slug": "moving-railway-frontend-off-nextjs",
+  "title": "[번역] Railway는 왜 프론트엔드를 Next.js에서 걷어냈나",
+  "source": "https://blog.railway.com/p/moving-railways-frontend-off-nextjs",
+  "mode": "thorough",
+  "polish_threshold": 9.5,
+  "timestamp_utc": "2026-06-14T16:15:27Z",
+  "summary": {
+    "total_sentences": 104,
+    "below_threshold": 8,
+    "applied": 5,
+    "rejected": 3,
+    "avg_before": 9.61,
+    "avg_after_estimate": 9.78
+  },
+  "applied": [
+    {
+      "line": 40,
+      "score_before": 9.4,
+      "score_after_estimate": 9.7,
+      "pattern": ["#6 의미 중복(shipped→완료)"],
+      "before": "...Vite + TanStack Router로 실행되며, PR 2개로 무중단 마이그레이션을 완료했습니다.",
+      "after": "...Vite + TanStack Router로 실행되며, PR 2개로 무중단 마이그레이션을 해냈습니다.",
+      "meaning_preserved": true
+    },
+    {
+      "line": 56,
+      "score_before": 9.4,
+      "score_after_estimate": 9.7,
+      "pattern": ["#5 장황한 부정사 구조", "#6 동사 중복"],
+      "before": "제품 팀 입장에서 프론트엔드 구현 방식을 일일이 고민하지 않아도 되게 해주는 요소들을 찾았고, 아래 다섯 가지가 결정적이었습니다.",
+      "after": "제품 팀 입장에서 프론트엔드 구현 방식을 일일이 고민하지 않아도 되는 요소들을 원했고, 아래 다섯 가지가 결정적이었습니다.",
+      "meaning_preserved": true,
+      "note": "원문 'we wanted...and found...convince us' 구조에 맞춰 '원했고' 채택, '결정적이었습니다(really convince us)' 유지"
+    },
+    {
+      "line": 72,
+      "score_before": 9.3,
+      "score_after_estimate": 9.8,
+      "pattern": ["#5 과다 부정형", "#6 중복 완료 표현", "원문 'just/nothing' 강조 누락"],
+      "before": "...프레임워크에 종속되지 않는 대안으로 교체했습니다. 프레임워크 자체는 건드리지 않았습니다. Next.js에 대한 의존성을 완전히 제거해서 PR 2가 깔끔한 교체 작업이 될 수 있도록 준비하는 단계였습니다.",
+      "after": "...프레임워크 독립적인 대안으로 교체했습니다. 이 PR은 프레임워크 자체는 전혀 건드리지 않았습니다. 그저 Next.js 의존성을 모두 제거해, PR 2가 깔끔한 교체 작업이 되도록 준비했을 뿐입니다.",
+      "meaning_preserved": true,
+      "note": "원문 'This PR changed nothing... It just removed every dependency'의 nothing(전혀)/just(그저~뿐)/every(모두) 강조 복원"
+    },
+    {
+      "line": 86,
+      "score_before": 9.4,
+      "score_after_estimate": 9.8,
+      "pattern": ["#9 '~만큼' 과다", "#6 의미 약화(comfortable)", "T1 원문 절 누락"],
+      "before": "...방향성이 옳고, 메인테이너들이 적극적으로 반응하며, Vite와 TanStack 모두를 스폰서하고 있는 만큼 감수할 수 있었습니다.",
+      "after": "...그래도 괜찮습니다. 방향성이 옳고, 메인테이너들이 적극적으로 반응하며, Vite와 TanStack이 나아가는 방향을 믿기에 두 프로젝트 모두를 후원하고 있기 때문입니다.",
+      "meaning_preserved": true,
+      "note": "1차 번역에서 누락됐던 원문 'because we believe in where they're going'(나아가는 방향을 믿기에) 복원 + 'We're comfortable with that' 주절(그래도 괜찮습니다) 살림"
+    },
+    {
+      "line": 102,
+      "score_before": 9.4,
+      "score_after_estimate": 9.8,
+      "pattern": ["#10 진행형/어휘 반복(나아가는...나아가고)"],
+      "before": "Vite + TanStack은 프론트엔드 변경 사항 배포가 거의 즉각적인 세계로 나아가는 발판이며, 우리는 그 세계를 향해 나아가고 있습니다.",
+      "after": "Vite + TanStack은 프론트엔드 변경 사항을 거의 즉시 배포할 수 있는 세계로 가는 발판이며, 우리는 바로 그런 세계를 만들어가고 있습니다.",
+      "meaning_preserved": true,
+      "note": "'나아가' 중복 제거, 'shipping...near-instant'를 '거의 즉시 배포할 수 있는'으로 정확화, 'world(세계)' 반복은 원문 의도대로 유지"
+    }
+  ],
+  "rejected": [
+    {
+      "line": 46,
+      "reason": "추천안이 'had crept past'의 '어느새', 'Next.js alone'의 '단독'을 누락하고 과거→현재 시제를 혼용하여 원문 충실도가 하락. 현행 유지."
+    },
+    {
+      "line": 50,
+      "reason": "추천안이 'our product is intentionally client-driven'의 '의도적으로(intentionally)'를 삭제. 의도적 선택이라는 핵심 뉘앙스 손실로 기각. 현행 유지."
+    },
+    {
+      "line": 76,
+      "reason": "현행이 충실도·자연스러움 모두 양호(9.4). 추천안은 '~고요/덤으로' 등 과한 구어체로 기술 문서 톤과 불일치. 현행 유지."
+    }
+  ],
+  "round2": {
+    "trigger": "사용자가 '한 번 더 다듬기' 선택",
+    "approach": "polish-agent 추천안이 아닌 직접 재작성으로, round1에서 기각한 3건을 충실도(어느새/단독/의도적으로) 보존하며 개선. round1이 놓친 의미 과장 1건도 정정.",
+    "applied": [
+      {"line": 46, "before": "그 중 6분은 Next.js 단독 처리 시간이었고, 절반은 ... 단계에 묶여 있었습니다.", "after": "그 중 6분은 오롯이 Next.js 몫이었고, 그마저 절반은 ... 단계에 발이 묶여 있었습니다.", "note": "alone(오롯이…몫)·stuck(발이 묶여) 보존하며 자연스러움 향상"},
+      {"line": 50, "before": "...서버 우선 패턴에 깊게 기대는 구조라 의도적으로 클라이언트 중심으로 설계된 우리 제품과는 맞지 않았습니다.", "after": "...App Router는 서버 우선 패턴에 깊게 기대는 구조입니다. 우리 제품은 의도적으로 클라이언트 중심으로 설계했기에 그 방향과는 맞지 않았습니다.", "note": "수식 충돌 문장 분리, intentionally(의도적으로) 보존"},
+      {"line": 54, "before": "명시적이고, 클라이언트 우선이며, 빠르게 반복할 수 있는 것. 무엇보다 개발하면서 즐거운 도구여야 했습니다.", "after": "...빠르게 반복할 수 있는 것. 게다가 우리가 쓰면서 진심으로 즐겁다는 점도 한몫했습니다.", "note": "[충실도 정정] 'It also helps'(부가 요인)를 '무엇보다…여야 했습니다'(필수 조건)로 과장한 것을 정정"},
+      {"line": 76, "before": "...교체했고, 덕분에 코드도 한결 깔끔해졌습니다.", "after": "...교체했고, 덤으로 코드도 한결 깔끔해졌습니다.", "note": "as a side effect 뉘앙스를 '덤으로'로 정확화"}
+    ]
+  }
+}
