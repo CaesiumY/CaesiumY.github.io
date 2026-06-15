@@ -1,6 +1,7 @@
 ---
 title: "[번역] Railway는 왜 프론트엔드를 Next.js에서 걷어냈나"
 description: "Railway가 Next.js에서 Vite + TanStack Router로 프론트엔드 전체를 마이그레이션한 실전 사례 한글 번역. 빌드 10분 단축, PR 2개로 무중단 전환, 엣지 캐싱 전략까지 상세히 정리합니다."
+ogImage: "https://cms.railway.com/media/7752f141cc06584f9c4611877356dd95bdae0a58db7c0d60f74174f5e14d41e3.png"
 pubDatetime: 2026-06-14T16:15:27Z
 featured: false
 draft: false
