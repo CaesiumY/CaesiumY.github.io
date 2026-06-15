@@ -7,15 +7,82 @@
 
 ## 피드백 통계
 
-- 총 피드백 수: 9
-- 긍정 피드백: 9
+- 총 피드백 수: 10
+- 긍정 피드백: 10
 - 부정 피드백: 0
-- 승인된 번역: 9
+- 승인된 번역: 10
 - 거절된 번역: 0
 
 ---
 
 ## 피드백 이력
+
+### 2026-06-15
+
+**원문**: Moving Railway's Frontend Off Next.js (https://blog.railway.com/p/moving-railways-frontend-off-nextjs)
+
+**번역 제목**: [번역] Railway는 왜 프론트엔드를 Next.js에서 걷어냈나
+
+**유형**: 승인
+
+**모드**: thorough
+
+**검토 점수**: Reviewer 8.2/10, Verifier 8.5/10 (둘 다 1차 PASS)
+
+**체감 점수**: 미제공
+
+**검토 횟수**: 1회 (1차 PASS 후 바로 승인)
+
+**사용자 직접 수정 2건**:
+
+1. **framework magic 음차 회피**
+   - 원문: "framework magic"
+   - 지양: "프레임워크 매직" (음차)
+   - 권장: "프레임워크가 뒤에서 부리는 '마법'" / 대안: "암묵적 동작"
+   - 패턴: 음차 대신 함축(숨은/암묵적 동작)을 풀어쓰기
+
+2. **"타입 체크됩니다" Konglish 피동 → 능동화**
+   - 원문: "are type-checked"
+   - 지양: "타입 체크됩니다" (Konglish 피동)
+   - 권장: "타입 검사를 거칩니다" (능동적 한국어)
+   - 패턴: "체크" 음차 + 피동 동시 회피
+
+**원문 특성**:
+- **스타일**: 사례 분석 (Railway 엔지니어링 블로그, 스토리텔링 + 기술)
+- **주제**: Railway 프론트엔드 팀의 Next.js → Vite/Nitro 마이그레이션 사례
+- **특징**: 펀치라인 헤딩, 구어체, 내부 직원 인터뷰, 편집자 주(Ed:) 포함
+
+**추출된 스타일 규칙**:
+
+| 항목 | 내용 |
+|------|------|
+| **의미 강도 보존 (also helps)** | "It also helps that ~"는 부가 요인 → "게다가 ~점도 한몫했습니다" (필수 조건으로 격상 금지) |
+| **"as a side effect"** | "덤으로" (부수적 이득 뉘앙스) |
+| **"Next.js alone" / "stuck on"** | "오롯이 Next.js 몫" / "~에 발이 묶여" (의미 보존 숙어) |
+| **수량 일치 검증** | "the following" + 불릿 N개 → 도입부 수량 표현과 반드시 일치 |
+| **"everywhere else"** | 전면적 범위 유지 (축소 금지) |
+| **강조어 보존** | nothing/just/every 탈락 금지 |
+| **펀치라인 헤딩** | "served us well. Then it didn't." → "제 역할을 다했다. 그러다 아니게 됐다." (대구 유지) |
+| **구어·관용** | war room → 워룸(war room), dogfood → 직접 사용해보다, (Ed:) → (편집자 주:) |
+| **sponsor → 후원** | 외래어 "스폰서"보다 한국어 선호 |
+
+**style-guide.md 업데이트**:
+- "반드시 피해야 할 표현" 표에 2행 추가 (framework magic, Konglish 피동)
+- "의미 강도 및 충실도 정정 패턴 (사례 분석 스타일)" 소섹션 신설
+- "구어·관용 표현 (사례 분석 스타일)" 소섹션 신설
+- 학습된 패턴 히스토리에 2026-06-15 행 추가
+- 분석 대상 샘플에 11번 추가
+
+**glossary.md 업데이트**:
+- "의역 및 문체 관련 용어" 표: framework magic, sponsor, war room, dogfood 추가
+- "고급 기술 용어" 표: Nitro, Fastly, content-hashed chunk, ecosystem 추가
+
+**승인된 번역 저장**:
+
+저장 경로: `.claude/skills/translate-writer/data/approved-posts/11-railway-frontend-off-nextjs.md`
+
+---
+
 
 ### 2026-02-20 14:00
 
@@ -408,6 +475,7 @@
 | 2026-02-07 | The Complete Guide to Building Skills for Claude (Part 6) | [번역] Claude 스킬 구축 완벽 가이드 - 6부 | 승인 |
 | 2026-02-11 | Making agent-friendly pages with content negotiation | [번역] 콘텐츠 협상으로 에이전트 친화적인 페이지 만들기 | ~8.5/10 |
 | 2026-02-20 | Reducing local dev time by 83%: Why we migrated off Next.js | [번역] 로컬 개발 시간 83% 단축: Next.js에서 벗어난 이유 | ~9/10 |
+| 2026-06-15 | Moving Railway's Frontend Off Next.js | [번역] Railway는 왜 프론트엔드를 Next.js에서 걷어냈나 | R 8.2 / V 8.5 |
 
 ---
 
@@ -425,7 +493,12 @@
 | 2026-02-20 | prescriptive | 정해진 / 명시적인 | translation-learner | 반영 완료 |
 | 2026-02-20 | risk averse | 보수적인 / 리스크를 꺼리는 | translation-learner | 반영 완료 |
 | 2026-02-20 | brute force (migration) | 한 번에 밀어붙이기 / 전면 전환 | translation-learner | 반영 완료 |
+| 2026-06-15 | framework magic | 프레임워크가 뒤에서 부리는 '마법' / 암묵적 동작 | translation-learner | 반영 완료 |
+| 2026-06-15 | sponsor | 후원 | translation-learner | 반영 완료 |
+| 2026-06-15 | war room | 워룸(war room) | translation-learner | 반영 완료 |
+| 2026-06-15 | dogfood | 직접 사용해보다 / 도그푸딩 | translation-learner | 반영 완료 |
+| 2026-06-15 | Nitro, Fastly, content-hashed chunk, ecosystem | (각 항목 참조) | translation-learner | 반영 완료 |
 
 ---
 
-✅ **마지막 업데이트**: 2026-02-20 14:00 KST
+✅ **마지막 업데이트**: 2026-06-15 KST
