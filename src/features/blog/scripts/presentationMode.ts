@@ -28,6 +28,11 @@ const SUMMARY_H2_PATTERN = /^핵심 요약$/;
 const TLDR_SUMMARY_PATTERN = /TL;DR/i;
 const MIN_SLIDES = 2;
 
+// 리모컨 바 아이콘 SVG path (Tabler 24x24, stroke 기반). currentColor로 버튼 색을 상속한다.
+const ICON_PREV = '<path d="M15 6l-6 6l6 6" />';
+const ICON_NEXT = '<path d="M9 6l6 6l-6 6" />';
+const ICON_EXIT = '<path d="M18 6l-12 12" /><path d="M6 6l12 12" />';
+
 interface PresentationState {
   overlay: HTMLElement;
   slides: HTMLElement[];
@@ -163,11 +168,56 @@ function openOverlay(triggerButton: HTMLButtonElement): void {
     overlay.appendChild(slide);
   });
 
-  const counter = document.createElement("div");
+  // 키보드·리모컨 버튼 리스너를 한 번에 정리하기 위한 컨트롤러. closeOverlay()의 abort()로 해제.
+  const controller = new AbortController();
+  const { signal } = controller;
+
+  // 하단 리모컨 바: [‹ 이전] [카운터] [다음 ›] | [✕ 나가기] (아이콘 버튼)
+  // 버튼은 기존 navigate()/closeOverlay()를 호출만 하고, click 리스너는 signal로 등록돼
+  // closeOverlay()의 controller.abort()로 오버레이와 함께 자동 정리된다.
+  const remote = document.createElement("div");
+  remote.className = "presentation-remote";
+  remote.setAttribute("role", "toolbar");
+  remote.setAttribute("aria-label", "프레젠테이션 컨트롤");
+
+  const prevButton = makeRemoteButton({
+    className: "presentation-remote-prev",
+    ariaLabel: "이전 슬라이드",
+    iconPath: ICON_PREV,
+    onClick: () => navigate(-1),
+    signal,
+  });
+
+  const counter = document.createElement("span");
   counter.className = "presentation-counter";
   counter.setAttribute("aria-live", "off");
   counter.textContent = `1 / ${slides.length}`;
-  overlay.appendChild(counter);
+
+  const nextButton = makeRemoteButton({
+    className: "presentation-remote-next",
+    ariaLabel: "다음 슬라이드",
+    iconPath: ICON_NEXT,
+    onClick: () => navigate(1),
+    signal,
+  });
+
+  const separator = document.createElement("span");
+  separator.className = "presentation-remote-separator";
+  separator.setAttribute("aria-hidden", "true");
+
+  // 나가기 버튼만 ESC 단축키를 함께 고지(진입 버튼의 Shift+P 관례와 일치).
+  const exitButton = makeRemoteButton({
+    className: "presentation-remote-exit",
+    ariaLabel: "프레젠테이션 종료",
+    iconPath: ICON_EXIT,
+    onClick: () => closeOverlay(),
+    signal,
+  });
+  exitButton.setAttribute("aria-keyshortcuts", "Escape");
+  exitButton.title = "프레젠테이션 종료 (Esc)";
+
+  remote.append(prevButton, counter, nextButton, separator, exitButton);
+  overlay.appendChild(remote);
 
   // body 자식에 inert 적용 (포커스 트랩 + 스크린리더 차단)
   const inertedElements: Element[] = [];
@@ -193,9 +243,6 @@ function openOverlay(triggerButton: HTMLButtonElement): void {
   // 그 이후 keydown은 body → document로만 버블링되어 overlay까지 도달하지 못함.
   // document에 부착하면 포커스 위치와 무관하게 키 이벤트를 받을 수 있고,
   // `if (!state) return` 가드가 오버레이 닫힌 상태에서 오작동을 방지함.
-  const controller = new AbortController();
-  const { signal } = controller;
-
   document.addEventListener(
     "keydown",
     event => {
@@ -205,8 +252,7 @@ function openOverlay(triggerButton: HTMLButtonElement): void {
     { signal }
   );
 
-  // 오버레이 바깥 클릭(빈 공간)은 무시. 하단 카운터 영역 클릭 무시.
-  // 사용자가 실수로 닫지 않도록 ESC만 닫기 트리거로 유지.
+  // 오버레이 바깥(빈 공간) 클릭은 무시. 종료는 리모컨 바의 "나가기" 버튼 또는 ESC로만 가능.
 
   state = {
     overlay,
@@ -218,7 +264,40 @@ function openOverlay(triggerButton: HTMLButtonElement): void {
     controller,
   };
 
-  updateCounter();
+  updateRemote();
+}
+
+/**
+ * 리모컨 바 아이콘 버튼 생성. click 리스너를 signal로 등록해 closeOverlay()의 abort로 일괄 해제.
+ * 핵심: 버튼이 키보드 포커스를 받지 못하게 막는다 — mousedown preventDefault로 마우스 클릭
+ * 포커스를, tabIndex=-1로 Tab 도달을 각각 차단. 버튼이 포커스를 가지면 Space 키가 네이티브
+ * click과 handleKeydown의 Space(navigate)를 이중 발생시켜 슬라이드가 2칸씩 넘어간다. 포커스를
+ * 차단하면 키 입력 경로가 항상 활성 슬라이드에서 출발해 이 충돌이 원천 봉쇄된다. 리모컨은
+ * 마우스 보조 UI이고, 키보드 사용자는 기존 화살표/Space/ESC로 모든 동작을 수행한다.
+ * iconPath는 24x24 SVG path 문자열. 아이콘은 aria-hidden 장식이고 의미는 aria-label이 전달한다.
+ */
+function makeRemoteButton(options: {
+  className: string;
+  ariaLabel: string;
+  iconPath: string;
+  onClick: () => void;
+  signal: AbortSignal;
+}): HTMLButtonElement {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.tabIndex = -1;
+  button.className = `presentation-remote-button ${options.className}`;
+  button.setAttribute("aria-label", options.ariaLabel);
+  button.innerHTML =
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ` +
+    `stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${options.iconPath}</svg>`;
+
+  button.addEventListener("mousedown", event => event.preventDefault(), {
+    signal: options.signal,
+  });
+  button.addEventListener("click", options.onClick, { signal: options.signal });
+
+  return button;
 }
 
 /**
@@ -317,17 +396,32 @@ function navigateTo(index: number): void {
   slides[index].scrollTop = 0;
   slides[index].focus();
 
-  updateCounter();
+  updateRemote();
 }
 
-function updateCounter(): void {
+/**
+ * 리모컨 바 갱신: 카운터 텍스트 + 이전/다음 버튼 disabled 상태.
+ * 버튼 참조는 state에 보관하지 않고 overlay에서 조회한다(기존 카운터 갱신 패턴 유지).
+ * 슬라이드 전환은 키 입력당 1회뿐이라 querySelector 비용은 무시 가능하다.
+ */
+function updateRemote(): void {
   if (!state) return;
-  const counter = state.overlay.querySelector<HTMLElement>(
-    ".presentation-counter"
-  );
+  const { overlay, currentIndex, slides } = state;
+
+  const counter = overlay.querySelector<HTMLElement>(".presentation-counter");
   if (counter) {
-    counter.textContent = `${state.currentIndex + 1} / ${state.slides.length}`;
+    counter.textContent = `${currentIndex + 1} / ${slides.length}`;
   }
+
+  const prevButton = overlay.querySelector<HTMLButtonElement>(
+    ".presentation-remote-prev"
+  );
+  if (prevButton) prevButton.disabled = currentIndex === 0;
+
+  const nextButton = overlay.querySelector<HTMLButtonElement>(
+    ".presentation-remote-next"
+  );
+  if (nextButton) nextButton.disabled = currentIndex === slides.length - 1;
 }
 
 /**

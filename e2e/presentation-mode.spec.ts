@@ -667,3 +667,85 @@ test.describe("프레젠테이션 모드 - 단축키", () => {
     await expect(page.locator(".presentation-overlay")).toBeVisible();
   });
 });
+
+test.describe("프레젠테이션 모드 - 리모컨 바", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto(TEST_POST_URL);
+    await waitForPresentationButton(page);
+    await page.locator('[data-button="presentation-start"]').click();
+    await expect(page.locator(".presentation-overlay")).toBeVisible();
+  });
+
+  test("리모컨 바와 세 버튼이 표시되어야 함", async ({ page }) => {
+    const remote = page.locator(".presentation-remote");
+    await expect(remote).toBeVisible();
+    await expect(remote).toHaveAttribute("role", "toolbar");
+    await expect(page.locator(".presentation-remote-prev")).toBeVisible();
+    await expect(page.locator(".presentation-remote-next")).toBeVisible();
+    await expect(page.locator(".presentation-remote-exit")).toBeVisible();
+
+    // 카운터는 리모컨 바 내부 span으로 유지 ("1 / N")
+    await expect(remote.locator(".presentation-counter")).toHaveText(
+      /^1 \/ \d+$/
+    );
+  });
+
+  test("나가기 버튼에 ESC 단축키와 라벨이 고지되어야 함", async ({ page }) => {
+    const exitButton = page.locator(".presentation-remote-exit");
+    await expect(exitButton).toHaveAttribute("aria-keyshortcuts", "Escape");
+    await expect(exitButton).toHaveAttribute("aria-label", "프레젠테이션 종료");
+  });
+
+  test("다음 버튼 클릭 시 다음 슬라이드로 이동", async ({ page }) => {
+    await page.locator(".presentation-remote-next").click();
+    await expect(page.locator(".presentation-counter")).toHaveText(/^2 \/ /);
+  });
+
+  test("이전 버튼 클릭 시 이전 슬라이드로 이동", async ({ page }) => {
+    await page.locator(".presentation-remote-next").click();
+    await expect(page.locator(".presentation-counter")).toHaveText(/^2 \/ /);
+    await page.locator(".presentation-remote-prev").click();
+    await expect(page.locator(".presentation-counter")).toHaveText(/^1 \/ /);
+  });
+
+  test("첫 슬라이드에서 이전 버튼이 비활성화되어야 함", async ({ page }) => {
+    await expect(page.locator(".presentation-remote-prev")).toBeDisabled();
+    await expect(page.locator(".presentation-remote-next")).toBeEnabled();
+  });
+
+  test("마지막 슬라이드에서 다음 버튼이 비활성화되어야 함", async ({ page }) => {
+    await page.keyboard.press("End");
+    await expect(page.locator(".presentation-remote-next")).toBeDisabled();
+    await expect(page.locator(".presentation-remote-prev")).toBeEnabled();
+  });
+
+  test("나가기 버튼 클릭 시 종료 + 트리거 버튼으로 포커스 복귀", async ({
+    page,
+  }) => {
+    await page.locator(".presentation-remote-exit").click();
+    await expect(page.locator(".presentation-overlay")).toHaveCount(0);
+    await expect(page.locator("body")).not.toHaveClass(/presentation-active/);
+
+    const activeIsButton = await page.evaluate(
+      () =>
+        document.activeElement?.getAttribute("data-button") ===
+        "presentation-start"
+    );
+    expect(activeIsButton).toBe(true);
+  });
+
+  test("다음 버튼 클릭은 정확히 한 칸만 이동하고 포커스가 버튼에 남지 않아야 함 (Space 이중 트리거 방지)", async ({
+    page,
+  }) => {
+    await page.locator(".presentation-remote-next").click();
+    // 이중 트리거면 3/N이 된다. 정확히 2/N이어야 함.
+    await expect(page.locator(".presentation-counter")).toHaveText(/^2 \/ /);
+
+    const focusOnButton = await page.evaluate(() =>
+      Boolean(
+        document.activeElement?.classList.contains("presentation-remote-next")
+      )
+    );
+    expect(focusOnButton).toBe(false);
+  });
+});
