@@ -269,11 +269,9 @@ function openOverlay(triggerButton: HTMLButtonElement): void {
 
 /**
  * 리모컨 바 아이콘 버튼 생성. click 리스너를 signal로 등록해 closeOverlay()의 abort로 일괄 해제.
- * 핵심: 버튼이 키보드 포커스를 받지 못하게 막는다 — mousedown preventDefault로 마우스 클릭
- * 포커스를, tabIndex=-1로 Tab 도달을 각각 차단. 버튼이 포커스를 가지면 Space 키가 네이티브
- * click과 handleKeydown의 Space(navigate)를 이중 발생시켜 슬라이드가 2칸씩 넘어간다. 포커스를
- * 차단하면 키 입력 경로가 항상 활성 슬라이드에서 출발해 이 충돌이 원천 봉쇄된다. 리모컨은
- * 마우스 보조 UI이고, 키보드 사용자는 기존 화살표/Space/ESC로 모든 동작을 수행한다.
+ * 접근성: 버튼은 정상적으로 키보드 포커스를 받는다(role="toolbar" 안의 버튼). Space 이중 트리거
+ * (버튼 네이티브 click + document global keydown의 Space→navigate)는, 포커스를 차단하는 대신
+ * Space keydown의 전파만 중단(stopPropagation)해 방지한다 — 아래 keydown 리스너 참조.
  * iconPath는 24x24 SVG path 문자열. 아이콘은 aria-hidden 장식이고 의미는 aria-label이 전달한다.
  */
 function makeRemoteButton(options: {
@@ -285,16 +283,23 @@ function makeRemoteButton(options: {
 }): HTMLButtonElement {
   const button = document.createElement("button");
   button.type = "button";
-  button.tabIndex = -1;
   button.className = `presentation-remote-button ${options.className}`;
   button.setAttribute("aria-label", options.ariaLabel);
   button.innerHTML =
     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ` +
     `stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${options.iconPath}</svg>`;
 
-  button.addEventListener("mousedown", event => event.preventDefault(), {
-    signal: options.signal,
-  });
+  // 포커스된 버튼에서 Space를 누르면 네이티브 click과 document의 global keydown(Space→navigate)이
+  // 이중 발생한다. Space keydown의 전파만 중단해 global 핸들러를 거치지 않게 하면 버튼의 네이티브
+  // click만 발생해 정확히 1칸 이동한다. 화살표 등 다른 키는 전파를 막지 않아 활성 슬라이드 기준
+  // 네비게이션이 그대로 동작한다.
+  button.addEventListener(
+    "keydown",
+    event => {
+      if (event.key === " ") event.stopPropagation();
+    },
+    { signal: options.signal }
+  );
   button.addEventListener("click", options.onClick, { signal: options.signal });
 
   return button;

@@ -734,18 +734,31 @@ test.describe("프레젠테이션 모드 - 리모컨 바", () => {
     expect(activeIsButton).toBe(true);
   });
 
-  test("다음 버튼 클릭은 정확히 한 칸만 이동하고 포커스가 버튼에 남지 않아야 함 (Space 이중 트리거 방지)", async ({
+  test("다음 버튼 클릭은 정확히 한 칸만 이동하고 클릭 후 포커스가 활성 슬라이드로 이동해야 함", async ({
     page,
   }) => {
     await page.locator(".presentation-remote-next").click();
-    // 이중 트리거면 3/N이 된다. 정확히 2/N이어야 함.
     await expect(page.locator(".presentation-counter")).toHaveText(/^2 \/ /);
 
+    // navigate 성공 시 navigateTo가 활성 슬라이드로 포커스를 옮기므로 버튼에 남지 않는다.
     const focusOnButton = await page.evaluate(() =>
       Boolean(
         document.activeElement?.classList.contains("presentation-remote-next")
       )
     );
     expect(focusOnButton).toBe(false);
+  });
+
+  test("버튼은 키보드 포커스를 받고, 포커스 상태에서 Space는 정확히 한 칸만 이동해야 함 (접근성 + 이중 트리거 방지)", async ({
+    page,
+  }) => {
+    const next = page.locator(".presentation-remote-next");
+    await next.focus();
+    // 접근성: 리모컨 버튼이 키보드 포커스를 받을 수 있어야 한다(role="toolbar"의 버튼).
+    await expect(next).toBeFocused();
+
+    await page.keyboard.press("Space");
+    // 이중 트리거(버튼 native click + document의 Space→navigate)면 3/N이 된다. 정확히 2/N이어야 함.
+    await expect(page.locator(".presentation-counter")).toHaveText(/^2 \/ /);
   });
 });
