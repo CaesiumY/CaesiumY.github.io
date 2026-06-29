@@ -27,7 +27,7 @@
     "@astrojs/sitemap": "^3.7.3",
     "@giscus/react": "^3.1.0",
     "@tailwindcss/vite": "^4.3.1",
-    "astro": "~6.4.7",
+    "astro": "~7.0.3",
     "astro-icon": "^1.1.5",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.21",
