@@ -7,15 +7,93 @@
 
 ## 피드백 통계
 
-- 총 피드백 수: 10
-- 긍정 피드백: 10
+- 총 피드백 수: 11
+- 긍정 피드백: 11
 - 부정 피드백: 0
-- 승인된 번역: 10
+- 승인된 번역: 11
 - 거절된 번역: 0
 
 ---
 
 ## 피드백 이력
+
+### 2026-06-30
+
+**원문**: Building an LLM safe design system (https://polar.sh/blog/orbit-llm-safe-design-system)
+
+**번역 제목**: [번역] LLM도 벗어날 수 없는 디자인 시스템 만들기
+
+**유형**: 승인
+
+**모드**: thorough
+
+**검토 점수**: Reviewer 8.2/10, Verifier(재검증) 8.5/10 (둘 다 PASS)
+
+**체감 점수**: 미제공
+
+**검토 횟수**: 2회 (Verifier 1차 후 재검증 요청 → 8.5로 PASS)
+
+**최상위 교훈**: "의역이 더 좋아" — 사용자 명시 선호. 원문의 직역이 한국어 독자의 이해를 떨어뜨릴 때 의미를 명확히 푸는 의역 선호. 지시어가 가리키는 대상이 없어 끊겨 읽히는 문장은 도입어구·인용부호로 예시임을 드러낼 것.
+
+**원문 특성**:
+- **스타일**: 기술 설명 + 디자인 시스템 (Polar 엔지니어링 블로그)
+- **주제**: Polar 팀의 LLM 시대 대응 디자인 시스템 Orbit — StyleX 기반 토큰 전용 API, 순수 div 금지, ESLint CI 강제화
+- **특징**: "승부수(the bet)" 프레임 반복, 제약 설계 철학, 저자 voice "저희"
+
+**추출된 스타일 규칙**:
+
+| 항목 | 패턴 | 지양 | 권장 |
+|------|------|------|------|
+| in-the-loop 관용구 | "with an LLM in the loop" | "LLM이 참여해/함께" (약함) | "LLM을 개발 루프에 두고" |
+| 주체 명시 (수동→능동) | "generated code" | "생성된 코드" (번역투) | "LLM이 짠 코드" |
+| point of use (위치) | "the point of use" | "사용 시점" (시간 오독) | "그 값을 쓰는 자리" |
+| way around (우회로) | "way around them" | "돌아갈 길" (오독) | "빠져나갈 구멍" (반복 시 "그 구멍"으로 호응) |
+| open string surface | "open string surface" | "열린 문자열 표면" (직역 모호) | "아무 문자열이나 받아주던 열린 입구" |
+| reach for (습관적 선택) | "reach for" | "집다" (어색) | "손이 가다" |
+| defaults to path of least resistance | "defaults to..." | "기본 설정됩니다" (기계 어감) | "별수 없이 가장 손쉬운 길로 빠집니다" |
+| styling pass | "second styling pass" | "스타일링 패스" (음차 모호) | "스타일을 두 번 입히는 과정" |
+| opinionated convention | "opinionated convention" | "의견이 담긴 관례" (어색) | "저희 나름의 방침" |
+| This flips (지시대명사) | "This flips who..." | "이것은 ~ 바꿉니다" | "이렇게 하면 ~ 뒤바뀝니다" |
+| live with the output | "live with the output" | "결과물과 함께 사는 것" | "그 결과를 그대로 안고 가다" |
+| contrapositive (논리) | "contrapositive" | "그 역"(오류), "그 반대편"(엄밀성 약화) | "거기서 따라오는 결론" |
+| the bet (전략적 베팅) | "the bet" | "도박" (부정 어감) | "승부수" (한 문서 5곳+결말 일관) |
+| the bet ~ is built on | "bet ~ is built on" | "승부수는 ~에 있습니다" (토대 소실) | "딛고 선 승부수" |
+| make sure (능동) | "make sure the only things..." | "~것들뿐입니다" (make sure 소실) | "~만 CI를 통과하도록 해둘 뿐입니다" |
+| 이중 주격 비문 | "버그가…표현 자체가" | 이중 주격 비문 | 한쪽을 주제 조사 "는"으로 |
+| too small for X | "too small for X" | "X에는 너무 작다" (모호) | "X를 담아내기엔 너무 작다" |
+| keep coming back to | "the one we keep coming back to" | "아이디어가 돌아옵니다" (주체 반전) | "늘 다시 붙드는 생각은 하나입니다" |
+| 저자 voice | "we/our" | "우리/저희" 혼용 | "저희"로 통일 |
+| 지시어 끊김 | "Cards sit on this surface. ..." | 끊겨 읽히는 예시 직번역 | 도입어구("이를테면") + 인용부호로 예시 드러내기 |
+
+**style-guide.md 업데이트**:
+- "반드시 피해야 할 표현" 표에 19행 추가 (LLM safe design system 세션 패턴)
+- "의역(Paraphrasing)과 격언체 다루기" 표에 "지시어 없는 예시 나열" 행 추가
+- "의미 강도 및 충실도 정정 패턴" 표에 "the bet" 2행 추가
+- "구어·관용 표현" 표에 way around, the bet, opinionated convention 추가
+- "의역 사용 시점 판단" 표에 "지시어 끊김" 행 추가
+- "§9 의역 전략"에 "지시어 끊김 보정" 소섹션 추가
+- "§1 문체"에 저자 voice "저희" 통일 원칙 추가
+- "샘플에서 발견된 자연스러운 표현 패턴"에 2행 추가
+- "원문 유지 용어"에 CSS light-dark(), StyleX, Box (Orbit) 추가
+- "한글화 용어"에 design token, styling pass 추가
+- "괄호 병기 패턴"에 polymorphic 추가
+- 학습된 패턴 히스토리에 2026-06-30 행 추가
+- 분석 대상 샘플에 12번 추가
+- 마지막 업데이트 날짜 2026-06-30으로 갱신
+
+**glossary.md 업데이트**:
+- "의역 및 문체 관련 용어" 표: bet→승부수, escape hatch→탈출구, styling pass, opinionated convention, way around 추가
+- "프레임워크/라이브러리" 표: StyleX 추가
+- "고급 기술 용어" 표: polymorphic, design token, light-dark(), Box (Orbit) 추가
+- 업데이트 기록에 2026-06-30 행 추가
+
+**승인된 번역 저장**:
+
+저장 경로: `.claude/skills/translate-writer/data/approved-posts/12-llm-safe-design-system.md`
+
+심링크 경로: `.claude/skills/translate-writer/data/samples/12-llm-safe-design-system.md` (mode 120000 확인)
+
+---
 
 ### 2026-06-15
 
@@ -450,7 +528,11 @@
 
 | 피드백 유형 | 빈도 | 적용된 규칙 |
 |-------------|------|-------------|
-| 의역 전략 (격언, 비유, 부정조건) | 높음 (신규) | 새로운 섹션 "9. 의역 전략" 추가 |
+| 의역 전략 (격언, 비유, 부정조건, 지시어 끊김) | 높음 | "9. 의역 전략" 섹션 + 지시어 끊김 보정 추가 |
+| in-the-loop 등 관용구 직역 회피 | 높음 (신규) | "반드시 피해야 할 표현" 표 확충 |
+| 수동형 번역투 (generated code 등) | 높음 (신규) | 주체 명시 능동화 패턴 추가 |
+| "승부수" vs "도박" 단어 선택 | 중간 (신규) | glossary + style-guide 동시 반영 |
+| 저자 voice "저희" 통일 | 중간 (신규) | "§1 문체" 원칙 추가 |
 | "~경우" 제거 | 높음 | 반드시 피해야 할 표현에 추가 |
 | "제공하다" 대체 | 중간 | 스타일 가이드 확충 |
 | 긴 관계절 간결화 | 중간 | 구조 규칙에 반영 |
@@ -476,6 +558,7 @@
 | 2026-02-11 | Making agent-friendly pages with content negotiation | [번역] 콘텐츠 협상으로 에이전트 친화적인 페이지 만들기 | ~8.5/10 |
 | 2026-02-20 | Reducing local dev time by 83%: Why we migrated off Next.js | [번역] 로컬 개발 시간 83% 단축: Next.js에서 벗어난 이유 | ~9/10 |
 | 2026-06-15 | Moving Railway's Frontend Off Next.js | [번역] Railway는 왜 프론트엔드를 Next.js에서 걷어냈나 | R 8.2 / V 8.5 |
+| 2026-06-30 | Building an LLM safe design system | [번역] LLM도 벗어날 수 없는 디자인 시스템 만들기 | R 8.2 / V 8.5 |
 
 ---
 
@@ -498,7 +581,17 @@
 | 2026-06-15 | war room | 워룸(war room) | translation-learner | 반영 완료 |
 | 2026-06-15 | dogfood | 직접 사용해보다 / 도그푸딩 | translation-learner | 반영 완료 |
 | 2026-06-15 | Nitro, Fastly, content-hashed chunk, ecosystem | (각 항목 참조) | translation-learner | 반영 완료 |
+| 2026-06-30 | bet | 승부수 | translation-learner | 반영 완료 |
+| 2026-06-30 | escape hatch | 탈출구 | translation-learner | 반영 완료 |
+| 2026-06-30 | styling pass | 스타일을 입히는 과정 | translation-learner | 반영 완료 |
+| 2026-06-30 | opinionated convention | 저희 나름의 방침 | translation-learner | 반영 완료 |
+| 2026-06-30 | way around | 빠져나갈 구멍 / 우회로 | translation-learner | 반영 완료 |
+| 2026-06-30 | polymorphic | 다형적(polymorphic) | translation-learner | 반영 완료 |
+| 2026-06-30 | design token | 디자인 토큰 | translation-learner | 반영 완료 |
+| 2026-06-30 | light-dark() | light-dark() (원문 유지) | translation-learner | 반영 완료 |
+| 2026-06-30 | Box (Orbit) | Box (원문 유지) | translation-learner | 반영 완료 |
+| 2026-06-30 | StyleX | StyleX (원문 유지) | translation-learner | 반영 완료 |
 
 ---
 
-✅ **마지막 업데이트**: 2026-06-15 KST
+✅ **마지막 업데이트**: 2026-06-30 KST
