@@ -1,0 +1,76 @@
+{
+  "slug": "llm-safe-design-system",
+  "title": "[번역] LLM도 벗어날 수 없는 디자인 시스템 만들기",
+  "source": "https://polar.sh/blog/orbit-llm-safe-design-system",
+  "mode": "thorough",
+  "timestamp": "2026-06-30T13:38:12Z",
+  "summary": {
+    "analyzed_sentences": 71,
+    "avg_before": 9.32,
+    "below_threshold": 8,
+    "threshold": 9.5,
+    "improved": 8
+  },
+  "review_history": {
+    "reviewer_overall": 8.2,
+    "verifier_overall": 8.7
+  },
+  "improvements": [
+    {
+      "line": 47,
+      "before": "오늘날 Polar에서 출시되는 UI 코드의 대부분은 LLM이 함께 작성합니다.",
+      "after": "오늘날 Polar에서 출시되는 UI 코드 대부분은 LLM이 참여해 작성됩니다.",
+      "score_before": 9.2,
+      "pattern": "#10 부자연스러운 표현(함께 작성)"
+    },
+    {
+      "line": 53,
+      "before": "이런 생성이 수백 개의 컴포넌트와 수천 번의 생성을 거치면, ...",
+      "after": "이런 일이 수백 개의 컴포넌트와 수천 번의 생성에 걸쳐 쌓이면, ...",
+      "score_before": 9.1,
+      "pattern": "#6 의미 중복(생성이...생성을)"
+    },
+    {
+      "line": 59,
+      "before": "...지금도 선택할 겁니다.",
+      "after": "...지금도 최우선 선택지입니다.",
+      "score_before": 8.9,
+      "pattern": "#5 장황한 표현 + 강도 보존(we'd reach for it again)"
+    },
+    {
+      "line": 75,
+      "before": "...딱 하나의 방식으로 틀립니다. 시스템을 벗어났다는 것.",
+      "after": "...다만 정적 분석이 잡을 수 없는 한 가지 방식으로 틀렸습니다. 바로 시스템을 벗어났다는 것입니다.",
+      "score_before": 9.0,
+      "pattern": "#6 흐름 개선(off-system 콜론 리빌 보존)"
+    },
+    {
+      "line": 86,
+      "before": "...담겨 있지 않습니다.",
+      "after": "...설명하지 않습니다.",
+      "score_before": 9.3,
+      "pattern": "#1 번역투(~것이 담겨있지 않다)"
+    },
+    {
+      "line": 88,
+      "before": "카드 배경색에 대한 생각이 바뀌면, 결정을 고치는 게 아니라 색을 grep 하게 됩니다.",
+      "after": "카드 배경색 방침을 바꾸려면, 결정을 고치는 게 아니라 색을 grep 해야 합니다.",
+      "score_before": 9.2,
+      "pattern": "#3 주어 불명확"
+    },
+    {
+      "line": 104,
+      "before": "...설득해낼 수도 없는 검사 안에 박아 넣습니다.",
+      "after": "...말로 무를 수도 없는 검사 안에 박아 넣습니다.",
+      "score_before": 8.8,
+      "pattern": "#5 장황(talked out of 자연화)"
+    },
+    {
+      "line": 198,
+      "before": "LLM이 라이트 모드에서는 맞고 다크 모드에서는 깨진 컴포넌트를 내놓을 수 없습니다. 틀릴 수 있는 별도 다크 모드 코드가 없으니까요.",
+      "after": "LLM은 라이트 모드에서는 멀쩡하고 다크 모드에서는 깨진 컴포넌트를 내놓을 수 없습니다. 틀릴 만한 별도 다크 모드 코드가 아예 없으니까요.",
+      "score_before": 8.7,
+      "pattern": "#5 리듬 개선(인과절은 원래 보존돼 있었음)"
+    }
+  ]
+}

@@ -120,6 +120,11 @@
 | sponsor | 후원 | 외래어 "스폰서"보다 한국어 선호 |
 | war room | 워룸(war room) | 긴급 대응 상황실, 원문 병기 |
 | dogfood | 직접 사용해보다 / 도그푸딩 | 내부 실사용 |
+| bet (strategic context) | 승부수 | 전략적 베팅 의미; "도박"(도박장·중독 어감) 지양. 한 문서 내 일관 적용 |
+| escape hatch | 탈출구 | 시스템 우회 수단 |
+| styling pass | 스타일을 입히는 과정 | 음차 "패스" 지양 |
+| opinionated convention | 저희 나름의 방침 | 저자 voice와 연결; 뒤의 "the opinion"→"방침"으로 연결 유지 |
+| way around (something) | 빠져나갈 구멍 / 우회로 | "돌아갈 길"(되돌아가는 길 오독) 지양 |
 
 ### 프레임워크/라이브러리
 
@@ -129,6 +134,7 @@
 | Deno Fresh | Deno Fresh | 프레임워크명 (한글화 불필요) |
 | React Router | React Router | 프레임워크명 (한글화 불필요) |
 | Remix | Remix | 프레임워크명 (한글화 불필요) |
+| StyleX | StyleX | Meta 컴파일타임 타입 안전 스타일링, 원문 유지 |
 
 ### 고급 기술 용어
 
@@ -153,6 +159,10 @@
 | Fastly | Fastly | CDN/엣지, 원문 유지 |
 | content-hashed chunk | 콘텐츠 해시 청크 | Vite 에셋 모델 |
 | ecosystem | 에코시스템 | "생태계"도 통용 (문맥에 따라 선택) |
+| polymorphic | 다형적(polymorphic) | 괄호 병기 |
+| design token | 디자인 토큰 | |
+| light-dark() | light-dark() | CSS 네이티브 함수, 원문 유지 |
+| Box (Orbit) | Box | Orbit의 polymorphic primitive, 원문 유지 |
 
 ---
 
@@ -166,6 +176,7 @@
 | 2026-02-11 | "Content Negotiation" → "콘텐츠 협상", "Changelog" → "변경 내역" 추가 |
 | 2026-02-20 | 의역 관련 용어 추가 ("compelling", "honeymoon period", "prescriptive", "risk averse" 등), 프레임워크 용어 추가 ("Tanstack Start", "Deno Fresh" 등) |
 | 2026-06-15 | Railway 번역 승인: framework magic, sponsor, war room, dogfood, Nitro, Fastly, content-hashed chunk, ecosystem 추가 |
+| 2026-06-30 | LLM safe design system 번역 승인: bet→승부수, escape hatch→탈출구, styling pass, opinionated convention, way around, polymorphic, design token, light-dark(), Box (Orbit), StyleX 추가 |
 
 ---
 
