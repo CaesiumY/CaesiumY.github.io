@@ -11,7 +11,7 @@
 - 기본: 존댓말 (~습니다/~입니다) 사용
 - 코드 설명: 존댓말 유지 (예: "설정에서 파일 시스템 캐싱을 활성화하세요")
 - 인용/직접 화법: "~했습니다" 형태 유지 (예: "Horthy는 설명했습니다.")
-- **핵심 요약(TL;DR)도 존댓말 통일**: TL;DR 불릿을 평서체(~다/~한다)로 뽑지 말고 본문과 같은 존댓말(~습니다/~입니다)로. content-translator가 요약부를 평서체로 생성하는 경향이 있으니 번역 직후 반드시 점검 (승인 샘플 11 Railway TL;DR이 존댓말 기준)
+- **핵심 요약(TL;DR)도 존댓말 통일**: TL;DR 불릿을 평서체(~다/~한다)로 작성하지 말고 본문과 같은 존댓말(~습니다/~입니다) 사용. content-translator가 요약부를 평서체로 생성하는 경향이 있으니 번역 직후 반드시 점검 (승인 샘플 11 Railway TL;DR이 존댓말 기준)
 
 ### 문장 종결 패턴
 - **서술문**: "~입니다", "~합니다", "~됩니다"
@@ -167,7 +167,7 @@
 
 - **Obsidian 웹 클리퍼 등으로 뽑은 소스(`tags: ["clippings"]`)는 마크다운 구조가 뭉개질 수 있음**: 특히 산문 단락이 불릿(`- `)으로, 또는 그 반대로 변형됨
 - **필수 확인**: 리스트가 애매하면 실제 원문 URL(WebFetch)과 대조하여 "어디까지가 불릿 예시이고 어디부터가 산문 단락인지" 확인
-- 실제 사례: polar.sh Orbit 글은 **4개 불릿 예시 + 2개 산문 단락**인데, 클리퍼 소스가 6개 불릿으로 뭉개 하마터면 결론 단락을 목록으로 오역할 뻔함 (2026-06-30, gemini·claude 봇이 렌더링 이슈로 지적)
+- 실제 사례: polar.sh Orbit 글은 **4개 불릿 예시 + 2개 산문 단락**인데, 클리퍼 소스가 6개 불릿으로 뭉개져 하마터면 결론 단락을 목록으로 오역할 뻔함 (2026-06-30, gemini·claude 봇이 렌더링 이슈로 지적)
 
 ### 샘플에서 발견된 자연스러운 표현 패턴
 
@@ -509,7 +509,7 @@ tags: ["translation", "관련-태그", ...]
 | 2026-02-20 | Inngest: Migrating off Next.js 번역 승인 | 의역(paraphrasing) 전략, 격언체 다루기, 비유 표현 번역, 부정 조건 역발상 표현, 형용사 축약 패턴 추가 |
 | 2026-06-15 | Railway: Moving Frontend Off Next.js 승인 | framework magic 음차 회피, "타입 체크됩니다"→"타입 검사를 거칩니다" 능동화, also-helps 과장 정정, "as a side effect"→"덤으로", 수량 일치 검증, 강조어 보존, 구어·관용 표현(war room/dogfood) 패턴 추가, sponsor→후원 |
 | 2026-06-30 | Building an LLM safe design system 번역 승인 (Reviewer 8.2, Verifier 8.5) | 의역 최상위 교훈("의역이 더 좋아") 반영; "LLM을 개발 루프에 두고"(in-the-loop), "LLM이 짠 코드"(주체 명시), "그 값을 쓰는 자리"(point of use 위치), "빠져나갈 구멍"(way around), "손이 가다"(reach for), "별수 없이 손쉬운 길로 빠집니다"(defaults to path of least resistance), "스타일을 두 번 입히는 과정"(styling pass), "저희 나름의 방침"(opinionated convention), "이렇게 하면 ~ 뒤바뀝니다"(This flips), "그 결과를 안고 가다"(live with the output), "거기서 따라오는 결론"(contrapositive), "승부수"(the bet), "make sure" 능동화, 이중주격 비문 수정, 지시어 끊김 보정(도입어구+인용부호), 저자 voice "저희" 통일 패턴 추가 |
-| 2026-07-01 | LLM 번역 PR #99 리뷰 반영 (gemini·claude 봇) | TL;DR·핵심 요약도 존댓말 통일 규칙 추가(평서체 뽑힘 주의); 클리퍼 export(clippings) 소스는 불릿/단락 구조가 뭉개지므로 실제 원문 URL과 대조 규칙 추가 |
+| 2026-07-01 | LLM 번역 PR #99 리뷰 반영 (gemini·claude 봇) | TL;DR·핵심 요약도 존댓말 통일 규칙 추가(평서체 뽑힘 주의); 클리퍼 export(clippings) 소스는 불릿/단락 구조가 뭉개지므로 실제 원문 URL과 대조하는 규칙 추가 |
 
 ---
 
