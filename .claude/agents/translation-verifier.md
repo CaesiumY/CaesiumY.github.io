@@ -303,12 +303,11 @@ Read .claude/skills/translate-writer/data/glossary.md
 # 원문이 URL인 경우
 Task(
   subagent_type="translation-verifier",
-  model="opus",
   prompt="""
   다음 번역의 원문 충실도를 검증해주세요.
 
   원문 URL: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
-  번역 파일: /home/wsl-agent/my-projects/CaesiumY.github.io/contents/blog/javascript-promise-guide/index.md
+  번역 파일: contents/blog/javascript-promise-guide/index.md
 
   3개 차원(의미 정확성·기술 정확성·뉘앙스)별 점수와 종합 점수를 산정하고, 하드 임계값 통과 여부와 함께 상세 리포트를 작성해주세요.
   """
@@ -317,18 +316,19 @@ Task(
 # 원문이 파일인 경우
 Task(
   subagent_type="translation-verifier",
-  model="opus",
   prompt="""
   다음 번역의 원문 충실도를 검증해주세요.
 
-  원문 파일: /tmp/original-article.md
-  번역 파일: /home/wsl-agent/my-projects/CaesiumY.github.io/contents/blog/translated-article/index.md
+  원문 파일: [원문 마크다운 파일 경로]
+  번역 파일: contents/blog/translated-article/index.md
 
   특히 T7(코드/API 정확성)과 T8(수치/통계 보존)을 집중적으로 검토해주세요.
   기술 정확성 차원의 하드 임계값(8점 이상)을 충족하는지 확인해주세요.
   """
 )
 ```
+
+> 모델은 이 파일 frontmatter의 `model:` 필드에서 지정됩니다. Task 호출 시 `model` 파라미터를 중복 지정하지 마세요.
 
 ## 종료 조건 (Completion Criteria)
 
@@ -343,9 +343,3 @@ Task(
 - [ ] Critical/Important/Minor 오류 분류 완료
 - [ ] 마크다운 리포트 생성 완료 (차원별 점수 테이블 포함)
 - [ ] 모든 출력이 한국어로 작성됨
-
----
-
-**버전**: 2.0.0
-**최종 수정**: 2026-03-31
-**작성자**: Executor Agent (oh-my-claudecode)
