@@ -155,32 +155,34 @@ AskUserQuestion으로 사용자에게 질문:
 
 ## 에이전트 호출 방법
 
+> 반드시 전용 에이전트 이름을 `subagent_type`으로 지정하세요. `general-purpose`로 우회 호출하면 전용 에이전트의 model/tools 설정이 로드되지 않습니다.
+
 ### style-analyzer 호출
 ```
 Task 도구 사용:
-- subagent_type: "general-purpose"
-- prompt: "style-analyzer 에이전트를 실행하여 .claude/skills/blog-writer/data/samples/ 폴더의 글들을 분석하고 style-guide.md를 업데이트하세요."
+- subagent_type: "style-analyzer"
+- prompt: ".claude/skills/blog-writer/data/samples/ 폴더의 글들을 분석하고 .claude/skills/blog-writer/data/style-guide.md를 업데이트하세요."
 ```
 
 ### content-writer 호출
 ```
 Task 도구 사용:
-- subagent_type: "general-purpose"
-- prompt: "content-writer 에이전트를 실행하여 '[주제]' 주제로 블로그 글을 작성하세요. 스타일 가이드 참조 필수."
+- subagent_type: "content-writer"
+- prompt: "'[주제]' 주제로 블로그 글을 작성하세요. 카테고리: [카테고리]. 스타일 가이드(.claude/skills/blog-writer/data/style-guide.md) 참조 필수."
 ```
 
 ### content-reviewer 호출
 ```
 Task 도구 사용:
-- subagent_type: "general-purpose"
-- prompt: "content-reviewer 에이전트를 실행하여 작성된 글을 검토하고 점수를 부여하세요."
+- subagent_type: "content-reviewer"
+- prompt: "[글 파일 경로]의 글을 검토하고 100점 만점으로 점수를 부여하세요. 80점 미만이면 구체적 수정 지시를 작성하세요."
 ```
 
 ### style-learner 호출
 ```
 Task 도구 사용:
-- subagent_type: "general-purpose"
-- prompt: "style-learner 에이전트를 실행하여 '[피드백 내용]' 피드백을 학습하고 스타일 가이드를 업데이트하세요."
+- subagent_type: "style-learner"
+- prompt: "다음 피드백을 학습하고 스타일 가이드를 업데이트하세요: [피드백 내용 + 승인/수정/거절 여부]"
 ```
 
 ---
