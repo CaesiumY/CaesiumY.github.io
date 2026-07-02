@@ -53,10 +53,11 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 
 ### CI & platform
 
-- The merge gate is the single `Code standards & build` job (audit → lint → format check → build → E2E). The `Claude Code Review` workflow is advisory — its failures do not block merges.
+- The merge gate is the single `Code standards & build` job (audit → lint → format check → docs sync → asset lint → build → E2E). The `Claude Code Review` workflow is advisory — its failures do not block merges.
 - Windows: after `pnpm format`, `git status` may list files as modified with no real content change (CRLF). Judge with `git diff` and restore false positives with `git checkout`. A fresh Windows checkout can also fail `pnpm format:check` on nearly every file (`endOfLine: "lf"` vs CRLF working copies) — trust the CI verdict and never mass-reformat to "fix" it.
 - Playwright runs against the dev server (port 4321), not the build; CI uses 1 worker with 2 retries. Test fixtures reference real post slugs (`e2e/fixtures/test-posts.ts`) — renaming those posts breaks the suite.
 - `CLAUDE.md` and `AGENTS.md` are mirrors — when editing one, mirror the change to the other. Only the title line, the intro line, and the `## Skills` section may differ; any other divergence fails CI (`node scripts/check-agent-docs-sync.mjs`).
+- Skill/agent definitions are linted by `node scripts/check-claude-assets.mjs` (also in CI): skill frontmatter must have `name`/`description`/`allowed-tools` with `name` matching the directory; agent `model` must be an alias (haiku|sonnet|opus, never a concrete model ID); `subagent_type` references must name a defined agent (`general-purpose` is forbidden); referenced `.claude/...` paths must exist.
 
 ## Skills (Claude Code 스킬 시스템)
 
@@ -69,6 +70,8 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 - `/portfolio-strategy` — 인터뷰형 포트폴리오 섹션 작성
 - `/agents-md-optimizer` — CLAUDE.md/AGENTS.md discoverability 최적화
 - 에이전트 정의: `.claude/agents/` · 번역 스타일 가이드/용어집: `.claude/skills/translate-writer/data/`
+- 28개 번역투 패턴의 단일 정본: `.claude/skills/translate-writer/references/translation-patterns.md` — 패턴 번호를 다른 파일에 복사하지 말 것
+- 사용자 게이트는 `✋ GATE N — AskUserQuestion` 표기로 통일 — 게이트에서 AskUserQuestion 없이 다음 Phase 진행 금지
 
 ## Environment
 
