@@ -62,6 +62,8 @@ draft: true
 
 ### Phase 3: 사용자 승인
 
+**✋ GATE 1**: 게이트에서는 사용자 확인 없이 다음 Phase로 진행하지 마세요.
+
 사용자에게 제목, 카테고리, 점수, 저장 예정 경로, 핵심 미리보기를 보여주고 승인/수정/거절 중 하나를 확인합니다.
 
 - 승인: `contents/blog/[category]/[slug]/index.md`에 저장하고 학습 단계로 이동합니다.
@@ -74,7 +76,7 @@ draft: true
 
 1. 글은 `draft: true`로 저장합니다.
 2. 승인본을 `.agents/skills/blog-writer/data/approved-posts/`에 백업합니다.
-3. 필요하면 `.agents/skills/blog-writer/data/samples/`에 샘플을 추가합니다.
+3. 필요하면 `.agents/skills/blog-writer/data/samples/`에 샘플을 추가합니다. samples/의 파일은 approved-posts/를 가리키는 git 심링크입니다 — Windows에서 `ln -s`가 복사본을 만들거나 실패하면 `git update-index --add --cacheinfo 120000,...`으로 심링크를 직접 등록하고 `git ls-files -s`로 mode 120000을 검증합니다.
 4. `style-learner` 역할 프롬프트 기준으로 피드백 로그와 스타일 가이드를 갱신합니다.
 5. 스타일 가이드를 바꿀 때는 먼저 `.agents/skills/blog-writer/data/style-history/`에 백업합니다.
 

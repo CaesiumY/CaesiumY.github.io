@@ -26,7 +26,7 @@
         "issues": [{"type": "missing", "description": "significantly 누락"}]
       },
       "score": 9.3,
-      "patterns": ["#1", "#10"],
+      "patterns": ["#1", "#8"],
       "options": [],
       "status": "pending",
       "selected_option": null
