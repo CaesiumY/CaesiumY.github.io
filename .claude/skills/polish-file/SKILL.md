@@ -127,7 +127,7 @@ WebFetch(url=원본URL, prompt="전체 본문 텍스트를 마크다운 형식�
     "meaning_preserved": true,
     "issues": []
   },
-  "patterns_found": ["#1", "#10"],
+  "patterns_found": ["#1", "#8"],
   "options": [...]
 }
 ```
