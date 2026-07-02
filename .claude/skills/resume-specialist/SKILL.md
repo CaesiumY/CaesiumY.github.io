@@ -1,7 +1,8 @@
 ---
-allowed-tools: [Read, Write, Glob, Grep, Task, AskUserQuestion]
-argument-hint: "[작업 유형: 작성|검토|최적화] [대상 포지션]"
+name: resume-specialist
 description: 이력서/CV 작성, 검토, ATS 최적화를 수행하는 스킬. about.md와 projects.ts에서 프로젝트 이력을 참조하여 맞춤형 이력서를 생성합니다. "이력서 작성", "이력서 검토", "resume 만들어줘", "ATS 최적화", "CV 개선", "포지션에 맞게 이력서 수정" 등의 요청에 사용하세요. 이력서/CV 관련 작업이면 반드시 이 스킬을 사용합니다.
+argument-hint: "[작업 유형: 작성|검토|최적화] [대상 포지션]"
+allowed-tools: [Read, Write, Glob, Grep, Task, AskUserQuestion]
 ---
 
 # 이력서 전문가 스킬

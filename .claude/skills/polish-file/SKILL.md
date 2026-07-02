@@ -1,7 +1,8 @@
 ---
-allowed-tools: [Read, Write, Bash, Glob, Task, AskUserQuestion, Edit, WebFetch]
-argument-hint: <파일경로> [--threshold=9.5] [--resume]
+name: polish-file
 description: 마크다운 파일 전체의 문장 품질을 분석하고 점수별 개선을 제안하는 스킬. 번역 파일이면 원본 URL에서 영어 원문을 가져와 의미 보존까지 검증합니다. "파일 전체 다듬기", "글 품질 점검", "문장별 분석", "번역 품질 검사", "polish file", "파일 리뷰" 등의 요청에 사용하세요. 개별 문장이 아닌 파일 전체를 대상으로 할 때 /polish 대신 이 스킬을 사용합니다.
+argument-hint: <파일경로> [--threshold=9.5] [--resume]
+allowed-tools: [Read, Write, Bash, Glob, Task, AskUserQuestion, Edit, WebFetch]
 ---
 
 # /polish-file - 파일 전체 다듬기 스킬

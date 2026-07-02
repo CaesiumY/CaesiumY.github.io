@@ -1,7 +1,8 @@
 ---
-allowed-tools: [Read, Edit, AskUserQuestion, Grep, Task, WebFetch, Glob]
-argument-hint: "[선택된 텍스트]"
+name: polish
 description: 개별 문장을 분석하고 3-4개 개선 옵션을 점수와 함께 제시하는 문장 다듬기 스킬. 번역 파일이면 원본 영어 문장을 자동으로 찾아 의미 보존 여부까지 검증합니다. "이 문장 다듬어줘", "자연스럽게 고쳐줘", "문장 개선", "polish this sentence", "번역투 수정" 등의 요청에 사용하세요. 파일 전체가 아닌 특정 문장 1-2개를 다듬을 때 /polish-file 대신 이 스킬을 사용합니다.
+argument-hint: "[선택된 텍스트]"
+allowed-tools: [Read, Edit, AskUserQuestion, Grep, Task, WebFetch, Glob]
 ---
 
 # /polish - 문장 다듬기 스킬

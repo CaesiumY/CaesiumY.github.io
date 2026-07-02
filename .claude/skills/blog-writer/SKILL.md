@@ -1,7 +1,8 @@
 ---
-allowed-tools: [Read, Write, Bash, Glob, TodoWrite, Task, AskUserQuestion]
-argument-hint: "[주제/제목]" [--category 카테고리] [--analyze] [--skip-review]
+name: blog-writer
 description: 저자의 스타일을 학습하여 한국어 블로그 글을 자동 작성하는 4-에이전트 파이프라인. 스타일 분석, 초안 작성, 검토 루프(80점 기준), 사용자 승인까지 자동 수행. "글 써줘", "블로그 작성", "포스트 생성", "write a blog post", "새 글 쓰기" 등의 요청에 사용하세요. 번역이 아닌 원본 한국어 글을 쓸 때 /translate-writer 대신 이 스킬을 사용합니다.
+argument-hint: "[주제/제목]" [--category 카테고리] [--analyze] [--skip-review]
+allowed-tools: [Read, Write, Bash, Glob, TodoWrite, Task, AskUserQuestion]
 ---
 
 ## 블로그 글쓰기 에이전트 시스템

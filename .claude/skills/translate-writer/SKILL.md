@@ -1,7 +1,8 @@
 ---
-allowed-tools: [Read, Write, Edit, Bash, Glob, TodoWrite, Task, AskUserQuestion, WebFetch]
-argument-hint: <URL 또는 파일경로> [--mode=quick|thorough|perfect] [--analyze] [--skip-review]
+name: translate-writer
 description: 영어 기술 블로그/문서를 고품질 한국어 블로그 포스트로 변환하는 전문 번역 파이프라인. 이 스킬은 단순히 텍스트를 번역하는 것이 아니라, 저자의 스타일을 학습하고 6개 전문 에이전트(번역기, 번역투 리뷰어, 원문 충실도 검증기, 문장 polish 등)가 협업하여 출판 수준의 번역을 생성합니다. 사용자가 영어 글을 번역하거나 한국어로 옮기고 싶다고 하면 반드시 이 스킬을 사용하세요. URL이나 파일 경로를 주며 번역을 요청하는 경우, "번역해줘", "한국어로", "translate", "번역 블로그", "옮겨줘", "영어 글" 등의 키워드가 포함된 경우 모두 해당합니다. 직접 번역하지 말고 반드시 이 스킬을 호출하세요 — 직접 번역은 스타일 가이드, 용어집, 이중 검증을 활용할 수 없어 품질이 크게 떨어집니다.
+argument-hint: <URL 또는 파일경로> [--mode=quick|thorough|perfect] [--analyze] [--skip-review]
+allowed-tools: [Read, Write, Edit, Bash, Glob, TodoWrite, Task, AskUserQuestion, WebFetch]
 ---
 
 ## 번역 글쓰기 에이전트 시스템
