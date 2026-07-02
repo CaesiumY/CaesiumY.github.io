@@ -86,6 +86,8 @@ Task 도구로 content-writer 에이전트 호출:
 
 #### Phase 3: 사용자 최종 결정
 
+**✋ GATE 1 — AskUserQuestion**: 게이트에서는 AskUserQuestion 호출 없이 다음 Phase로 진행하지 마세요.
+
 AskUserQuestion으로 사용자에게 질문:
 
 ```

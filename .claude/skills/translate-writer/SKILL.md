@@ -161,13 +161,15 @@ Task 도구로 호출:
 
 1. **문장별 분석**: `/polish-file`의 Step 1-2와 동일 (polish-agent batch 호출)
 2. **필터링**: 기준 점수 미만 문장만 선택 (thorough: 9.5, perfect: 9.8)
-3. **사용자 확인**: "N개 문장 다듬기 진행?" (지금 다듬기 / 나중에 / 건너뛰기)
+3. **✋ GATE 1 — AskUserQuestion**: "N개 문장 다듬기 진행?" (지금 다듬기 / 나중에 / 건너뛰기)
 4. **순차 개선**: 각 문장에 대해 `/polish` 스킬의 Step 1-3을 따라 실행 (polish-agent → 옵션 제시 → Edit 적용)
 5. **JSON 리포트 저장**: `.claude/polish-reports/[slug]-[timestamp].json`
 
 상세 로직: `/polish-file` 스킬 참조, 개별 문장 다듬기: `/polish` 스킬 참조
 
 #### Phase 4: 사용자 최종 결정
+
+**✋ GATE 2 — AskUserQuestion**: 게이트에서는 AskUserQuestion 호출 없이 다음 Phase로 진행하지 마세요.
 
 AskUserQuestion으로 사용자에게 질문:
 
