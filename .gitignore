@@ -23,11 +23,9 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# Obsidian vault 및 Claudian(Obsidian용 Claude 플러그인) 설정 — contents/ 편집 도구가 생성
+# Obsidian vault 및 Claudian(Obsidian용 Claude 플러그인) 설정 — contents/ 를 볼트 루트로 사용
 .obsidian/
 .claudian/
-# Obsidian/Claudian 볼트 루트 (repo가 아닌 별도 노트 저장소) — ⚠️ 단수 content/ 만 무시; 복수 contents/ 는 실제 블로그라 무시 안 함
-/content/
 
 # pagefind
 public/pagefind
