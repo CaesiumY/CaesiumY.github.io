@@ -122,6 +122,7 @@ AskUserQuestion으로 사용자에게 질문:
 1. `contents/blog/[category]/[slug]/index.md` 저장
 2. `approved-posts/`에 백업 저장
 3. `samples/`에 심링크 추가 (`ln -s ../approved-posts/<파일명> .`) — style-analyzer가 승인된 스타일을 학습
+   - **Windows에서 `ln -s`가 복사본을 만들거나 실패하면**: `git update-index --add --cacheinfo 120000,$(echo -n "../approved-posts/<파일명>" | git hash-object -w --stdin),.claude/skills/blog-writer/data/samples/<파일명>` 으로 git 심링크를 직접 등록하고, `git ls-files -s`로 mode가 120000인지 검증
 4. style-guide.md 업데이트 (승인 패턴 강화)
 5. feedback-log.md 기록
 
