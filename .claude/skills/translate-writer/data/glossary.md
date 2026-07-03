@@ -163,6 +163,9 @@
 | design token | 디자인 토큰 | |
 | light-dark() | light-dark() | CSS 네이티브 함수, 원문 유지 |
 | Box (Orbit) | Box | Orbit의 polymorphic primitive, 원문 유지 |
+| time to safe merge | 안전한 머지까지 걸리는 시간(time to safe merge) | 저자 고유 지표 프레임, 첫 등장 시 괄호 병기 후 축약 가능 |
+| vibe coding / vibe coder | 바이브 코딩 / 바이브 코더 | 한국 개발자 커뮤니티 통용 표기 |
+| contributor poker | 컨트리뷰터 포커(contributor poker) | Kelley의 code review 비유, 괄호 병기 + 필요 시 함축 풀어쓰기 |
 
 ---
 
@@ -177,6 +180,7 @@
 | 2026-02-20 | 의역 관련 용어 추가 ("compelling", "honeymoon period", "prescriptive", "risk averse" 등), 프레임워크 용어 추가 ("Tanstack Start", "Deno Fresh" 등) |
 | 2026-06-15 | Railway 번역 승인: framework magic, sponsor, war room, dogfood, Nitro, Fastly, content-hashed chunk, ecosystem 추가 |
 | 2026-06-30 | LLM safe design system 번역 승인: bet→승부수, escape hatch→탈출구, styling pass, opinionated convention, way around, polymorphic, design token, light-dark(), Box (Orbit), StyleX 추가 |
+| 2026-07-03 | Vibe Coder vs Software Engineer 번역 승인: time to safe merge, vibe coding/vibe coder, contributor poker 추가 |
 
 ---
 

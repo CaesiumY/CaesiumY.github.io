@@ -1,0 +1,95 @@
+{
+  "metadata": {
+    "file": "contents/blog/translation/vibe-coder-vs-software-engineer/index.md",
+    "analyzed_at": "2026-07-03T13:15:00Z",
+    "total_sentences_analyzed": 6,
+    "analysis_scope": "reviewer가 지목한 개선 후보 문장 (전수 배치 분석 아님)",
+    "sentences_below_threshold": 2,
+    "average_score": 9.3,
+    "threshold": 9.5,
+    "mode": "thorough",
+    "is_translation": true,
+    "source_url": "https://yusufaytas.com/vibe-coder-vs-software-engineer",
+    "source_title": "Vibe Coder vs Software Engineer"
+  },
+  "sentences": [
+    {
+      "id": 1,
+      "line": 73,
+      "original": "AI가 생성한 코드에서는 그런 결정들 중 일부가 사실 결정이 아닙니다. 그것은 자동 완성일 뿐입니다.",
+      "source": "With AI-generated code, some of those decisions are not decisions. They are completions.",
+      "source_validation": { "meaning_preserved": true, "issues": [{ "type": "nuance", "description": "completions의 아젠시 부재 강조가 다소 약화" }] },
+      "score": 8.5,
+      "patterns": ["#4", "#23"],
+      "status": "completed",
+      "selected_option": "A",
+      "applied_text": "AI가 생성한 코드에서는 그런 결정들 중 일부가 사실 결정이 아닙니다. 단지 시스템이 자동으로 완성한 것일 뿐입니다."
+    },
+    {
+      "id": 2,
+      "line": 91,
+      "original": "하지만 그들이 묘사하는 그 난장판은 AI에 대한 심판이 아닙니다. 그것은 바이브 코딩이 경계선의 잘못된 쪽에 놓였을 때 만들어내는 결과물일 뿐입니다.",
+      "source": "But the mess they describe is not a verdict on AI. It is what vibe coding produces when it lands on the wrong side of a line.",
+      "source_validation": { "meaning_preserved": true, "issues": [{ "type": "nuance", "description": "lands on의 동적 뉘앙스 약화" }] },
+      "score": 8.3,
+      "patterns": ["#4", "#24"],
+      "status": "completed",
+      "selected_option": "B",
+      "applied_text": "하지만 그들이 묘사하는 난장판이 AI에 대한 심판은 아닙니다. 바이브 코딩이 경계선의 잘못된 쪽에 떨어질 때 나오는 결과일 뿐입니다."
+    },
+    {
+      "id": 3,
+      "line": 85,
+      "original": "좋은 프롬프트는 마법이 아닙니다. 그것은 대개 엔지니어가 이미 그 경계를 이해하고 있다는 증거일 뿐입니다.",
+      "source": "A good prompt is not magic here. It is usually evidence that the engineer already understands the boundary.",
+      "score": 9.7,
+      "patterns": ["#4"],
+      "status": "skipped",
+      "selected_option": null,
+      "note": "임계값(9.5) 이상 — 유지"
+    },
+    {
+      "id": 4,
+      "line": 57,
+      "original": "이 중 어느 것도 취미 프로젝트에는 존재하지 않습니다.",
+      "source": "None of these are part of anyone's toy project.",
+      "score": 9.8,
+      "patterns": ["#11"],
+      "status": "completed",
+      "selected_option": "reviewer-minor",
+      "applied_text": "이 중 어느 것도 취미 프로젝트에는 없습니다.",
+      "note": "임계값 이상이나 사용자 승인 하에 reviewer 경미 수정 일괄 적용"
+    },
+    {
+      "id": 5,
+      "line": 71,
+      "original": "그 결정이 틀렸을 수도 있지만, 적어도 그 경로를 설명할 수 있는 사람이 존재합니다.",
+      "source": "It might be flawed, but at least there is a person who can explain the path.",
+      "score": 9.7,
+      "patterns": ["#11"],
+      "status": "completed",
+      "selected_option": "reviewer-minor",
+      "applied_text": "그 결정이 틀렸을 수도 있지만, 적어도 그 경로를 설명할 수 있는 사람이 있습니다."
+    },
+    {
+      "id": 6,
+      "line": 83,
+      "original": "제가 더 구체적으로 지시할수록, 모델은 저를 위해 더 나은 작업을 해냅니다.",
+      "source": "When I am more prescriptive, it does better work for me.",
+      "score": 9.6,
+      "patterns": ["#23"],
+      "status": "completed",
+      "selected_option": "reviewer-minor",
+      "applied_text": "제가 더 구체적으로 지시할수록, 모델은 더 나은 결과를 내놓습니다."
+    }
+  ],
+  "additional_fixes": [
+    { "line": 81, "change": "컨텍스트 윈도 → 컨텍스트 윈도우", "reason": "시리즈 표기 일관성" },
+    { "line": 105, "change": "\"그리고 이것이 마지막 차이입니다\" → \"이것이 마지막 차이입니다\"", "reason": "#19 문장 시작 접속사 생략" },
+    { "line": 105, "change": "두 번째 \"이 일은\" → \"핵심은\"", "reason": "#4 변형 반복 완화" }
+  ],
+  "progress": {
+    "completed": 8,
+    "total": 8
+  }
+}

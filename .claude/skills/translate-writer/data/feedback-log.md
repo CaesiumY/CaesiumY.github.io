@@ -7,15 +7,80 @@
 
 ## 피드백 통계
 
-- 총 피드백 수: 11
-- 긍정 피드백: 11
+- 총 피드백 수: 12
+- 긍정 피드백: 12
 - 부정 피드백: 0
-- 승인된 번역: 11
+- 승인된 번역: 12
 - 거절된 번역: 0
 
 ---
 
 ## 피드백 이력
+
+### 2026-07-03
+
+**원문**: Vibe Coder vs Software Engineer (https://yusufaytas.com/vibe-coder-vs-software-engineer)
+
+**번역 제목**: [번역] 바이브 코더 vs 소프트웨어 엔지니어
+
+**유형**: 승인 (1차 검증 통과 후 polish 8건 적용, 수정 요청 없이 승인)
+
+**모드**: thorough
+
+**검토 점수**: Reviewer 8/10 (자연스러움 8·어휘 9·흐름 9·개발자맥락 8), Verifier 8.8/10 (의미 정확성 8.6·기술 정확성 9.5·뉘앙스 8.5) — 모든 하드 임계값 1차 통과
+
+**체감 점수**: 미제공 (수정 요청 없이 바로 승인되어 calibration divergence 분석 대상 아님)
+
+**검토 횟수**: 1회 (1차 PASS 후 polish 8건 적용 → 바로 승인)
+
+**원문 특성**:
+- **스타일**: 1인칭 개인 에세이 (개인 블로그, 저자 본인의 경험·의견 서술)
+- **주제**: 바이브 코딩과 소프트웨어 엔지니어링의 여섯 가지 차이 — 측정 지표, 작업 단위, 소유권, 컨텍스트, 발견/딜리버리 경계, 견습
+- **특징**: 저자 1인칭 "저" 화법, "안전한 머지까지 걸리는 시간(time to safe merge)" 프레임 반복, Zig 메인테이너 Andrew Kelley 인용, "컨트리뷰터 포커" 비유
+
+**Polish에서 적용된 패턴 (8건)**:
+
+| 패턴 번호 | 내용 | 적용 횟수 |
+|-----------|------|-----------|
+| #4 지시대명사 제거 | "그것은 ~뿐입니다" 3연속 반복 → 주어 구체화/생략 | 3회 |
+| #11 존재하다→있다/없다 | 자연스러운 한국어 술어로 교체 | 2회 |
+| #23 직역투(does X for me) | "저를 위해 더 나은 작업을 해냅니다" → "더 나은 결과를 내놓습니다" | 1회 |
+| #19 문단 서두 접속어 생략 | "그리고" 생략 | 1회 |
+| 표기 통일 | "컨텍스트 윈도" → "컨텍스트 윈도우" | 1회 |
+
+**추출된 스타일 규칙**:
+
+| 항목 | 패턴 | 지양 | 권장 |
+|------|------|------|------|
+| 지시대명사 반복 (3회+) | "그것은 ~뿐입니다" 연속 | 매 문장 동일 지시대명사로 시작 | 주어 구체화 또는 생략, 핵심어를 문두로 당겨오기 |
+| does X for me 직역 | "저를 위해 ~해냅니다" | 수혜자 명시 직역 | "~을 내놓습니다/결과가 좋아집니다" (결과 중심 재구성) |
+| 1인칭 개인 에세이 저자 voice | "저" (개인 저자) | "저희"(집단 어감이라 어색) | 기업 블로그 "저희"와 명확히 구분 |
+
+**style-guide.md 업데이트**:
+- "반드시 피해야 할 표현" 표에 2행 추가 (지시대명사 3회+ 반복, does X for me 직역)
+- "§1 문체" 저자 voice 규칙을 기업 블로그("저희") vs 1인칭 개인 에세이("저") 구분으로 확장
+- 학습된 패턴 히스토리에 2026-07-03 행 추가
+- 분석 대상 샘플에 13번 추가 (1인칭 개인 에세이 스타일)
+- 마지막 업데이트 날짜 2026-07-03으로 갱신
+
+**glossary.md 업데이트 제안** (2026-07-03 사용자 승인으로 반영 완료):
+
+| 원문 | 번역 | 비고 |
+|------|------|------|
+| time to safe merge | 안전한 머지까지 걸리는 시간(time to safe merge) | 저자 고유 지표 프레임, 첫 등장 시 괄호 병기 |
+| vibe coding | 바이브 코딩 | 이미 통용 표기 확인 |
+| vibe coder | 바이브 코더 | 이미 통용 표기 확인 |
+| contributor poker | 컨트리뷰터 포커(contributor poker) | Kelley의 code review 비유, 괄호 병기 + 필요 시 함축 풀어쓰기("패를 하나씩 까 보이며 상대의 실력을 가늠하는 게임") |
+
+**Calibration divergence**: 사용자가 체감 점수를 제공하지 않고 수정 요청 없이 바로 승인 → divergence 분석 해당 없음 (기록 생략)
+
+**승인된 번역 저장**:
+
+저장 경로: `.claude/skills/translate-writer/data/approved-posts/13-vibe-coder-vs-software-engineer.md`
+
+심링크 경로: `.claude/skills/translate-writer/data/samples/13-vibe-coder-vs-software-engineer.md` (mode 120000 확인)
+
+---
 
 ### 2026-06-30
 
@@ -559,6 +624,7 @@
 | 2026-02-20 | Reducing local dev time by 83%: Why we migrated off Next.js | [번역] 로컬 개발 시간 83% 단축: Next.js에서 벗어난 이유 | ~9/10 |
 | 2026-06-15 | Moving Railway's Frontend Off Next.js | [번역] Railway는 왜 프론트엔드를 Next.js에서 걷어냈나 | R 8.2 / V 8.5 |
 | 2026-06-30 | Building an LLM safe design system | [번역] LLM도 벗어날 수 없는 디자인 시스템 만들기 | R 8.2 / V 8.5 |
+| 2026-07-03 | Vibe Coder vs Software Engineer | [번역] 바이브 코더 vs 소프트웨어 엔지니어 | R 8.0 / V 8.8 |
 
 ---
 
@@ -591,7 +657,10 @@
 | 2026-06-30 | light-dark() | light-dark() (원문 유지) | translation-learner | 반영 완료 |
 | 2026-06-30 | Box (Orbit) | Box (원문 유지) | translation-learner | 반영 완료 |
 | 2026-06-30 | StyleX | StyleX (원문 유지) | translation-learner | 반영 완료 |
+| 2026-07-03 | time to safe merge | 안전한 머지까지 걸리는 시간(time to safe merge) | translation-learner | 반영 완료 |
+| 2026-07-03 | vibe coding / vibe coder | 바이브 코딩 / 바이브 코더 | translation-learner | 반영 완료 |
+| 2026-07-03 | contributor poker | 컨트리뷰터 포커(contributor poker) | translation-learner | 반영 완료 |
 
 ---
 
-✅ **마지막 업데이트**: 2026-06-30 KST
+✅ **마지막 업데이트**: 2026-07-03 KST
