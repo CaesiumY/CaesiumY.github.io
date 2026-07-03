@@ -1,7 +1,8 @@
 ---
-allowed-tools: [Read, Write, Glob, Grep, Task, AskUserQuestion]
-argument-hint: "[--jd <경로|URL|인라인>] [--target <프로젝트명>] [--reviewer=hr|tech|both]"
+name: portfolio-strategy
 description: 인터뷰형 4-Phase 하네스로 포트폴리오 섹션을 작성하는 스킬. 이력서(about.md, projects.ts)에서 후보 선별 → 사용자 인터뷰 → 마크다운 작성 → 채용 담당자 시점 평가 루프를 단계별 강한 게이트로 진행합니다. "포트폴리오 작성", "포트폴리오 채워줘", "JD에 맞춰 포트폴리오", "이력서를 포트폴리오로 확장", "문제·해결·결과로 풀어줘", "포트폴리오 케이스 스터디" 등의 요청에 반드시 사용하세요. 단순 이력서 압축 작성은 /resume-specialist를 사용합니다 — 이 스킬은 이력서로는 부족한 정량 지표·트레이드오프·맥락을 사용자 인터뷰로 보강해 케이스 스터디 형태로 작성합니다.
+argument-hint: "[--jd <경로|URL|인라인>] [--target <프로젝트명>] [--reviewer=hr|tech|both]"
+allowed-tools: [Read, Write, Glob, Grep, Task, AskUserQuestion]
 ---
 
 # 포트폴리오 전략 스킬

@@ -157,3 +157,4 @@ ls -la .agents/skills/blog-writer/data/samples/
 2. **히스토리 기록**: style-history/에 이전 버전 백업
 3. **예시 선별**: 대표적인 예시만 포함 (가이드가 너무 길어지지 않게)
 4. **한국어로 작성**: 모든 분석 결과는 한국어로
+5. **심링크 폴백**: samples/의 파일은 approved-posts/를 가리키는 git 심링크입니다. Windows에서 Read가 파일 내용 대신 경로 문자열 한 줄을 반환하면, 그 경로를 따라 approved-posts/의 원본을 직접 읽으세요

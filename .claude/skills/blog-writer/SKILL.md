@@ -1,7 +1,8 @@
 ---
-allowed-tools: [Read, Write, Bash, Glob, TodoWrite, Task, AskUserQuestion]
-argument-hint: "[주제/제목]" [--category 카테고리] [--analyze] [--skip-review]
+name: blog-writer
 description: 저자의 스타일을 학습하여 한국어 블로그 글을 자동 작성하는 4-에이전트 파이프라인. 스타일 분석, 초안 작성, 검토 루프(80점 기준), 사용자 승인까지 자동 수행. "글 써줘", "블로그 작성", "포스트 생성", "write a blog post", "새 글 쓰기" 등의 요청에 사용하세요. 번역이 아닌 원본 한국어 글을 쓸 때 /translate-writer 대신 이 스킬을 사용합니다.
+argument-hint: "[주제/제목]" [--category 카테고리] [--analyze] [--skip-review]
+allowed-tools: [Read, Write, Bash, Glob, TodoWrite, Task, AskUserQuestion]
 ---
 
 ## 블로그 글쓰기 에이전트 시스템
@@ -85,6 +86,8 @@ Task 도구로 content-writer 에이전트 호출:
 
 #### Phase 3: 사용자 최종 결정
 
+**✋ GATE 1 — AskUserQuestion**: 게이트에서는 AskUserQuestion 호출 없이 다음 Phase로 진행하지 마세요.
+
 AskUserQuestion으로 사용자에게 질문:
 
 ```
@@ -119,6 +122,7 @@ AskUserQuestion으로 사용자에게 질문:
 1. `contents/blog/[category]/[slug]/index.md` 저장
 2. `approved-posts/`에 백업 저장
 3. `samples/`에 심링크 추가 (`ln -s ../approved-posts/<파일명> .`) — style-analyzer가 승인된 스타일을 학습
+   - **Windows에서 `ln -s`가 복사본을 만들거나 실패하면**: `git update-index --add --cacheinfo 120000,$(echo -n "../approved-posts/<파일명>" | git hash-object -w --stdin),.claude/skills/blog-writer/data/samples/<파일명>` 으로 git 심링크를 직접 등록하고, `git ls-files -s`로 mode가 120000인지 검증
 4. style-guide.md 업데이트 (승인 패턴 강화)
 5. feedback-log.md 기록
 
@@ -155,32 +159,34 @@ AskUserQuestion으로 사용자에게 질문:
 
 ## 에이전트 호출 방법
 
+> 반드시 전용 에이전트 이름을 `subagent_type`으로 지정하세요. `general-purpose`로 우회 호출하면 전용 에이전트의 model/tools 설정이 로드되지 않습니다.
+
 ### style-analyzer 호출
 ```
 Task 도구 사용:
-- subagent_type: "general-purpose"
-- prompt: "style-analyzer 에이전트를 실행하여 .claude/skills/blog-writer/data/samples/ 폴더의 글들을 분석하고 style-guide.md를 업데이트하세요."
+- subagent_type: "style-analyzer"
+- prompt: ".claude/skills/blog-writer/data/samples/ 폴더의 글들을 분석하고 .claude/skills/blog-writer/data/style-guide.md를 업데이트하세요."
 ```
 
 ### content-writer 호출
 ```
 Task 도구 사용:
-- subagent_type: "general-purpose"
-- prompt: "content-writer 에이전트를 실행하여 '[주제]' 주제로 블로그 글을 작성하세요. 스타일 가이드 참조 필수."
+- subagent_type: "content-writer"
+- prompt: "'[주제]' 주제로 블로그 글을 작성하세요. 카테고리: [카테고리]. 스타일 가이드(.claude/skills/blog-writer/data/style-guide.md) 참조 필수."
 ```
 
 ### content-reviewer 호출
 ```
 Task 도구 사용:
-- subagent_type: "general-purpose"
-- prompt: "content-reviewer 에이전트를 실행하여 작성된 글을 검토하고 점수를 부여하세요."
+- subagent_type: "content-reviewer"
+- prompt: "[글 파일 경로]의 글을 검토하고 100점 만점으로 점수를 부여하세요. 80점 미만이면 구체적 수정 지시를 작성하세요."
 ```
 
 ### style-learner 호출
 ```
 Task 도구 사용:
-- subagent_type: "general-purpose"
-- prompt: "style-learner 에이전트를 실행하여 '[피드백 내용]' 피드백을 학습하고 스타일 가이드를 업데이트하세요."
+- subagent_type: "style-learner"
+- prompt: "다음 피드백을 학습하고 스타일 가이드를 업데이트하세요: [피드백 내용 + 승인/수정/거절 여부]"
 ```
 
 ---

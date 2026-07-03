@@ -1,7 +1,8 @@
 ---
-allowed-tools: [Read, Write, Bash, Glob, TodoWrite, Task, AskUserQuestion, WebFetch]
-argument-hint: <URL 또는 파일경로> [--mode=quick|thorough|perfect] [--analyze] [--skip-review]
+name: translate-writer
 description: 영어 기술 블로그/문서를 고품질 한국어 블로그 포스트로 변환하는 전문 번역 파이프라인. 이 스킬은 단순히 텍스트를 번역하는 것이 아니라, 저자의 스타일을 학습하고 6개 전문 에이전트(번역기, 번역투 리뷰어, 원문 충실도 검증기, 문장 polish 등)가 협업하여 출판 수준의 번역을 생성합니다. 사용자가 영어 글을 번역하거나 한국어로 옮기고 싶다고 하면 반드시 이 스킬을 사용하세요. URL이나 파일 경로를 주며 번역을 요청하는 경우, "번역해줘", "한국어로", "translate", "번역 블로그", "옮겨줘", "영어 글" 등의 키워드가 포함된 경우 모두 해당합니다. 직접 번역하지 말고 반드시 이 스킬을 호출하세요 — 직접 번역은 스타일 가이드, 용어집, 이중 검증을 활용할 수 없어 품질이 크게 떨어집니다.
+argument-hint: <URL 또는 파일경로> [--mode=quick|thorough|perfect] [--analyze] [--skip-review]
+allowed-tools: [Read, Write, Edit, Bash, Glob, TodoWrite, Task, AskUserQuestion, WebFetch]
 ---
 
 ## 번역 글쓰기 에이전트 시스템
@@ -70,7 +71,8 @@ description: 영어 기술 블로그/문서를 고품질 한국어 블로그 포
 #### Phase 0: 스타일 가이드 확인
 
 1. `.claude/skills/translate-writer/data/style-guide.md` 읽기
-2. `[분석 필요]` 문자열이 많으면 → translation-style-analyzer 에이전트 먼저 호출
+2. `[분석 필요]` 문자열이 많으면 → 먼저 Task 도구로 스타일 분석 실행:
+   - subagent_type: `translation-style-analyzer`
 3. 용어집 확인: `.claude/skills/translate-writer/data/glossary.md`
 4. 스타일 가이드가 준비되면 Phase 1로 진행
 
@@ -81,12 +83,14 @@ description: 영어 기술 블로그/문서를 고품질 한국어 블로그 포
 
 #### Phase 1: 번역 (content-translator)
 
-Task 도구로 content-translator 에이전트 호출:
+Task 도구로 호출:
 ```
-- 입력: [URL 또는 파일 경로]
-- 스타일 가이드 참조
-- 용어집 참조
-- 번역 생성 및 반환
+- subagent_type: "content-translator"
+- prompt에 포함:
+  - 입력: [URL 또는 파일 경로]
+  - 스타일 가이드 경로: .claude/skills/translate-writer/data/style-guide.md
+  - 용어집 경로: .claude/skills/translate-writer/data/glossary.md
+  - 번역 생성 및 반환
 ```
 
 **URL인 경우**: WebFetch로 원문 수집
@@ -115,11 +119,11 @@ Task 도구로 content-translator 에이전트 호출:
 
 ```
 반복 (최대 3회):
-  1. 병렬 실행:
-     - translation-reviewer 에이전트: 한국어 품질 평가 (4차원 가중치 채점)
+  1. 병렬 실행 — Task 두 건을 한 메시지에서 동시 호출:
+     - Task(subagent_type: "translation-reviewer"): 한국어 품질 평가 (4차원 가중치 채점)
        → 자연스러움(40%), 어휘(25%), 흐름(20%), 개발자맥락(15%)
        → 각 차원별 하드 임계값 적용
-     - translation-verifier 에이전트: 원문 충실도 평가 (3차원 가중치 채점)
+     - Task(subagent_type: "translation-verifier"): 원문 충실도 평가 (3차원 가중치 채점)
        → 의미 정확성(50%), 기술 정확성(30%), 뉘앙스(20%)
        → 각 차원별 하드 임계값 적용
        (원문 URL/파일 + 번역 파일 모두 전달)
@@ -157,13 +161,15 @@ Task 도구로 content-translator 에이전트 호출:
 
 1. **문장별 분석**: `/polish-file`의 Step 1-2와 동일 (polish-agent batch 호출)
 2. **필터링**: 기준 점수 미만 문장만 선택 (thorough: 9.5, perfect: 9.8)
-3. **사용자 확인**: "N개 문장 다듬기 진행?" (지금 다듬기 / 나중에 / 건너뛰기)
+3. **✋ GATE 1 — AskUserQuestion**: "N개 문장 다듬기 진행?" (지금 다듬기 / 나중에 / 건너뛰기)
 4. **순차 개선**: 각 문장에 대해 `/polish` 스킬의 Step 1-3을 따라 실행 (polish-agent → 옵션 제시 → Edit 적용)
 5. **JSON 리포트 저장**: `.claude/polish-reports/[slug]-[timestamp].json`
 
 상세 로직: `/polish-file` 스킬 참조, 개별 문장 다듬기: `/polish` 스킬 참조
 
 #### Phase 4: 사용자 최종 결정
+
+**✋ GATE 2 — AskUserQuestion**: 게이트에서는 AskUserQuestion 호출 없이 다음 Phase로 진행하지 마세요.
 
 AskUserQuestion으로 사용자에게 질문:
 
@@ -216,10 +222,13 @@ AskUserQuestion으로 사용자에게 질문:
 
 #### Phase 5: 저장 및 학습 (translation-learner)
 
+학습 단계는 Task 도구로 호출: subagent_type: `translation-learner` (승인/거절 여부와 사용자 피드백을 prompt에 포함)
+
 승인된 경우:
 1. `contents/blog/translation/[slug]/index.md` 저장
 2. `approved-posts/`에 백업 저장
 3. `samples/`에 심링크 추가 (`ln -s ../approved-posts/<파일명> .`) — style-analyzer가 승인된 스타일을 학습
+   - **Windows에서 `ln -s`가 복사본을 만들거나 실패하면**: `git update-index --add --cacheinfo 120000,$(echo -n "../approved-posts/<파일명>" | git hash-object -w --stdin),.claude/skills/translate-writer/data/samples/<파일명>` 으로 git 심링크를 직접 등록하고, `git ls-files -s`로 mode가 120000인지 검증
 4. style-guide.md 업데이트 (승인 패턴 강화)
 5. feedback-log.md 기록
 6. 새 용어 발견 시 용어집 업데이트 제안

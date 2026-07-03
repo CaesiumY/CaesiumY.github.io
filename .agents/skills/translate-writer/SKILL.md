@@ -74,11 +74,13 @@ Codex에서는 `.agents/agents/*.md`의 역할 프롬프트를 참고해 기본 
 
 1. 문장별 점수를 산정합니다.
 2. 모드별 기준 미만 문장만 개선 대상으로 고릅니다.
-3. 사용자에게 진행 여부를 확인합니다.
+3. **✋ GATE 1**: 사용자에게 진행 여부를 확인합니다 (지금 다듬기 / 나중에 / 건너뛰기).
 4. 선택한 문장에 대해 `/polish` 흐름으로 개선 옵션을 제시하고 파일에 반영합니다.
 5. 리포트는 `.agents/polish-reports/[slug]-[timestamp].json`에 저장합니다.
 
 ### Phase 4: 사용자 승인
+
+**✋ GATE 2**: 게이트에서는 사용자 확인 없이 다음 Phase로 진행하지 마세요.
 
 사용자에게 원문, 번역 제목, 모드, reviewer/verifier 점수, polish 결과, 저장 예정 경로를 보여주고 승인/수정/추가 다듬기/거절 중 하나를 확인합니다.
 
@@ -93,7 +95,7 @@ Codex에서는 `.agents/agents/*.md`의 역할 프롬프트를 참고해 기본 
 
 1. 번역문을 `contents/blog/translation/[slug]/index.md`에 `draft: true`로 저장합니다.
 2. 승인본을 `.agents/skills/translate-writer/data/approved-posts/`에 백업합니다.
-3. 필요하면 `.agents/skills/translate-writer/data/samples/`에 샘플을 추가합니다.
+3. 필요하면 `.agents/skills/translate-writer/data/samples/`에 샘플을 추가합니다. samples/의 파일은 approved-posts/를 가리키는 git 심링크입니다 — Windows에서 `ln -s`가 복사본을 만들거나 실패하면 `git update-index --add --cacheinfo 120000,...`으로 심링크를 직접 등록하고 `git ls-files -s`로 mode 120000을 검증합니다.
 4. `translation-learner` 역할 프롬프트 기준으로 피드백 로그를 갱신합니다.
 5. 스타일 가이드 변경 전에는 `.agents/skills/translate-writer/data/style-history/`에 백업합니다.
 6. 새 용어가 있으면 용어집 업데이트를 제안하거나 반영합니다.

@@ -44,10 +44,12 @@ ogImage: "./thumbnail.png"  # 선택사항
 |------|------|------|
 | title | ✅ | 20-70자, 핵심 키워드 포함 |
 | description | ✅ | 120-160자, SEO 최적화 |
-| pubDatetime | ✅ | ISO 8601 UTC 형식 |
+| pubDatetime | ✅ | ISO 8601 UTC 형식 (**`date -u +"%Y-%m-%dT%H:%M:%SZ"` 명령으로 실제 UTC 시간 확인 필수**) |
 | tags | ✅ | 5-7개, lowercase-kebab-case |
 | featured | ❌ | 기본값: false |
 | draft | ❌ | 기본값: true |
+
+> ⚠️ **날짜 주의**: `pubDatetime`이 미래 날짜면 Astro 빌드에서 글이 제외됩니다. 반드시 `date -u` 명령으로 실제 UTC 시간을 확인하세요.
 
 ---
 
