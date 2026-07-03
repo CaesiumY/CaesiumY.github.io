@@ -1,0 +1,1 @@
+../approved-posts/13-vibe-coder-vs-software-engineer.md
