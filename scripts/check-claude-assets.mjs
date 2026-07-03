@@ -59,7 +59,15 @@ function parseFrontmatter(filePath) {
       break;
     }
     const m = lines[i].match(/^([A-Za-z][A-Za-z0-9_-]*):\s*(.*)$/);
-    if (m) keys[m[1]] = m[2].trim();
+    if (m) {
+      let value = m[2].trim();
+      // Strip one pair of matching surrounding quotes (YAML scalar quoting).
+      const q = value[0];
+      if ((q === '"' || q === "'") && value.length >= 2 && value.endsWith(q)) {
+        value = value.slice(1, -1);
+      }
+      keys[m[1]] = value;
+    }
   }
   return { keys, body: lines.slice(end + 1).join("\n") };
 }
@@ -133,9 +141,9 @@ for (const agentPath of agentFiles) {
 }
 
 // 4) subagent_type wiring: every reference in a SKILL.md must name a defined
-//    agent. Matches `subagent_type: "x"`, `subagent_type: \`x\``, and
-//    `Task(subagent_type="x")` forms.
-const SUBAGENT_RE = /subagent_type["']?\s*[:=]\s*["'`]([A-Za-z0-9_-]+)["'`]/g;
+//    agent. Matches `subagent_type: "x"`, `subagent_type: \`x\``,
+//    `Task(subagent_type="x")`, and unquoted `subagent_type: x` forms.
+const SUBAGENT_RE = /subagent_type["']?\s*[:=]\s*["'`]?([A-Za-z0-9_-]+)["'`]?/g;
 for (const skillPath of skillFiles) {
   const body = readFileSync(skillPath, "utf8");
   for (const match of body.matchAll(SUBAGENT_RE)) {
@@ -157,7 +165,16 @@ for (const skillPath of skillFiles) {
 //    at placeholders ([slug], <파일명>, {x}), so templated tails degrade to
 //    their existing parent directory. Trailing punctuation is stripped.
 const PATH_RE = /\.claude\/[A-Za-z0-9_./-]+/g;
-const pathSources = [...skillFiles, ...agentFiles];
+// Reference files are the canonical sources other files point to — a broken
+// link inside one would otherwise silently pass. Scan them too.
+const referenceFiles = skillDirs.flatMap(dir => {
+  const refDir = path.join(skillsDir, dir, "references");
+  if (!existsSync(refDir)) return [];
+  return readdirSync(refDir, { withFileTypes: true })
+    .filter(e => e.isFile() && e.name.endsWith(".md"))
+    .map(e => path.join(refDir, e.name));
+});
+const pathSources = [...skillFiles, ...agentFiles, ...referenceFiles];
 for (const src of pathSources) {
   const body = readFileSync(src, "utf8");
   const seen = new Set();

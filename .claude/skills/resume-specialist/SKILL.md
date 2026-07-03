@@ -34,7 +34,7 @@ allowed-tools: [Read, Write, Glob, Grep, Task, AskUserQuestion]
 
 ### Step 3: resume-specialist 에이전트 호출
 
-Task 도구로 `resume-specialist` 에이전트를 호출하여 전문 분석/작성 수행:
+Task 도구로 호출하여 전문 분석/작성 수행 (subagent_type: "resume-specialist"):
 
 ```
 역할: [작성|검토|최적화]
