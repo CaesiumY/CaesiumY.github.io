@@ -176,7 +176,7 @@ Task 도구로 호출:
 1. **문장별 분석**: `/polish-file`의 Step 1-2와 동일 — polish-agent batch Task 호출로 문장별 점수·패턴·개선 옵션을 수집
 2. **필터링**: 기준 점수 미만 문장만 선택 (thorough: 9.5, perfect: 9.8)
 3. **✋ GATE 1 — AskUserQuestion**: "N개 문장 다듬기 진행?" (지금 다듬기 / 나중에 / 건너뛰기)
-4. **순차 개선**: step 1의 batch 분석이 반환한 개선 옵션을 재사용해 문장별로 제시(AskUserQuestion, 옵션 포맷은 `/polish` 스킬 참조) → 선택 적용(Edit). 파일이 그 사이 수정됐거나 사용자가 재분석을 요청한 문장만 polish-agent를 다시 호출
+4. **순차 개선**: Step 1의 batch 분석이 반환한 개선 옵션을 재사용해 문장별로 제시(AskUserQuestion, 옵션 포맷은 `/polish` 스킬 참조) → 선택 적용(Edit). 파일이 그 사이 수정됐거나 사용자가 재분석을 요청한 문장만 polish-agent를 다시 호출
 5. **JSON 리포트 저장**: `.claude/polish-reports/[slug]-[timestamp].json`
 
 상세 로직: `/polish-file` 스킬 참조, 개별 문장 다듬기: `/polish` 스킬 참조

@@ -136,7 +136,7 @@ cp [번역된글경로] .claude/skills/translate-writer/data/approved-posts/YYYY
 ```
 
 이어서 `samples/`에 심링크 추가 (`ln -s ../approved-posts/YYYYMMDD-[slug].md .`) — style-analyzer가 승인된 스타일을 학습:
-- **Windows에서 `ln -s`가 복사본을 만들거나 실패하면**: `git update-index --add --cacheinfo 120000,$(echo -n "../approved-posts/YYYYMMDD-[slug].md" | git hash-object -w --stdin),.claude/skills/translate-writer/data/samples/YYYYMMDD-[slug].md` 으로 git 심링크를 직접 등록하고, `git ls-files -s`로 mode가 120000인지 검증
+- **Windows에서 `ln -s`가 복사본을 만들거나 실패하면** (아래 명령은 `$(...)`·`echo -n` 등 Bash 문법을 쓰므로 반드시 Git Bash·WSL 등 Bash 호환 셸에서 실행 — cmd/PowerShell에서는 동작하지 않음): `git update-index --add --cacheinfo 120000,$(echo -n "../approved-posts/YYYYMMDD-[slug].md" | git hash-object -w --stdin),.claude/skills/translate-writer/data/samples/YYYYMMDD-[slug].md` 으로 git 심링크를 직접 등록하고, `git ls-files -s`로 mode가 120000인지 검증
 
 ---
 

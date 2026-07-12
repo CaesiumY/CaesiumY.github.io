@@ -146,7 +146,9 @@ for (const agentPath of agentFiles) {
 // Scanned by checks 4 and 5 alike.
 const referenceFiles = skillDirs.flatMap(dir => {
   const refDir = path.join(skillsDir, dir, "references");
-  if (!existsSync(refDir)) return [];
+  // Guard isDirectory: a plain file named `references` would make
+  // readdirSync throw ENOTDIR and abort the whole lint.
+  if (!existsSync(refDir) || !statSync(refDir).isDirectory()) return [];
   return readdirSync(refDir, { withFileTypes: true })
     .filter(e => e.isFile() && e.name.endsWith(".md"))
     .map(e => path.join(refDir, e.name));
