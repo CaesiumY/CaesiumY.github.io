@@ -158,6 +158,10 @@ const referenceFiles = skillDirs.flatMap(dir => {
 //    script) reference must name a defined agent. Matches
 //    `subagent_type: "x"`, `Task(subagent_type="x")`, `agentType: 'x'`,
 //    and unquoted forms, across SKILL.md and references/*.md files.
+//    Only the `key:value`/`key=value` shape matches, so prose like
+//    "the agentType field" is ignored — but a literal `agentType: 'foo'`
+//    written as an example inside a references doc WILL be scanned, so use
+//    a real agent name there (or don't write it in key:value form).
 const SUBAGENT_RE =
   /(?:subagent_type|agentType)["']?\s*[:=]\s*["'`]?([A-Za-z0-9_-]+)["'`]?/g;
 for (const srcPath of [...skillFiles, ...referenceFiles]) {
