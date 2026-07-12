@@ -57,13 +57,13 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 - Windows: after `pnpm format`, `git status` may list files as modified with no real content change (CRLF). Judge with `git diff` and restore false positives with `git checkout`. A fresh Windows checkout can also fail `pnpm format:check` on nearly every file (`endOfLine: "lf"` vs CRLF working copies) — trust the CI verdict and never mass-reformat to "fix" it.
 - Playwright runs against the dev server (port 4321), not the build; CI uses 1 worker with 2 retries. Test fixtures reference real post slugs (`e2e/fixtures/test-posts.ts`) — renaming those posts breaks the suite.
 - `CLAUDE.md` and `AGENTS.md` are mirrors — when editing one, mirror the change to the other. Only the title line, the intro line, and the `## Skills` section may differ; any other divergence fails CI (`node scripts/check-agent-docs-sync.mjs`).
-- Skill/agent definitions are linted by `node scripts/check-claude-assets.mjs` (also in CI): skill frontmatter must have `name`/`description`/`allowed-tools` with `name` matching the directory; agent `model` must be an alias (haiku|sonnet|opus, never a concrete model ID); `subagent_type` references must name a defined agent (`general-purpose` is forbidden); referenced `.claude/...` paths must exist.
+- Skill/agent definitions are linted by `node scripts/check-claude-assets.mjs` (also in CI): skill frontmatter must have `name`/`description`/`allowed-tools` with `name` matching the directory; agent `model` must be an alias (haiku|sonnet|opus, never a concrete model ID); `subagent_type`/`agentType` references (SKILL.md + references/*.md) must name a defined agent (`general-purpose` is forbidden); referenced `.claude/...` paths must exist.
 
 ## Skills (Claude Code 스킬 시스템)
 
 `.claude/skills/`에 정의된 스킬들입니다. `/스킬이름`으로 호출합니다.
 
-- `/translate-writer` — 영어 → 한국어 번역 파이프라인 (에이전트 6개)
+- `/translate-writer` — 영어 → 한국어 번역 파이프라인 (에이전트 6개 · 오케스트레이터-워커)
 - `/blog-writer` — 한국어 블로그 글 작성 (에이전트 4개)
 - `/polish`, `/polish-file` — 개별 문장 / 파일 전체 다듬기
 - `/resume-specialist` — 이력서 작성·검토·ATS 최적화
@@ -71,6 +71,7 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 - `/agents-md-optimizer` — CLAUDE.md/AGENTS.md discoverability 최적화
 - 에이전트 정의: `.claude/agents/` · 번역 스타일 가이드/용어집: `.claude/skills/translate-writer/data/`
 - 28개 번역투 패턴의 단일 정본: `.claude/skills/translate-writer/references/translation-patterns.md` — 패턴 번호를 다른 파일에 복사하지 말 것
+- 번역 파이프라인은 오케스트레이터-워커 구조 — 메인 루프(Opus)는 조율 전용, 번역·검토·다듬기는 frontmatter 모델(haiku|sonnet|opus)의 전담 에이전트가 수행 (translate-writer SKILL.md '오케스트레이션 원칙' 섹션 참조)
 - 사용자 게이트는 `✋ GATE N — AskUserQuestion` 표기로 통일 — 게이트에서 AskUserQuestion 없이 다음 Phase 진행 금지
 
 ## Environment
