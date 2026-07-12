@@ -135,6 +135,9 @@ cp .claude/skills/translate-writer/data/style-guide.md \
 cp [번역된글경로] .claude/skills/translate-writer/data/approved-posts/YYYYMMDD-[slug].md
 ```
 
+이어서 `samples/`에 심링크 추가 (`ln -s ../approved-posts/YYYYMMDD-[slug].md .`) — style-analyzer가 승인된 스타일을 학습:
+- **Windows에서 `ln -s`가 복사본을 만들거나 실패하면**: `git update-index --add --cacheinfo 120000,$(echo -n "../approved-posts/YYYYMMDD-[slug].md" | git hash-object -w --stdin),.claude/skills/translate-writer/data/samples/YYYYMMDD-[slug].md` 으로 git 심링크를 직접 등록하고, `git ls-files -s`로 mode가 120000인지 검증
+
 ---
 
 ## 용어집 업데이트 처리
@@ -232,8 +235,6 @@ cp [번역된글경로] .claude/skills/translate-writer/data/approved-posts/YYYY
 
 4. **용어 관련 피드백 시**: 사용자가 용어 번역 수정 요청
    - 용어집 업데이트 제안
-
----
 
 ---
 

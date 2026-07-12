@@ -11,15 +11,16 @@ allowed-tools: [Read, Write, Edit, Bash, Glob, TodoWrite, Task, AskUserQuestion,
 
 ```
 사용자 요청 (URL/파일) [--mode=quick|thorough|perfect]
+  → 오케스트레이터(메인 루프): 인자 파싱·점수 판정·게이트·Edit 적용·보고 전담 — 직접 번역/채점 금지
   → Phase 0: 스타일 가이드 확인 (없으면 translation-style-analyzer 호출)
   → Phase 1: 번역 (content-translator, 스타일 가이드 + 용어집 참조)
-  → Phase 2: 이중 검증 (병렬, 최대 3회 반복)
+  → Phase 2: 이중 검증 (Task 병렬, 최대 3회 반복)
       ├─ translation-reviewer (한국어 품질, 28개 패턴)
       └─ translation-verifier (원문 충실도, T1~T10)
-      미달 시 → content-translator에 수정 지시 → 재검증
+      미달 시 → content-translator에 수정 지시 → 재검증 (3회 미달 시 ✋ GATE 0)
   → Phase 3: Polish 정밀 다듬기 [quick: 건너뛰기]
-      문장별 분석 → 기준 미만 필터링 → 사용자 확인 후 순차 개선
-  → Phase 4: 사용자 최종 결정
+      polish-agent batch 분석 → 기준 미만 필터링 → ✋ GATE 1 → 순차 개선 (batch 옵션 재사용)
+  → Phase 4: ✋ GATE 2 — 사용자 최종 결정
       ✅ 승인 → Phase 5 | 📝 수정 → Phase 1 | 🔧 다듬기 → Phase 3 | ❌ 거절 → 종료
   → Phase 5: 저장 및 학습 (translation-learner)
 ```
@@ -33,6 +34,19 @@ allowed-tools: [Read, Write, Edit, Bash, Glob, TodoWrite, Task, AskUserQuestion,
 | `--mode=quick` | 8점 | 건너뛰기 | 5-10분 | 빠른 참고용 |
 | `--mode=thorough` (기본) | 8점 | 9.5점 미만만 | 15-20분 | 일반 블로그 |
 | `--mode=perfect` | 9점 | 9.8점 미만 전체 | 30분+ | 중요 문서 |
+
+---
+
+## 오케스트레이션 원칙
+
+이 스킬은 **오케스트레이터-워커** 구조로 실행합니다. 메인 루프(Opus 등 상위 모델)는 아래 3원칙을 지키세요.
+
+1. **메인 루프는 오케스트레이션 전용** — 번역·검토·다듬기 결과물을 직접 생성하거나 채점하지 않습니다. 인자 파싱, Task 호출, 점수 판정(에이전트가 보고한 차원 점수에 하드 임계값 규칙 적용), 게이트(AskUserQuestion), 사용자가 선택한 개선안의 Edit 적용, 결과 보고만 수행합니다.
+2. **콘텐츠 작업은 전담 서브 에이전트가 수행** — 각 에이전트의 모델은 `.claude/agents/` frontmatter의 별칭(haiku|sonnet|opus)을 따릅니다. 메인 루프가 에이전트 대신 번역하거나 점수를 만들어내는 것은 금지입니다.
+3. **독립 작업은 병렬로** — Phase 2의 reviewer·verifier처럼 서로 의존하지 않는 Task는 한 메시지에서 동시에 호출합니다.
+
+- ✋ GATE는 항상 메인 루프에서 AskUserQuestion으로 진행합니다.
+- 하네스에 따라 Task 도구가 `Agent`라는 이름으로 노출될 수 있습니다. 같은 도구입니다.
 
 ---
 
@@ -147,7 +161,7 @@ Task 도구로 호출:
 
 > **하드 임계값**: 어떤 차원이든 하나라도 미달이면, 종합 점수가 기준 이상이어도 FAIL.
 
-**3회 수정 후에도 기준 미만**:
+**3회 수정 후에도 기준 미만** — **✋ GATE 0 — AskUserQuestion (조건부)**:
 - 사용자에게 상황 보고
 - 각 에이전트의 **차원별 점수**와 하드 임계값 통과 여부 안내
 - 어떤 차원이 반복적으로 미달인지 명시
@@ -159,10 +173,10 @@ Task 도구로 호출:
 
 **thorough/perfect 모드** — `/polish-file` 스킬의 로직을 따릅니다:
 
-1. **문장별 분석**: `/polish-file`의 Step 1-2와 동일 (polish-agent batch 호출)
+1. **문장별 분석**: `/polish-file`의 Step 1-2와 동일 — polish-agent batch Task 호출로 문장별 점수·패턴·개선 옵션을 수집
 2. **필터링**: 기준 점수 미만 문장만 선택 (thorough: 9.5, perfect: 9.8)
 3. **✋ GATE 1 — AskUserQuestion**: "N개 문장 다듬기 진행?" (지금 다듬기 / 나중에 / 건너뛰기)
-4. **순차 개선**: 각 문장에 대해 `/polish` 스킬의 Step 1-3을 따라 실행 (polish-agent → 옵션 제시 → Edit 적용)
+4. **순차 개선**: step 1의 batch 분석이 반환한 개선 옵션을 재사용해 문장별로 제시(AskUserQuestion, 옵션 포맷은 `/polish` 스킬 참조) → 선택 적용(Edit). 파일이 그 사이 수정됐거나 사용자가 재분석을 요청한 문장만 polish-agent를 다시 호출
 5. **JSON 리포트 저장**: `.claude/polish-reports/[slug]-[timestamp].json`
 
 상세 로직: `/polish-file` 스킬 참조, 개별 문장 다듬기: `/polish` 스킬 참조
@@ -254,14 +268,16 @@ AskUserQuestion으로 사용자에게 질문:
 
 ## 에이전트 역할
 
-| 에이전트 | 역할 | 점수 체계 |
-|----------|------|----------|
-| translation-style-analyzer | 기존 번역 분석 → 스타일 가이드 생성 | - |
-| content-translator | URL/파일 번역 | - |
-| translation-reviewer | 한국어 품질 검토 (28개 패턴) | 10점 만점 |
-| translation-verifier | 원문 충실도 검증 (T1~T10) | 10점 만점 |
-| polish-agent | 문장 단위 정밀 분석 (10개 핵심 패턴) | 10점 만점 |
-| translation-learner | 피드백 학습 → 스타일 가이드 업데이트 | - |
+모델은 각 에이전트 frontmatter의 별칭 기준입니다.
+
+| 에이전트 | 모델 | 역할 | 점수 체계 |
+|----------|------|------|----------|
+| translation-style-analyzer | sonnet | 기존 번역 분석 → 스타일 가이드 생성 | - |
+| content-translator | sonnet | URL/파일 번역 | - |
+| translation-reviewer | sonnet | 한국어 품질 검토 (28개 패턴) | 10점 만점 |
+| translation-verifier | opus | 원문 충실도 검증 (T1~T10) | 10점 만점 |
+| polish-agent | haiku | 문장 단위 정밀 분석 (10개 핵심 패턴) | 10점 만점 |
+| translation-learner | sonnet | 피드백 학습 → 스타일 가이드 업데이트 | - |
 
 ---
 
@@ -292,3 +308,4 @@ AskUserQuestion으로 사용자에게 질문:
 6. **백업**: style-guide.md 변경 전 항상 style-history/에 백업.
 7. **한국어**: 모든 출력과 번역은 한국어로.
 8. **Polish 리포트**: 학습 및 추적용으로 보존.
+9. **오케스트레이션 원칙**: 메인 루프는 콘텐츠를 직접 생성·채점하지 않습니다. 모든 콘텐츠 작업은 전담 에이전트(Task)에 위임하세요.

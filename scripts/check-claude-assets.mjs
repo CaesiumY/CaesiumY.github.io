@@ -12,9 +12,10 @@
  *   3. Model routing: agent `model` must be one of haiku|sonnet|opus.
  *      Pinning to alias names (never `fable`, `claude-*`, or dated IDs)
  *      keeps the definitions valid across model generations.
- *   4. Agent wiring: every `subagent_type` referenced in a SKILL.md must
- *      match a defined agent name — `general-purpose` is forbidden because
- *      it bypasses the dedicated agent's model/tools frontmatter.
+ *   4. Agent wiring: every `subagent_type` (Task) or `agentType` (Workflow)
+ *      reference in a SKILL.md or skills/<x>/references/*.md must match a
+ *      defined agent name — `general-purpose` is forbidden because it
+ *      bypasses the dedicated agent's model/tools frontmatter.
  *   5. Path references: every `.claude/...` path mentioned in skill/agent
  *      bodies must exist on disk (placeholders like [slug] are ignored).
  *
@@ -140,22 +141,35 @@ for (const agentPath of agentFiles) {
   }
 }
 
-// 4) subagent_type wiring: every reference in a SKILL.md must name a defined
-//    agent. Matches `subagent_type: "x"`, `subagent_type: \`x\``,
-//    `Task(subagent_type="x")`, and unquoted `subagent_type: x` forms.
-const SUBAGENT_RE = /subagent_type["']?\s*[:=]\s*["'`]?([A-Za-z0-9_-]+)["'`]?/g;
-for (const skillPath of skillFiles) {
-  const body = readFileSync(skillPath, "utf8");
+// Reference files are the canonical sources other files point to — a broken
+// agent reference or path link inside one would otherwise silently pass.
+// Scanned by checks 4 and 5 alike.
+const referenceFiles = skillDirs.flatMap(dir => {
+  const refDir = path.join(skillsDir, dir, "references");
+  if (!existsSync(refDir)) return [];
+  return readdirSync(refDir, { withFileTypes: true })
+    .filter(e => e.isFile() && e.name.endsWith(".md"))
+    .map(e => path.join(refDir, e.name));
+});
+
+// 4) Agent wiring: every `subagent_type` (Task) or `agentType` (Workflow
+//    script) reference must name a defined agent. Matches
+//    `subagent_type: "x"`, `Task(subagent_type="x")`, `agentType: 'x'`,
+//    and unquoted forms, across SKILL.md and references/*.md files.
+const SUBAGENT_RE =
+  /(?:subagent_type|agentType)["']?\s*[:=]\s*["'`]?([A-Za-z0-9_-]+)["'`]?/g;
+for (const srcPath of [...skillFiles, ...referenceFiles]) {
+  const body = readFileSync(srcPath, "utf8");
   for (const match of body.matchAll(SUBAGENT_RE)) {
     const name = match[1];
     if (name === "general-purpose") {
       problems.push(
-        `${rel(skillPath)} — subagent_type "general-purpose" is forbidden: it bypasses the ` +
+        `${rel(srcPath)} — agent reference "general-purpose" is forbidden: it bypasses the ` +
           `dedicated agent's model/tools frontmatter. Name the agent directly.`
       );
     } else if (!agentNames.has(name)) {
       problems.push(
-        `${rel(skillPath)} — subagent_type "${name}" has no matching agent in .claude/agents/.`
+        `${rel(srcPath)} — agent reference "${name}" has no matching agent in .claude/agents/.`
       );
     }
   }
@@ -165,15 +179,6 @@ for (const skillPath of skillFiles) {
 //    at placeholders ([slug], <파일명>, {x}), so templated tails degrade to
 //    their existing parent directory. Trailing punctuation is stripped.
 const PATH_RE = /\.claude\/[A-Za-z0-9_./-]+/g;
-// Reference files are the canonical sources other files point to — a broken
-// link inside one would otherwise silently pass. Scan them too.
-const referenceFiles = skillDirs.flatMap(dir => {
-  const refDir = path.join(skillsDir, dir, "references");
-  if (!existsSync(refDir)) return [];
-  return readdirSync(refDir, { withFileTypes: true })
-    .filter(e => e.isFile() && e.name.endsWith(".md"))
-    .map(e => path.join(refDir, e.name));
-});
 const pathSources = [...skillFiles, ...agentFiles, ...referenceFiles];
 for (const src of pathSources) {
   const body = readFileSync(src, "utf8");
