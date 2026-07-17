@@ -33,6 +33,17 @@
 
 태그는 쓸 수 없다. `contents/blog/ai/ai-translation-orchestration/index.md`가 오탐으로 걸린다 — 번역글이 아니라 번역 오케스트레이션에 *관한* 자작글인데, 주제 태그라서 똑같이 붙는다. 주제 태그는 "이것은 번역이다"(종류)와 "이것은 번역에 관한 글이다"(주제)를 구분하지 못한다.
 
+이 오탐은 "태그 있는 글을 번역으로 모으기"뿐 아니라 **여집합으로 자작글을 정의할 때도 그대로 나타난다.** `!tags.includes("translation")`으로 자작글을 뽑으면:
+
+| | 태그 신호 (`!includes`) | 디렉터리 신호 (`!isTranslated`) | 진실 |
+| --- | --- | --- | --- |
+| 자작글 | 26편 | 27편 | 27 |
+| 번역글 | 19편 | 18편 | 18 |
+
+`ai-translation-orchestration`(자작글)이 `translation` 태그 때문에 번역 집합으로 새어나가, 자작 26 / 번역 19가 된다. 하필 자작글을 → 번역 쪽으로 밀어내므로, "자작글 부각"이라는 목표와 정반대 방향의 실수다. 여집합 접근 자체는 옳지만(그것이 `/posts/authored` = `filter(post => !isTranslated(post))`의 메커니즘이다), 여집합을 정의하는 **신호원**이 태그가 아니라 디렉터리여야 오탐이 0이 된다.
+
+태그 신호로 오탐 0을 만들려면 `ai-translation-orchestration`에서 `translation` 태그를 떼야 하는데, 그 글은 번역을 주제로 다루므로 태그가 정당하고 떼면 `/tags/translation` 주제 검색에서 누락된다. 디렉터리 신호는 그 글을 건드리지 않고도 오탐이 0이다(그 글은 `ai/`에 있다).
+
 스키마의 `canonicalURL` 필드(`src/content.config.ts:21`)는 선언만 되어 있고 45편 전부 미사용이므로 신호로 쓸 수 없다.
 
 **결론: 디렉터리를 신호로 쓴다.** 스키마 변경 없음, frontmatter 마이그레이션 없음, 45개 콘텐츠 파일 무수정.
@@ -173,6 +184,7 @@ if (breadcrumbList[0] === "posts") {
 - 번역글 18편의 제목/description에서 `[번역]` 접두어 제거
 - `canonicalURL` 필드 활용 또는 스키마 정리
 - `ai-translation-orchestration`의 `translation` 태그 정리 (태그를 신호로 쓰지 않으므로 무해)
+- 태그 기반 분리 (기존 `/tags/translation` 재사용, 전용 마커 태그 도입) — 위 "무엇으로 번역글을 식별하는가"에서 오탐/비대칭으로 기각
 
 ## 열린 질문
 
