@@ -64,13 +64,10 @@ for (const file of allPosts) {
 }
 
 if (errors.length > 0) {
-  // eslint-disable-next-line no-console -- CLI tool: must report errors to stderr
-  console.error(`❌ 번역글 분류 신호 불일치 (${errors.length}건):`);
-  // eslint-disable-next-line no-console -- CLI tool: must report errors to stderr
-  console.error(errors.join("\n"));
-  // eslint-disable-next-line no-console -- CLI tool: must report errors to stderr
-  console.error(
-    `\n디렉터리(contents/blog/translation/)와 제목 [번역] 접두어는 완전히 동치여야 합니다.`
+  process.stderr.write(`❌ 번역글 분류 신호 불일치 (${errors.length}건):\n`);
+  process.stderr.write(errors.join("\n") + "\n");
+  process.stderr.write(
+    `\n디렉터리(contents/blog/translation/)와 제목 [번역] 접두어는 완전히 동치여야 합니다.\n`
   );
   process.exit(1);
 }
@@ -78,7 +75,6 @@ if (errors.length > 0) {
 const translationCount = allPosts.filter(f =>
   f.startsWith(TRANSLATION_DIR + path.sep)
 ).length;
-// eslint-disable-next-line no-console -- CLI tool: must report results to stdout
-console.log(
-  `✅ 번역글 분류 신호 일관성 OK: translation/ 디렉터리 ${translationCount}편 == [번역] 접두어 ${translationCount}편`
+process.stdout.write(
+  `✅ 번역글 분류 신호 일관성 OK: translation/ 디렉터리 ${translationCount}편 == [번역] 접두어 ${translationCount}편\n`
 );
