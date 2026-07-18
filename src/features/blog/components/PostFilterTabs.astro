@@ -16,10 +16,12 @@ const { activeTab } = Astro.props;
         aria-current={tab.key === activeTab ? "page" : undefined}
         class:list={[
           "px-1 pb-2 font-medium transition-colors",
-          // active-nav(물결 밑줄)는 헤더 내비게이션용 — 탭 하단 보더와 겹쳐 쓰지 않는다
+          // active-nav(물결 밑줄)는 헤더 내비게이션용 — 탭 하단 보더와 겹쳐 쓰지 않는다.
+          // hover는 accent를 쓰지 않는다: 활성 탭 색과 같으면 마우스를 올린 비활성 탭이
+          // 활성처럼 보인다. 보더가 있는 쪽만 accent를 가져간다.
           tab.key === activeTab
             ? "border-b-2 border-accent text-accent"
-            : "text-foreground/60 hover:text-accent",
+            : "text-foreground/60 hover:text-foreground",
         ]}
       >
         {tab.label}
