@@ -55,6 +55,9 @@ jobs:
       - name: "🤖 Check Claude skill/agent assets"
         run: node scripts/check-claude-assets.mjs
 
+      - name: "🏷️ Check post classification"
+        run: node scripts/check-post-classification.mjs
+
       - name: "🚀 Build the project"
         run: pnpm run build
 

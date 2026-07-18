@@ -1,4 +1,6 @@
 ---
+import { POST_TAB_LABELS } from "@/utils/postTabs";
+
 // Remove current url path and remove trailing slash if exists
 const currentUrlPath = Astro.url.pathname.replace(/\/+$/, "");
 
@@ -6,10 +8,22 @@ const currentUrlPath = Astro.url.pathname.replace(/\/+$/, "");
 // eg: /tags/tailwindcss => ['tags', 'tailwindcss']
 const breadcrumbList = currentUrlPath.split("/").slice(1);
 
-// if breadcrumb is Home > Posts > 1 <etc>
-// replace Posts with Posts (page number)
+// if breadcrumb is Home > Posts > <tab> > <page?> or Home > Posts > <page?>
 if (breadcrumbList[0] === "posts") {
-  breadcrumbList.splice(0, 2, `Posts (${breadcrumbList[1] || 1}페이지)`);
+  const maybeTab = breadcrumbList[1];
+  // `in`이 아니라 hasOwn: `in`은 프로토타입 체인까지 봐서 /posts/constructor 같은
+  // 경로가 탭으로 오인된다 (POST_TAB_LABELS["constructor"]는 Object 함수라 truthy)
+  if (maybeTab && Object.hasOwn(POST_TAB_LABELS, maybeTab)) {
+    // /posts/authored, /posts/authored/2 → "Posts > 직접 쓴 글 (2페이지)"
+    const tabLabel = POST_TAB_LABELS[maybeTab];
+    const pageNum = breadcrumbList[2];
+    const suffix = pageNum && Number(pageNum) > 1 ? ` (${pageNum}페이지)` : "";
+    // 'posts'는 /posts 링크로 남기고, 탭 세그먼트 이후를 라벨 하나로 합친다
+    breadcrumbList.splice(1, breadcrumbList.length - 1, `${tabLabel}${suffix}`);
+  } else {
+    // /posts, /posts/2 → "Posts (2페이지)" (기존 동작)
+    breadcrumbList.splice(0, 2, `Posts (${breadcrumbList[1] || 1}페이지)`);
+  }
 }
 
 // if breadcrumb is Home > Tags > [tag] > [page] <etc>

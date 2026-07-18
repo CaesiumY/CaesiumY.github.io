@@ -39,12 +39,13 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 
 ### Content pipeline
 
-- Posts are plain `.md` only — there is no MDX integration. Files starting with `_` are excluded from the blog collection entirely (loader pattern `**/[^_]*.md`), a stronger exclusion than `draft: true`.
+- Posts are plain `.md` only — there is no MDX integration. Files whose **filename** starts with `_` are excluded from the blog collection (loader pattern `**/[^_]*.md`), a stronger exclusion than `draft: true`. ⚠️ `_`-prefixed **directories are NOT excluded**: `contents/blog/_samples/` (17 posts) does load into the collection and shows up in dev listings — they are all `draft: true`, so only production hides them. Count posts with the loader's rule, not by filtering `_samples` out of a `find`.
 - Scheduled publishing is build-time only: a post with a future `pubDatetime` stays hidden until a build runs after that time (minus the 15-minute `SITE.scheduledPostMargin`). Without a redeploy it never appears. Dev mode shows drafts.
 - Omitted `tags` defaults to `["others"]`.
 - A `## 목차` heading inside a post triggers remark-toc auto-generation, collapsed under "목차 보기".
 - Add remark/rehype plugins via `markdown.processor: unified({...})` in `astro.config.ts` (Astro 6.4+ style) — the legacy top-level `markdown.remarkPlugins`/`rehypePlugins`/`remarkRehype` keys are deprecated.
 - The frontmatter schema lives in `src/content.config.ts` (`pubDatetime`, `modDatetime`, `ogImage`, `series`, ...) — read it before writing frontmatter; field names differ from upstream AstroPaper docs.
+- Translated posts must live under `contents/blog/translation/` and have a title starting with `[번역]` — the two must always agree, and `scripts/check-post-classification.mjs` enforces this in CI.
 
 ### Build & search
 
@@ -53,7 +54,7 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 
 ### CI & platform
 
-- The merge gate is the single `Code standards & build` job (audit → lint → format check → docs sync → asset lint → build → E2E). The `Claude Code Review` workflow is advisory — its failures do not block merges.
+- The merge gate is the single `Code standards & build` job (audit → lint → format check → docs sync → asset lint → post classification → build → E2E). The `Claude Code Review` workflow is advisory — its failures do not block merges.
 - Windows: after `pnpm format`, `git status` may list files as modified with no real content change (CRLF). Judge with `git diff` and restore false positives with `git checkout`. A fresh Windows checkout can also fail `pnpm format:check` on nearly every file (`endOfLine: "lf"` vs CRLF working copies) — trust the CI verdict and never mass-reformat to "fix" it.
 - Playwright runs against the dev server (port 4321), not the build; CI uses 1 worker with 2 retries. Test fixtures reference real post slugs (`e2e/fixtures/test-posts.ts`) — renaming those posts breaks the suite.
 - `CLAUDE.md` and `AGENTS.md` are mirrors — when editing one, mirror the change to the other. Only the title line, the intro line, and the `## Skills` section may differ; any other divergence fails CI (`node scripts/check-agent-docs-sync.mjs`).

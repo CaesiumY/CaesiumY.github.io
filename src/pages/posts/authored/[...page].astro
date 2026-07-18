@@ -9,25 +9,28 @@ import Card from "@/features/blog/components/Card.astro";
 import Pagination from "@/features/blog/components/Pagination.astro";
 import PostFilterTabs from "@/features/blog/components/PostFilterTabs.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
+import { isTranslatedPost } from "@/utils/isTranslatedPost";
 import { SITE } from "@/config";
 
 export const getStaticPaths = (async ({ paginate }) => {
-  // 모든 포스트를 가져오고, getSortedPosts에서 필터링 적용
   const posts = await getCollection("blog");
-  return paginate(getSortedPosts(posts), { pageSize: SITE.postPerPage });
+  const authored = getSortedPosts(posts).filter(
+    post => !isTranslatedPost(post.filePath)
+  );
+  return paginate(authored, { pageSize: SITE.postPerPage });
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
 ---
 
 <Layout
-  title={`Posts | ${SITE.title}`}
-  description="작성한 모든 글을 확인하세요. 프론트엔드 개발, AI 도구, 기술 팁 등 다양한 주제의 블로그 포스트."
+  title={`직접 쓴 글 | ${SITE.title}`}
+  description="직접 작성한 글만 모았습니다. 프론트엔드 개발, AI 도구, 회고 등."
   pageType="website"
 >
   <Header />
-  <Main pageTitle="Posts" pageDesc="작성한 모든 글을 확인하세요.">
-    <PostFilterTabs activeTab="all" />
+  <Main pageTitle="Posts" pageDesc="직접 쓴 글만 모았습니다.">
+    <PostFilterTabs activeTab="authored" />
     <ul>
       {page.data.map(data => <Card {...data} />)}
     </ul>
