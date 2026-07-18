@@ -15,7 +15,9 @@ const POST_TAB_LABELS: Record<string, string> = {
 // if breadcrumb is Home > Posts > <tab> > <page?> or Home > Posts > <page?>
 if (breadcrumbList[0] === "posts") {
   const maybeTab = breadcrumbList[1];
-  if (maybeTab && maybeTab in POST_TAB_LABELS) {
+  // `in`이 아니라 hasOwn: `in`은 프로토타입 체인까지 봐서 /posts/constructor 같은
+  // 경로가 탭으로 오인된다 (POST_TAB_LABELS["constructor"]는 Object 함수라 truthy)
+  if (maybeTab && Object.hasOwn(POST_TAB_LABELS, maybeTab)) {
     // /posts/authored, /posts/authored/2 → "Posts > 직접 쓴 글 (2페이지)"
     const tabLabel = POST_TAB_LABELS[maybeTab];
     const pageNum = breadcrumbList[2];
