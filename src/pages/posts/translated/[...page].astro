@@ -1,0 +1,42 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Main from "@/layouts/Main.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/layouts/components/Header.astro";
+import Footer from "@/layouts/components/Footer.astro";
+import Card from "@/features/blog/components/Card.astro";
+import Pagination from "@/features/blog/components/Pagination.astro";
+import PostFilterTabs from "@/features/blog/components/PostFilterTabs.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import { isTranslatedPost } from "@/utils/isTranslatedPost";
+import { SITE } from "@/config";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getCollection("blog");
+  const translated = getSortedPosts(posts).filter(post =>
+    isTranslatedPost(post.filePath)
+  );
+  return paginate(translated, { pageSize: SITE.postPerPage });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<Layout
+  title={`번역 | ${SITE.title}`}
+  description="영어 기술 글을 한국어로 옮긴 번역 글 모음입니다."
+  pageType="website"
+>
+  <Header />
+  <Main pageTitle="Posts" pageDesc="번역한 글만 모았습니다.">
+    <PostFilterTabs activeTab="translated" />
+    <ul>
+      {page.data.map(data => <Card {...data} />)}
+    </ul>
+  </Main>
+
+  <Pagination {page} />
+
+  <Footer noMarginTop={page.lastPage > 1} />
+</Layout>

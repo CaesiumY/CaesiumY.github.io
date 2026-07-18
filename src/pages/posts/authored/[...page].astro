@@ -1,0 +1,42 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Main from "@/layouts/Main.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/layouts/components/Header.astro";
+import Footer from "@/layouts/components/Footer.astro";
+import Card from "@/features/blog/components/Card.astro";
+import Pagination from "@/features/blog/components/Pagination.astro";
+import PostFilterTabs from "@/features/blog/components/PostFilterTabs.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import { isTranslatedPost } from "@/utils/isTranslatedPost";
+import { SITE } from "@/config";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getCollection("blog");
+  const authored = getSortedPosts(posts).filter(
+    post => !isTranslatedPost(post.filePath)
+  );
+  return paginate(authored, { pageSize: SITE.postPerPage });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<Layout
+  title={`직접 쓴 글 | ${SITE.title}`}
+  description="직접 작성한 글만 모았습니다. 프론트엔드 개발, AI 도구, 회고 등."
+  pageType="website"
+>
+  <Header />
+  <Main pageTitle="Posts" pageDesc="직접 쓴 글만 모았습니다.">
+    <PostFilterTabs activeTab="authored" />
+    <ul>
+      {page.data.map(data => <Card {...data} />)}
+    </ul>
+  </Main>
+
+  <Pagination {page} />
+
+  <Footer noMarginTop={page.lastPage > 1} />
+</Layout>
