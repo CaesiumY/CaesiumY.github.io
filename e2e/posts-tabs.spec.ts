@@ -57,4 +57,21 @@ test.describe("게시글 번역/자작 탭 분리", () => {
       .click();
     await expect(page).toHaveURL(/\/posts\/translated\/?$/);
   });
+
+  test("authored breadcrumb은 '직접 쓴 글'이고 'authored'가 노출되지 않는다", async ({
+    page,
+  }) => {
+    await page.goto("/posts/authored");
+    const crumb = page.getByLabel("breadcrumb");
+    await expect(crumb).toContainText("직접 쓴 글");
+    await expect(crumb).not.toContainText("authored");
+  });
+
+  test("translated 2페이지 breadcrumb은 '번역 (2페이지)'", async ({ page }) => {
+    await page.goto("/posts/translated/2");
+    const crumb = page.getByLabel("breadcrumb");
+    await expect(crumb).toContainText("번역");
+    await expect(crumb).toContainText("2페이지");
+    await expect(crumb).not.toContainText("translated");
+  });
 });
