@@ -39,7 +39,7 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 
 ### Content pipeline
 
-- Posts are plain `.md` only — there is no MDX integration. Files starting with `_` are excluded from the blog collection entirely (loader pattern `**/[^_]*.md`), a stronger exclusion than `draft: true`.
+- Posts are plain `.md` only — there is no MDX integration. Files whose **filename** starts with `_` are excluded from the blog collection (loader pattern `**/[^_]*.md`), a stronger exclusion than `draft: true`. ⚠️ `_`-prefixed **directories are NOT excluded**: `contents/blog/_samples/` (17 posts) does load into the collection and shows up in dev listings — they are all `draft: true`, so only production hides them. Count posts with the loader's rule, not by filtering `_samples` out of a `find`.
 - Scheduled publishing is build-time only: a post with a future `pubDatetime` stays hidden until a build runs after that time (minus the 15-minute `SITE.scheduledPostMargin`). Without a redeploy it never appears. Dev mode shows drafts.
 - Omitted `tags` defaults to `["others"]`.
 - A `## 목차` heading inside a post triggers remark-toc auto-generation, collapsed under "목차 보기".

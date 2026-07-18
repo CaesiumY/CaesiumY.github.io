@@ -88,9 +88,14 @@ test.describe("게시글 번역/자작 탭 분리", () => {
     await expect(cards.getByText("번역", { exact: true })).toHaveCount(0);
   });
 
+  // 홈 Featured 섹션은 Card가 아니라 FeaturedCard를 쓰므로 배지 적용이 별개 경로다.
+  // 콘텐츠 의존: featured 번역글이 최소 1편 있어야 한다(현재 claude-skills-guide-part-1,
+  // harness-design-long-running-apps). 둘 다 featured를 떼면 이 테스트는 실패한다.
   test("홈 Featured의 번역글에도 배지가 있다", async ({ page }) => {
     await page.goto("/");
     const featured = page.locator("#featured");
-    await expect(featured.getByText("번역", { exact: true }).first()).toBeVisible();
+    await expect(
+      featured.getByText("번역", { exact: true }).first()
+    ).toBeVisible();
   });
 });
