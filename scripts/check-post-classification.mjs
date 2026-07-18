@@ -3,9 +3,12 @@
 /**
  * 번역글 분류 신호의 무결성 검사.
  *
- * 규칙: "contents/blog/translation/ 디렉터리에 있음" ⟺ "제목이 [번역]로 시작함".
- * 두 신호가 완전히 동치여야 isTranslatedPost(디렉터리 기반)가 올바르게 동작한다.
- * 번역글을 다른 디렉터리에 두거나 접두어를 빠뜨리면 이 검사가 실패한다.
+ * 1) 규칙: "contents/blog/translation/ 디렉터리에 있음" ⟺ "제목이 [번역]로 시작함".
+ *    두 신호가 완전히 동치여야 isTranslatedPost(디렉터리 기반)가 올바르게 동작한다.
+ *    번역글을 다른 디렉터리에 두거나 접두어를 빠뜨리면 이 검사가 실패한다.
+ * 2) 예약 디렉터리: contents/blog/ 아래에 탭 URL 세그먼트와 같은 이름의 디렉터리를
+ *    만들면 그 글의 URL(getPath)이 탭 목록 라우트와 겹쳐 글이 도달 불가가 된다.
+ *    Astro는 정적 세그먼트를 우선하므로 조용히 묻히기 때문에 여기서 막는다.
  *
  * Exit codes: 0 = 일관됨, 1 = 불일치.
  */
@@ -21,6 +24,10 @@ const repoRoot = path.resolve(
 const BLOG = path.join(repoRoot, "contents/blog");
 const TRANSLATION_DIR = path.join(BLOG, "translation");
 const TITLE_PREFIX = "[번역]";
+
+// src/utils/postTabs.ts의 탭 key와 같아야 한다 (= /posts/<key> 라우트 세그먼트).
+// 이 이름으로 글 디렉터리를 만들면 목록 라우트와 URL이 충돌한다.
+const RESERVED_DIRS = ["authored", "translated"];
 
 // 발행 대상 md만 수집한다: 파일명이 _로 시작하지 않고, 경로에 _로 시작하는
 // 세그먼트(_samples 등)가 없는 .md. 주의: 로더와 다르다 — 로더 패턴
@@ -50,6 +57,14 @@ function titleStartsWithPrefix(file) {
 const allPosts = collectPosts(BLOG);
 const errors = [];
 
+for (const reserved of RESERVED_DIRS) {
+  if (existsSync(path.join(BLOG, reserved))) {
+    errors.push(
+      `  예약된 이름의 글 디렉터리: contents/blog/${reserved}/ — /posts/${reserved} 목록 라우트와 URL이 충돌해 이 디렉터리의 글은 접근할 수 없게 된다`
+    );
+  }
+}
+
 for (const file of allPosts) {
   const rel = path.relative(BLOG, file).split(path.sep).join("/");
   const inTranslationDir =
@@ -67,10 +82,11 @@ for (const file of allPosts) {
 }
 
 if (errors.length > 0) {
-  process.stderr.write(`❌ 번역글 분류 신호 불일치 (${errors.length}건):\n`);
+  process.stderr.write(`❌ 게시글 분류 검사 실패 (${errors.length}건):\n`);
   process.stderr.write(errors.join("\n") + "\n");
   process.stderr.write(
-    `\n디렉터리(contents/blog/translation/)와 제목 [번역] 접두어는 완전히 동치여야 합니다.\n`
+    `\n번역글은 contents/blog/translation/ 아래에 두고 제목을 "${TITLE_PREFIX}"로 시작해야 합니다(두 신호는 동치).\n` +
+      `탭 URL 세그먼트(${RESERVED_DIRS.join(", ")})는 글 디렉터리 이름으로 쓸 수 없습니다.\n`
   );
   process.exit(1);
 }

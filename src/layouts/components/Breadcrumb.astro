@@ -1,16 +1,12 @@
 ---
+import { POST_TAB_LABELS } from "@/utils/postTabs";
+
 // Remove current url path and remove trailing slash if exists
 const currentUrlPath = Astro.url.pathname.replace(/\/+$/, "");
 
 // Get url array from path
 // eg: /tags/tailwindcss => ['tags', 'tailwindcss']
 const breadcrumbList = currentUrlPath.split("/").slice(1);
-
-// 게시글 탭 라벨 (URL 세그먼트 → 표시 이름)
-const POST_TAB_LABELS: Record<string, string> = {
-  authored: "직접 쓴 글",
-  translated: "번역",
-};
 
 // if breadcrumb is Home > Posts > <tab> > <page?> or Home > Posts > <page?>
 if (breadcrumbList[0] === "posts") {

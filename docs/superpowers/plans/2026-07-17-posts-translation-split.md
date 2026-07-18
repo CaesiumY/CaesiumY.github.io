@@ -4,6 +4,8 @@
 
 **Goal:** `/posts` 게시글 목록을 전체·직접 쓴 글·번역 세 탭으로 분리하고, 모든 카드에 번역 배지를 단다.
 
+> **실행 후 변경 (2026-07-18):** 배지 부분은 철회되었다. 구현 후 실제 목록을 보니 번역글 제목이 이미 `[번역]`으로 시작해 배지가 같은 정보를 두 번 말했고, 제목 접두어를 유지하기로 한 이상 잉여였다. `TranslationBadge.astro`는 삭제되었고 아래 **Task 5는 더 이상 유효하지 않다**(파일 구조·E2E 항목 포함). 탭 분리 부분(Task 1~4, 6)은 그대로 유효하다. 근거는 설계 문서의 "확정된 결정" 표 참조.
+
 **Architecture:** 번역글은 이미 `contents/blog/translation/` 디렉터리에 물리적으로 분리되어 있다. 이 디렉터리 여부를 판별하는 순수 함수 하나(`isTranslatedPost`)를 신호원으로 삼아, 기존 `paginate()` 패턴을 복제한 정적 라우트 2개(`/posts/authored`, `/posts/translated`)와 순수 링크 탭 컴포넌트를 추가한다. 스키마 변경·콘텐츠 파일 수정·클라이언트 JS가 전부 0이다.
 
 **Tech Stack:** Astro 6 (SSG, `output: static`), Tailwind 4 (`@utility`), Playwright E2E, Node 스크립트 기반 회귀 가드.
