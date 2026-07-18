@@ -23,7 +23,10 @@ const TRANSLATION_DIR = path.join(BLOG, "translation");
 const TITLE_PREFIX = "[번역]";
 
 // 발행 대상 md만 수집한다: 파일명이 _로 시작하지 않고, 경로에 _로 시작하는
-// 세그먼트(_samples 등)가 없는 .md. content.config.ts의 로더 규칙과 동일하다.
+// 세그먼트(_samples 등)가 없는 .md. 주의: 로더와 다르다 — 로더 패턴
+// (**/[^_]*.md)는 파일명만 거르고 디렉터리는 거르지 않으므로 _samples/의
+// 글도 컬렉션에는 포함된다. 이 스크립트는 _로 시작하는 디렉터리까지 건너뛰어
+// 발행 대상 트리만 본다.
 function collectPosts(dir, acc = []) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     if (entry.name.startsWith("_")) continue;
