@@ -74,28 +74,15 @@ test.describe("게시글 번역/자작 탭 분리", () => {
     await expect(crumb).not.toContainText("translated");
   });
 
-  test("translated 탭 첫 카드에 번역 배지가 있다", async ({ page }) => {
-    await page.goto("/posts/translated");
-    const firstCard = page.locator("#main-content ul > li").first();
-    await expect(
-      firstCard.getByText("번역", { exact: true })
-    ).toBeVisible();
-  });
-
-  test("authored 탭 카드에는 번역 배지가 없다", async ({ page }) => {
+  test("활성 탭에만 aria-current가 붙는다", async ({ page }) => {
     await page.goto("/posts/authored");
-    const cards = page.locator("#main-content ul > li");
-    await expect(cards.getByText("번역", { exact: true })).toHaveCount(0);
-  });
-
-  // 홈 Featured 섹션은 Card가 아니라 FeaturedCard를 쓰므로 배지 적용이 별개 경로다.
-  // 콘텐츠 의존: featured 번역글이 최소 1편 있어야 한다(현재 claude-skills-guide-part-1,
-  // harness-design-long-running-apps). 둘 다 featured를 떼면 이 테스트는 실패한다.
-  test("홈 Featured의 번역글에도 배지가 있다", async ({ page }) => {
-    await page.goto("/");
-    const featured = page.locator("#featured");
+    const tabs = page.getByRole("navigation", { name: "게시글 분류" });
+    await expect(tabs.getByRole("link", { name: "직접 쓴 글" })).toHaveAttribute(
+      "aria-current",
+      "page"
+    );
     await expect(
-      featured.getByText("번역", { exact: true }).first()
-    ).toBeVisible();
+      tabs.getByRole("link", { name: "전체" })
+    ).not.toHaveAttribute("aria-current", "page");
   });
 });

@@ -20,8 +20,9 @@ const tabs = [
         aria-current={tab.key === activeTab ? "page" : undefined}
         class:list={[
           "px-1 pb-2 font-medium transition-colors",
+          // active-nav(물결 밑줄)는 헤더 내비게이션용 — 탭 하단 보더와 겹쳐 쓰지 않는다
           tab.key === activeTab
-            ? "border-b-2 border-accent active-nav"
+            ? "border-b-2 border-accent text-accent"
             : "text-foreground/60 hover:text-accent",
         ]}
       >

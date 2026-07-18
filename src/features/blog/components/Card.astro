@@ -4,8 +4,6 @@ import type { CollectionEntry } from "astro:content";
 import { getPath } from "@/utils/getPath";
 import Datetime from "./Datetime.astro";
 import DraftBadge from "./DraftBadge.astro";
-import TranslationBadge from "./TranslationBadge.astro";
-import { isTranslatedPost } from "@/utils/isTranslatedPost";
 
 export interface Props extends CollectionEntry<"blog"> {
   variant?: "h2" | "h3";
@@ -14,7 +12,6 @@ export interface Props extends CollectionEntry<"blog"> {
 const { variant = "h2", data, id, filePath } = Astro.props;
 
 const { title, description, pubDatetime, modDatetime, timezone, draft } = data;
-const isTranslated = isTranslatedPost(filePath);
 
 // Astro 동적 태그 — 대문자 변수여야 태그로 렌더된다 (h2/h3 마크업 중복 제거)
 const Heading = variant;
@@ -33,7 +30,6 @@ const headerProps = {
   >
     <Heading {...headerProps}>
       {draft && <DraftBadge class="me-2" />}
-      {isTranslated && <TranslationBadge class="me-2" />}
       <span>{title}</span>
     </Heading>
   </a>
