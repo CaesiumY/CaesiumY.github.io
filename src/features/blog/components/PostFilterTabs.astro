@@ -1,0 +1,32 @@
+---
+interface Props {
+  activeTab: "all" | "authored" | "translated";
+}
+
+const { activeTab } = Astro.props;
+
+const tabs = [
+  { key: "all", label: "전체", href: "/posts" },
+  { key: "authored", label: "직접 쓴 글", href: "/posts/authored" },
+  { key: "translated", label: "번역", href: "/posts/translated" },
+] as const;
+---
+
+<nav class="mb-6 flex gap-4 border-b border-border" aria-label="게시글 분류">
+  {
+    tabs.map(tab => (
+      <a
+        href={tab.href}
+        aria-current={tab.key === activeTab ? "page" : undefined}
+        class:list={[
+          "px-1 pb-2 font-medium transition-colors",
+          tab.key === activeTab
+            ? "border-b-2 border-accent active-nav"
+            : "text-foreground/60 hover:text-accent",
+        ]}
+      >
+        {tab.label}
+      </a>
+    ))
+  }
+</nav>
