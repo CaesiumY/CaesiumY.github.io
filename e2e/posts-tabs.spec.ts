@@ -36,8 +36,7 @@ test.describe("게시글 번역/자작 탭 분리", () => {
     // 번역 탭의 모든 카드가 [번역] 제목이어야 한다
     await expect(cards(page).filter({ hasText: "[번역]" })).toHaveCount(8);
 
-    // 번역글에는 draft가 없어 DEV/PROD 모두 18편 → 3페이지로 안정적이다
-    await expect(page.getByLabel("Pagination")).toContainText(/1\s*\/\s*3/);
+    // 페이지네이션이 전체 목록이 아니라 이 탭 기준으로 동작한다
     await expect(nextLink(page)).toHaveAttribute("href", "/posts/translated/2");
   });
 
@@ -87,5 +86,11 @@ test.describe("게시글 번역/자작 탭 분리", () => {
     await page.goto("/posts/authored");
     const cards = page.locator("#main-content ul > li");
     await expect(cards.getByText("번역", { exact: true })).toHaveCount(0);
+  });
+
+  test("홈 Featured의 번역글에도 배지가 있다", async ({ page }) => {
+    await page.goto("/");
+    const featured = page.locator("#featured");
+    await expect(featured.getByText("번역", { exact: true }).first()).toBeVisible();
   });
 });

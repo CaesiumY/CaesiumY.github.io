@@ -5,6 +5,8 @@ import { getPath } from "@/utils/getPath";
 import { getPostThumbnailUrl } from "@/utils/getPostThumbnailUrl";
 import Datetime from "./Datetime.astro";
 import DraftBadge from "./DraftBadge.astro";
+import TranslationBadge from "./TranslationBadge.astro";
+import { isTranslatedPost } from "@/utils/isTranslatedPost";
 import { Icon } from "astro-icon/components";
 
 export interface Props extends CollectionEntry<"blog"> {
@@ -13,6 +15,7 @@ export interface Props extends CollectionEntry<"blog"> {
 
 const { data, id, filePath, index } = Astro.props;
 const { title, description, pubDatetime, modDatetime, timezone, draft } = data;
+const isTranslated = isTranslatedPost(filePath);
 
 const thumbnailUrl = getPostThumbnailUrl(
   Astro.props as CollectionEntry<"blog">
@@ -56,6 +59,7 @@ const postUrl = getPath(id, filePath);
         class="flex items-center text-lg font-medium decoration-dashed hover:underline"
       >
         {draft && <DraftBadge class="me-2" />}
+        {isTranslated && <TranslationBadge class="me-2" />}
         <span>{title}</span>
       </h3>
     </a>
