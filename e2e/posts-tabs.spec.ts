@@ -74,4 +74,18 @@ test.describe("게시글 번역/자작 탭 분리", () => {
     await expect(crumb).toContainText("2페이지");
     await expect(crumb).not.toContainText("translated");
   });
+
+  test("translated 탭 첫 카드에 번역 배지가 있다", async ({ page }) => {
+    await page.goto("/posts/translated");
+    const firstCard = page.locator("#main-content ul > li").first();
+    await expect(
+      firstCard.getByText("번역", { exact: true })
+    ).toBeVisible();
+  });
+
+  test("authored 탭 카드에는 번역 배지가 없다", async ({ page }) => {
+    await page.goto("/posts/authored");
+    const cards = page.locator("#main-content ul > li");
+    await expect(cards.getByText("번역", { exact: true })).toHaveCount(0);
+  });
 });

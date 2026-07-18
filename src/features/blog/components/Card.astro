@@ -4,6 +4,8 @@ import type { CollectionEntry } from "astro:content";
 import { getPath } from "@/utils/getPath";
 import Datetime from "./Datetime.astro";
 import DraftBadge from "./DraftBadge.astro";
+import TranslationBadge from "./TranslationBadge.astro";
+import { isTranslatedPost } from "@/utils/isTranslatedPost";
 
 export interface Props extends CollectionEntry<"blog"> {
   variant?: "h2" | "h3";
@@ -12,6 +14,7 @@ export interface Props extends CollectionEntry<"blog"> {
 const { variant = "h2", data, id, filePath } = Astro.props;
 
 const { title, description, pubDatetime, modDatetime, timezone, draft } = data;
+const isTranslated = isTranslatedPost(filePath);
 
 const headerProps = {
   style: { viewTransitionName: slugifyStr(title) },
@@ -29,11 +32,13 @@ const headerProps = {
       variant === "h2" ? (
         <h2 {...headerProps}>
           {draft && <DraftBadge class="me-2" />}
+          {isTranslated && <TranslationBadge class="me-2" />}
           <span>{title}</span>
         </h2>
       ) : (
         <h3 {...headerProps}>
           {draft && <DraftBadge class="me-2" />}
+          {isTranslated && <TranslationBadge class="me-2" />}
           <span>{title}</span>
         </h3>
       )
