@@ -7,15 +7,90 @@
 
 ## 피드백 통계
 
-- 총 피드백 수: 12
-- 긍정 피드백: 12
+- 총 피드백 수: 13
+- 긍정 피드백: 13
 - 부정 피드백: 0
-- 승인된 번역: 12
+- 승인된 번역: 13
 - 거절된 번역: 0
 
 ---
 
 ## 피드백 이력
+
+### 2026-07-27
+
+**원문**: The new rules of context engineering for Claude 5 generation models (https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models)
+
+**번역 제목**: [번역] Claude 5세대 모델을 위한 컨텍스트 엔지니어링의 새로운 규칙
+
+**유형**: 승인 (1차 FAIL → 재작업 후 PASS → polish 26건 → 재검증 → 뉘앙스 회귀 보정 9건 후 최종 승인)
+
+**모드**: thorough
+
+**검토 점수 이력**:
+
+| 라운드 | Reviewer | Verifier | 결과 |
+|--------|----------|----------|------|
+| R1 | 6.95/10 (자연스러움 7·어휘 6·흐름 8·개발자맥락 7) | 8.1/10 (의미 8·기술 9·뉘앙스 7) | FAIL (종합 미달) |
+| R2 | 8.1/10 (자연스러움 8·어휘 7·흐름 9·개발자맥락 9) | 8.3/10 (의미 8·기술 9·뉘앙스 8) | PASS |
+| R3 (polish 26건 후 재검증) | — | 8.1/10 (의미 8·기술 9·뉘앙스 7) | PASS, 단 뉘앙스 회귀 확인 |
+| 뉘앙스 회귀 보정 (추가 9건 수정) | — | — | 사용자 승인 |
+
+**체감 점수**: 미제공 (수정 요청 없이 재검증 승인 흐름 — calibration divergence 분석 대상 아님)
+
+**검토 횟수**: 3회 (R1 FAIL → R2 PASS → R3 재검증 PASS, 이후 뉘앙스 회귀 지점 9곳 추가 수정)
+
+**파이프라인 구성 (오케스트레이터-워커, 서브에이전트 상한 10개 내 실행)**:
+
+- 다이내믹 워크플로우 + 모델 티어링: translator/reviewer = sonnet, verifier = opus, polish = haiku
+- 실사용 서브에이전트 11개 = 워크플로우 9개(R1 실패로 인한 재작업 포함) + 재검증(R3) 1개 + 학습(translation-learner, 본 기록) 1개
+- 메인 루프(Opus)는 조율만 담당, 번역·검토·다듬기는 각 전담 에이전트가 수행
+
+**원문 특성**:
+- **스타일**: 공식 블로그 (Anthropic) + 개인 저자 voice 혼재 (Thariq Shihipar, Member of Technical Staff)
+- **주제**: Claude 5세대 모델을 위한 컨텍스트 엔지니어링 원칙 전환 — 규칙→판단, 예시→인터페이스 설계, 전체 적재→점진적 공개, 반복 지시→간결한 도구 설명, CLAUDE.md 메모리→자동 메모리, 단순 스펙→풍부한 레퍼런스
+- **특징**: 서론은 저자 개인 경험 서술("I've written previously"), 이후 회사 주어("we/our")와 독자 대상("you/your")이 문장 단위로 혼재. 클리퍼(clippings) 소스 특유의 렌더링 아티팩트 다수 발견
+
+**추출된 스타일 규칙**:
+
+| 항목 | 패턴 | 지양 | 권장 |
+|------|------|------|------|
+| 동일 종결 템플릿 반복 (3회+) | "~다는 사실을 확인했습니다"가 한 문서 L46/60/116에 3회 등장 | 기계적으로 읽히는 반복 | "알게 됐습니다 / 결론에 이르렀습니다 / 깨달았습니다"로 문맥별 분산 |
+| "~에 관해/관한" 일반화 | "검증 방법에 관한 정보" | 기존 금지 패턴("~에 대해")과 같은 계열 | 조사나 목적어로 대체("검증 방법을 다룬 정보") |
+| 주어-서술어 호응 붕괴 | "이 원리를 ~ 적용합니다" (주어 없는 능동태) | 원문 주어(we) 소실 | 원문 주어를 살려 "저희는 도구에도 같은 원리를 적용하고 있습니다" |
+| polish 점수-의미보존 트레이드오프 (최대 교훈) | polish 점수는 "한국어다움" 단일 축 | 한정어 삭제로 매끄러워진 최고점 옵션 자동 채택 | 원문 대조 후 의미가 보존되는 최고점 옵션 선택 (최대 9.9점 옵션도 `as much as possible`/`unique`/`just like we did`/`may also be`/`we found` 등 5건 소실로 탈락 처리) |
+| 모달 평탄화 (뉘앙스 회귀 원인) | polish 과정에서 can/should가 단정 서술로 일제히 기움 (뉘앙스 8→7) | "~할 수 있습니다 과다"를 전부 단정형으로 변형 | "~하기도 합니다 / ~할 여지가 있습니다"처럼 양태 보존 변형도 혼합 |
+| 이미지 alt 창작 금지 | 원문 alt 빈칸(`![](url)`)에 한국어 alt 신규 작성 시 | 본문에 없는 도구명("TodoWrite")·평가어("장황한") 창작 → verifier T2(의미 추가) Important 지적 | 본문에 근거 있는 최소 서술만 사용 |
+| 저자 voice 3분할 | 기업 블로그 + 개인 저자 혼재 문서 | 1인칭 voice 미구분 | 저자 개인 서술="저", 회사 주어(we/our)="저희", 독자 대상(you/your)="여러분"으로 문장 단위 구분 (reviewer 개발자맥락 9/10) |
+| myth → 오해 통일 | "통념"은 부정적 함의 약함 | "통념" | "오해"로 한 문서 내 일관 |
+| 클리퍼 소스 아티팩트 확장 | frontmatter `published` 연도 오기(2026-07-24 → `2001-07-24`), 파일명 가짜 자동링크("CLAUDE.md" → `[CLAUDE.md](http://claude.md/)`), 인라인 코드 뒤 세미콜론 잔재(`` `claude doctor;` ``) | 클리퍼 렌더링 결함을 그대로 반영 | WebFetch로 원문 대조·연도 정정, 인라인 코드 처리 후 가짜 링크 제거, 세미콜론 제거 |
+
+**style-guide.md 업데이트**:
+- "반드시 피해야 할 표현" 표에 3행 추가 (동일 종결 템플릿 반복, "~에 관한" 일반화, 주어-서술어 호응 붕괴)
+- "polish 단계의 함정 (원문 대조 없이 점수만 보고 채택 금지)" 신규 소섹션 추가 (탈락 원문 요소 표 + 모달 평탄화 주의)
+- "§1 문체"에 저자 voice 3분할(저/저희/여러분) 규칙 추가
+- "§3 용어 규칙 - 일관성 규칙"에 myth→오해 통일 규칙 추가
+- "§4 구조 규칙"에 "이미지 alt 텍스트 규칙" 신규 소섹션 추가
+- "원문 소스 형식 검증" 섹션에 클리퍼 아티팩트 3종(연도 오기, 가짜 자동링크, 세미콜론 잔재) 추가
+- 학습된 패턴 히스토리에 2026-07-27 행 추가
+- 분석 대상 샘플에 14번 추가
+- 마지막 업데이트 날짜 2026-07-27로 갱신
+
+**glossary.md 업데이트**:
+- "고급 기술 용어" 표: unhobbling(발목 풀어주기), progressive disclosure(점진적 공개), deferred loading(지연 로딩), rubric(루브릭), agent harness(에이전트 하네스) 추가
+- "의역 및 문체 관련 용어" 표: myth→오해 추가
+- Context Engineering은 이미 "고급 기술 용어" 표에 등재되어 있어 중복 추가 스킵
+- 업데이트 기록에 2026-07-27 행 추가
+
+**Calibration divergence**: 사용자가 체감 점수를 제공하지 않고 재검증 흐름으로 승인 → divergence 분석 해당 없음 (기록 생략)
+
+**승인된 번역 저장**:
+
+저장 경로: `.claude/skills/translate-writer/data/approved-posts/14-new-rules-of-context-engineering-claude-5.md`
+
+심링크 경로: `.claude/skills/translate-writer/data/samples/14-new-rules-of-context-engineering-claude-5.md` (git ls-files -s 확인 결과 mode 120000)
+
+---
 
 ### 2026-07-03
 
@@ -597,7 +672,9 @@
 | in-the-loop 등 관용구 직역 회피 | 높음 (신규) | "반드시 피해야 할 표현" 표 확충 |
 | 수동형 번역투 (generated code 등) | 높음 (신규) | 주체 명시 능동화 패턴 추가 |
 | "승부수" vs "도박" 단어 선택 | 중간 (신규) | glossary + style-guide 동시 반영 |
-| 저자 voice "저희" 통일 | 중간 (신규) | "§1 문체" 원칙 추가 |
+| 저자 voice "저희"/"저"/"여러분" 구분 | 중간 → 높음 | "§1 문체" 원칙 확장 (기업/개인 구분 → 문장 단위 3분할) |
+| polish 점수와 원문 의미 보존 상충 | 신규 | "polish 단계의 함정" 소섹션 신설 |
+| 동일 종결 템플릿 반복 | 신규 | 발견 동사 분산 규칙 추가 |
 | "~경우" 제거 | 높음 | 반드시 피해야 할 표현에 추가 |
 | "제공하다" 대체 | 중간 | 스타일 가이드 확충 |
 | 긴 관계절 간결화 | 중간 | 구조 규칙에 반영 |
@@ -607,6 +684,7 @@
 | 외래어→한국어 선호 | 높음 | 새로운 섹션 추가 |
 | 동사 선택 다양성 | 낮음 | "보여줍니다", "접근하다" 문맥 구분 |
 | 역주 활용 | 낮음 | 새로운 규칙 섹션 추가 |
+| 클리퍼(clippings) 소스 아티팩트 | 낮음 → 중간 | 원문 소스 형식 검증 규칙 확장 |
 
 ---
 
@@ -625,6 +703,7 @@
 | 2026-06-15 | Moving Railway's Frontend Off Next.js | [번역] Railway는 왜 프론트엔드를 Next.js에서 걷어냈나 | R 8.2 / V 8.5 |
 | 2026-06-30 | Building an LLM safe design system | [번역] LLM도 벗어날 수 없는 디자인 시스템 만들기 | R 8.2 / V 8.5 |
 | 2026-07-03 | Vibe Coder vs Software Engineer | [번역] 바이브 코더 vs 소프트웨어 엔지니어 | R 8.0 / V 8.8 |
+| 2026-07-27 | The new rules of context engineering for Claude 5 generation models | [번역] Claude 5세대 모델을 위한 컨텍스트 엔지니어링의 새로운 규칙 | R 8.1 / V 8.1 (R2/R3) |
 
 ---
 
@@ -660,7 +739,13 @@
 | 2026-07-03 | time to safe merge | 안전한 머지까지 걸리는 시간(time to safe merge) | translation-learner | 반영 완료 |
 | 2026-07-03 | vibe coding / vibe coder | 바이브 코딩 / 바이브 코더 | translation-learner | 반영 완료 |
 | 2026-07-03 | contributor poker | 컨트리뷰터 포커(contributor poker) | translation-learner | 반영 완료 |
+| 2026-07-27 | unhobbling | 발목 풀어주기 (Unhobbling) | translation-learner | 반영 완료 |
+| 2026-07-27 | progressive disclosure | 점진적 공개 | translation-learner | 반영 완료 |
+| 2026-07-27 | deferred loading | 지연 로딩 (deferred loading) | translation-learner | 반영 완료 |
+| 2026-07-27 | rubric | 루브릭 (rubric) | translation-learner | 반영 완료 |
+| 2026-07-27 | agent harness | 에이전트 하네스 (agent harness) | translation-learner | 반영 완료 |
+| 2026-07-27 | myth | 오해 | translation-learner | 반영 완료 |
 
 ---
 
-✅ **마지막 업데이트**: 2026-07-03 KST
+✅ **마지막 업데이트**: 2026-07-27 KST
