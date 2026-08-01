@@ -17,6 +17,11 @@ import { SITE } from "./src/config";
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
+  // Astro 7부터 기본값이 'jsx'로 바뀌어 인라인 요소 사이 공백을 더 공격적으로
+  // 제거한다. 이 사이트는 .astro 템플릿에서 "텍스트 다음 줄에 인라인 요소"
+  // 패턴을 쓰는 곳이 있어 실제로 렌더 공백이 사라진다(예: "만나보세요. 더 자세한").
+  // Astro 6과 동일한 렌더를 유지하려고 명시적으로 true로 둔다.
+  compressHTML: true,
   integrations: [
     react(),
     icon({
