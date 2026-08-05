@@ -47,6 +47,13 @@ updates:
         update-types:
           - "minor"
           - "patch"
+    ignore:
+      # typescript 7은 Go 네이티브 포트라 JS 프로그래매틱 API를 제공하지 않는다(새 API는 7.1 목표).
+      # astro check(@astrojs/check가 require.resolve("typescript")를 하드코딩)와
+      # typescript-eslint(peer: <6.1.0)가 모두 동작하지 않아 머지가 불가능하다.
+      # 메이저만 막고 6.x minor/patch는 계속 받는다. 해제 조건은 #132 참조.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
