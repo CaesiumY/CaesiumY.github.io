@@ -9,7 +9,7 @@ Caesiumy's personal blog at https://caesiumy.dev — Astro SSG, started from the
 ## Development Commands
 
 ```bash
-pnpm install       # Install dependencies (pnpm 10, Node >= 22.12)
+pnpm install       # Install dependencies (pnpm 10, Node 22.22.3+ / 24.16+ / 26.3+)
 pnpm dev           # Dev server (localhost:4321)
 pnpm build         # astro check + astro build + pagefind index + copy to public/
 pnpm preview       # Preview the production build
