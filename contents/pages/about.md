@@ -8,7 +8,7 @@ AI-Native 기반의 개발 워크플로우를 지향하며, 비즈니스 목표 
 
 | 항목         | 링크                                                                          |
 | ------------ | ----------------------------------------------------------------------------- |
-| **Email**    | [dbs2636@gmail.com](mailto:dbs2636@gmail.com)                                 |
+| **Email**    | [wise@caesiumy.dev](mailto:wise@caesiumy.dev)                                 |
 | **Github**   | [github.com/caesiumy](https://github.com/caesiumy)                            |
 | **LinkedIn** | [linkedin.com/in/chang-sik-yoon](https://www.linkedin.com/in/chang-sik-yoon/) |
 | **Blog**     | [caesiumy.dev](https://caesiumy.dev/)                                         |
