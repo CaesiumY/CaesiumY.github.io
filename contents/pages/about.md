@@ -33,16 +33,16 @@ AI-Native 기반의 개발 워크플로우를 지향하며, 비즈니스 목표 
 
 ## Experience
 
-### [팀스파르타](https://nbcamp.spartacodingclub.kr/frontend) <span class="text-sm text-gray-500 dark:text-gray-400">코딩 부트캠프 운영 에듀테크 기업</span>
+### [팀스파르타 내일배움캠프](https://nbcamp.spartaclub.kr/)
 
-**내배캠 리액트 트랙 튜터 (2023.12 ~ 2025.05, 1년 6개월)**
+**리액트 트랙 튜터 (2023.12 ~ 2025.05, 1년 6개월)**
 
 - **중도 포기율 75% 감소**: 맞춤형 클래스 담당, 9to9 상주 환경에서 학습 병목 실시간 해결, 라이브 강의 80회+
 - **수강생 노션 템플릿 표준화**: 노션 페이지 UI/UX 및 관계형 DB 구조 문제 발견 → 전면 개선 후 전 트랙 표준 템플릿으로 채택
 - **AI 과제 리뷰 자동화**: 제출된 과제를 리뷰하는 반복 과중 업무 → AI로 코드 베이스 분석, GitHub 이슈 및 사내 문서 항목으로 피드백 자동 등록
 - **교육 콘텐츠 설계**: 최신 프론트엔드 트렌드(Next.js, TypeScript) 기반 커리큘럼과 실무형 인턴십 과제·평가 지표를 설계하고, 개발 기초 과정의 AI Agent 활용 섹션을 기획·집필
 
-### [KC-MIC](https://kc-mic.com/) <span class="text-sm text-gray-500 dark:text-gray-400">반도체 기업 AI 연구 조직</span>
+### [KC Softmax(현 ML2)](https://www.kc-ml2.com/) <span class="text-sm text-gray-500 dark:text-gray-400">반도체 기업 AI 연구 조직</span>
 
 **프론트엔드 엔지니어 (2022.03 ~ 2023.09, 1년 6개월)**
 
@@ -58,7 +58,7 @@ AI-Native 기반의 개발 워크플로우를 지향하며, 비즈니스 목표 
 
 프리랜서 계약 프로젝트로, 재직 기간 및 프로젝트 간 병행 진행되었습니다.
 
-### 한국 기술 마켓 <a class="text-sm text-gray-500 dark:text-gray-400" href="https://kotechmarket.com/">kotechmarket.com</a> <span class="text-sm text-gray-500 dark:text-gray-400">|</span> <a class="text-sm text-gray-500 dark:text-gray-400" href="https://kotechhub.com/">kotechhub.com</a>
+### 한국기술마켓 <a class="text-sm text-gray-500 dark:text-gray-400" href="https://kotechmarket.com/">kotechmarket.com</a> <span class="text-sm text-gray-500 dark:text-gray-400">|</span> <a class="text-sm text-gray-500 dark:text-gray-400" href="https://kotechhub.com/">kotechhub.com</a>
 
 **유저 페이지 · 관리자 페이지 프론트엔드 개발 (2024.05 ~ 2026.05, 2년)**
 
@@ -71,7 +71,7 @@ AI-Native 기반의 개발 워크플로우를 지향하며, 비즈니스 목표 
 
 ### 교육 지원 플랫폼 <a class="text-sm text-gray-500 dark:text-gray-400" href="https://www.chungbook-e.com/">chungbook-e.com</a>
 
-**유저 페이지 · 관리자 페이지 프론트엔드 개발 (2025.05 ~ 2026.01, 8개월)**
+**유저 및 관리자 페이지 프론트엔드 개발 (2025.05 ~ 2026.01, 8개월)**
 
 - **AI 기반 개발 파이프라인 도입(MSW 선제 스키마 + Orval/TanStack Query 자동 생성)**: 백엔드 의존성 제거로 예상 개발 공수 2개월 → 1개월 단축, 이후 유지보수 포함 8개월 계약 완수
 - **Linear 기반 진행도 체계화**: 이슈 트래커 도입 + MCP로 AI 기반 티켓 관리, 로드맵 제공으로 클라이언트 반복 문의 해소
@@ -84,17 +84,16 @@ AI-Native 기반의 개발 워크플로우를 지향하며, 비즈니스 목표 
 ### 출판
 
 - 『[자바스크립트 + 리액트 디자인 패턴](https://www.yes24.com/Product/Goods/129374961)』 역자 (한빛미디어, 2023~2024)
-  - 최신 리액트 디자인 패턴과 렌더링 최적화 기법을 깊이 있게 연구하고, 한국 독자가 이해하기 쉽도록 의역 및 용어를 재정립
 
 ### 강의
 
-- **기업 대상 AI 활용 교육 (주강사 · 기술튜터)** — 대기업 임원·시니어 개발자 대상 Claude Code·생성형 AI 실무 교육 (2026년)
-  - [삼성전자], [카카오페이], [포스코], [고려대학교], [한솔제지], [가톨릭대학교]
-  - 그 외 삼성증권, 삼성바이오로직스, 삼성인력개발원, 동희홀딩스 등
-- [한양대학교] AI 활용 프로그래밍 정규 교과목 강의 진행 (2026)
+- **기업 대상 AI 활용 교육** — 대기업 임원·시니어 개발자 대상 Claude Code·생성형 AI 실무 교육 (2026 ~ )
+  - 삼성전자, 카카오페이, 포스코, 고려대학교, 가톨릭대학교
+  - 그 외 삼성증권, 삼성바이오로직스, 삼성인력개발원 등
+- [한양대학교] AI 활용 프로그래밍 정규 교과목 강의 진행 (2026 ~ )
   - 14주차 분량 슬라이드를 AI 파이프라인(디자인 시스템 + PRD 기반 정리 + 스크린샷 비주얼 검증)으로 제작해 견적 2주 → 실제 3일에 완수 ([관련 글](https://caesiumy.dev/posts/ai/ai-playwright-slide-generation-system))
-- [오즈코딩스쿨] 프론트엔드 주강사, 실시간 세션 및 AI 특강 진행 (2025.12 ~ 2026.06)
-- [프로그래머스] Next.js & Notion API 라이브 코딩 강사 (2022 ~ 2023)
+- [오즈코딩스쿨] 프론트엔드 주강사, 실시간 세션 및 AI 특강 진행 (2025.12 ~ 2026.06, 6개월)
+- [프로그래머스] Next.js & Notion API 라이브 코딩 강사 (2022 ~ 2023, 8개월)
 
 ### 베타 리더
 
@@ -109,10 +108,9 @@ AI-Native 기반의 개발 워크플로우를 지향하며, 비즈니스 목표 
 
 ## Side Projects
 
-### [기술 블로그](https://caesiumy.dev/) <a class="text-sm text-gray-500 dark:text-gray-400" href="https://github.com/CaesiumY/CaesiumY.github.io">GitHub</a> (2019 ~ , CI 도입 2025.08)
+### [caesiumy.dev](https://caesiumy.dev/) (2019 ~ )
 
-- **CI/CD 파이프라인 구축**: 배포 후에야 회귀를 발견하던 문제를 GitHub Actions 단일 머지 게이트(의존성 감사 → 린트 → 포맷 → 자작 검증 3종 → 빌드 → E2E **65개 케이스**)와 GitHub Pages 자동 배포로 해결
-- **회귀 방지 스크립트 자작**: 리뷰로만 걸러지던 반복 실수 3종(문서 동기화 이탈·에이전트 정의 규칙 위반·게시글 분류 불일치)을 검증 스크립트로 CI에 편입해 사람의 주의력에 의존하던 검사를 자동 차단으로 전환
+- Astro 기반 정적 기술 블로그
 
 ### [ko/design.md](https://www.getdesign.kr/) (2026.05)
 
@@ -120,7 +118,7 @@ AI-Native 기반의 개발 워크플로우를 지향하며, 비즈니스 목표 
 
 ### [dding-dong](https://caesiumy.dev/dding-dong/) (2026.02)
 
-- 크로스 플랫폼(macOS/Linux/WSL) 사운드·OS 알림 및 AI 음성 합성(TTS) 커스텀 팩 시스템 구축 ([GitHub](https://github.com/CaesiumY/dding-dong))
+- 크로스 플랫폼(macOS/Linux/WSL) 사운드·OS 알림 및 AI 음성 합성(TTS) 커스텀 팩 시스템 구축
 
 ### [Notion API 블로그](https://github.com/CaesiumY/notion-blog-v2) (2022.10 ~ 2023.05)
 
