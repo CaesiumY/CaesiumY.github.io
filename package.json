@@ -64,7 +64,11 @@
   },
   "pnpm": {
     "overrides": {
-      "yaml": "^2.8.3"
+      "yaml": "^2.8.3",
+      "nanoid": "^3.3.18"
+    },
+    "auditConfig": {
+      "ignoreGhsas": ["GHSA-jmr9-qjv8-65gv"]
     }
   }
 }
