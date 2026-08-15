@@ -50,3 +50,7 @@ test-results/
 
 # 커리어 자산 (인터뷰 노트·포트폴리오 드래프트) — contents/ 볼트에서 편집하되 공개 레포에 올리지 않음
 contents/career/
+
+# 커리어 도구 산출물 (interview-agents 플러그인) — 실행한 cwd 기준으로 생성되므로 레포 루트 실행 시 유출을 막는다
+/portfolio/
+/resumes/
