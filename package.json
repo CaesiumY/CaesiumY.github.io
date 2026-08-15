@@ -68,7 +68,9 @@
       "nanoid": "^3.3.18"
     },
     "auditConfig": {
-      "ignoreGhsas": ["GHSA-jmr9-qjv8-65gv"]
+      "ignoreGhsas": [
+        "GHSA-jmr9-qjv8-65gv"
+      ]
     }
   }
 }
