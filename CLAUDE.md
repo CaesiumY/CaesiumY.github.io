@@ -67,9 +67,9 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 - `/translate-writer` — 영어 → 한국어 번역 파이프라인 (에이전트 6개 · 오케스트레이터-워커)
 - `/blog-writer` — 한국어 블로그 글 작성 (에이전트 4개)
 - `/polish`, `/polish-file` — 개별 문장 / 파일 전체 다듬기
-- `/resume-specialist` — 이력서 작성·검토·ATS 최적화
-- `/portfolio-strategy` — 인터뷰형 포트폴리오 섹션 작성
 - `/agents-md-optimizer` — CLAUDE.md/AGENTS.md discoverability 최적화
+- ⚠️ 이력서·포트폴리오·면접 준비는 이 레포에 없습니다 — `interview-agents` 플러그인을 사용하세요 (`/interview-agents:portfolio`, `/interview-agents:review-resume` 등 8개 커맨드). 레포판 `/portfolio-strategy`·`/resume-specialist`는 중복이라 삭제했습니다
+- 커리어 데이터(인터뷰 노트·포트폴리오 드래프트)는 `contents/career/`에 있고 gitignore 대상입니다 — 옵시디언 볼트(`contents/`)에서 편집하되 커밋되지 않습니다
 - 에이전트 정의: `.claude/agents/` · 번역 스타일 가이드/용어집: `.claude/skills/translate-writer/data/`
 - 28개 번역투 패턴의 단일 정본: `.claude/skills/translate-writer/references/translation-patterns.md` — 패턴 번호를 다른 파일에 복사하지 말 것
 - 번역 파이프라인은 오케스트레이터-워커 구조 — 메인 루프(Opus)는 조율 전용, 번역·검토·다듬기는 frontmatter 모델(haiku|sonnet|opus)의 전담 에이전트가 수행 (translate-writer SKILL.md '오케스트레이션 원칙' 섹션 참조)
