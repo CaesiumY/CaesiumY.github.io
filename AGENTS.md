@@ -70,6 +70,7 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 - 역할 프롬프트 정의: `.agents/agents/` · 번역 스타일 가이드/용어집: `.agents/skills/translate-writer/data/`
 - ⚠️ 이력서·포트폴리오·면접 준비 스킬은 이 레포에서 삭제되었습니다 — Claude Code의 `interview-agents` 플러그인으로 통합했습니다. Codex에는 대응물이 없습니다
 - 커리어 데이터(인터뷰 노트·포트폴리오 드래프트)는 `contents/career/`에 있고 gitignore 대상입니다
+- ⚠️ 커리어 도구 산출물 경로(`portfolio/`·`resumes/`·`assignments/`)는 실행한 cwd 기준으로 생성되며 세 경로 모두 루트에 한정해 gitignore 처리했습니다. 사용법 전체는 `contents/career/README.md` 참조
 
 ## Environment
 

@@ -57,3 +57,4 @@ contents/career/
 
 # 볼트 폴더에 자동 생성된 로컬 Claude Code 설정 (머신별 절대 경로 포함)
 contents/.claude/
+/assignments/
