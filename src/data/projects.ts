@@ -15,10 +15,17 @@ export const projects: Project[] = [
   {
     title: "교육 지원 플랫폼",
     description:
-      "AI-Native 워크플로우 기반 교육 지원 서비스. MSW를 활용한 선제적 인터페이스 설계로 개발 기간 50% 단축.",
+      "AI-Native 워크플로우 기반 교육 지원 서비스. MSW 선제 스키마로 백엔드 의존성을 제거해 예상 개발 공수 2개월 → 1개월 단축.",
     liveUrl: "https://www.chungbook-e.com/",
     ogImage: "https://www.chungbook-e.com/opengraph-image.jpg?e993f9fb9b0e04a9",
-    techStack: ["Next.js", "TypeScript", "MSW", "AI Agents"],
+    techStack: [
+      "Next.js",
+      "TypeScript",
+      "MSW",
+      "Orval",
+      "TanStack Query",
+      "AI Agents",
+    ],
     date: new Date("2025-05-01"),
     featured: true,
     category: "outsourced",
@@ -26,9 +33,16 @@ export const projects: Project[] = [
   {
     title: "한국 기술 마켓",
     description:
-      "Turborepo 기반 모노레포로 다중 브랜드 서비스 운영. FSD 아키텍처와 Suspense/ErrorBoundary로 선언적 UI 구현.",
+      "Turborepo 기반 모노레포로 다중 브랜드 서비스 운영. AI 디자인 시스템 자동화로 신규 브랜드 출시를 3주 → 3일로 단축하고, API 클라이언트를 엔드포인트 단위 테스트 검증과 함께 점진 이관.",
     liveUrl: "https://kotechmarket.com/",
-    techStack: ["Next.js", "TypeScript", "Turborepo", "FSD", "Suspense"],
+    techStack: [
+      "Next.js",
+      "TypeScript",
+      "Turborepo",
+      "FSD",
+      "Orval",
+      "Storybook",
+    ],
     date: new Date("2024-05-01"),
     featured: true,
     category: "outsourced",
@@ -52,6 +66,16 @@ export const projects: Project[] = [
     liveUrl: "https://caesiumy.dev/dding-dong/",
     techStack: ["Claude Code", "Plugin", "Astro", "TTS"],
     date: new Date("2026-02-28"),
+    featured: true,
+    category: "personal",
+  },
+  {
+    title: "e2e-flow-skill",
+    description:
+      "QA 인력 없는 프론트엔드 팀을 위한 E2E 자동화 스킬. 자연어 시나리오로 Playwright 테스트를 생성하고, 실패 trace를 UI 변경·테스트 버그·앱 버그·환경 이슈 4종으로 분류해 자가 복구하는 4단계 파이프라인.",
+    githubUrl: "https://github.com/CaesiumY/e2e-flow-skill",
+    techStack: ["Playwright", "TypeScript", "Claude Code", "Skill"],
+    date: new Date("2026-05-25"),
     featured: true,
     category: "personal",
   },

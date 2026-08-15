@@ -62,13 +62,14 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 
 ## Skills (Codex 스킬 시스템)
 
-`.agents/skills/`에 정의된 스킬들입니다. `/스킬이름`으로 호출합니다. Claude Code 전용 스킬(`/portfolio-strategy`, `/agents-md-optimizer`)은 `.claude/skills/`에만 존재합니다 — 아래 목록과 CLAUDE.md의 차이는 의도된 것입니다.
+`.agents/skills/`에 정의된 스킬들입니다. `/스킬이름`으로 호출합니다. Claude Code 전용 스킬(`/agents-md-optimizer`)은 `.claude/skills/`에만 존재합니다 — 아래 목록과 CLAUDE.md의 차이는 의도된 것입니다.
 
 - `/translate-writer` — 영어 → 한국어 번역 파이프라인 (에이전트 6개)
 - `/blog-writer` — 한국어 블로그 글 작성 (에이전트 4개)
 - `/polish`, `/polish-file` — 개별 문장 / 파일 전체 다듬기
-- `/resume-specialist` — 이력서 작성·검토·ATS 최적화
 - 역할 프롬프트 정의: `.agents/agents/` · 번역 스타일 가이드/용어집: `.agents/skills/translate-writer/data/`
+- ⚠️ 이력서·포트폴리오·면접 준비 스킬은 이 레포에서 삭제되었습니다 — Claude Code의 `interview-agents` 플러그인으로 통합했습니다. Codex에는 대응물이 없습니다
+- 커리어 데이터(인터뷰 노트·포트폴리오 드래프트)는 `contents/career/`에 있고 gitignore 대상입니다
 
 ## Environment
 
