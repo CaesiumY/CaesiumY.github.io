@@ -68,6 +68,7 @@
       "nanoid": "^3.3.18"
     },
     "auditConfig": {
+      "//ignoreGhsas": "GHSA-jmr9-qjv8-65gv (extract-zip): 업스트림 패치 없음(first_patched_version null). astro.config.ts의 icon({ include }) 경로는 @iconify/tools를 아예 import하지 않아 도달 불가능 — 로컬/커스텀 아이콘 컬렉션 로딩을 추가하면 재검토 필요. 근거: PR #138",
       "ignoreGhsas": [
         "GHSA-jmr9-qjv8-65gv"
       ]
