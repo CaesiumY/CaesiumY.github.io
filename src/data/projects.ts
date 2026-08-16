@@ -17,7 +17,7 @@ export const projects: Project[] = [
     description:
       "AI-Native 워크플로우 기반 교육 지원 서비스. MSW 선제 스키마로 백엔드 의존성을 제거해 예상 개발 공수 2개월 → 1개월 단축.",
     liveUrl: "https://www.chungbook-e.com/",
-    ogImage: "https://www.chungbook-e.com/opengraph-image.jpg?e993f9fb9b0e04a9",
+    ogImage: "/projects/chungbooke.webp",
     techStack: [
       "Next.js",
       "TypeScript",
