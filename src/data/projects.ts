@@ -59,6 +59,16 @@ export const projects: Project[] = [
     category: "personal",
   },
   {
+    title: "claude-interview-agents",
+    description:
+      "프론트엔드 이직 전 과정(이력서 리뷰, 기술 면접 질문지 생성, 임원 모의면접, 포트폴리오 작성, 오퍼 협상)을 8개 커맨드와 9개 전담 에이전트로 다루는 Claude Code 플러그인. 기술 평가자와 커뮤니케이션 평가자가 독립 채점한 뒤 조율자가 종합하는 3단 구조로 단일 모델의 편향을 줄였다.",
+    githubUrl: "https://github.com/CaesiumY/claude-interview-agents",
+    techStack: ["Claude Code", "Plugin", "Subagents", "Skill"],
+    date: new Date("2025-12-29"),
+    featured: true,
+    category: "personal",
+  },
+  {
     title: "dding-dong",
     description:
       "Claude Code 알림 플러그인. 작업 완료·에러·입력 요청 시 사운드 및 OS 알림 제공. AI 음성 합성(TTS) 커스텀 팩 지원.",
@@ -129,6 +139,16 @@ export const projects: Project[] = [
     liveUrl: "https://www.getdesign.kr/",
     techStack: ["TanStack Start", "TypeScript", "Vite", "Satori"],
     date: new Date("2026-05-10"),
+    featured: true,
+    category: "personal",
+  },
+  {
+    title: "undraw-plugin",
+    description:
+      "코딩 에이전트에서 unDraw 일러스트와 손그림 요소를 검색해 프로젝트에 바로 저장하는 플러그인. 스타일시트에서 테마 primary 색상을 읽어 SVG를 자동 리컬러하며, npm 의존성 없이 Claude Code, Codex, Cursor, Gemini CLI 등 Agent Plugins 1.0 규격 호스트를 지원한다.",
+    githubUrl: "https://github.com/CaesiumY/undraw-plugin",
+    techStack: ["Claude Code", "Plugin", "JavaScript", "SVG"],
+    date: new Date("2026-08-15"),
     featured: true,
     category: "personal",
   },
