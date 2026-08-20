@@ -6,6 +6,9 @@ test("테마별 파비콘이 올바른 이미지와 연결되어야 함", async 
 }) => {
   await page.goto("/");
 
+  const fallbackIcon = page.locator(
+    'link[rel="icon"][href="/favicon.svg"]:not([media])'
+  );
   const lightIcon = page.locator(
     'link[rel="icon"][media="(prefers-color-scheme: light)"]'
   );
@@ -13,6 +16,7 @@ test("테마별 파비콘이 올바른 이미지와 연결되어야 함", async 
     'link[rel="icon"][media="(prefers-color-scheme: dark)"]'
   );
 
+  await expect(fallbackIcon).toHaveAttribute("type", "image/svg+xml");
   await expect(lightIcon).toHaveAttribute("href", "/favicon-light.png");
   await expect(darkIcon).toHaveAttribute("href", "/favicon-dark.png");
 
