@@ -1,0 +1,26 @@
+import { test, expect } from "@playwright/test";
+
+test("테마별 파비콘이 올바른 이미지와 연결되어야 함", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/");
+
+  const fallbackIcon = page.locator(
+    'link[rel="icon"][href="/favicon-light.png"]:not([media])'
+  );
+  const darkIcon = page.locator(
+    'link[rel="icon"][media="(prefers-color-scheme: dark)"]'
+  );
+
+  await expect(fallbackIcon).toHaveAttribute("type", "image/png");
+  await expect(darkIcon).toHaveAttribute("href", "/favicon-dark.png");
+
+  const [lightResponse, darkResponse] = await Promise.all([
+    request.get("/favicon-light.png"),
+    request.get("/favicon-dark.png"),
+  ]);
+
+  expect(lightResponse.headers()["content-type"]).toContain("image/png");
+  expect(darkResponse.headers()["content-type"]).toContain("image/png");
+});
