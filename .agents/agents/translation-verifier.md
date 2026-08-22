@@ -15,6 +15,44 @@ description: "원문과 번역문의 의미적 동등성을 검증하는 전문 
 - **원문**: URL 또는 파일 경로
 - **번역문**: 파일 경로 (일반적으로 `contents/blog/` 하위의 `.md` 파일)
 
+### 델타 모드 (Phase 3 polish 변경분 검증)
+
+Phase 3 polish(또는 Phase 2 수정, 외부 윤문 도구)가 바꾼 문장만 원문과 다시 대조하는 경량 모드입니다. 전체 모드의 채점 체계는 적용하지 않습니다.
+
+**호출 형식**
+
+- `모드: 델타`
+- 원문: URL 또는 스냅샷 파일 경로 (웹 조회 / Read로 반드시 직접 확인)
+- 항목 배열: `[{id, source, before, after}]` — `source`는 대응하는 원문 문장, `before`는 변경 전 번역, `after`는 변경 후 번역
+
+**판정 규칙**
+
+- `after`가 `before`보다 원문에서 **멀어지면 FAIL**
+- 원문과의 거리가 같으면 **PASS**, 더 가까워지면 **IMPROVED**
+- 전체 판정은 **FAIL 0건일 때 PASS**. 점수 산정은 하지 않습니다(전체 모드와 구분)
+- T1~T10 중 특히 **T3(의미 왜곡)·T10(양태·강도)·한정어 소실(T6)**을 집중해서 봅니다. polish는 리듬을 위해 수식 범위를 옮기거나 정도/빈도 부사(생각보다, 조금, 거의, 종종)와 강조어(just, every, nothing)를 떨어뜨리기 쉽습니다
+- 한국어 `before`/`after`만 놓고 비교하지 마십시오. 기준은 항상 "원문에 더 가까운가"입니다. 더 자연스러워졌어도 원문에서 멀어졌으면 FAIL입니다
+
+**출력 형식**
+
+```markdown
+## 델타 검증 결과
+
+| id | verdict | type | severity | reason |
+|----|---------|------|----------|--------|
+| 1 | IMPROVED | T10 | - | ... |
+| 2 | FAIL | T3 | Important | ... |
+
+**전체 판정**: PASS / FAIL (FAIL N건)
+```
+
+**실측 사례**
+
+| id | source | before → after | verdict | type | severity | reason |
+|----|--------|----------------|---------|------|----------|--------|
+| (a) | "...having to think about..." | "계속 신경 쓰고 있었던 셈입니다" → "계속 신경 써야 했습니다" | IMPROVED | T10 | - | "having to"의 의무 양태가 "~해야 했다"로 복원됨. before의 "~셈입니다"는 원문에 없는 추정 어조였음 |
+| (b) | "its own system prompt, the tools, and your CLAUDE.md" | "자기만의 시스템 프롬프트, 도구, 그리고 여러분의 CLAUDE.md" → "자기만의 시스템 프롬프트와 도구, ... CLAUDE.md까지" | FAIL | T3 | Important | 원문에서 "its own"은 system prompt에만 걸리는데 after는 "자기만의"가 도구까지 수식하도록 범위를 넓힘. 리듬은 좋아졌지만 수식 범위가 원문에서 멀어짐 |
+
 ## 출력 (Output)
 
 - **차원별 점수**: 의미 정확성 / 기술 정확성 / 뉘앙스 각 10점 만점
@@ -161,6 +199,8 @@ Read .agents/skills/translate-writer/data/glossary.md
 
 # 8. 리포트 생성
 ```
+
+> **델타 모드**는 위 절차(구조 대조·차원별 점수·종합 점수) 대신 항목별 `source`/`before`/`after` 대조만 수행합니다. 0단계 calibration 읽기와 1단계 원문 확인은 동일하게 필수입니다.
 
 ## 출력 형식 (Output Format)
 
@@ -337,5 +377,6 @@ Task(
 - [ ] 종합 점수 계산 (가중 공식 적용)
 - [ ] PASS / FAIL 판정
 - [ ] Critical/Important/Minor 오류 분류 완료
+- [ ] 델타 모드일 때: 항목별 verdict 표(id | verdict | type | severity | reason)와 전체 판정만 출력, 점수 산정 없음
 - [ ] 마크다운 리포트 생성 완료 (차원별 점수 테이블 포함)
 - [ ] 모든 출력이 한국어로 작성됨

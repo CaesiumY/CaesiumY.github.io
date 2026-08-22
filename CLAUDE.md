@@ -26,4 +26,5 @@ Guide for Claude Code (claude.ai/code) when working with code in this repository
 - 에이전트 정의: `.claude/agents/` · 번역 스타일 가이드/용어집: `.claude/skills/translate-writer/data/`
 - 28개 번역투 패턴의 단일 정본: `.claude/skills/translate-writer/references/translation-patterns.md` — 패턴 번호를 다른 파일에 복사하지 말 것
 - 번역 파이프라인은 오케스트레이터-워커 구조 — 메인 루프(Opus)는 조율 전용, 번역·검토·다듬기는 frontmatter 모델(haiku|sonnet|opus)의 전담 에이전트가 수행 (translate-writer SKILL.md '오케스트레이션 원칙' 섹션 참조)
+- 재작성 단계(Phase 2 수정, Phase 3 polish, 외부 윤문 도구) 뒤에는 무결성 게이트 필수: `node .claude/skills/translate-writer/scripts/check-translation-integrity.mjs <before.md> <after.md>` (헤딩·이미지·코드·수치·커맨드 불변 검사, exit 1이면 GATE 2 진입 금지). polish로 바뀐 문장은 translation-verifier 델타 모드로 재검증 — 원문을 보지 않는 윤문이 verifier 수정을 되돌린 사례가 있음
 - 사용자 게이트는 `✋ GATE N — AskUserQuestion` 표기로 통일 — 게이트에서 AskUserQuestion 없이 다음 Phase 진행 금지

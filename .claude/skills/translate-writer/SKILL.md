@@ -17,9 +17,10 @@ allowed-tools: [Read, Write, Edit, Bash, Glob, TodoWrite, Task, AskUserQuestion,
   → Phase 2: 이중 검증 (Task 병렬, 최대 3회 반복)
       ├─ translation-reviewer (한국어 품질, 28개 패턴)
       └─ translation-verifier (원문 충실도, T1~T10)
-      미달 시 → content-translator에 수정 지시 → 재검증 (3회 미달 시 ✋ GATE 0)
+      미달 시 → content-translator에 수정 지시 → 무결성 게이트 → 재검증 (3회 미달 시 ✋ GATE 0)
   → Phase 3: Polish 정밀 다듬기 [quick: 건너뛰기]
-      polish-agent batch 분석 → 기준 미만 필터링 → ✋ GATE 1 → 순차 개선 (batch 옵션 재사용)
+      스냅샷 → polish-agent batch 분석 → 기준 미만 필터링 → ✋ GATE 1 → 순차 개선 (batch 옵션 재사용)
+      → 델타 검증(verifier 델타 모드) → 무결성 게이트
   → Phase 4: ✋ GATE 2 — 사용자 최종 결정
       ✅ 승인 → Phase 5 | 📝 수정 → Phase 1 | 🔧 다듬기 → Phase 3 | ❌ 거절 → 종료
   → Phase 5: 저장 및 학습 (translation-learner)
@@ -152,6 +153,14 @@ Task 도구로 호출:
        미달 차원만 추출하여 translator에게 전달:
        "자연스러움 차원 5/10 미달(임계값 6). 패턴 #3 수동태 3건, #4 지시대명사 2건 수정."
        "의미 정확성 차원 6/10 미달(임계값 7). T3 왜곡 1건(Line 42) 수정."
+
+     수정 직후 무결성 게이트:
+       수정 지시 전 현재 파일을 스크래치패드에 스냅샷으로 복사해 두고,
+       translator 수정이 끝나면 실행:
+       node .claude/skills/translate-writer/scripts/check-translation-integrity.mjs <수정 전 스냅샷> <수정 후 파일>
+       → exit 0(PASS)이면 재검증 진행
+       → exit 1(FAIL)이면 FAIL 항목(헤딩·이미지·코드·숫자·커맨드 토큰·frontmatter 등)을
+         translator에게 불변 요소 복구 지시 → 재실행. PASS 전에는 재검증으로 넘어가지 않음
 ```
 
 **루프 조건** (차원별 하드 임계값 + 종합 점수):
@@ -173,13 +182,30 @@ Task 도구로 호출:
 
 **thorough/perfect 모드** — `/polish-file` 스킬의 로직을 따릅니다:
 
+0. **스냅샷 복사**: polish 시작 전 현재 번역 파일을 스크래치패드에 복사 (예: `<scratchpad>/polish-before.md`). 델타 검증과 무결성 게이트의 비교 기준이 됩니다
 1. **문장별 분석**: `/polish-file`의 Step 1-2와 동일 — polish-agent batch Task 호출로 문장별 점수·패턴·개선 옵션을 수집
 2. **필터링**: 기준 점수 미만 문장만 선택 (thorough: 9.5, perfect: 9.8)
 3. **✋ GATE 1 — AskUserQuestion**: "N개 문장 다듬기 진행?" (지금 다듬기 / 나중에 / 건너뛰기)
-4. **순차 개선**: Step 1의 batch 분석이 반환한 개선 옵션을 재사용해 문장별로 제시(AskUserQuestion, 옵션 포맷은 `/polish` 스킬 참조) → 선택 적용(Edit). 파일이 그 사이 수정됐거나 사용자가 재분석을 요청한 문장만 polish-agent를 다시 호출
-5. **JSON 리포트 저장**: `.claude/polish-reports/[slug]-[timestamp].json`
+4. **순차 개선**: Step 1의 batch 분석이 반환한 개선 옵션을 재사용해 문장별로 제시(AskUserQuestion, 옵션 포맷은 `/polish` 스킬 참조) → 선택 적용(Edit). 파일이 그 사이 수정됐거나 사용자가 재분석을 요청한 문장만 polish-agent를 다시 호출. batch 옵션 중 `preserved: false`(의미 소실)인 옵션은 제시에서 제외하거나 note를 함께 표시하고 추천으로 올리지 않음. 적용한 문장마다 {id, 원문 대응 문장, before, after}를 변경 목록에 기록
+5. **델타 검증 (translation-verifier 델타 모드)**: 변경된 문장만 모아 Task 1회 호출
+   ```
+   - subagent_type: "translation-verifier"
+   - prompt에 포함:
+     - 모드: 델타
+     - 원문: [URL 또는 스냅샷 파일 경로]
+     - 항목: [{id, source, before, after}, ...]  ← Step 4의 변경 목록
+   ```
+   - 반환: 항목별 {id, verdict: PASS|FAIL|IMPROVED, type: T1~T10, severity, reason} (점수 산정 없음)
+   - 통과 조건: verifier 전체 판정 PASS, 즉 verdict FAIL 항목 0건 (FAIL은 주로 T3 왜곡, T10 양태·강도, T6 한정어 소실이 Important 이상일 때 매겨짐)
+   - 미통과 시: 해당 문장은 before로 되돌리거나(Edit) Step 4의 다른 옵션을 선택한 뒤, 그 문장만 다시 델타 검증 1회. 재검증도 미통과면 before로 확정
+6. **무결성 게이트**: `node .claude/skills/translate-writer/scripts/check-translation-integrity.mjs <Step 0 스냅샷> <현재 파일>` 실행
+   - exit 0(PASS) → GATE 2(Phase 4)로 진입 가능
+   - exit 1(FAIL) → FAIL 항목(인라인 코드·링크·숫자·커맨드 토큰·frontmatter 빈 줄 등)의 원인을 찾아 수정(보통 옵션 텍스트의 이스케이프된 백틱이나 인접 문장 중복) 후 재실행. PASS 전에는 GATE 2로 넘어가지 않음
+7. **JSON 리포트 저장**: `.claude/polish-reports/[slug]-[timestamp].json` (델타 검증 결과와 무결성 게이트 결과 포함)
 
 상세 로직: `/polish-file` 스킬 참조, 개별 문장 다듬기: `/polish` 스킬 참조
+
+> 외부 윤문 도구(humanize-korean 등)를 쓰려면 Phase 2 이전에 돌리거나 Phase 3과 같은 델타 검증·무결성 게이트를 거칠 것 — 원문을 보지 않는 윤문이 verifier 수정을 되돌린 실측 사례가 있다.
 
 #### Phase 4: 사용자 최종 결정
 
@@ -275,7 +301,7 @@ AskUserQuestion으로 사용자에게 질문:
 | translation-style-analyzer | sonnet | 기존 번역 분석 → 스타일 가이드 생성 | - |
 | content-translator | sonnet | URL/파일 번역 | - |
 | translation-reviewer | sonnet | 한국어 품질 검토 (28개 패턴) | 10점 만점 |
-| translation-verifier | opus | 원문 충실도 검증 (T1~T10) | 10점 만점 |
+| translation-verifier | opus | 원문 충실도 검증 (T1~T10) (+ 델타 모드: Phase 3 변경 문장만 before/after 대조, 점수 없음) | 10점 만점 |
 | polish-agent | haiku | 문장 단위 정밀 분석 (10개 핵심 패턴) | 10점 만점 |
 | translation-learner | sonnet | 피드백 학습 → 스타일 가이드 업데이트 | - |
 
@@ -309,3 +335,4 @@ AskUserQuestion으로 사용자에게 질문:
 7. **한국어**: 모든 출력과 번역은 한국어로.
 8. **Polish 리포트**: 학습 및 추적용으로 보존.
 9. **오케스트레이션 원칙**: 메인 루프는 콘텐츠를 직접 생성·채점하지 않습니다. 모든 콘텐츠 작업은 전담 에이전트(Task)에 위임하세요.
+10. **재작성 단계 뒤 무결성 게이트 필수**: Phase 2 수정, Phase 3 polish, 외부 윤문 등 산문을 고쳐 쓰는 단계 뒤에는 반드시 `scripts/check-translation-integrity.mjs`로 수정 전 스냅샷과 비교해 PASS를 확인하세요. 헤딩·이미지·코드·숫자·커맨드·frontmatter가 조용히 깨지는 것을 막는 유일한 장치입니다.
