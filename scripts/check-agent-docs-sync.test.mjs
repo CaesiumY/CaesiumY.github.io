@@ -65,6 +65,14 @@ test("accepts the shapes Claude Code treats as an import", async (t) => {
       "",
       "prefix <!-- note --> @AGENTS.md"
     ),
+    // A blank line ends the paragraph, so the span above cannot reach down here.
+    "after a code span left open above a blank line": md(
+      "# X",
+      "",
+      "unclosed `span",
+      "",
+      "@AGENTS.md"
+    ),
   };
 
   for (const [name, source] of Object.entries(accepted)) {
@@ -106,6 +114,12 @@ test("rejects tokens that only look like an import", async (t) => {
       "# X",
       "",
       "prefix<!-- note -->@AGENTS.md"
+    ),
+    // A code span may close on a later line. Masking each line in isolation
+    // left the token inside such a span looking like a live import.
+    "inside a code span that wraps a line break": md(
+      "line one `text",
+      "@AGENTS.md text` end"
     ),
     "nowhere at all": md("# X", "", "no import here"),
   };

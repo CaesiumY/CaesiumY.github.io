@@ -37,35 +37,41 @@ const FENCE = /^ {0,3}(`{3,}|~{3,})/;
 // and similar neighbours from counting.
 const IMPORT = /(?:^|\s)@AGENTS\.md(?=\s|$)/;
 
-// Backtick runs must match in length, same as CommonMark code spans.
-const CODE_SPAN = /(`+)[^`]*?\1/g;
 
 /**
  * Decide whether `markdown` carries a live `@AGENTS.md` import.
  *
- * Exported for the regression suite. The ordering below is load-bearing and
- * each step exists because its absence produced a real bug:
+ * Exported for the regression suite. Every rule below exists because its
+ * absence produced a real bug in this file:
  *
- *  - Code spans are masked FIRST. CommonMark binds them tighter than raw HTML,
- *    so a documented `` `<!--` `` is literal text. Stripping comments first made
- *    that example open a phantom comment that swallowed the rest of the file,
- *    hiding a perfectly good import.
- *  - HTML comments are removed next. Claude Code strips block-level comments
- *    before injecting a memory file, so `@AGENTS.md` inside `<!-- ... -->` is
- *    not an import — a maintainer note describing the import used to satisfy
- *    this check on its own and keep CI green after the real import was deleted.
- *    Removing them before the fence walk also stops a fence marker written
- *    inside a comment from opening a phantom code block.
- *  - Fences are tracked line by line rather than matched as whole blocks. A
- *    block regex needs a closing fence, so an unclosed fence left its body
+ *  - Fences are tracked line by line, not matched as whole blocks. A block
+ *    regex needs a closing fence, so an unclosed fence left its body
  *    searchable and a stray example inside it satisfied the check.
+ *  - Fence openers are read before the line is rewritten. Masking code spans
+ *    first ate the leading pair of a ``` fence and destroyed the marker.
+ *  - Code spans and HTML comments are resolved in DOCUMENT ORDER, because
+ *    CommonMark gives them the same precedence. Handling either one first
+ *    unconditionally breaks the other: `` `<!--` `` must read as code, while
+ *    `<!-- ```js -->` must read as a comment.
+ *  - Both carry state across lines, like fences. A code span may close on a
+ *    later line, and masking each line alone left a token inside such a span
+ *    looking like a live import.
+ *  - Skipped regions leave NOTHING behind. Substituting a space invented a
+ *    word boundary and made a decorative comment look like an import.
  *
- * An unterminated comment swallows the rest of the file. That fails safe: the
- * guard reports a missing import instead of trusting text of unclear status.
+ * HTML comments are skipped at all because Claude Code strips block-level
+ * comments before injecting a memory file, so a `@AGENTS.md` written inside
+ * one is not an import — the note describing the import used to satisfy this
+ * check by itself and keep CI green after the real import was deleted.
+ *
+ * An unterminated comment or code span swallows the rest of its region. That
+ * fails safe: the guard reports a missing import instead of trusting text of
+ * unclear status.
  */
 export function hasAgentsImport(markdown) {
   let inComment = false;
   let openFence = null;
+  let openSpan = null;
 
   for (const rawLine of markdown.split(/\r?\n/)) {
     let line = rawLine;
@@ -98,31 +104,57 @@ export function hasAgentsImport(markdown) {
       continue;
     }
 
-    // Now that the line is known not to be a fence, mask code spans so that
-    // backticked examples of comment syntax stay literal.
-    line = line.replace(CODE_SPAN, (match) => " ".repeat(match.length));
+    // A blank line ends the paragraph, so a code span left hanging dies here.
+    if (openSpan && line.trim() === "") openSpan = null;
 
-    // Resolve any comments that open on this line, keeping the text around
-    // them; a comment left open flips the flag and drops the remainder.
-    // The comment is spliced out with NOTHING in its place. Substituting a
-    // space would invent a word boundary: `prefix<!-- note -->@AGENTS.md`
-    // would become `prefix @AGENTS.md` and satisfy IMPORT, even though the
-    // stripped text Claude Code sees is `prefix@AGENTS.md`, which is not an
-    // import. Manufacturing a boundary here would let a decorative comment
-    // keep CI green after the real import was deleted.
+    // Scan the line left to right, letting whichever delimiter appears FIRST
+    // win. CommonMark gives code spans and raw HTML the same precedence and
+    // resolves them in document order, so a fixed order here is wrong in one
+    // direction or the other: `` `<!--` `` must read as code, while
+    // `<!-- ```js -->` must read as a comment.
+    // Skipped regions contribute NOTHING to `prose`. Substituting a space
+    // would invent a word boundary — `prefix<!-- note -->@AGENTS.md` would
+    // become `prefix @AGENTS.md` and satisfy IMPORT, even though the text
+    // Claude Code sees is `prefix@AGENTS.md`, which is not an import.
+    let prose = "";
+    let rest = line;
+
     for (;;) {
-      const start = line.indexOf("<!--");
-      if (start === -1) break;
-      const end = line.indexOf("-->", start + 4);
+      if (openSpan) {
+        const closer = new RegExp("`{" + openSpan.length + "}(?!`)");
+        const hit = closer.exec(rest);
+        if (!hit) {
+          rest = "";
+          break;
+        }
+        rest = rest.slice(hit.index + hit[0].length);
+        openSpan = null;
+      }
+
+      const tick = /`+/.exec(rest);
+      const note = rest.indexOf("<!--");
+
+      if (!tick && note === -1) break;
+      const tickFirst = tick && (note === -1 || tick.index < note);
+
+      if (tickFirst) {
+        prose += rest.slice(0, tick.index);
+        openSpan = tick[0];
+        rest = rest.slice(tick.index + tick[0].length);
+        continue;
+      }
+
+      prose += rest.slice(0, note);
+      const end = rest.indexOf("-->", note + 4);
       if (end === -1) {
-        line = line.slice(0, start);
         inComment = true;
+        rest = "";
         break;
       }
-      line = line.slice(0, start) + line.slice(end + 3);
+      rest = rest.slice(end + 3);
     }
 
-    if (IMPORT.test(line)) return true;
+    if (IMPORT.test(prose + rest)) return true;
   }
 
   return false;
