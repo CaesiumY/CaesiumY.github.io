@@ -17,6 +17,7 @@
     "format": "prettier --write .",
     "lint": "eslint .",
     "test": "playwright test",
+    "test:scripts": "node --test \"scripts/**/*.test.mjs\"",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug"
   },

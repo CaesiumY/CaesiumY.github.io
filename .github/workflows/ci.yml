@@ -52,6 +52,9 @@ jobs:
       - name: "🔁 Check agent docs sync"
         run: node scripts/check-agent-docs-sync.mjs
 
+      - name: "🧪 Test repo scripts"
+        run: pnpm run test:scripts
+
       - name: "🤖 Check Claude skill/agent assets"
         run: node scripts/check-claude-assets.mjs
 
