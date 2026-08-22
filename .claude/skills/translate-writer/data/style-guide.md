@@ -24,6 +24,8 @@
 - **목록 항목**: 명사형 또는 간결한 서술문
   - 예: "2-5배 빠른 프로덕션 빌드"
   - 예: "최대 10배 빠른 Fast Refresh"
+  - **번호 매김된 절차형 리스트는 존댓말 서술문으로 유지**: 요약형 목록의 명사형 압축과 달리, 절차 단계는 본문과 같은 "~합니다" 존댓말 종결 유지
+    - 예: "1. 관련 요소를 같은 컨테이너 안에 배치합니다" (UI 디자인 팁 16가지 번역, 4단계 절차 목록 전부 존댓말 종결로 승인)
 
 ### 자연스러운 톤
 - **약간의 구어체 허용**: 기술 문서도 딱딱하지 않게 작성
@@ -152,6 +154,17 @@
 | 수량 표현 ("the following" + N개) | 도입부에서 항목 수 오기 | 실제 불릿 수와 일치 확인 | "다섯 가지"로 소개 → 본문에 다섯 항목이 있는지 검증 필수 |
 | "the bet" (전략적 베팅) | "도박" (부정적 어감) | "승부수" | 도박장·중독 이미지 지양; 전략적 선택 의미 보존. 한 문서 5곳+결말 일관 적용 |
 | "the bet ~ is built on" (토대 뉘앙스) | "승부수는 ~에 있습니다" (토대 소실) | "딛고 선 승부수" | built-on의 기반/토대 뉘앙스 살리기 |
+
+### 의미 충실도 원칙 (UI 디자인 팁 스타일, 튜토리얼/체크리스트형)
+
+| 원문 패턴 | 지양 | 권장 | 이유 |
+|-----------|------|------|------|
+| 원문에 없는 메타데이터(발행일 등) | 임의로 날짜를 추정하거나 새로 만들어 표기 | 원문에 명시된 정보만 표기하고, 없으면 생략 | 실제 사례: 원문에 없는 발행일을 날조해 verifier가 Critical로 지적, 1차 FAIL 처리됨(이번 세션 최대 실책) |
+| hedge 표현(helps, try to, can) | 단정형 서술로 격상 | "도움이 됩니다", "되도록", "~일 수 있습니다"로 보존 | 원문의 불확실성 또는 권고 뉘앙스를 유지해야 정확한 정보 전달 |
+| "above X"(초과)와 "at least X"(이상) | 둘 다 "X 이상"으로 뭉뚱그려 번역 | "above"는 "X 넘게", "at least"는 "X 이상"으로 구분 | 접근성 기준(WCAG 명암비 등)처럼 경계값이 중요한 문맥에서 방향을 반대로 번역하면 사실 오류가 됨 |
+| "above X" 조사 처리 | "X:1을 넘도록"(조사 중복으로 어색) | "X:1 넘게" | 조사 중복 제거로 자연스러움 확보 |
+| 저자가 의도적으로 반복하는 표현(예: "It's safest") | 매번 다른 표현으로 바꿔서 번역 | 문서 내내 같은 표현으로 반복 유지 | 반복이 강조 장치로 쓰인 경우이므로, 번역가가 도입한 무의식적 반복(동일 종결 템플릿 반복 회피 규칙 대상)과는 구분해야 함. 원문 대조로 반복이 저자의 의도인지 먼저 판단할 것 |
+| 범위 한정어 "some"(일부) | 전체 사용자로 일반화 | "일부 사용자에게"처럼 범위를 그대로 유지 | 한정어를 지우면 과잉 일반화가 되어 사실과 어긋남 |
 
 ### 구어·관용 표현 (사례 분석 스타일)
 
@@ -300,6 +313,14 @@
 | Changelog | 변경 내역 | 버전 기록 |
 | Tanstack Start | Tanstack Start | 프레임워크명 (한글화 불필요) |
 | Deno Fresh | Deno Fresh | 프레임워크명 (한글화 불필요) |
+| Squint Test | 스퀸트 테스트(Squint Test) | 눈 찌푸리기 테스트, 시각적 위계 점검법 |
+| x-height | x-height | 원문 유지, 서체에서 소문자의 높이를 가리키는 전문 용어 |
+| sentence case | 문장 표기(sentence case) | 첫 단어와 고유명사만 대문자로 쓰는 표기법 |
+| primary action | 주요 액션(primary action) | 인터페이스에서 가장 중요한 동작 버튼 |
+| interaction cost | 상호작용 비용(interaction cost) | 사용자가 작업을 완료하는 데 드는 물리적, 인지적 노력 |
+| line height | 줄 간격(line height) | 텍스트 두 줄 사이의 수직 거리 |
+| contrast ratio | 명암비(contrast ratio) | 두 색상 사이 밝기 차이 지표, "대비"와 혼용 가능 |
+| typeface / font | 서체 / 폰트 | typeface는 폰트 묶음(예: Helvetica), font는 그 안에서 굵기, 크기별로 갈라지는 변형(예: Helvetica Bold) |
 
 ---
 
@@ -564,6 +585,7 @@ tags: ["translation", "관련-태그", ...]
 | 2026-07-01 | LLM 번역 PR #99 리뷰 반영 (gemini·claude 봇) | TL;DR·핵심 요약도 존댓말 통일 규칙 추가(평서체 뽑힘 주의); 클리퍼 export(clippings) 소스는 불릿/단락 구조가 뭉개지므로 실제 원문 URL과 대조하는 규칙 추가 |
 | 2026-07-03 | Vibe Coder vs Software Engineer 번역 승인 (Reviewer 8/10, Verifier 8.8/10, polish 8건) | 지시대명사("그것은 ~뿐입니다") 3회+ 반복 시 감점 패턴 추가, "저를 위해 ~해냅니다"(does X for me) 직역 회피 패턴 추가, 1인칭 개인 에세이 저자 voice "저" vs 기업 블로그 "저희" 구분 규칙 명시 |
 | 2026-07-27 | Claude 5세대 컨텍스트 엔지니어링 번역 승인 (Reviewer 8.1, Verifier 8.1, polish 26건 + 뉘앙스 회귀 보정 9건) | 동일 종결 템플릿("~다는 사실을 확인했습니다") 3회+ 반복 회피, "~에 관한" 일반화, 주어-서술어 호응 붕괴 보정("이 원리를 ~ 적용합니다"→"저희는 ~ 적용하고 있습니다"); polish는 점수 순 자동 채택 금지·원문 대조 후 의미 보존 최고점 선택 규칙 신설(최대 9.9점 옵션도 한정어 소실로 탈락 사례 5건); can/should 모달 평탄화로 뉘앙스 회귀(8→7) 방지를 위한 양태 보존 변형 규칙; 이미지 alt 창작 금지 규칙 신설; 저자 voice 3분할(저/저희/여러분) 규칙 명시; myth→오해 통일; 클리퍼 아티팩트 3종(연도 오기, 가짜 자동링크, 세미콜론 잔재) 추가 |
+| 2026-08-22 | 16 little UI design tips that make a big impact 번역 승인 (Reviewer 8.75, Verifier 8.8, 1차 verifier FAIL 후 15건 수정, polish 25건) | 원문에 없는 메타데이터(발행일) 날조 금지 규칙 신설(1차 FAIL 최대 원인); hedge 표현(helps, try to, can) 보존 규칙 추가; above(초과) vs at least(이상) 구분 및 "X:1 넘게" 조사 표현 정리; 저자의 의도적 반복 표현 유지 규칙 추가(번역가의 무의식적 반복 회피 규칙과 구분); 범위 한정어(some) 보존 규칙 추가; 절차형 목록도 본문과 같은 존댓말 유지 규칙 명시; 용어집 추가 제안(스퀸트 테스트, x-height, 문장 표기, 주요 액션, 상호작용 비용, 줄 간격, 명암비, 서체/폰트 구분) |
 | 2026-08-22 | Maximizing the value of your Claude Code sessions 번역 승인 (Reviewer 8.0/10, Verifier 8.5/10, 2차 검증에서 통과 — 1차 7.8/8.3) | polish batch(haiku) 함정 5종 세분화(스타일 가이드 위반 옵션·평서체 오염·인접 문장 중복·한정어 탈락 재현·이스케이프 백틱 오염)로 "polish 단계의 함정" 보강; "A, B, 그리고 C" 나열 기계적 반복(6회+) 회피 규칙 신설; 이미지 내용이 이미지 안에만 있을 때 캡션 추가 규칙 신설(alt 창작 금지 규칙과 근거 대상으로 구분); 원격 CDN 핫링크 대신 로컬 PNG 다운로드 전환 첫 적용 사례 기록 |
 
 ---
@@ -586,7 +608,8 @@ tags: ["translation", "관련-태그", ...]
 - `12-llm-safe-design-system.md` - Building an LLM safe design system (Polar Orbit) 번역 (기술 설명 + 디자인 시스템 스타일)
 - `13-vibe-coder-vs-software-engineer.md` - Vibe Coder vs Software Engineer 번역 (1인칭 개인 에세이 스타일)
 - `14-new-rules-of-context-engineering-claude-5.md` - Claude 5세대 컨텍스트 엔지니어링 원칙 번역 (공식 블로그 · 개인 저자 voice 혼재 스타일)
-- `15-maximizing-claude-code-sessions.md` - Maximizing the value of your Claude Code sessions 번역 (Anthropic 공식 블로그, 기술 설명 + 실전 팁 스타일)
+- `15-16-little-ui-design-tips.md` - 16 little UI design tips that make a big impact 번역 (UI 디자인 튜토리얼, 체크리스트형 스타일)
+- `16-maximizing-claude-code-sessions.md` - Maximizing the value of your Claude Code sessions 번역 (Anthropic 공식 블로그, 기술 설명 + 실전 팁 스타일)
 
 ---
 

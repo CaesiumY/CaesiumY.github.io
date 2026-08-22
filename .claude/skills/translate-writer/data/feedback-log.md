@@ -7,17 +7,17 @@
 
 ## 피드백 통계
 
-- 총 피드백 수: 14
-- 긍정 피드백: 14
+- 총 피드백 수: 15
+- 긍정 피드백: 15
 - 부정 피드백: 0
-- 승인된 번역: 14
+- 승인된 번역: 15
 - 거절된 번역: 0
 
 ---
 
 ## 피드백 이력
 
-### 2026-08-22
+### 2026-08-22 11:17
 
 **원문**: Maximizing the value of your Claude Code sessions (https://claude.com/blog/maximizing-the-value-of-your-claude-code-sessions)
 
@@ -91,9 +91,66 @@
 
 **승인된 번역 저장**:
 
-저장 경로: `.claude/skills/translate-writer/data/approved-posts/15-maximizing-claude-code-sessions.md`
+저장 경로: `.claude/skills/translate-writer/data/approved-posts/16-maximizing-claude-code-sessions.md`
 
-심링크 경로: `.claude/skills/translate-writer/data/samples/15-maximizing-claude-code-sessions.md` (git 심링크 직접 등록, `git ls-files -s` 확인 결과 mode 120000)
+심링크 경로: `.claude/skills/translate-writer/data/samples/16-maximizing-claude-code-sessions.md` (git 심링크 직접 등록, `git ls-files -s` 확인 결과 mode 120000)
+
+---
+
+### 2026-08-22 09:25
+
+**원문**: 16 little UI design tips that make a big impact (Adham Dannaway, https://www.adhamdannaway.com/blog/ui-design/ui-design-tips)
+
+**번역 제목**: [번역] 작지만 확실한 효과를 내는 UI 디자인 팁 16가지
+
+**유형**: 승인 (1차 verifier FAIL, 원문에 없는 발행일 날조 Critical 1건 발견 후 15건 수정 → 2차 PASS → polish 25건 적용 후 최종 승인)
+
+**모드**: thorough
+
+**검토 점수**: Reviewer 8.75/10 (자연스러움 9, 어휘 8, 흐름 9, 개발자맥락 9), Verifier 8.8/10 (의미 정확성 9, 기술 정확성 9, 뉘앙스 8), 모든 하드 임계값 통과
+
+**체감 점수**: 미제공 (Phase 4에서 수정 요청 없이 바로 승인되어 calibration divergence 분석 대상 아님)
+
+**검토 횟수**: 2회 (1차 verifier FAIL(원문에 없는 발행일 날조 Critical) → 15건 수정 후 2차 PASS → polish 25건 적용 → 승인)
+
+**원문 특성**:
+- **스타일**: UI 디자인 튜토리얼, 체크리스트형 (개인 디자이너 블로그, Adham Dannaway)
+- **주제**: 레이아웃, 간격, 타이포그래피, 색상 명암비 등 UI 디자인 논리적 원칙 16가지를 단기 숙박 예약 앱 매물 상세 페이지 예시에 순서대로 적용
+- **특징**: 번호 매김 절차형 리스트 다수, WCAG 2.1 레벨 AA 접근성 기준(3:1, 4.5:1) 반복 언급, hedge 표현(helps, can, try to) 다수, "It's safest to X" 등 저자의 의도적 반복 표현
+
+**사용자 피드백 특이사항**:
+1. **폴리시 게이트에서 "추천안 일괄 적용" 선호**: 개별 승인/거절 대신 폴리시 에이전트의 추천을 일괄 적용하는 방식 선호
+2. **결론 문단은 적극 수정, 컨테이너 문장은 원문 충실도 우선**: 추가 다듬기 단계에서 결론 문단은 더 적극적인 수정안을 채택하고, 컨테이너 관련 문장은 자연스러움보다 원문 충실도를 우선해 현행 유지 선택
+3. **표기 오타에 민감**: 질문 텍스트의 "컴테이너" 오타를 사용자가 즉시 지적함(향후 게이트, 질문 텍스트 작성 시 오타 검수 강화 필요)
+
+**추출된 스타일 규칙**:
+
+| 항목 | 패턴 | 지양 | 권장 |
+|------|------|------|------|
+| 원문 없는 메타데이터 날조 (최대 실책) | 원문에 명시되지 않은 발행일을 임의로 생성 | 날짜 추정, 창작 | 원문에 명시된 것만 표기, 없으면 생략. 1차 verifier가 Critical로 지적해 FAIL 처리됨 |
+| hedge 표현 보존 | helps, try to, can | 단정형으로 격상 | "도움이 됩니다", "되도록", "~일 수 있습니다"로 뉘앙스 보존 |
+| above vs at least 구분 | "above X"(초과) / "at least X"(이상) | 둘 다 "X 이상"으로 뭉뚱그림 | 방향 구분 후 "X 넘게"(above)로 조사 중복 없이 표현 |
+| 저자의 의도적 반복 유지 | "It's safest to X" 등 | 매번 다른 표현으로 변형 | 문서 내내 반복 유지(번역가의 무의식적 반복과는 구분) |
+| 목록 항목도 존댓말 유지 | 절차형 번호 목록 | 명사형 압축 | 본문과 같은 "~합니다" 존댓말 종결 |
+| 범위 한정어(some) 보존 | "일부 사용자에게" | 전체로 일반화 | 한정어 그대로 유지 |
+
+**style-guide.md 업데이트**:
+- "1. 문체" "목록 항목" 항목에 절차형 리스트 존댓말 유지 규칙 추가
+- "2. 번역투 회피 패턴"에 신규 소섹션 "의미 충실도 원칙 (UI 디자인 팁 스타일, 튜토리얼/체크리스트형)" 추가 (메타데이터 날조 금지, hedge 보존, above/at least 구분, 조사 중복 회피, 의도적 반복 유지, 범위 한정어 보존 등 6행)
+- "3. 용어 규칙 - 용어집에 추가 제안 용어" 표에 8행 추가 (스퀸트 테스트, x-height, 문장 표기, 주요 액션, 상호작용 비용, 줄 간격, 명암비, 서체/폰트 구분)
+- 학습된 패턴 히스토리에 2026-08-22 행 추가
+- 분석 대상 샘플에 15번 추가
+- 마지막 업데이트 날짜 2026-08-22로 갱신
+
+**glossary.md 업데이트**: 직접 반영 없음. style-guide.md "용어집에 추가 제안 용어" 표에 8건 제안 등재(스퀸트 테스트, x-height, 문장 표기, 주요 액션, 상호작용 비용, 줄 간격, 명암비, 서체/폰트 구분). 사용자가 "용어집 업데이트"를 승인하면 glossary.md에 반영 예정.
+
+**Calibration divergence**: 사용자가 체감 점수를 제공하지 않고 수정 요청 없이 바로 승인 → divergence 분석 해당 없음 (기록 생략)
+
+**승인된 번역 저장**:
+
+저장 경로: `.claude/skills/translate-writer/data/approved-posts/15-16-little-ui-design-tips.md`
+
+심링크 경로: `.claude/skills/translate-writer/data/samples/15-16-little-ui-design-tips.md` (git ls-files -s 확인 결과 mode 120000)
 
 ---
 
@@ -786,6 +843,7 @@
 | 2026-06-30 | Building an LLM safe design system | [번역] LLM도 벗어날 수 없는 디자인 시스템 만들기 | R 8.2 / V 8.5 |
 | 2026-07-03 | Vibe Coder vs Software Engineer | [번역] 바이브 코더 vs 소프트웨어 엔지니어 | R 8.0 / V 8.8 |
 | 2026-07-27 | The new rules of context engineering for Claude 5 generation models | [번역] Claude 5세대 모델을 위한 컨텍스트 엔지니어링의 새로운 규칙 | R 8.1 / V 8.1 (R2/R3) |
+| 2026-08-22 | 16 little UI design tips that make a big impact | [번역] 작지만 확실한 효과를 내는 UI 디자인 팁 16가지 | R 8.75 / V 8.8 |
 | 2026-08-22 | Maximizing the value of your Claude Code sessions | [번역] Claude Code 세션의 가치를 극대화하는 방법 | R 8.0 / V 8.5 (R2) |
 
 ---

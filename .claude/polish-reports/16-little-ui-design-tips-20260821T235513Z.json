@@ -1,0 +1,57 @@
+{
+  "file": "contents/blog/translation/16-little-ui-design-tips/index.md",
+  "source_file": "16 little UI design tips that make a big impact.md",
+  "source_url": "https://www.adhamdannaway.com/blog/ui-design/ui-design-tips",
+  "mode": "translate-writer Phase 3 (thorough)",
+  "threshold": 9.5,
+  "created": "2026-08-21T23:55:13Z",
+  "status": "completed",
+  "progress": { "total_below_threshold": 21, "applied": 20, "skipped": 1, "phase2_minors_applied": 2, "phase2_minors_skipped": 1, "note": "일괄 적용 모드. 스킵: L72 컨테이너 문장(개선안이 명사 중첩으로 원문보다 저하), L305 이상 표기(polish-C 현행 유지 판정)" },
+  "stats": {
+    "total_sentences": 214,
+    "average_score": 9.52,
+    "by_range": [
+      { "range": "1-107", "sentences": 87, "average": 9.47, "below": 11 },
+      { "range": "108-252", "sentences": 75, "average": 9.37, "below": 10 },
+      { "range": "253-387", "sentences": 52, "average": 9.82, "below": 0 }
+    ]
+  },
+  "orchestrator_notes": [
+    "A구간 일부 개선안은 '나는/내' 반말 1인칭을 사용함. 적용 시 문서 관례(저/제 존댓말)로 조정 필요.",
+    "'이상'(WCAG 요건) vs '넘도록'(저자의 above 권고) 구분은 verifier가 의도적 처리로 승인함. B구간 개선안 중 '이상'으로 되돌리는 안은 조사 중복 해소 목적일 때만 채택.",
+    "'가장 안전합니다' 반복은 원문 'It's safest' 반복 보존으로 유지 확정.",
+    "C구간 367·375행은 9.7점 경계선(임계값 이상)으로 개선 대상 아님, 선택 사항."
+  ],
+  "below_threshold": [
+    { "line": 41, "score": 9.3, "original": "20년 넘게 프로덕트 디자이너로 일하면서 저는 제 비주얼 디자인과 인터랙션 디자인 결정 대부분이 사실 하나의 논리적인 가이드라인 체계를 따르고 있다는 사실을 깨달았습니다.", "patterns": ["#7"], "best_option": "20년 넘게 프로덕트 디자이너로 일하면서 저는 제 디자인 결정 대부분이 논리적인 가이드라인 체계를 따른다는 사실을 깨달았습니다.", "note": "긴 관계절 단순화 (원안의 반말 1인칭은 존댓말로 조정)" },
+    { "line": 43, "score": 9.3, "original": "하지만 직관적이고 접근성 좋고 아름다운 인터페이스 디자인을 만드는 요소 상당수는 학습으로 익힐 수 있습니다.", "patterns": ["#7"], "best_option": "하지만 직관적이고 접근성 높고 아름다운 인터페이스를 만드는 요소 대부분은 학습으로 익힐 수 있습니다.", "note": "어절 수 감소" },
+    { "line": 43, "score": 9.4, "original": "그런 논리적 체계 없이는 그럴싸해 보일 때까지 감으로 이것저것 옮겨보는 수밖에 없습니다.", "patterns": ["#4"], "best_option": "논리적 체계가 없으면 그럴싸해질 때까지 이것저것 옮기며 조정할 수밖에 없습니다.", "note": "주어 구체화" },
+    { "line": 51, "score": 9.4, "original": "첫 번째는 원본 디자인이고, 두 번째는 몇 가지 UI 디자인 팁을 빠르게 적용한 결과입니다.", "patterns": ["#16"], "best_option": "첫 번째는 원본 디자인이며, 두 번째는 몇 가지 UI 팁을 빠르게 적용한 결과입니다.", "note": "연결어 정렬" },
+    { "line": 57, "score": 9.4, "original": "비주얼 디자인이나 인터랙션 디자인 경험이 많지 않아도, 원본 디자인이 지저분하고 복잡하고 쓰기 불편하다는 느낌을 받으실 겁니다.", "patterns": ["#5"], "best_option": "비주얼이나 인터랙션 디자인 경험이 없어도 원본 디자인이 지저분하고 복잡하고 쓰기 불편하다는 느낌이 들 겁니다.", "note": "완곡 표현 단순화" },
+    { "line": 59, "score": 9.4, "original": "이제 아래 UI 디자인 팁을 하나씩 적용해가며 원본 디자인의 문제를 고쳐보겠습니다.", "patterns": ["#7"], "best_option": "이제 아래 팁들을 하나씩 적용하며 원본 디자인의 문제를 고쳐보겠습니다.", "note": "명사형 축소" },
+    { "line": 72, "score": 9.4, "original": "컨테이너는 인터페이스 요소를 그룹화하는 가장 강력한 시각적 신호지만, 불필요한 잡음을 더할 수도 있습니다.", "patterns": ["#22"], "best_option": "컨테이너는 요소 그룹화의 가장 강력한 시각 신호지만 불필요한 잡음을 더할 수 있습니다.", "note": "소유격 감소" },
+    { "line": 72, "score": 9.4, "original": "훨씬 은근하면서도 디자인을 단순하게 만드는 데 도움이 될 때가 많습니다.", "patterns": ["#2"], "best_option": "더 은근하면서도 디자인을 단순하게 만드는 경우가 많습니다.", "note": "완곡 표현 정리" },
+    { "line": 76, "score": 9.3, "original": "예시 디자인에서는 콘텐츠 사이에 여백이 부족해 전체적으로 어수선하고 이해하기 어려워 보입니다.", "patterns": ["#7"], "best_option": "예시 디자인은 콘텐츠 사이 여백이 부족해 어수선하고 이해하기 어렵습니다.", "note": "주어 단순화" },
+    { "line": 76, "score": 9.4, "original": "간격을 넓히면 콘텐츠를 명확하게 그룹화할 수 있어 더 정돈되고 이해하기 쉬워집니다.", "patterns": ["#1"], "best_option": "간격을 넓히면 콘텐츠가 명확히 그룹화되고 더 정돈되며 이해하기 쉬워집니다.", "note": "'할 수 있어' 간결화" },
+    { "line": 92, "score": 8.5, "original": "아이콘에는 텍스트 라벨도 함께 붙여 의미를 이해하는 데 도움이 되도록 합니다.", "patterns": ["#2"], "best_option": "아이콘에는 사람들이 의미를 이해하는 데 도움이 되도록 텍스트 라벨도 함께 붙입니다.", "note": "이중 완곡 해소, 원문 help 뉘앙스 보존" },
+    { "line": 132, "score": 9.2, "original": "대비가 강한 배경색과 볼드 폰트가 도움이 됩니다.", "patterns": ["clarity"], "best_option": "대비가 강한 배경색과 볼드 폰트를 적용하면 가장 눈에 띄게 만드는 데 도움이 됩니다.", "note": "helps achieve this의 목적어 복원 + hedge 유지" },
+    { "line": 138, "score": 9.2, "original": "수정된 디자인에 스퀸트 테스트를 적용해보면, 주요 액션이 확실히 가장 눈에 띄는 요소가 되었습니다.", "patterns": ["tense"], "best_option": "수정된 디자인에 스퀸트 테스트를 적용해보면, 주요 액션이 확실히 가장 눈에 띄는 요소입니다.", "note": "현재형 일치" },
+    { "line": 144, "score": 9.3, "original": "곧 몇 가지 간단한 타이포그래피 가이드라인을 살펴볼 텐데, 이를 통해 시각적 위계를 바로잡을 수 있습니다.", "patterns": ["word_choice"], "best_option": "곧 몇 가지 간단한 타이포그래피 가이드라인을 배울 텐데, 이를 통해 시각적 위계를 바로잡을 수 있습니다.", "note": "learn 의미 명확화" },
+    { "line": 164, "score": 8.3, "original": "…인터랙티브하지 않은 요소에는 브랜드 컬러는 되도록 쓰지 마세요. (+ 학습할 수 있습니다 문장)", "patterns": ["particle_duplication", "voice"], "best_option": "이렇게 하면 사람들이 무엇이 인터랙티브한지 구분하는 데 도움이 됩니다. / 인터랙티브하지 않은 요소에는 브랜드 컬러를 되도록 쓰지 마세요.", "note": "조사 중복 제거 + teach 조력 뉘앙스" },
+    { "line": 184, "score": 9.3, "original": "…WCAG 2.1 레벨 AA의 색상 명암비 기준은 충족하는 것을 목표로 삼으세요.", "patterns": ["particle_redundancy"], "best_option": "…WCAG 2.1 레벨 AA의 색상 명암비 기준을 충족하는 것을 목표로 삼으세요.", "note": "조사 정리" },
+    { "line": 184, "score": 9.4, "original": "즉 폼 필드, 아이콘, 버튼 같은 사용자 인터페이스 요소는 명암비가 최소 3:1은 되어야 한다는 뜻입니다.", "patterns": ["particle_awkwardness"], "best_option": "즉 폼 필드, 아이콘, 버튼 같은 사용자 인터페이스 요소는 명암비가 최소 3:1 이상이어야 한다는 뜻입니다.", "note": "at least 대응 유지" },
+    { "line": 198, "score": 9.0, "original": "버튼의 명암비를 3:1을 넘도록 높이면 접근성을 확보하는 동시에 시각적 위계를 바로잡는 데도 도움이 됩니다.", "patterns": ["particle_duplication"], "best_option": "버튼의 명암비를 3:1 넘게 높이면 접근성을 확보하는 동시에 시각적 위계를 바로잡는 데도 도움이 됩니다.", "note": "조사 중복 제거, above 의미 유지" },
+    { "line": 200, "score": 9.0, "original": "화살표 아이콘과 버튼의 명암비를 3:1을 넘도록 높이면 아래와 같은 디자인이 됩니다.", "patterns": ["particle_duplication"], "best_option": "화살표 아이콘과 버튼의 명암비를 3:1 넘게 높이면 아래와 같은 디자인이 됩니다.", "note": "조사 중복 제거, above 의미 유지" },
+    { "line": 213, "score": 9.0, "original": "회색 컨테이너의 불투명도를 높이고 텍스트에 그림자를 추가해 명암비를 4.5:1을 넘도록 끌어올립니다.", "patterns": ["particle_duplication"], "best_option": "회색 컨테이너의 불투명도를 높이고 텍스트에 그림자를 추가해 명암비를 4.5:1 넘게 끌어올립니다.", "note": "조사 중복 제거, above 의미 유지" },
+    { "line": 243, "score": 9.3, "original": "예시 디자인에서는 제목에 장식이 많은 세리프 서체를 쓰고 있는데, 다소 읽기 어렵고 일부 사람에게는 산만하게 느껴질 수 있습니다.", "patterns": ["aspect"], "best_option": "예시 디자인의 제목은 장식이 많은 세리프 서체를 사용하는데, 다소 읽기 어렵고 일부 사람에게는 산만하게 느껴질 수 있습니다.", "note": "주어 구체화" }
+  ],
+  "borderline_optional": [
+    { "line": 367, "score": 9.7, "note": "#7 긴 관계절, 문장 분리 시 개선 여지" },
+    { "line": 375, "score": 9.7, "note": "#7 문단 압축 여지" }
+  ],
+  "pending_minor_from_phase2": [
+    { "line": 221, "note": "캡션 '불투명도를 4.5:1을 넘도록 높인' 구조를 215행 캡션과 통일 필요 (verifier Minor #2). B구간 배치에서 옵션 미생성, 적용 시 '불투명도를 높여 명암비를 4.5:1 넘게 높인'으로." },
+    { "line": 198, "note": "원문 'Learn more...' 명령형이 '알아볼 수 있습니다'로 약화 (verifier Minor #3). '알아보세요'로 복원 검토." },
+    { "line": 305, "note": "'4.5:1 이상으로' vs 다른 지점 '넘게' 표기 (verifier Minor #5). polish-C는 현행 유지 판정, 선택 사항." }
+  ]
+}
