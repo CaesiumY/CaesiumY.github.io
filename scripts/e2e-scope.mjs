@@ -53,9 +53,15 @@ const CONTENT_BASE_SPECS = ["e2e/posts-tabs.spec.ts", "e2e/og-image.spec.ts"];
 // 커밋하므로, 이게 없으면 초안 PR이 전부 ALL로 떨어진다.
 //
 // "빌드에 영향 없다"는 단정은 시간이 지나면 깨질 수 있다(스킬 목록을 렌더하는
-// 페이지가 생기는 순간 거짓이 된다). runCheck가 빌드 입력에서 이 접두어들을
-// 찾아 전제가 여전히 참인지 검사한다.
-const NON_BUILD_PREFIXES = [".claude/", ".agents/"];
+// 페이지가 생기는 순간 거짓이 된다). runCheck가 빌드 입력에서 이 이름들을 찾아
+// 전제가 여전히 참인지 검사한다.
+//
+// 슬래시 없는 순수 디렉터리 이름으로 둔다. 경로 판정에는 nonBuildPrefix가
+// 슬래시를 붙여 쓰고, 전제 가드는 순수 이름으로 찾는다 — 빌드 코드가
+// `path.join(root, ".agents", "skills")`처럼 세그먼트를 나눠 조합하면 소스에
+// ".agents/"라는 문자열이 나타나지 않아 슬래시를 포함한 채로는 놓친다.
+const NON_BUILD_DIRS = [".claude", ".agents"];
+const nonBuildPrefix = dir => `${dir}/`;
 
 // 빌드 입력으로 취급하는 텍스트 파일. 위 전제를 검사할 대상이다.
 const BUILD_INPUT_ROOTS = ["src"];
@@ -275,7 +281,7 @@ function buildInputFiles() {
  * 2) fixture 파일은 글을 지목하려고 존재하므로 최소 1개의 핀을 내야 한다.
  * 3) CONTENT_BASE_SPECS는 유일하게 손으로 적은 목록이라 실존 여부를 검사한다.
  *    이게 없으면 스펙 rename이 콘텐츠 티어를 조용히 축소시킨다.
- * 4) NON_BUILD_PREFIXES가 "빌드가 읽지 않는 경로"라는 전제를 검사한다. 빌드
+ * 4) NON_BUILD_DIRS가 "빌드가 읽지 않는 경로"라는 전제를 검사한다. 빌드
  *    입력이 그 경로를 참조하기 시작하면 전제가 깨지고, 스코핑이 렌더 결과를
  *    바꾸는 변경에 E2E를 건너뛰게 된다.
  *
@@ -323,10 +329,11 @@ function runCheck(specSources, postUrls, pins) {
 
   for (const file of buildInputFiles()) {
     const source = readFileSync(abs(file), "utf8");
-    for (const prefix of NON_BUILD_PREFIXES) {
-      if (!source.includes(prefix)) continue;
+    // 슬래시를 붙이지 않고 찾는다 — 세그먼트를 나눠 조합한 경로도 잡아야 한다
+    for (const dir of NON_BUILD_DIRS) {
+      if (!source.includes(dir)) continue;
       errors.add(
-        `  ${file}: "${prefix}"를 참조합니다 — 이 경로는 빌드에 영향을 주지 않는다는 전제로 E2E 스코핑 안전 목록에 있습니다. 빌드가 실제로 읽는다면 NON_BUILD_PREFIXES에서 빼세요`
+        `  ${file}: "${dir}"를 참조합니다 — 이 경로는 빌드에 영향을 주지 않는다는 전제로 E2E 스코핑 안전 목록에 있습니다. 빌드가 실제로 읽는다면 NON_BUILD_DIRS에서 빼세요`
       );
     }
   }
@@ -356,10 +363,14 @@ function changedFilesFrom(ref) {
       cwd: repoRoot,
       encoding: "utf8",
     }).trim();
-    const diff = execFileSync("git", ["diff", "--name-only", base, "HEAD"], {
-      cwd: repoRoot,
-      encoding: "utf8",
-    });
+    // --no-renames: 이름 변경을 삭제+추가로 풀어 원본 경로까지 목록에 남긴다.
+    // 기본값(rename 감지 켜짐)은 목적지만 보고하므로, 빌드 입력을 안전 경로로
+    // 옮기는 변경이 "안전한 변경"으로 보여 스코프가 줄어든다.
+    const diff = execFileSync(
+      "git",
+      ["diff", "--name-only", "--no-renames", base, "HEAD"],
+      { cwd: repoRoot, encoding: "utf8" }
+    );
     return diff.split("\n").filter(Boolean);
   } catch {
     return null;
@@ -386,7 +397,7 @@ function isScopeSafe(file) {
   const p = toPosix(file);
   return (
     p.startsWith("contents/") ||
-    NON_BUILD_PREFIXES.some(prefix => p.startsWith(prefix))
+    NON_BUILD_DIRS.some(dir => p.startsWith(nonBuildPrefix(dir)))
   );
 }
 
