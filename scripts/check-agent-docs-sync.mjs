@@ -1,154 +1,78 @@
 #!/usr/bin/env node
 
 /**
- * CLAUDE.md ↔ AGENTS.md mirror sync check.
+ * Guideline single-source check.
  *
- * The two files are manual mirrors. Only these differences are allowed:
- *   1. Title line:  "# CLAUDE.md" vs "# AGENTS.md"
- *   2. Intro line:  the "Guide for ..." sentence (tool name differs)
- *   3. The Skills section: heading suffix and body are tool-specific by
- *      design (skill lists and .claude/ vs .agents/ paths differ)
- * Everything else must match line for line.
+ * AGENTS.md is the single source of truth for this repo's agent guidance.
+ * CLAUDE.md is a thin wrapper that pulls it in with Claude Code's `@AGENTS.md`
+ * import syntax, then adds Claude-only content below it.
  *
- * If you intentionally reword the title/intro/Skills heading, update the
- * pinned constants below — the check pins exact strings on purpose so that
- * accidental edits to one file cannot pass as "allowed" differences.
+ * Why an import and not a symlink: Claude Code reads CLAUDE.md, not AGENTS.md,
+ * and creating a symlink on Windows needs Administrator rights or Developer
+ * Mode, so the official docs recommend the import for cross-platform repos.
+ *
+ * This check guards the one thing that silently breaks the setup: someone
+ * editing CLAUDE.md and dropping the import line, which would strip every
+ * shared rule from Claude Code sessions with no visible error.
+ *
+ * Import parsing skips code spans and fenced code blocks, matching Claude
+ * Code's own behaviour — a backticked `@AGENTS.md` is literal text, not an
+ * import, so it must not satisfy this check.
  *
  * Usage: node scripts/check-agent-docs-sync.mjs [claude-md agents-md]
- * Exit codes: 0 = in sync, 1 = drift or structural mismatch.
+ * Exit codes: 0 = wired correctly, 1 = import missing or file absent.
  */
 
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
-// Resolve against the repo root (script location), not cwd — the check must
-// behave identically no matter where it is invoked from.
 const repoRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   ".."
 );
-const claudePath = process.argv[2] ?? path.join(repoRoot, "CLAUDE.md");
-const agentsPath = process.argv[3] ?? path.join(repoRoot, "AGENTS.md");
 
-const TITLE_PAIR = ["# CLAUDE.md", "# AGENTS.md"];
-const INTRO_PAIR = [
-  "Guide for Claude Code (claude.ai/code) when working with code in this repository.",
-  "Guide for Codex (OpenAI Codex) when working with code in this repository.",
-];
-const SKILLS_HEADING_PAIR = [
-  "## Skills (Claude Code 스킬 시스템)",
-  "## Skills (Codex 스킬 시스템)",
-];
+const [claudeArg, agentsArg] = process.argv.slice(2);
+const claudePath = claudeArg
+  ? path.resolve(claudeArg)
+  : path.join(repoRoot, "CLAUDE.md");
+const agentsPath = agentsArg
+  ? path.resolve(agentsArg)
+  : path.join(repoRoot, "AGENTS.md");
 
-const problems = [];
-
-function readSections(filePath) {
-  // CRLF-safe split; drop the final newline so the last element is a real line.
-  const lines = readFileSync(filePath, "utf8")
-    .replace(/\r?\n$/, "")
-    .split(/\r?\n/);
-  const sections = [{ heading: "(preamble)", lines: [] }];
-  for (const line of lines) {
-    if (line.startsWith("## ")) {
-      sections.push({ heading: line, lines: [] });
-    } else {
-      sections.at(-1).lines.push(line);
-    }
-  }
-  return sections;
-}
-
-function compareLines(label, expected, actual) {
-  // Positional comparison (no LCS): one inserted line marks the rest of the
-  // section as differing. The cap below keeps such reports readable.
-  const max = Math.max(expected.length, actual.length);
-  const mismatches = [];
-  for (let i = 0; i < max; i++) {
-    if (expected[i] !== actual[i]) mismatches.push(i);
-  }
-  for (const i of mismatches.slice(0, 3)) {
-    problems.push(
-      `${label} — line ${i + 1} of the section differs:\n` +
-        `  CLAUDE.md (expected mirror): ${expected[i] ?? "<missing>"}\n` +
-        `  AGENTS.md (actual)         : ${actual[i] ?? "<missing>"}`
-    );
-  }
-  if (mismatches.length > 3) {
-    problems.push(
-      `${label} — ${mismatches.length - 3} more differing line(s) in this section (showing first 3).`
-    );
-  }
-}
-
-let claude, agents;
-try {
-  claude = readSections(claudePath);
-  agents = readSections(agentsPath);
-} catch (err) {
-  process.stderr.write(`agent-docs-sync: cannot read input: ${err.message}\n`);
+const fail = (msg) => {
+  console.error(`agent-docs-sync: ${msg}`);
   process.exit(1);
+};
+
+for (const p of [claudePath, agentsPath]) {
+  if (!existsSync(p)) fail(`missing ${path.relative(repoRoot, p)}`);
 }
 
-// 1) Preamble: title and intro lines map pairwise, the rest must be identical.
-const expectedPreamble = claude[0].lines.map(line => {
-  if (line === TITLE_PAIR[0]) return TITLE_PAIR[1];
-  if (line === INTRO_PAIR[0]) return INTRO_PAIR[1];
-  return line;
-});
-compareLines("(preamble)", expectedPreamble, agents[0].lines);
-if (!claude[0].lines.includes(TITLE_PAIR[0])) {
-  problems.push(
-    `CLAUDE.md title line "${TITLE_PAIR[0]}" not found — update TITLE_PAIR if it was renamed intentionally.`
-  );
-}
-if (!claude[0].lines.includes(INTRO_PAIR[0])) {
-  problems.push(
-    `CLAUDE.md intro line not found — update INTRO_PAIR if it was reworded intentionally.`
+const raw = readFileSync(claudePath, "utf8");
+
+// Strip fenced blocks and inline code spans before looking for the import,
+// so a documented `@AGENTS.md` example never counts as the real import.
+const stripped = raw
+  .replace(/^```[\s\S]*?^```/gm, "")
+  .replace(/^~~~[\s\S]*?^~~~/gm, "")
+  .replace(/`[^`\n]*`/g, "");
+
+// The import must stand alone on its line; trailing text would make Claude
+// Code treat the rest of the line as prose, not as part of the path.
+const hasImport = stripped
+  .split(/\r?\n/)
+  .some((line) => line.trim() === "@AGENTS.md");
+
+if (!hasImport) {
+  fail(
+    "CLAUDE.md no longer imports AGENTS.md.\n" +
+      "  Add a line containing exactly `@AGENTS.md` (outside code blocks).\n" +
+      "  Without it, Claude Code sessions load none of the shared guidance."
   );
 }
 
-// 2) Sections: same count and order; Skills heading maps pairwise and its
-//    body is exempt; every other section must be identical.
-if (claude.length !== agents.length) {
-  problems.push(
-    `Section count differs: CLAUDE.md has ${claude.length - 1} "## " sections, AGENTS.md has ${agents.length - 1}.`
-  );
-} else {
-  for (let i = 1; i < claude.length; i++) {
-    const c = claude[i];
-    const a = agents[i];
-    if (c.heading === SKILLS_HEADING_PAIR[0]) {
-      if (a.heading !== SKILLS_HEADING_PAIR[1]) {
-        problems.push(
-          `Skills heading mismatch: expected "${SKILLS_HEADING_PAIR[1]}", found "${a.heading}".`
-        );
-      }
-      // Skills body is tool-specific by design: the skill list, the intro
-      // sentence, and .claude/ vs .agents/ paths may all differ here. Keep
-      // the exemption confined to this one section — do not widen it.
-      continue;
-    }
-    if (c.heading !== a.heading) {
-      problems.push(
-        `Section order/heading mismatch at position ${i}: "${c.heading}" vs "${a.heading}".`
-      );
-      continue;
-    }
-    compareLines(c.heading, c.lines, a.lines);
-  }
-}
-
-if (problems.length > 0) {
-  process.stderr.write(
-    `agent-docs-sync: CLAUDE.md and AGENTS.md have drifted (${problems.length} problem(s)).\n` +
-      `Allowed differences are only the title line, the intro line, and the Skills section.\n\n` +
-      problems.map(p => `* ${p}`).join("\n\n") +
-      `\n\nFix: mirror the edit to both files (see the "manual mirrors" note in CLAUDE.md).\n` +
-      `Tip: reports are positional — a single inserted/removed line cascades through the rest\n` +
-      `of its section, so diff the first named section directly to find the root edit.\n`
-  );
-  process.exit(1);
-}
-
-process.stdout.write("agent-docs-sync: CLAUDE.md and AGENTS.md are in sync.\n");
+const agentsLines = readFileSync(agentsPath, "utf8").split(/\r?\n/).length;
+console.log(
+  `agent-docs-sync: CLAUDE.md imports AGENTS.md (${agentsLines} lines, single source).`
+);
