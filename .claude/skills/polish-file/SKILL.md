@@ -133,6 +133,8 @@ WebFetch(url=원본URL, prompt="전체 본문 텍스트를 마크다운 형식�
 }
 ```
 
+> `options[].preserved`가 `false`인 옵션(note가 "의미 소실:"로 시작)은 Step 5 제시에서 제외하거나 note를 함께 표시하고, 추천 옵션으로 올리지 않습니다.
+
 ### Step 3: JSON 리포트 생성
 
 리포트를 `.claude/polish-reports/[slug]-[timestamp].json`에 저장합니다.

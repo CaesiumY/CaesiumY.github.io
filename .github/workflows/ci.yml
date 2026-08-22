@@ -64,6 +64,9 @@ jobs:
       - name: "📌 Check E2E content pins"
         run: node scripts/e2e-scope.mjs --check
 
+      - name: "🧪 Self-test translation integrity gate"
+        run: node .claude/skills/translate-writer/scripts/check-translation-integrity.mjs --self-test
+
       - name: "🚀 Build the project"
         run: pnpm run build
 

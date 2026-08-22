@@ -63,6 +63,7 @@ Codex에서는 `.agents/agents/*.md`의 역할 프롬프트를 참고해 기본 
 - reviewer와 verifier 모두 모드별 종합 기준을 만족해야 합니다.
 - 각 역할 프롬프트에 정의된 하드 임계값을 모두 통과해야 합니다.
 - 기준 미달이면 미달 차원만 구조화해 수정하고 최대 3회 반복합니다.
+- 수정 직후에는 무결성 게이트를 통과해야 재검증으로 넘어갑니다: 수정 전 파일을 스냅샷으로 복사해 두고 `node .agents/skills/translate-writer/scripts/check-translation-integrity.mjs <수정 전 스냅샷> <수정 후 파일>`을 실행합니다. exit 1(FAIL)이면 FAIL 항목(헤딩·이미지·코드·숫자·커맨드·frontmatter 등)을 복구한 뒤 다시 실행합니다.
 
 `--skip-review`가 있으면 검토 루프를 생략하되, 최종 응답에 생략 사실을 명시합니다.
 
@@ -72,11 +73,16 @@ Codex에서는 `.agents/agents/*.md`의 역할 프롬프트를 참고해 기본 
 
 `thorough`와 `perfect` 모드는 `/polish-file` 흐름을 사용합니다.
 
+0. polish 시작 전 현재 번역 파일을 스크래치패드에 스냅샷으로 복사합니다. 델타 검증과 무결성 게이트의 비교 기준입니다.
 1. 문장별 점수를 산정합니다.
 2. 모드별 기준 미만 문장만 개선 대상으로 고릅니다.
 3. **✋ GATE 1**: 사용자에게 진행 여부를 확인합니다 (지금 다듬기 / 나중에 / 건너뛰기).
-4. 선택한 문장에 대해 `/polish` 흐름으로 개선 옵션을 제시하고 파일에 반영합니다.
-5. 리포트는 `.agents/polish-reports/[slug]-[timestamp].json`에 저장합니다.
+4. 선택한 문장에 대해 `/polish` 흐름으로 개선 옵션을 제시하고 파일에 반영합니다. 반영한 문장마다 {id, 원문 대응 문장, before, after}를 변경 목록에 기록합니다. `preserved: false`(의미 소실) 옵션은 제시에서 제외하거나 note를 함께 표시하고 추천하지 않습니다.
+5. 델타 검증: 변경 목록만 `translation-verifier` 역할 프롬프트의 델타 모드로 검토합니다 (입력: "모드: 델타", 원문, 항목 배열 [{id, source, before, after}]; 출력: 항목별 verdict PASS|FAIL|IMPROVED, type T1~T10, severity, reason, 점수 산정 없음). verdict FAIL 항목이 0건이면(verifier 전체 판정 PASS) 통과합니다. FAIL은 주로 T3 왜곡, T10 양태·강도, T6 한정어 소실이 Important 이상일 때 매겨집니다. 미통과 문장은 before로 되돌리거나 다른 옵션을 선택한 뒤 그 문장만 1회 재검증하고, 그래도 미통과면 before로 확정합니다.
+6. 무결성 게이트: `node .agents/skills/translate-writer/scripts/check-translation-integrity.mjs <0번 스냅샷> <현재 파일>`을 실행합니다. exit 0(PASS)이어야 GATE 2로 진입합니다. exit 1(FAIL)이면 FAIL 항목(인라인 코드·링크·숫자·커맨드·frontmatter 빈 줄 등)의 원인을 고치고 다시 실행합니다.
+7. 리포트는 `.agents/polish-reports/[slug]-[timestamp].json`에 저장합니다 (델타 검증·무결성 게이트 결과 포함).
+
+> 외부 윤문 도구(humanize-korean 등)를 쓰려면 Phase 2 이전에 돌리거나 Phase 3과 같은 델타 검증·무결성 게이트를 거칩니다. 원문을 보지 않는 윤문이 verifier 수정을 되돌린 실측 사례가 있습니다.
 
 ### Phase 4: 사용자 승인
 
