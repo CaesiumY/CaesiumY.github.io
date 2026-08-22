@@ -3,7 +3,7 @@
 Guide for Claude Code (claude.ai/code) when working with code in this repository.
 
 <!-- 이 저장소의 지침 정본은 AGENTS.md 하나입니다. 공통 내용은 AGENTS.md만 고치세요. -->
-<!-- 아래 @AGENTS.md 는 Claude Code의 import 문법으로, 세션 시작 시 AGENTS.md 전문을 이 자리에 펼쳐 읽습니다. -->
+<!-- 아래 한 줄은 Claude Code의 import 문법으로, 세션 시작 시 AGENTS.md 전문을 이 자리에 펼쳐 읽습니다. -->
 <!-- Windows에서는 심링크에 관리자 권한이 필요해 공식 문서가 import 방식을 권장합니다. -->
 
 @AGENTS.md
