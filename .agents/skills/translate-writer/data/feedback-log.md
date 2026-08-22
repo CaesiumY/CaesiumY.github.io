@@ -7,15 +7,437 @@
 
 ## 피드백 통계
 
-- 총 피드백 수: 9
-- 긍정 피드백: 9
+- 총 피드백 수: 15
+- 긍정 피드백: 15
 - 부정 피드백: 0
-- 승인된 번역: 9
+- 승인된 번역: 15
 - 거절된 번역: 0
 
 ---
 
 ## 피드백 이력
+
+### 2026-08-22 11:17
+
+**원문**: Maximizing the value of your Claude Code sessions (https://claude.com/blog/maximizing-the-value-of-your-claude-code-sessions)
+
+**번역 제목**: [번역] Claude Code 세션의 가치를 극대화하는 방법
+
+**유형**: 승인 (1차 FAIL → 잔여 지적 14건 반영 및 이미지 7개 로컬 PNG화 → 2차 재검증 PASS → polish 11건 분석(4건 적용/7건 의도적 유지) → 최종 승인)
+
+**모드**: thorough
+
+**검토 점수 이력**:
+
+| 라운드 | Reviewer | Verifier | 결과 |
+|--------|----------|----------|------|
+| R1 | 7.8/10 | 8.3/10 | FAIL (하드 임계값 미달) |
+| R2 (잔여 지적 14건 + 이미지 로컬화 반영 후) | 8.0/10 (자연스러움 8·어휘 7·흐름 9·개발자맥락 8) | 8.5/10 (의미 8·기술 9·뉘앙스 9) | PASS |
+
+**체감 점수**: 미제공 (수정 요청 없이 재검증 승인 흐름 — calibration divergence 분석 대상 아님)
+
+**검토 횟수**: 2회 (R1 FAIL → 잔여 지적·이미지 로컬화 반영 → R2 PASS)
+
+**원문 특성**:
+- **스타일**: 공식 블로그 (Anthropic, Lydia Hallie)
+- **주제**: Claude Code 세션의 토큰 비용 구조 — 프리필/디코드 단계, 프롬프트 캐싱, 컨텍스트 누적 요인, `/clear`·`/compact`·서브에이전트를 활용한 실전 비용 절감 팁
+- **특징**: 결론부에 4개 요소를 요약하는 카드형 다이어그램이 있고 그 실질 내용이 이미지 텍스트에만 존재; 원문 이미지 7개를 원격 CDN 대신 포스트 폴더에 로컬 PNG로 다운로드해 저장(레포 이미지 규칙 준수)
+
+**승인 전 추가 반영 사항**:
+- GATE 1 잔여 지적 14건 반영
+- 이미지 7개를 원격 핫링크에서 포스트 폴더 로컬 PNG로 전환
+- polish(haiku, thorough 모드) 11건 분석 → 4건 적용 / 7건 원문 대조 후 의미 보존을 이유로 의도적 유지 (근거: `.claude/polish-reports/maximizing-claude-code-sessions-20260822.json`)
+- humanize-korean 후처리(승인 후, light 경로 자동 배정·보수 강도): 치환 57건 중 56건 적용 (연결어미 뒤 쉼표 제거 33건, 문장 분리·형식명사 결말·어휘 반복 해소 등). 1건은 2차 verifier가 고친 its-own 수식 범위 문장을 되돌리는 충실도 회귀라 현재 번역 유지 — humanize는 영어 원문을 보지 않으므로 번역 포스트에는 통째 적용 대신 verifier 지적 목록과 대조한 선별 패치로 적용할 것
+
+**polish 리포트 observations_for_learner (5건, 신규 학습 패턴)**:
+
+| 함정 유형 | 증상 |
+|-----------|------|
+| 스타일 가이드 위반 옵션 생성 | haiku 최고점 옵션이 기업 블로그 "저희"를 "우리는"으로 바꿈 (P4) |
+| 평서체 오염 | 존댓말 문서에 평서체 옵션 생성 (P8 옵션A, P10 옵션A) |
+| 인접 문장 중복 | 옵션이 이미 존재하는 인접 문장 내용을 포함해 적용 시 중복 위험 (P8 옵션A·B) |
+| 한정어 탈락 재현 | 옵션 3개 전원이 "than you'd think" 한정어를 탈락시킴 — 기존 "polish 함정" 규칙이 haiku batch에도 그대로 재현 (P11) |
+| 이스케이프 백틱 오염 | 옵션 텍스트에 이스케이프된 백틱이 포함되어 그대로 적용하면 마크다운 파손 (P9) |
+
+**추출된 스타일 규칙**:
+
+| 항목 | 패턴 | 지양 | 권장 |
+|------|------|------|------|
+| polish batch(haiku) 함정 5종 세분화 | 위 표 참조 | 최고점 옵션 자동 채택 | "polish 단계의 함정"에 검증 체크리스트로 세분화 반영 |
+| "A, B, 그리고 C" 나열 기계적 반복 | 1차 검증에서 지적된, 한 문서에 6회 반복된 3항 나열 | 매번 동일한 "A, B, 그리고 C" 구조 | 접속사 다양화(또는/이나) 또는 구두점 나열로 변주 |
+| 이미지 내용이 이미지 안에만 있을 때 | 결론부 4개 카드가 이미지 텍스트로만 핵심 내용을 전달 | 캡션 없이 방치 | 이미지 아래 한국어 요약/캡션 추가 (alt 창작 금지 규칙과 근거 대상 구분: alt는 본문 근거, 캡션은 이미지 안 텍스트 근거) |
+| 이미지 로컬 소싱 | 원문 이미지 7개가 원격 CDN URL | 원격 핫링크 | 포스트 폴더에 로컬 PNG로 다운로드 (프로젝트 규칙 첫 적용 사례) |
+
+**style-guide.md 업데이트**:
+- "반드시 피해야 할 표현" 표에 1행 추가 ("A, B, 그리고 C" 나열 기계적 반복)
+- "polish 단계의 함정" 섹션에 "polish-agent(haiku) batch 모드에서 반복 발견된 함정 패턴" 소섹션 신규 추가 (검증 체크리스트 표 5행)
+- "이미지 alt 텍스트 규칙" 뒤에 "이미지 내용이 이미지 안에만 있을 때 (캡션 추가 규칙)", "이미지 소싱 (원격 핫링크 금지)" 소섹션 신규 추가
+- 학습된 패턴 히스토리에 2026-08-22 행 추가
+- 분석 대상 샘플에 15번 추가
+- 마지막 업데이트 날짜 2026-08-22로 갱신
+
+**glossary.md 업데이트 제안 (2026-08-22 사용자 승인, glossary.md 반영 완료)**:
+
+| 원문 | 번역 | 비고 |
+|------|------|------|
+| prefill | 프리필(prefill) | 첫 등장 시 병기 |
+| decode | 디코드(decode) | 첫 등장 시 병기 |
+| effort level | effort 레벨 | Claude Code 고유 개념, 부분 음차 |
+| thinking tokens | 생각(thinking) 토큰 | 첫 등장 시 병기 |
+| quiet flag | quiet 플래그 | |
+| bust the cache | 캐시를 깨뜨리다 | 문맥상 "여러분이 캐시를 깨뜨릴 수는 있으니" — 능동 주체 있는 문맥이라 "깨뜨리다" 채택, "날리다"는 보류 |
+
+**Calibration divergence**: 사용자가 체감 점수를 제공하지 않고 재검증 흐름으로 승인 → divergence 분석 해당 없음 (기록 생략)
+
+**승인된 번역 저장**:
+
+저장 경로: `.claude/skills/translate-writer/data/approved-posts/16-maximizing-claude-code-sessions.md`
+
+심링크 경로: `.claude/skills/translate-writer/data/samples/16-maximizing-claude-code-sessions.md` (git 심링크 직접 등록, `git ls-files -s` 확인 결과 mode 120000)
+
+---
+
+### 2026-08-22 09:25
+
+**원문**: 16 little UI design tips that make a big impact (Adham Dannaway, https://www.adhamdannaway.com/blog/ui-design/ui-design-tips)
+
+**번역 제목**: [번역] 작지만 확실한 효과를 내는 UI 디자인 팁 16가지
+
+**유형**: 승인 (1차 verifier FAIL, 원문에 없는 발행일 날조 Critical 1건 발견 후 15건 수정 → 2차 PASS → polish 25건 적용 후 최종 승인)
+
+**모드**: thorough
+
+**검토 점수**: Reviewer 8.75/10 (자연스러움 9, 어휘 8, 흐름 9, 개발자맥락 9), Verifier 8.8/10 (의미 정확성 9, 기술 정확성 9, 뉘앙스 8), 모든 하드 임계값 통과
+
+**체감 점수**: 미제공 (Phase 4에서 수정 요청 없이 바로 승인되어 calibration divergence 분석 대상 아님)
+
+**검토 횟수**: 2회 (1차 verifier FAIL(원문에 없는 발행일 날조 Critical) → 15건 수정 후 2차 PASS → polish 25건 적용 → 승인)
+
+**원문 특성**:
+- **스타일**: UI 디자인 튜토리얼, 체크리스트형 (개인 디자이너 블로그, Adham Dannaway)
+- **주제**: 레이아웃, 간격, 타이포그래피, 색상 명암비 등 UI 디자인 논리적 원칙 16가지를 단기 숙박 예약 앱 매물 상세 페이지 예시에 순서대로 적용
+- **특징**: 번호 매김 절차형 리스트 다수, WCAG 2.1 레벨 AA 접근성 기준(3:1, 4.5:1) 반복 언급, hedge 표현(helps, can, try to) 다수, "It's safest to X" 등 저자의 의도적 반복 표현
+
+**사용자 피드백 특이사항**:
+1. **폴리시 게이트에서 "추천안 일괄 적용" 선호**: 개별 승인/거절 대신 폴리시 에이전트의 추천을 일괄 적용하는 방식 선호
+2. **결론 문단은 적극 수정, 컨테이너 문장은 원문 충실도 우선**: 추가 다듬기 단계에서 결론 문단은 더 적극적인 수정안을 채택하고, 컨테이너 관련 문장은 자연스러움보다 원문 충실도를 우선해 현행 유지 선택
+3. **표기 오타에 민감**: 질문 텍스트의 "컴테이너" 오타를 사용자가 즉시 지적함(향후 게이트, 질문 텍스트 작성 시 오타 검수 강화 필요)
+
+**추출된 스타일 규칙**:
+
+| 항목 | 패턴 | 지양 | 권장 |
+|------|------|------|------|
+| 원문 없는 메타데이터 날조 (최대 실책) | 원문에 명시되지 않은 발행일을 임의로 생성 | 날짜 추정, 창작 | 원문에 명시된 것만 표기, 없으면 생략. 1차 verifier가 Critical로 지적해 FAIL 처리됨 |
+| hedge 표현 보존 | helps, try to, can | 단정형으로 격상 | "도움이 됩니다", "되도록", "~일 수 있습니다"로 뉘앙스 보존 |
+| above vs at least 구분 | "above X"(초과) / "at least X"(이상) | 둘 다 "X 이상"으로 뭉뚱그림 | 방향 구분 후 "X 넘게"(above)로 조사 중복 없이 표현 |
+| 저자의 의도적 반복 유지 | "It's safest to X" 등 | 매번 다른 표현으로 변형 | 문서 내내 반복 유지(번역가의 무의식적 반복과는 구분) |
+| 목록 항목도 존댓말 유지 | 절차형 번호 목록 | 명사형 압축 | 본문과 같은 "~합니다" 존댓말 종결 |
+| 범위 한정어(some) 보존 | "일부 사용자에게" | 전체로 일반화 | 한정어 그대로 유지 |
+
+**style-guide.md 업데이트**:
+- "1. 문체" "목록 항목" 항목에 절차형 리스트 존댓말 유지 규칙 추가
+- "2. 번역투 회피 패턴"에 신규 소섹션 "의미 충실도 원칙 (UI 디자인 팁 스타일, 튜토리얼/체크리스트형)" 추가 (메타데이터 날조 금지, hedge 보존, above/at least 구분, 조사 중복 회피, 의도적 반복 유지, 범위 한정어 보존 등 6행)
+- "3. 용어 규칙 - 용어집에 추가 제안 용어" 표에 8행 추가 (스퀸트 테스트, x-height, 문장 표기, 주요 액션, 상호작용 비용, 줄 간격, 명암비, 서체/폰트 구분)
+- 학습된 패턴 히스토리에 2026-08-22 행 추가
+- 분석 대상 샘플에 15번 추가
+- 마지막 업데이트 날짜 2026-08-22로 갱신
+
+**glossary.md 업데이트**: 직접 반영 없음. style-guide.md "용어집에 추가 제안 용어" 표에 8건 제안 등재(스퀸트 테스트, x-height, 문장 표기, 주요 액션, 상호작용 비용, 줄 간격, 명암비, 서체/폰트 구분). 사용자가 "용어집 업데이트"를 승인하면 glossary.md에 반영 예정.
+
+**Calibration divergence**: 사용자가 체감 점수를 제공하지 않고 수정 요청 없이 바로 승인 → divergence 분석 해당 없음 (기록 생략)
+
+**승인된 번역 저장**:
+
+저장 경로: `.claude/skills/translate-writer/data/approved-posts/15-16-little-ui-design-tips.md`
+
+심링크 경로: `.claude/skills/translate-writer/data/samples/15-16-little-ui-design-tips.md` (git ls-files -s 확인 결과 mode 120000)
+
+---
+
+### 2026-07-27
+
+**원문**: The new rules of context engineering for Claude 5 generation models (https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models)
+
+**번역 제목**: [번역] Claude 5세대 모델을 위한 컨텍스트 엔지니어링의 새로운 규칙
+
+**유형**: 승인 (1차 FAIL → 재작업 후 PASS → polish 26건 → 재검증 → 뉘앙스 회귀 보정 9건 후 최종 승인)
+
+**모드**: thorough
+
+**검토 점수 이력**:
+
+| 라운드 | Reviewer | Verifier | 결과 |
+|--------|----------|----------|------|
+| R1 | 6.95/10 (자연스러움 7·어휘 6·흐름 8·개발자맥락 7) | 8.1/10 (의미 8·기술 9·뉘앙스 7) | FAIL (종합 미달) |
+| R2 | 8.1/10 (자연스러움 8·어휘 7·흐름 9·개발자맥락 9) | 8.3/10 (의미 8·기술 9·뉘앙스 8) | PASS |
+| R3 (polish 26건 후 재검증) | — | 8.1/10 (의미 8·기술 9·뉘앙스 7) | PASS, 단 뉘앙스 회귀 확인 |
+| 뉘앙스 회귀 보정 (추가 9건 수정) | — | — | 사용자 승인 |
+
+**체감 점수**: 미제공 (수정 요청 없이 재검증 승인 흐름 — calibration divergence 분석 대상 아님)
+
+**검토 횟수**: 3회 (R1 FAIL → R2 PASS → R3 재검증 PASS, 이후 뉘앙스 회귀 지점 9곳 추가 수정)
+
+**파이프라인 구성 (오케스트레이터-워커, 서브에이전트 상한 10개 내 실행)**:
+
+- 다이내믹 워크플로우 + 모델 티어링: translator/reviewer = sonnet, verifier = opus, polish = haiku
+- 실사용 서브에이전트 11개 = 워크플로우 9개(R1 실패로 인한 재작업 포함) + 재검증(R3) 1개 + 학습(translation-learner, 본 기록) 1개
+- 메인 루프(Opus)는 조율만 담당, 번역·검토·다듬기는 각 전담 에이전트가 수행
+
+**원문 특성**:
+- **스타일**: 공식 블로그 (Anthropic) + 개인 저자 voice 혼재 (Thariq Shihipar, Member of Technical Staff)
+- **주제**: Claude 5세대 모델을 위한 컨텍스트 엔지니어링 원칙 전환 — 규칙→판단, 예시→인터페이스 설계, 전체 적재→점진적 공개, 반복 지시→간결한 도구 설명, CLAUDE.md 메모리→자동 메모리, 단순 스펙→풍부한 레퍼런스
+- **특징**: 서론은 저자 개인 경험 서술("I've written previously"), 이후 회사 주어("we/our")와 독자 대상("you/your")이 문장 단위로 혼재. 클리퍼(clippings) 소스 특유의 렌더링 아티팩트 다수 발견
+
+**추출된 스타일 규칙**:
+
+| 항목 | 패턴 | 지양 | 권장 |
+|------|------|------|------|
+| 동일 종결 템플릿 반복 (3회+) | "~다는 사실을 확인했습니다"가 한 문서 L46/60/116에 3회 등장 | 기계적으로 읽히는 반복 | "알게 됐습니다 / 결론에 이르렀습니다 / 깨달았습니다"로 문맥별 분산 |
+| "~에 관해/관한" 일반화 | "검증 방법에 관한 정보" | 기존 금지 패턴("~에 대해")과 같은 계열 | 조사나 목적어로 대체("검증 방법을 다룬 정보") |
+| 주어-서술어 호응 붕괴 | "이 원리를 ~ 적용합니다" (주어 없는 능동태) | 원문 주어(we) 소실 | 원문 주어를 살려 "저희는 도구에도 같은 원리를 적용하고 있습니다" |
+| polish 점수-의미보존 트레이드오프 (최대 교훈) | polish 점수는 "한국어다움" 단일 축 | 한정어 삭제로 매끄러워진 최고점 옵션 자동 채택 | 원문 대조 후 의미가 보존되는 최고점 옵션 선택 (최대 9.9점 옵션도 `as much as possible`/`unique`/`just like we did`/`may also be`/`we found` 등 5건 소실로 탈락 처리) |
+| 모달 평탄화 (뉘앙스 회귀 원인) | polish 과정에서 can/should가 단정 서술로 일제히 기움 (뉘앙스 8→7) | "~할 수 있습니다 과다"를 전부 단정형으로 변형 | "~하기도 합니다 / ~할 여지가 있습니다"처럼 양태 보존 변형도 혼합 |
+| 이미지 alt 창작 금지 | 원문 alt 빈칸(`![](url)`)에 한국어 alt 신규 작성 시 | 본문에 없는 도구명("TodoWrite")·평가어("장황한") 창작 → verifier T2(의미 추가) Important 지적 | 본문에 근거 있는 최소 서술만 사용 |
+| 저자 voice 3분할 | 기업 블로그 + 개인 저자 혼재 문서 | 1인칭 voice 미구분 | 저자 개인 서술="저", 회사 주어(we/our)="저희", 독자 대상(you/your)="여러분"으로 문장 단위 구분 (reviewer 개발자맥락 9/10) |
+| myth → 오해 통일 | "통념"은 부정적 함의 약함 | "통념" | "오해"로 한 문서 내 일관 |
+| 클리퍼 소스 아티팩트 확장 | frontmatter `published` 연도 오기(2026-07-24 → `2001-07-24`), 파일명 가짜 자동링크("CLAUDE.md" → `[CLAUDE.md](http://claude.md/)`), 인라인 코드 뒤 세미콜론 잔재(`` `claude doctor;` ``) | 클리퍼 렌더링 결함을 그대로 반영 | WebFetch로 원문 대조·연도 정정, 인라인 코드 처리 후 가짜 링크 제거, 세미콜론 제거 |
+
+**style-guide.md 업데이트**:
+- "반드시 피해야 할 표현" 표에 3행 추가 (동일 종결 템플릿 반복, "~에 관한" 일반화, 주어-서술어 호응 붕괴)
+- "polish 단계의 함정 (원문 대조 없이 점수만 보고 채택 금지)" 신규 소섹션 추가 (탈락 원문 요소 표 + 모달 평탄화 주의)
+- "§1 문체"에 저자 voice 3분할(저/저희/여러분) 규칙 추가
+- "§3 용어 규칙 - 일관성 규칙"에 myth→오해 통일 규칙 추가
+- "§4 구조 규칙"에 "이미지 alt 텍스트 규칙" 신규 소섹션 추가
+- "원문 소스 형식 검증" 섹션에 클리퍼 아티팩트 3종(연도 오기, 가짜 자동링크, 세미콜론 잔재) 추가
+- 학습된 패턴 히스토리에 2026-07-27 행 추가
+- 분석 대상 샘플에 14번 추가
+- 마지막 업데이트 날짜 2026-07-27로 갱신
+
+**glossary.md 업데이트**:
+- "고급 기술 용어" 표: unhobbling(발목 풀어주기), progressive disclosure(점진적 공개), deferred loading(지연 로딩), rubric(루브릭), agent harness(에이전트 하네스) 추가
+- "의역 및 문체 관련 용어" 표: myth→오해 추가
+- Context Engineering은 이미 "고급 기술 용어" 표에 등재되어 있어 중복 추가 스킵
+- 업데이트 기록에 2026-07-27 행 추가
+
+**Calibration divergence**: 사용자가 체감 점수를 제공하지 않고 재검증 흐름으로 승인 → divergence 분석 해당 없음 (기록 생략)
+
+**승인된 번역 저장**:
+
+저장 경로: `.claude/skills/translate-writer/data/approved-posts/14-new-rules-of-context-engineering-claude-5.md`
+
+심링크 경로: `.claude/skills/translate-writer/data/samples/14-new-rules-of-context-engineering-claude-5.md` (git ls-files -s 확인 결과 mode 120000)
+
+---
+
+### 2026-07-03
+
+**원문**: Vibe Coder vs Software Engineer (https://yusufaytas.com/vibe-coder-vs-software-engineer)
+
+**번역 제목**: [번역] 바이브 코더 vs 소프트웨어 엔지니어
+
+**유형**: 승인 (1차 검증 통과 후 polish 8건 적용, 수정 요청 없이 승인)
+
+**모드**: thorough
+
+**검토 점수**: Reviewer 8/10 (자연스러움 8·어휘 9·흐름 9·개발자맥락 8), Verifier 8.8/10 (의미 정확성 8.6·기술 정확성 9.5·뉘앙스 8.5) — 모든 하드 임계값 1차 통과
+
+**체감 점수**: 미제공 (수정 요청 없이 바로 승인되어 calibration divergence 분석 대상 아님)
+
+**검토 횟수**: 1회 (1차 PASS 후 polish 8건 적용 → 바로 승인)
+
+**원문 특성**:
+- **스타일**: 1인칭 개인 에세이 (개인 블로그, 저자 본인의 경험·의견 서술)
+- **주제**: 바이브 코딩과 소프트웨어 엔지니어링의 여섯 가지 차이 — 측정 지표, 작업 단위, 소유권, 컨텍스트, 발견/딜리버리 경계, 견습
+- **특징**: 저자 1인칭 "저" 화법, "안전한 머지까지 걸리는 시간(time to safe merge)" 프레임 반복, Zig 메인테이너 Andrew Kelley 인용, "컨트리뷰터 포커" 비유
+
+**Polish에서 적용된 패턴 (8건)**:
+
+| 패턴 번호 | 내용 | 적용 횟수 |
+|-----------|------|-----------|
+| #4 지시대명사 제거 | "그것은 ~뿐입니다" 3연속 반복 → 주어 구체화/생략 | 3회 |
+| #11 존재하다→있다/없다 | 자연스러운 한국어 술어로 교체 | 2회 |
+| #23 직역투(does X for me) | "저를 위해 더 나은 작업을 해냅니다" → "더 나은 결과를 내놓습니다" | 1회 |
+| #19 문단 서두 접속어 생략 | "그리고" 생략 | 1회 |
+| 표기 통일 | "컨텍스트 윈도" → "컨텍스트 윈도우" | 1회 |
+
+**추출된 스타일 규칙**:
+
+| 항목 | 패턴 | 지양 | 권장 |
+|------|------|------|------|
+| 지시대명사 반복 (3회+) | "그것은 ~뿐입니다" 연속 | 매 문장 동일 지시대명사로 시작 | 주어 구체화 또는 생략, 핵심어를 문두로 당겨오기 |
+| does X for me 직역 | "저를 위해 ~해냅니다" | 수혜자 명시 직역 | "~을 내놓습니다/결과가 좋아집니다" (결과 중심 재구성) |
+| 1인칭 개인 에세이 저자 voice | "저" (개인 저자) | "저희"(집단 어감이라 어색) | 기업 블로그 "저희"와 명확히 구분 |
+
+**style-guide.md 업데이트**:
+- "반드시 피해야 할 표현" 표에 2행 추가 (지시대명사 3회+ 반복, does X for me 직역)
+- "§1 문체" 저자 voice 규칙을 기업 블로그("저희") vs 1인칭 개인 에세이("저") 구분으로 확장
+- 학습된 패턴 히스토리에 2026-07-03 행 추가
+- 분석 대상 샘플에 13번 추가 (1인칭 개인 에세이 스타일)
+- 마지막 업데이트 날짜 2026-07-03으로 갱신
+
+**glossary.md 업데이트 제안** (2026-07-03 사용자 승인으로 반영 완료):
+
+| 원문 | 번역 | 비고 |
+|------|------|------|
+| time to safe merge | 안전한 머지까지 걸리는 시간(time to safe merge) | 저자 고유 지표 프레임, 첫 등장 시 괄호 병기 |
+| vibe coding | 바이브 코딩 | 이미 통용 표기 확인 |
+| vibe coder | 바이브 코더 | 이미 통용 표기 확인 |
+| contributor poker | 컨트리뷰터 포커(contributor poker) | Kelley의 code review 비유, 괄호 병기 + 필요 시 함축 풀어쓰기("패를 하나씩 까 보이며 상대의 실력을 가늠하는 게임") |
+
+**Calibration divergence**: 사용자가 체감 점수를 제공하지 않고 수정 요청 없이 바로 승인 → divergence 분석 해당 없음 (기록 생략)
+
+**승인된 번역 저장**:
+
+저장 경로: `.claude/skills/translate-writer/data/approved-posts/13-vibe-coder-vs-software-engineer.md`
+
+심링크 경로: `.claude/skills/translate-writer/data/samples/13-vibe-coder-vs-software-engineer.md` (mode 120000 확인)
+
+---
+
+### 2026-06-30
+
+**원문**: Building an LLM safe design system (https://polar.sh/blog/orbit-llm-safe-design-system)
+
+**번역 제목**: [번역] LLM도 벗어날 수 없는 디자인 시스템 만들기
+
+**유형**: 승인
+
+**모드**: thorough
+
+**검토 점수**: Reviewer 8.2/10, Verifier(재검증) 8.5/10 (둘 다 PASS)
+
+**체감 점수**: 미제공
+
+**검토 횟수**: 2회 (Verifier 1차 후 재검증 요청 → 8.5로 PASS)
+
+**최상위 교훈**: "의역이 더 좋아" — 사용자 명시 선호. 원문의 직역이 한국어 독자의 이해를 떨어뜨릴 때 의미를 명확히 푸는 의역 선호. 지시어가 가리키는 대상이 없어 끊겨 읽히는 문장은 도입어구·인용부호로 예시임을 드러낼 것.
+
+**원문 특성**:
+- **스타일**: 기술 설명 + 디자인 시스템 (Polar 엔지니어링 블로그)
+- **주제**: Polar 팀의 LLM 시대 대응 디자인 시스템 Orbit — StyleX 기반 토큰 전용 API, 순수 div 금지, ESLint CI 강제화
+- **특징**: "승부수(the bet)" 프레임 반복, 제약 설계 철학, 저자 voice "저희"
+
+**추출된 스타일 규칙**:
+
+| 항목 | 패턴 | 지양 | 권장 |
+|------|------|------|------|
+| in-the-loop 관용구 | "with an LLM in the loop" | "LLM이 참여해/함께" (약함) | "LLM을 개발 루프에 두고" |
+| 주체 명시 (수동→능동) | "generated code" | "생성된 코드" (번역투) | "LLM이 짠 코드" |
+| point of use (위치) | "the point of use" | "사용 시점" (시간 오독) | "그 값을 쓰는 자리" |
+| way around (우회로) | "way around them" | "돌아갈 길" (오독) | "빠져나갈 구멍" (반복 시 "그 구멍"으로 호응) |
+| open string surface | "open string surface" | "열린 문자열 표면" (직역 모호) | "아무 문자열이나 받아주던 열린 입구" |
+| reach for (습관적 선택) | "reach for" | "집다" (어색) | "손이 가다" |
+| defaults to path of least resistance | "defaults to..." | "기본 설정됩니다" (기계 어감) | "별수 없이 가장 손쉬운 길로 빠집니다" |
+| styling pass | "second styling pass" | "스타일링 패스" (음차 모호) | "스타일을 두 번 입히는 과정" |
+| opinionated convention | "opinionated convention" | "의견이 담긴 관례" (어색) | "저희 나름의 방침" |
+| This flips (지시대명사) | "This flips who..." | "이것은 ~ 바꿉니다" | "이렇게 하면 ~ 뒤바뀝니다" |
+| live with the output | "live with the output" | "결과물과 함께 사는 것" | "그 결과를 그대로 안고 가다" |
+| contrapositive (논리) | "contrapositive" | "그 역"(오류), "그 반대편"(엄밀성 약화) | "거기서 따라오는 결론" |
+| the bet (전략적 베팅) | "the bet" | "도박" (부정 어감) | "승부수" (한 문서 5곳+결말 일관) |
+| the bet ~ is built on | "bet ~ is built on" | "승부수는 ~에 있습니다" (토대 소실) | "딛고 선 승부수" |
+| make sure (능동) | "make sure the only things..." | "~것들뿐입니다" (make sure 소실) | "~만 CI를 통과하도록 해둘 뿐입니다" |
+| 이중 주격 비문 | "버그가…표현 자체가" | 이중 주격 비문 | 한쪽을 주제 조사 "는"으로 |
+| too small for X | "too small for X" | "X에는 너무 작다" (모호) | "X를 담아내기엔 너무 작다" |
+| keep coming back to | "the one we keep coming back to" | "아이디어가 돌아옵니다" (주체 반전) | "늘 다시 붙드는 생각은 하나입니다" |
+| 저자 voice | "we/our" | "우리/저희" 혼용 | "저희"로 통일 |
+| 지시어 끊김 | "Cards sit on this surface. ..." | 끊겨 읽히는 예시 직번역 | 도입어구("이를테면") + 인용부호로 예시 드러내기 |
+
+**style-guide.md 업데이트**:
+- "반드시 피해야 할 표현" 표에 19행 추가 (LLM safe design system 세션 패턴)
+- "의역(Paraphrasing)과 격언체 다루기" 표에 "지시어 없는 예시 나열" 행 추가
+- "의미 강도 및 충실도 정정 패턴" 표에 "the bet" 2행 추가
+- "구어·관용 표현" 표에 way around, the bet, opinionated convention 추가
+- "의역 사용 시점 판단" 표에 "지시어 끊김" 행 추가
+- "§9 의역 전략"에 "지시어 끊김 보정" 소섹션 추가
+- "§1 문체"에 저자 voice "저희" 통일 원칙 추가
+- "샘플에서 발견된 자연스러운 표현 패턴"에 2행 추가
+- "원문 유지 용어"에 CSS light-dark(), StyleX, Box (Orbit) 추가
+- "한글화 용어"에 design token, styling pass 추가
+- "괄호 병기 패턴"에 polymorphic 추가
+- 학습된 패턴 히스토리에 2026-06-30 행 추가
+- 분석 대상 샘플에 12번 추가
+- 마지막 업데이트 날짜 2026-06-30으로 갱신
+
+**glossary.md 업데이트**:
+- "의역 및 문체 관련 용어" 표: bet→승부수, escape hatch→탈출구, styling pass, opinionated convention, way around 추가
+- "프레임워크/라이브러리" 표: StyleX 추가
+- "고급 기술 용어" 표: polymorphic, design token, light-dark(), Box (Orbit) 추가
+- 업데이트 기록에 2026-06-30 행 추가
+
+**승인된 번역 저장**:
+
+저장 경로: `.claude/skills/translate-writer/data/approved-posts/12-llm-safe-design-system.md`
+
+심링크 경로: `.claude/skills/translate-writer/data/samples/12-llm-safe-design-system.md` (mode 120000 확인)
+
+---
+
+### 2026-06-15
+
+**원문**: Moving Railway's Frontend Off Next.js (https://blog.railway.com/p/moving-railways-frontend-off-nextjs)
+
+**번역 제목**: [번역] Railway는 왜 프론트엔드를 Next.js에서 걷어냈나
+
+**유형**: 승인
+
+**모드**: thorough
+
+**검토 점수**: Reviewer 8.2/10, Verifier 8.5/10 (둘 다 1차 PASS)
+
+**체감 점수**: 미제공
+
+**검토 횟수**: 1회 (1차 PASS 후 바로 승인)
+
+**사용자 직접 수정 2건**:
+
+1. **framework magic 음차 회피**
+   - 원문: "framework magic"
+   - 지양: "프레임워크 매직" (음차)
+   - 권장: "프레임워크가 뒤에서 부리는 '마법'" / 대안: "암묵적 동작"
+   - 패턴: 음차 대신 함축(숨은/암묵적 동작)을 풀어쓰기
+
+2. **"타입 체크됩니다" Konglish 피동 → 능동화**
+   - 원문: "are type-checked"
+   - 지양: "타입 체크됩니다" (Konglish 피동)
+   - 권장: "타입 검사를 거칩니다" (능동적 한국어)
+   - 패턴: "체크" 음차 + 피동 동시 회피
+
+**원문 특성**:
+- **스타일**: 사례 분석 (Railway 엔지니어링 블로그, 스토리텔링 + 기술)
+- **주제**: Railway 프론트엔드 팀의 Next.js → Vite/Nitro 마이그레이션 사례
+- **특징**: 펀치라인 헤딩, 구어체, 내부 직원 인터뷰, 편집자 주(Ed:) 포함
+
+**추출된 스타일 규칙**:
+
+| 항목 | 내용 |
+|------|------|
+| **의미 강도 보존 (also helps)** | "It also helps that ~"는 부가 요인 → "게다가 ~점도 한몫했습니다" (필수 조건으로 격상 금지) |
+| **"as a side effect"** | "덤으로" (부수적 이득 뉘앙스) |
+| **"Next.js alone" / "stuck on"** | "오롯이 Next.js 몫" / "~에 발이 묶여" (의미 보존 숙어) |
+| **수량 일치 검증** | "the following" + 불릿 N개 → 도입부 수량 표현과 반드시 일치 |
+| **"everywhere else"** | 전면적 범위 유지 (축소 금지) |
+| **강조어 보존** | nothing/just/every 탈락 금지 |
+| **펀치라인 헤딩** | "served us well. Then it didn't." → "제 역할을 다했다. 그러다 아니게 됐다." (대구 유지) |
+| **구어·관용** | war room → 워룸(war room), dogfood → 직접 사용해보다, (Ed:) → (편집자 주:) |
+| **sponsor → 후원** | 외래어 "스폰서"보다 한국어 선호 |
+
+**style-guide.md 업데이트**:
+- "반드시 피해야 할 표현" 표에 2행 추가 (framework magic, Konglish 피동)
+- "의미 강도 및 충실도 정정 패턴 (사례 분석 스타일)" 소섹션 신설
+- "구어·관용 표현 (사례 분석 스타일)" 소섹션 신설
+- 학습된 패턴 히스토리에 2026-06-15 행 추가
+- 분석 대상 샘플에 11번 추가
+
+**glossary.md 업데이트**:
+- "의역 및 문체 관련 용어" 표: framework magic, sponsor, war room, dogfood 추가
+- "고급 기술 용어" 표: Nitro, Fastly, content-hashed chunk, ecosystem 추가
+
+**승인된 번역 저장**:
+
+저장 경로: `.claude/skills/translate-writer/data/approved-posts/11-railway-frontend-off-nextjs.md`
+
+---
+
 
 ### 2026-02-20 14:00
 
@@ -383,7 +805,13 @@
 
 | 피드백 유형 | 빈도 | 적용된 규칙 |
 |-------------|------|-------------|
-| 의역 전략 (격언, 비유, 부정조건) | 높음 (신규) | 새로운 섹션 "9. 의역 전략" 추가 |
+| 의역 전략 (격언, 비유, 부정조건, 지시어 끊김) | 높음 | "9. 의역 전략" 섹션 + 지시어 끊김 보정 추가 |
+| in-the-loop 등 관용구 직역 회피 | 높음 (신규) | "반드시 피해야 할 표현" 표 확충 |
+| 수동형 번역투 (generated code 등) | 높음 (신규) | 주체 명시 능동화 패턴 추가 |
+| "승부수" vs "도박" 단어 선택 | 중간 (신규) | glossary + style-guide 동시 반영 |
+| 저자 voice "저희"/"저"/"여러분" 구분 | 중간 → 높음 | "§1 문체" 원칙 확장 (기업/개인 구분 → 문장 단위 3분할) |
+| polish 점수와 원문 의미 보존 상충 | 신규 | "polish 단계의 함정" 소섹션 신설 |
+| 동일 종결 템플릿 반복 | 신규 | 발견 동사 분산 규칙 추가 |
 | "~경우" 제거 | 높음 | 반드시 피해야 할 표현에 추가 |
 | "제공하다" 대체 | 중간 | 스타일 가이드 확충 |
 | 긴 관계절 간결화 | 중간 | 구조 규칙에 반영 |
@@ -393,6 +821,9 @@
 | 외래어→한국어 선호 | 높음 | 새로운 섹션 추가 |
 | 동사 선택 다양성 | 낮음 | "보여줍니다", "접근하다" 문맥 구분 |
 | 역주 활용 | 낮음 | 새로운 규칙 섹션 추가 |
+| 클리퍼(clippings) 소스 아티팩트 | 낮음 → 중간 | 원문 소스 형식 검증 규칙 확장 |
+| polish batch(haiku) 반복 함정 (스타일 위반·평서체·중복·한정어 탈락·이스케이프) | 신규 | "polish 단계의 함정"에 검증 체크리스트 신설 |
+| 이미지 내용이 이미지 안에만 있을 때 캡션 처리 | 신규 | "이미지 alt 텍스트 규칙" 뒤에 캡션/로컬 소싱 소섹션 신설 |
 
 ---
 
@@ -408,6 +839,12 @@
 | 2026-02-07 | The Complete Guide to Building Skills for Claude (Part 6) | [번역] Claude 스킬 구축 완벽 가이드 - 6부 | 승인 |
 | 2026-02-11 | Making agent-friendly pages with content negotiation | [번역] 콘텐츠 협상으로 에이전트 친화적인 페이지 만들기 | ~8.5/10 |
 | 2026-02-20 | Reducing local dev time by 83%: Why we migrated off Next.js | [번역] 로컬 개발 시간 83% 단축: Next.js에서 벗어난 이유 | ~9/10 |
+| 2026-06-15 | Moving Railway's Frontend Off Next.js | [번역] Railway는 왜 프론트엔드를 Next.js에서 걷어냈나 | R 8.2 / V 8.5 |
+| 2026-06-30 | Building an LLM safe design system | [번역] LLM도 벗어날 수 없는 디자인 시스템 만들기 | R 8.2 / V 8.5 |
+| 2026-07-03 | Vibe Coder vs Software Engineer | [번역] 바이브 코더 vs 소프트웨어 엔지니어 | R 8.0 / V 8.8 |
+| 2026-07-27 | The new rules of context engineering for Claude 5 generation models | [번역] Claude 5세대 모델을 위한 컨텍스트 엔지니어링의 새로운 규칙 | R 8.1 / V 8.1 (R2/R3) |
+| 2026-08-22 | 16 little UI design tips that make a big impact | [번역] 작지만 확실한 효과를 내는 UI 디자인 팁 16가지 | R 8.75 / V 8.8 |
+| 2026-08-22 | Maximizing the value of your Claude Code sessions | [번역] Claude Code 세션의 가치를 극대화하는 방법 | R 8.0 / V 8.5 (R2) |
 
 ---
 
@@ -425,27 +862,30 @@
 | 2026-02-20 | prescriptive | 정해진 / 명시적인 | translation-learner | 반영 완료 |
 | 2026-02-20 | risk averse | 보수적인 / 리스크를 꺼리는 | translation-learner | 반영 완료 |
 | 2026-02-20 | brute force (migration) | 한 번에 밀어붙이기 / 전면 전환 | translation-learner | 반영 완료 |
-| 2026-08-22 | Squint Test | 스퀸트 테스트(Squint Test) | translation-learner | 제안 |
-| 2026-08-22 | x-height | x-height (원문 유지) | translation-learner | 제안 |
-| 2026-08-22 | sentence case | 문장 표기(sentence case) | translation-learner | 제안 |
-| 2026-08-22 | primary action | 주요 액션(primary action) | translation-learner | 제안 |
-| 2026-08-22 | interaction cost | 상호작용 비용(interaction cost) | translation-learner | 제안 |
-| 2026-08-22 | line height | 줄 간격(line height) | translation-learner | 제안 |
-| 2026-08-22 | contrast ratio | 명암비(contrast ratio) | translation-learner | 제안 |
-| 2026-08-22 | typeface / font | 서체 / 폰트 (구분 사용) | translation-learner | 제안 |
-
----
-
-## 2026-08-22 — 16 little UI design tips that make a big impact
-
-- **원문**: [16 little UI design tips that make a big impact](https://www.adhamdannaway.com/blog/ui-design/ui-design-tips) (Adham Dannaway)
-- **번역 제목**: [번역] 작지만 확실한 효과를 내는 UI 디자인 팁 16가지
-- **판정**: ✅ 승인
-- **점수**: Reviewer 8.8/10 (자연 9, 어휘 9, 흐름 8, 개발자 맥락 9) · Verifier 8.7/10 (의미 8.5, 기술 9.5, 뉘앙스 8)
-- **이력**: 1차 이중 검증에서 verifier FAIL(원문에 없는 발행일 날조 Critical) → 15건 수정 후 2차 PASS → Polish 25건 적용 → 3중 재감사에서 18건 추가 수정
-- **학습된 규칙**: 원문에 없는 메타데이터 표기 금지, hedge 표현 보존, above/at least 구분, 저자의 의도적 반복 유지, 범위 한정어 보존, 절차형 목록 존댓말 유지
-
-> 이 항목은 Claude Code 세션에서 학습된 내용을 Codex 미러(`.agents/`)에 반영한 것입니다. 원본 기록은 `.claude/skills/translate-writer/data/feedback-log.md`에 있습니다.
+| 2026-06-15 | framework magic | 프레임워크가 뒤에서 부리는 '마법' / 암묵적 동작 | translation-learner | 반영 완료 |
+| 2026-06-15 | sponsor | 후원 | translation-learner | 반영 완료 |
+| 2026-06-15 | war room | 워룸(war room) | translation-learner | 반영 완료 |
+| 2026-06-15 | dogfood | 직접 사용해보다 / 도그푸딩 | translation-learner | 반영 완료 |
+| 2026-06-15 | Nitro, Fastly, content-hashed chunk, ecosystem | (각 항목 참조) | translation-learner | 반영 완료 |
+| 2026-06-30 | bet | 승부수 | translation-learner | 반영 완료 |
+| 2026-06-30 | escape hatch | 탈출구 | translation-learner | 반영 완료 |
+| 2026-06-30 | styling pass | 스타일을 입히는 과정 | translation-learner | 반영 완료 |
+| 2026-06-30 | opinionated convention | 저희 나름의 방침 | translation-learner | 반영 완료 |
+| 2026-06-30 | way around | 빠져나갈 구멍 / 우회로 | translation-learner | 반영 완료 |
+| 2026-06-30 | polymorphic | 다형적(polymorphic) | translation-learner | 반영 완료 |
+| 2026-06-30 | design token | 디자인 토큰 | translation-learner | 반영 완료 |
+| 2026-06-30 | light-dark() | light-dark() (원문 유지) | translation-learner | 반영 완료 |
+| 2026-06-30 | Box (Orbit) | Box (원문 유지) | translation-learner | 반영 완료 |
+| 2026-06-30 | StyleX | StyleX (원문 유지) | translation-learner | 반영 완료 |
+| 2026-07-03 | time to safe merge | 안전한 머지까지 걸리는 시간(time to safe merge) | translation-learner | 반영 완료 |
+| 2026-07-03 | vibe coding / vibe coder | 바이브 코딩 / 바이브 코더 | translation-learner | 반영 완료 |
+| 2026-07-03 | contributor poker | 컨트리뷰터 포커(contributor poker) | translation-learner | 반영 완료 |
+| 2026-07-27 | unhobbling | 발목 풀어주기 (Unhobbling) | translation-learner | 반영 완료 |
+| 2026-07-27 | progressive disclosure | 점진적 공개 | translation-learner | 반영 완료 |
+| 2026-07-27 | deferred loading | 지연 로딩 (deferred loading) | translation-learner | 반영 완료 |
+| 2026-07-27 | rubric | 루브릭 (rubric) | translation-learner | 반영 완료 |
+| 2026-07-27 | agent harness | 에이전트 하네스 (agent harness) | translation-learner | 반영 완료 |
+| 2026-07-27 | myth | 오해 | translation-learner | 반영 완료 |
 
 ---
 

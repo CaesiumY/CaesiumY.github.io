@@ -172,6 +172,12 @@
 | deferred loading | 지연 로딩 (deferred loading) | Lazy Loading("지연 로딩")과 구분이 필요할 때 괄호 병기 |
 | rubric | 루브릭 (rubric) | 평가 기준표. 첫 등장 시 병기 후 "루브릭" |
 | agent harness | 에이전트 하네스 (agent harness) | 프로젝트 문서에서도 "하네스" 표기 사용 |
+| prefill | 프리필(prefill) | LLM 추론 1단계(입력 읽기). 첫 등장 시 병기 후 축약 |
+| decode | 디코드(decode) | LLM 추론 2단계(출력 생성). 첫 등장 시 병기 후 축약 |
+| effort level | effort 레벨 | Claude Code 고유 개념, 부분 음차 |
+| thinking tokens | 생각(thinking) 토큰 | 첫 등장 시 병기 후 "생각 토큰" |
+| quiet flag | quiet 플래그 | 출력 억제 플래그. 한 문서 내 표기 통일 |
+| bust the cache | 캐시를 깨뜨리다 | 능동 주체가 있는 문맥. "캐시를 날리다"는 무주체 서술에만 |
 
 ---
 
@@ -188,6 +194,7 @@
 | 2026-06-30 | LLM safe design system 번역 승인: bet→승부수, escape hatch→탈출구, styling pass, opinionated convention, way around, polymorphic, design token, light-dark(), Box (Orbit), StyleX 추가 |
 | 2026-07-03 | Vibe Coder vs Software Engineer 번역 승인: time to safe merge, vibe coding/vibe coder, contributor poker 추가 |
 | 2026-07-27 | Claude 5세대 컨텍스트 엔지니어링 번역 승인: unhobbling(발목 풀어주기), progressive disclosure(점진적 공개), deferred loading(지연 로딩), rubric(루브릭), agent harness(에이전트 하네스), myth→오해 추가. Context Engineering은 기존 등재 항목과 중복 확인되어 스킵 |
+| 2026-08-22 | Maximizing Claude Code sessions 번역 승인: prefill(프리필), decode(디코드), effort level(effort 레벨), thinking tokens(생각 토큰), quiet flag(quiet 플래그), bust the cache(캐시를 깨뜨리다) 추가 |
 
 ---
 

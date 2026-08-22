@@ -116,6 +116,16 @@
 | risk averse | 보수적인 / 리스크를 꺼리는 | 문맥에 따라 선택 |
 | convention-over-configuration | 관례 우선 | 원문 유지 가능 |
 | brute force (migration context) | 전면 전환 / 한 번에 밀어붙이기 | 마이그레이션 맥락 |
+| framework magic | 프레임워크가 뒤에서 부리는 '마법' / 암묵적 동작 | 음차 "프레임워크 매직" 지양 |
+| sponsor | 후원 | 외래어 "스폰서"보다 한국어 선호 |
+| war room | 워룸(war room) | 긴급 대응 상황실, 원문 병기 |
+| dogfood | 직접 사용해보다 / 도그푸딩 | 내부 실사용 |
+| bet (strategic context) | 승부수 | 전략적 베팅 의미; "도박"(도박장·중독 어감) 지양. 한 문서 내 일관 적용 |
+| escape hatch | 탈출구 | 시스템 우회 수단 |
+| styling pass | 스타일을 입히는 과정 | 음차 "패스" 지양 |
+| opinionated convention | 저희 나름의 방침 | 저자 voice와 연결; 뒤의 "the opinion"→"방침"으로 연결 유지 |
+| way around (something) | 빠져나갈 구멍 / 우회로 | "돌아갈 길"(되돌아가는 길 오독) 지양 |
+| myth | 오해 | "통념"은 부정적 함의가 약해 지양. 한 문서 내 일관 적용 |
 
 ### 프레임워크/라이브러리
 
@@ -125,6 +135,7 @@
 | Deno Fresh | Deno Fresh | 프레임워크명 (한글화 불필요) |
 | React Router | React Router | 프레임워크명 (한글화 불필요) |
 | Remix | Remix | 프레임워크명 (한글화 불필요) |
+| StyleX | StyleX | Meta 컴파일타임 타입 안전 스타일링, 원문 유지 |
 
 ### 고급 기술 용어
 
@@ -145,6 +156,28 @@
 | Instruction | 지시사항 | Skill.md의 내용 |
 | Content Negotiation | 콘텐츠 협상 | HTTP 표준 메커니즘 |
 | Changelog | 변경 내역 | 버전 기록 |
+| Nitro | Nitro | 서버 레이어, 원문 유지 |
+| Fastly | Fastly | CDN/엣지, 원문 유지 |
+| content-hashed chunk | 콘텐츠 해시 청크 | Vite 에셋 모델 |
+| ecosystem | 에코시스템 | "생태계"도 통용 (문맥에 따라 선택) |
+| polymorphic | 다형적(polymorphic) | 괄호 병기 |
+| design token | 디자인 토큰 | |
+| light-dark() | light-dark() | CSS 네이티브 함수, 원문 유지 |
+| Box (Orbit) | Box | Orbit의 polymorphic primitive, 원문 유지 |
+| time to safe merge | 안전한 머지까지 걸리는 시간(time to safe merge) | 저자 고유 지표 프레임, 첫 등장 시 괄호 병기 후 축약 가능 |
+| vibe coding / vibe coder | 바이브 코딩 / 바이브 코더 | 한국 개발자 커뮤니티 통용 표기 |
+| contributor poker | 컨트리뷰터 포커(contributor poker) | Kelley의 code review 비유, 괄호 병기 + 필요 시 함축 풀어쓰기 |
+| unhobbling | 발목 풀어주기 (Unhobbling) | AI 능력론 은어. 모델에 걸린 인위적 제약을 제거해 원래 역량을 발휘하게 함. 헤딩에서 첫 등장 시 영문 병기, 이후 "족쇄/제약을 풀다"로 서술 |
+| progressive disclosure | 점진적 공개 | 첫 등장 시 괄호 병기(progressive disclosure) 후 이후 축약 |
+| deferred loading | 지연 로딩 (deferred loading) | Lazy Loading("지연 로딩")과 구분이 필요할 때 괄호 병기 |
+| rubric | 루브릭 (rubric) | 평가 기준표. 첫 등장 시 병기 후 "루브릭" |
+| agent harness | 에이전트 하네스 (agent harness) | 프로젝트 문서에서도 "하네스" 표기 사용 |
+| prefill | 프리필(prefill) | LLM 추론 1단계(입력 읽기). 첫 등장 시 병기 후 축약 |
+| decode | 디코드(decode) | LLM 추론 2단계(출력 생성). 첫 등장 시 병기 후 축약 |
+| effort level | effort 레벨 | Claude Code 고유 개념, 부분 음차 |
+| thinking tokens | 생각(thinking) 토큰 | 첫 등장 시 병기 후 "생각 토큰" |
+| quiet flag | quiet 플래그 | 출력 억제 플래그. 한 문서 내 표기 통일 |
+| bust the cache | 캐시를 깨뜨리다 | 능동 주체가 있는 문맥. "캐시를 날리다"는 무주체 서술에만 |
 
 ---
 
@@ -157,6 +190,11 @@
 | 2026-02-07 | "suite" → "모음", "nuance" → "맥락/의미/어감" 추가 (외래어→한국어 선호) |
 | 2026-02-11 | "Content Negotiation" → "콘텐츠 협상", "Changelog" → "변경 내역" 추가 |
 | 2026-02-20 | 의역 관련 용어 추가 ("compelling", "honeymoon period", "prescriptive", "risk averse" 등), 프레임워크 용어 추가 ("Tanstack Start", "Deno Fresh" 등) |
+| 2026-06-15 | Railway 번역 승인: framework magic, sponsor, war room, dogfood, Nitro, Fastly, content-hashed chunk, ecosystem 추가 |
+| 2026-06-30 | LLM safe design system 번역 승인: bet→승부수, escape hatch→탈출구, styling pass, opinionated convention, way around, polymorphic, design token, light-dark(), Box (Orbit), StyleX 추가 |
+| 2026-07-03 | Vibe Coder vs Software Engineer 번역 승인: time to safe merge, vibe coding/vibe coder, contributor poker 추가 |
+| 2026-07-27 | Claude 5세대 컨텍스트 엔지니어링 번역 승인: unhobbling(발목 풀어주기), progressive disclosure(점진적 공개), deferred loading(지연 로딩), rubric(루브릭), agent harness(에이전트 하네스), myth→오해 추가. Context Engineering은 기존 등재 항목과 중복 확인되어 스킵 |
+| 2026-08-22 | Maximizing Claude Code sessions 번역 승인: prefill(프리필), decode(디코드), effort level(effort 레벨), thinking tokens(생각 토큰), quiet flag(quiet 플래그), bust the cache(캐시를 깨뜨리다) 추가 |
 
 ---
 
