@@ -41,7 +41,7 @@ const agentsPath = agentsArg
   : path.join(repoRoot, "AGENTS.md");
 
 const fail = (msg) => {
-  console.error(`agent-docs-sync: ${msg}`);
+  process.stderr.write(`agent-docs-sync: ${msg}\n`);
   process.exit(1);
 };
 
@@ -73,6 +73,6 @@ if (!hasImport) {
 }
 
 const agentsLines = readFileSync(agentsPath, "utf8").split(/\r?\n/).length;
-console.log(
-  `agent-docs-sync: CLAUDE.md imports AGENTS.md (${agentsLines} lines, single source).`
+process.stdout.write(
+  `agent-docs-sync: CLAUDE.md imports AGENTS.md (${agentsLines} lines, single source).\n`
 );
