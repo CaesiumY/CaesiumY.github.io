@@ -1,0 +1,34 @@
+{
+  "slug": "maximizing-claude-code-sessions",
+  "date": "2026-08-22",
+  "mode": "thorough",
+  "threshold": 9.5,
+  "batch_analysis": {
+    "total_sentences": 152,
+    "avg_score": 9.34,
+    "below_threshold_count": 12,
+    "invalidated_by_prior_fixes": 1
+  },
+  "decisions": [
+    { "id": "P1", "line": 54, "score": 9.4, "topic": "토큰 효율성 두 문장 대구", "decision": "유지", "reason": "원문 두 문장 리듬과 '전체(overall)' 보존, 대안들은 병합으로 대구 소실" },
+    { "id": "P2", "line": 60, "score": 9.3, "topic": "추론 괄호 나열", "decision": "옵션B 적용", "applied": "GPU, TPU, 또는 모델이 실행되는 어떤 하드웨어든 ~ 시간을 말합니다", "adjustment": "첫 등장 용어 병기 추론(inference)은 유지 (옵션 원문에서 탈락했던 부분 복원)" },
+    { "id": "P3", "line": 62, "score": 9.3, "topic": "세 요인 나열", "decision": "유지", "reason": "능동태와 괄호 설명(들어가는/나오는 토큰) 보존, 최고점 옵션은 괄호 설명 소실" },
+    { "id": "P4", "line": 66, "score": 9.0, "topic": "모델 고르기 링크 문장", "decision": "유지", "reason": "최고점 옵션이 '저희'→'우리는'으로 스타일 가이드(기업 블로그 저희 통일) 위반, 차점 옵션은 사실 서술이 권유로 변화" },
+    { "id": "P5", "line": 77, "score": 9.1, "topic": "프리필 관계절", "decision": "옵션A 적용", "applied": "모델이 요청과 컨텍스트를 읽습니다. 여기에는 ~ 이 포함됩니다 (문장 분리)", "adjustment": "1차 검증에서 제거한 '그리고' 나열 패턴 재유입 방지 + '그 이후(since)' 시점 표현 복원" },
+    { "id": "P6", "line": 79, "score": 9.1, "topic": "디코드 200토큰", "decision": "옵션B 적용", "applied": "토큰을 한 번에 하나씩 생성하므로, 200토큰 응답은 모델을 200번 순차 실행하는 것입니다", "reason": "one-after-the-other를 '순차'로 보존, 최고점 옵션은 '연속' 소실" },
+    { "id": "P7", "line": 91, "score": 9.2, "topic": "캐시 상태 피동형", "decision": "옵션A 적용", "applied": "상태도 똑같이 나옵니다", "reason": "피동형만 제거, 의미 완전 보존" },
+    { "id": "P8", "line": 93, "score": 9.2, "topic": "캐시 읽기/쓰기 비용", "decision": "유지", "reason": "고점 옵션 A·B는 뒤 문장과 내용 중복 발생, A는 평서체로 존댓말 위반, C는 '조금(a bit)' 한정어 소실" },
+    { "id": "P9", "line": 97, "score": 9.3, "topic": "예시 인용 커맨드", "decision": "유지", "reason": "한글 예시 번역이 시리즈 관례이고 다이어그램 캡션과 정합, 나머지 옵션 2개는 이스케이프 오염으로 제외" },
+    { "id": "P10", "line": 140, "score": 9.2, "topic": "도구 결과 명사화", "decision": "유지", "reason": "'Claude가 읽은 파일과 실행한 명령어' 구체성 보존, 최고점 옵션은 평서체 위반" },
+    { "id": "P11", "line": 163, "score": 9.3, "topic": "긴 세션 비용", "decision": "유지", "reason": "옵션 3개 전부 '생각보다(than you'd think)' 한정어 탈락 — 스타일 가이드 polish 함정 사례" },
+    { "id": "P12", "line": null, "score": 9.2, "topic": "grep 탐색 긴 문장", "decision": "무효화", "reason": "GATE 1 잔여 지적 반영(문장 분리)으로 원문장이 사라져 polish 대상에서 제외" }
+  ],
+  "extra_fix": "L71 캡션 '실제 벤치마크 데이터를 나타내지 않습니다' → '그래프는 예시일 뿐입니다' (원문 'Curves are for illustration purposes only' 범위 초과 표현 제거)",
+  "observations_for_learner": [
+    "polish-agent(haiku) 최고점 옵션이 기업 블로그 '저희'를 '우리는'으로 바꾸는 스타일 가이드 위반 옵션을 생성함 (P4)",
+    "polish-agent가 존댓말 문서에 평서체 옵션을 생성함 (P8 옵션A, P10 옵션A)",
+    "polish-agent가 이미 파일에 존재하는 인접 문장 내용을 포함한 옵션을 생성해 적용 시 중복 위험 (P8 옵션A·B)",
+    "P11: 옵션 3개 전원이 'than you'd think' 한정어 탈락 — 기존 'polish 함정' 규칙이 haiku batch에도 그대로 재현됨",
+    "P9: 옵션 텍스트에 이스케이프된 백틱(\\`)이 포함되어 그대로 적용하면 마크다운 파손"
+  ]
+}
