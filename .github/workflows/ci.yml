@@ -25,6 +25,9 @@ jobs:
     steps:
       - name: "☁️ Checkout repository"
         uses: actions/checkout@v7
+        with:
+          # E2E 실행 범위 판정에 merge-base가 필요하다 (scripts/e2e-scope.mjs)
+          fetch-depth: 0
 
       - name: "📦 Install pnpm"
         uses: pnpm/action-setup@v6
@@ -58,13 +61,43 @@ jobs:
       - name: "🏷️ Check post classification"
         run: node scripts/check-post-classification.mjs
 
+      - name: "📌 Check E2E content pins"
+        run: node scripts/e2e-scope.mjs --check
+
       - name: "🧪 Self-test translation integrity gate"
         run: node .claude/skills/translate-writer/scripts/check-translation-integrity.mjs --self-test
 
       - name: "🚀 Build the project"
         run: pnpm run build
 
+      # 콘텐츠만 바뀐 PR에 무관한 스펙까지 돌리지 않는다. 판정 불가 시 ALL이라
+      # 커버리지가 조용히 줄어드는 쪽으로는 실패하지 않는다.
+      - name: "🎯 Resolve E2E scope"
+        id: e2e-scope
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          SPECS=$(node scripts/e2e-scope.mjs --changed-from "$BASE_SHA" || echo ALL)
+          echo "specs=$SPECS" >> "$GITHUB_OUTPUT"
+          echo "판정: $SPECS"
+
+      - name: "🎭 Resolve Playwright version"
+        id: playwright
+        run: echo "version=$(pnpm exec playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+
+      - name: "📦 Cache Playwright browsers"
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+
+      # SPECS를 ${{ }}로 bash 본문에 보간하면 스크립트 인젝션 표면이 된다 — env로 넘긴다
       - name: "🧪 Run E2E tests"
+        env:
+          SPECS: ${{ steps.e2e-scope.outputs.specs }}
         run: |
           pnpm exec playwright install --with-deps chromium
-          pnpm test
+          # ALL은 "인자 없이 전체"라는 뜻이다. 인자를 비워 pnpm test 한 경로로
+          # 합치면 package.json의 test 스크립트가 두 경로로 갈리지 않는다.
+          if [ "$SPECS" = "ALL" ]; then SPECS=""; fi
+          pnpm test $SPECS
