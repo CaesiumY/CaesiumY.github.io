@@ -10,6 +10,9 @@
  *
  * 사용:
  *   node check-translation-integrity.mjs <before.md> <after.md> [--json]
+ *   node check-translation-integrity.mjs --self-test
+ *     내장 픽스처를 임시 디렉터리(os.tmpdir)에 써서 회귀 케이스를 돌리고 결과를
+ *     표로 출력한다. 하나라도 기대와 다르면 exit 1. 임시 파일은 종료 시 정리한다.
  *
  * 오류(FAIL):
  *   - frontmatter 키 집합 불일치
@@ -32,6 +35,8 @@
  *   - 이미지 alt 텍스트 변경
  *   - modDatetime · draft · featured · description 값 변경
  *   - before에만 있는 HTML 주석 블록(주석 제거)
+ *   - after에 본문이 없음(frontmatter만 있는 파일이라 빈 줄 검사를 생략)
+ *   - 닫히지 않은 펜스 코드 블록(여는 줄부터 끝까지를 산문으로 취급해 집계)
  *
  * 토큰 집계 범위: frontmatter 제외, 펜스 코드 블록은 별도 비교 후 본문에서 제외,
  * 인라인 코드 · 링크 URL · 이미지 경로도 각자 비교한 뒤 산문 토큰 집계에서 뺀다.
@@ -39,9 +44,17 @@
  *
  * 출력(stdout): 항목별 PASS/FAIL/WARN과 차이. --json 이면 {pass, errors, warnings}.
  * Exit codes: 0 = PASS, 1 = FAIL, 2 = 사용 오류.
+ *   --self-test: 0 = 전 케이스 기대 일치, 1 = 불일치 있음.
  */
 
-import { existsSync, readFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import process from "node:process";
 
@@ -53,7 +66,8 @@ const WARN_KEYS = new Set(["modDatetime", "draft", "featured", "description"]);
 function usage(message) {
   if (message) process.stderr.write(`오류: ${message}\n\n`);
   process.stderr.write(
-    "사용법: node check-translation-integrity.mjs <before.md> <after.md> [--json]\n"
+    "사용법: node check-translation-integrity.mjs <before.md> <after.md> [--json]\n" +
+      "        node check-translation-integrity.mjs --self-test\n"
   );
   process.exit(2);
 }
@@ -61,16 +75,23 @@ function usage(message) {
 function parseArgs(argv) {
   const files = [];
   let json = false;
+  let selfTest = false;
   for (const arg of argv) {
     if (arg === "--json") json = true;
+    else if (arg === "--self-test") selfTest = true;
     else if (arg.startsWith("--")) usage(`알 수 없는 옵션: ${arg}`);
     else files.push(arg);
+  }
+  if (selfTest) {
+    if (files.length) usage("--self-test 는 파일 인자를 받지 않습니다");
+    if (json) usage("--self-test 는 --json 과 함께 쓸 수 없습니다");
+    return { selfTest: true };
   }
   if (files.length !== 2) usage("before.md 와 after.md 두 파일 경로가 필요합니다");
   for (const file of files) {
     if (!existsSync(file)) usage(`파일을 찾을 수 없습니다: ${file}`);
   }
-  return { before: files[0], after: files[1], json };
+  return { selfTest: false, before: files[0], after: files[1], json };
 }
 
 // ─── 파싱 ───────────────────────────────────────────────────────────────────
@@ -82,7 +103,6 @@ function parseDocument(raw) {
   let frontmatter = new Map();
   let bodyStart = 0;
   let hasFrontmatter = false;
-  let blankAfterFrontmatter = null;
 
   if (lines[0] === "---") {
     const closing = lines.indexOf("---", 1);
@@ -90,20 +110,26 @@ function parseDocument(raw) {
       hasFrontmatter = true;
       frontmatter = parseFrontmatter(lines.slice(1, closing));
       bodyStart = closing + 1;
-      blankAfterFrontmatter = lines[bodyStart] === "";
     }
   }
 
   const bodyLines = lines.slice(bodyStart);
-  const { fences, proseLines } = extractFences(bodyLines);
+  // 닫는 --- 가 파일 마지막 줄이면 lines[bodyStart] 가 undefined 라 빈 줄 검사가
+  // 거짓 FAIL 나므로, 본문이 아예 없는 파일은 검사 대상에서 뺀다(null).
+  const hasBody = bodyLines.some(line => line.trim() !== "");
+  const blankAfterFrontmatter =
+    hasFrontmatter && hasBody ? lines[bodyStart] === "" : null;
+  const { fences, proseLines, unclosedAt } = extractFences(bodyLines);
   const prose = proseLines.join("\n");
 
   return {
     text,
     hasFrontmatter,
+    hasBody,
     frontmatter,
     blankAfterFrontmatter,
     fences,
+    unclosedFenceLine: unclosedAt === null ? null : bodyStart + unclosedAt + 1,
     headings: proseLines.filter(line => /^#{1,6}\s+\S/.test(line)),
     images: collectImages(prose),
     inlineCode: multiset(collectInlineCode(prose)),
@@ -132,17 +158,24 @@ function parseFrontmatter(lines) {
   return map;
 }
 
+// CommonMark 대로 펜스 앞 공백은 0~3칸만 허용한다(4칸 이상은 들여쓴 코드 블록이라 산문 취급).
+const FENCE_OPEN_RE = /^ {0,3}(`{3,}|~{3,})(.*)$/;
+const FENCE_CLOSE_RE = /^ {0,3}(`{3,}|~{3,})\s*$/;
+
 // 펜스 코드 블록(``` 또는 ~~~)을 순서대로 뽑아내고 본문에서 제거한다.
 function extractFences(lines) {
   const fences = [];
   const proseLines = [];
   let open = null;
+  let openAt = null;
   let buffer = [];
-  for (const line of lines) {
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     if (open === null) {
-      const match = line.match(/^\s*(`{3,}|~{3,})(.*)$/);
+      const match = line.match(FENCE_OPEN_RE);
       if (match) {
         open = match[1];
+        openAt = i;
         buffer = [line];
       } else {
         proseLines.push(line);
@@ -150,15 +183,18 @@ function extractFences(lines) {
       continue;
     }
     buffer.push(line);
-    const closing = line.match(/^\s*(`{3,}|~{3,})\s*$/);
+    const closing = line.match(FENCE_CLOSE_RE);
     if (closing && closing[1][0] === open[0] && closing[1].length >= open.length) {
       fences.push(buffer.join("\n"));
       open = null;
+      openAt = null;
       buffer = [];
     }
   }
-  if (open !== null) fences.push(buffer.join("\n"));
-  return { fences, proseLines };
+  // 닫히지 않은 펜스는 블록으로 접지 않는다. 나머지를 통째로 코드로 숨기면 그 뒤의
+  // 산문 변경이 게이트를 그냥 통과하므로, 산문으로 돌려보내고 WARN 으로 알린다.
+  if (open !== null) proseLines.push(...buffer);
+  return { fences, proseLines, unclosedAt: open === null ? null : openAt };
 }
 
 const IMAGE_RE = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g;
@@ -291,10 +327,14 @@ function compare(before, after) {
       const label = FAIL_KEYS.has(key) || WARN_KEYS.has(key) ? "" : " (보호 키 외)";
       add(`frontmatter ${key}${label}`, level, `'${a}' → '${b}'`);
     }
-    check(
-      "frontmatter 뒤 빈 줄",
-      after.blankAfterFrontmatter ? null : "닫는 --- 바로 뒤에 빈 줄이 없음"
-    );
+    if (after.hasBody) {
+      check(
+        "frontmatter 뒤 빈 줄",
+        after.blankAfterFrontmatter ? null : "닫는 --- 바로 뒤에 빈 줄이 없음"
+      );
+    } else {
+      add("frontmatter 뒤 빈 줄", "WARN", "본문이 없어 검사 생략");
+    }
   }
 
   // 구조
@@ -321,6 +361,12 @@ function compare(before, after) {
       after.fences.map(summarizeFence)
     )
   );
+  const unclosed = [];
+  if (before.unclosedFenceLine !== null)
+    unclosed.push(`before 라인 ${before.unclosedFenceLine}`);
+  if (after.unclosedFenceLine !== null)
+    unclosed.push(`after 라인 ${after.unclosedFenceLine}`);
+  check("닫히지 않은 펜스 코드 블록", unclosed.join(", ") || null, "WARN");
 
   // 다중집합
   check("인라인 코드 스팬", diffMultiset(before.inlineCode, after.inlineCode));
@@ -388,43 +434,242 @@ function truncate(text, max = 60) {
   return oneLine.length > max ? `${oneLine.slice(0, max)}…` : oneLine;
 }
 
-// ─── 실행 ───────────────────────────────────────────────────────────────────
-
-const { before, after, json } = parseArgs(process.argv.slice(2));
-const results = compare(
-  parseDocument(readFileSync(before, "utf8")),
-  parseDocument(readFileSync(after, "utf8"))
-);
-
-const errors = results.filter(r => r.status === "FAIL");
-const warnings = results.filter(r => r.status === "WARN");
-const pass = errors.length === 0;
-const format = r => `${r.name}: ${r.detail}`;
-
-const out = text => process.stdout.write(`${text}
-`);
-
-if (json) {
-  out(
-    JSON.stringify(
-      { pass, errors: errors.map(format), warnings: warnings.map(format) },
-      null,
-      2
-    )
-  );
-} else {
-  out(`무결성 게이트: ${path.basename(before)} → ${path.basename(after)}`);
-  const icon = { PASS: "✅", FAIL: "❌", WARN: "⚠️" };
-  for (const r of results) {
-    out(`  ${icon[r.status]} ${r.status} ${r.name}${r.detail ? ` — ${r.detail}` : ""}`);
-  }
-  out(
-    pass
-      ? `
-✅ PASS (경고 ${warnings.length}건)`
-      : `
-❌ FAIL (오류 ${errors.length}건, 경고 ${warnings.length}건)`
+function compareFiles(beforePath, afterPath) {
+  return compare(
+    parseDocument(readFileSync(beforePath, "utf8")),
+    parseDocument(readFileSync(afterPath, "utf8"))
   );
 }
 
-process.exit(pass ? 0 : 1);
+const out = text => process.stdout.write(`${text}\n`);
+
+// ─── 셀프 테스트 ─────────────────────────────────────────────────────────────
+// 인라인 픽스처를 임시 디렉터리에 써서 실제 파일 경로로 게이트를 돌린다.
+// 기대값은 {판정, FAIL 항목 이름, WARN 항목 이름}이며 순서는 무시한다.
+
+const doc = (...lines) => `${lines.join("\n")}\n`;
+
+const FIXTURE_FRONTMATTER = [
+  "---",
+  'title: "[번역] 무결성 게이트 픽스처"',
+  "pubDatetime: 2026-08-22T00:00:00Z",
+  "modDatetime: 2026-08-22T00:00:00Z",
+  "draft: true",
+  "tags:",
+  "  - claude-code",
+  "---",
+];
+const FIXTURE_BODY = [
+  "<!-- 요약: 픽스처 -->",
+  "",
+  "# 제목",
+  "",
+  "버전 0.1 에서 `pnpm build` 를 실행합니다. [문서](https://example.com/docs)",
+  "",
+  "## 둘째 절",
+  "",
+  "```bash",
+  "pnpm dev",
+  "```",
+  "",
+  "![그림](./image.png)",
+  "",
+  "마지막으로 /clear 커맨드와 MY_ENV 변수를 확인합니다.",
+];
+const FIXTURE = doc(...FIXTURE_FRONTMATTER, "", ...FIXTURE_BODY);
+const FIXTURE_NO_BODY = doc(
+  "---",
+  "title: 본문 없음",
+  "pubDatetime: 2026-08-22T00:00:00Z",
+  "---"
+);
+const FIXTURE_FENCE = doc(
+  "---",
+  "title: 펜스",
+  "pubDatetime: 2026-08-22T00:00:00Z",
+  "---",
+  "",
+  "# 제목",
+  "",
+  "```bash",
+  "echo hi",
+  "```",
+  "",
+  "답은 42 입니다."
+);
+
+const SELF_TEST_CASES = [
+  {
+    id: "a",
+    name: "동일 파일",
+    before: FIXTURE,
+    after: FIXTURE,
+    expect: { pass: true, errors: [], warnings: [] },
+  },
+  {
+    id: "b",
+    name: "modDatetime, draft 만 변경",
+    before: FIXTURE,
+    after: FIXTURE.replace(
+      "modDatetime: 2026-08-22T00:00:00Z",
+      "modDatetime: 2026-08-23T00:00:00Z"
+    ).replace("draft: true", "draft: false"),
+    expect: {
+      pass: true,
+      errors: [],
+      warnings: ["frontmatter modDatetime", "frontmatter draft"],
+    },
+  },
+  {
+    id: "c",
+    name: "숫자 0.1→0.2, 헤딩 변경, 끝에 HTML 주석 추가",
+    before: FIXTURE,
+    after: `${FIXTURE.replace("버전 0.1", "버전 0.2").replace("# 제목", "# 바뀐 제목")}<!-- X -->\n`,
+    expect: {
+      pass: false,
+      errors: ["숫자 토큰", "헤딩 순서·텍스트", "HTML 주석 블록(after 추가)"],
+      warnings: [],
+    },
+  },
+  {
+    id: "d",
+    name: "frontmatter 뒤 빈 줄 제거",
+    before: FIXTURE,
+    after: doc(...FIXTURE_FRONTMATTER, ...FIXTURE_BODY),
+    expect: {
+      pass: false,
+      errors: ["frontmatter 뒤 빈 줄"],
+      warnings: ["빈 줄 수"],
+    },
+  },
+  {
+    id: "e",
+    name: "본문 없는 frontmatter 전용 파일 쌍",
+    before: FIXTURE_NO_BODY,
+    after: FIXTURE_NO_BODY,
+    expect: { pass: true, errors: [], warnings: ["frontmatter 뒤 빈 줄"] },
+  },
+  {
+    // 닫는 펜스가 사라지면 여는 줄 이후를 산문으로 되돌리므로 숫자 42 는 그대로 PASS,
+    // 펜스 개수 1 → 0 만 FAIL 이고 닫히지 않은 펜스는 WARN 으로 라인을 알린다.
+    id: "f",
+    name: "after 의 닫는 펜스 삭제(닫히지 않은 펜스)",
+    before: FIXTURE_FENCE,
+    after: FIXTURE_FENCE.replace("echo hi\n```\n", "echo hi\n"),
+    expect: {
+      pass: false,
+      errors: ["펜스 코드 블록"],
+      warnings: ["닫히지 않은 펜스 코드 블록"],
+      details: [["닫히지 않은 펜스 코드 블록", "after 라인 8"]],
+    },
+  },
+];
+
+function summarize(results) {
+  const names = status =>
+    results
+      .filter(r => r.status === status)
+      .map(r => r.name)
+      .sort();
+  const errors = names("FAIL");
+  return { pass: errors.length === 0, errors, warnings: names("WARN") };
+}
+
+function checkExpectation(expect, results) {
+  const actual = summarize(results);
+  const problems = [];
+  const verdict = pass => (pass ? "PASS" : "FAIL");
+  if (expect.pass !== actual.pass)
+    problems.push(`판정 기대 ${verdict(expect.pass)} / 실제 ${verdict(actual.pass)}`);
+  for (const [kind, label] of [
+    ["errors", "오류"],
+    ["warnings", "경고"],
+  ]) {
+    const want = [...expect[kind]].sort();
+    if (JSON.stringify(want) !== JSON.stringify(actual[kind]))
+      problems.push(
+        `${label} 기대 [${want.join(", ")}] / 실제 [${actual[kind].join(", ")}]`
+      );
+  }
+  for (const [name, needle] of expect.details ?? []) {
+    const hit = results.find(r => r.name === name);
+    if (!hit || !String(hit.detail).includes(needle))
+      problems.push(
+        `'${name}' 상세에 '${needle}' 없음 (실제: ${hit ? hit.detail : "(항목 없음)"})`
+      );
+  }
+  return { actual, problems };
+}
+
+function runSelfTest() {
+  const dir = mkdtempSync(path.join(tmpdir(), "translation-integrity-"));
+  const rows = [];
+  try {
+    for (const tc of SELF_TEST_CASES) {
+      const beforePath = path.join(dir, `${tc.id}-before.md`);
+      const afterPath = path.join(dir, `${tc.id}-after.md`);
+      writeFileSync(beforePath, tc.before, "utf8");
+      writeFileSync(afterPath, tc.after, "utf8");
+      const results = compareFiles(beforePath, afterPath);
+      rows.push({ tc, ...checkExpectation(tc.expect, results) });
+    }
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+
+  const fmt = s =>
+    `${s.pass ? "PASS" : "FAIL"} 오류 ${s.errors.length} 경고 ${s.warnings.length}`;
+  out(`셀프 테스트 (${rows.length}건, 임시 디렉터리 ${dir})`);
+  out("| 케이스 | 기대 | 실제 | 결과 |");
+  out("|---|---|---|---|");
+  for (const { tc, actual, problems } of rows) {
+    const mark = problems.length ? "❌" : "✅";
+    out(`| (${tc.id}) ${tc.name} | ${fmt(tc.expect)} | ${fmt(actual)} | ${mark} |`);
+  }
+  const failed = rows.filter(r => r.problems.length);
+  for (const { tc, problems } of failed) {
+    out(`\n(${tc.id}) ${tc.name} 불일치:`);
+    for (const problem of problems) out(`  - ${problem}`);
+  }
+  out(
+    failed.length
+      ? `\n❌ 셀프 테스트 실패 (${failed.length}/${rows.length})`
+      : `\n✅ 셀프 테스트 통과 (${rows.length}/${rows.length})`
+  );
+  return failed.length ? 1 : 0;
+}
+
+// ─── 실행 ───────────────────────────────────────────────────────────────────
+
+function runGate({ before, after, json }) {
+  const results = compareFiles(before, after);
+  const errors = results.filter(r => r.status === "FAIL");
+  const warnings = results.filter(r => r.status === "WARN");
+  const pass = errors.length === 0;
+  const format = r => `${r.name}: ${r.detail}`;
+
+  if (json) {
+    out(
+      JSON.stringify(
+        { pass, errors: errors.map(format), warnings: warnings.map(format) },
+        null,
+        2
+      )
+    );
+  } else {
+    out(`무결성 게이트: ${path.basename(before)} → ${path.basename(after)}`);
+    const icon = { PASS: "✅", FAIL: "❌", WARN: "⚠️" };
+    for (const r of results) {
+      out(`  ${icon[r.status]} ${r.status} ${r.name}${r.detail ? ` — ${r.detail}` : ""}`);
+    }
+    out(
+      pass
+        ? `\n✅ PASS (경고 ${warnings.length}건)`
+        : `\n❌ FAIL (오류 ${errors.length}건, 경고 ${warnings.length}건)`
+    );
+  }
+  return pass ? 0 : 1;
+}
+
+const args = parseArgs(process.argv.slice(2));
+process.exitCode = args.selfTest ? runSelfTest() : runGate(args);
