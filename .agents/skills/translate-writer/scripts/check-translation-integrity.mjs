@@ -28,6 +28,9 @@
  *     닫힘(``foo`bar`` 지원), 닫히지 않은 런은 텍스트
  *   - 링크 목적지 다중집합 불일치 — 인라인 `[text](dest)`(상대 경로 포함) · 자동링크
  *     `<https://…>` · 맨 URL · 참조형 `[text][id]`(`[id]`로 기록) · 정의 `[id]: dest`
+ *     (정의는 dest 가 경로·URL 꼴일 때만: `<…>` 꺾쇠 · 스킴 `https:` `mailto:` ·
+ *     `/` 포함(`./` `../` 포함) · `#` 시작 · ASCII 파일명.확장자. 한글이 섞인 토큰은
+ *     산문이라 `[역주]: 3.5의 의미로 …` 같은 각주는 정의로 읽지 않는다)
  *   - 숫자 토큰 다중집합 불일치 — 부호 · % · 단위 · 한국어 수량 접미 포함(아래 참조)
  *   - 슬래시 커맨드(/clear 등) · 환경변수(대문자_언더스코어) 토큰 다중집합 불일치
  *   - details · summary 태그 수 불일치
@@ -48,9 +51,11 @@
  * 줄 시작 · 여는 괄호 뒤에 올 때만 취한다(범위 `3-5`, 날짜 `2026-08-22`, 목록 `- `,
  * 표 `|---|` 는 부호가 아님). 접미는 한국어 조사와 섞이지 않게 화이트리스트만 인정한다:
  *   `%` · ASCII 단위 ms s x k K M KB MB GB px pt(뒤에 영숫자가 없을 때) ·
- *   한국어 수량 접미 만 천 억 배 자 턴 개 줄 분 초 시간 번 회 건 명 일 주 월 년
+ *   한국어 다중 글자 단위 개월 분기 주일 시간(긴 것부터 시도해 `3개월` 이 `3개`+`월` 로
+ *   갈리지 않음) · 한 글자 수량 접미 만 천 억 배 자 턴 개 줄 분 초 번 회 건 명 일 주 월 년.
+ *   밀리초 · 킬로바이트처럼 풀어 쓴 단위는 넣지 않는다(ms · KB 로 충분).
  * 예: "99.9%"→`99.9%`, "600ms"→`600ms`, "0.1배만"→`0.1배`, "3만 자"→`3만`,
- *     "40번째"→`40번`, "200토큰"→`200`, "v2.1.221"→`2.1.221`.
+ *     "40번째"→`40번`, "200토큰"→`200`, "v2.1.221"→`2.1.221`, "3개월 뒤"→`3개월`.
  *
  * 토큰 집계 범위: frontmatter 제외, 펜스 코드 블록은 별도 비교 후 본문에서 제외,
  * 인라인 코드 · 링크 목적지 · 이미지 경로도 각자 비교한 뒤 산문 토큰 집계에서 뺀다.
@@ -281,10 +286,31 @@ function collectHeadings(proseLines) {
 const AUTOLINK_RE = /<(https?:\/\/[^>\s]+)>/g;
 const BARE_URL_RE = /https?:\/\/[^\s<>)\]]+/g;
 const COMMENT_RE = /<!--[\s\S]*?-->/g;
-// 참조 링크 정의 `[id]: dest` — 한국어 산문의 `[역주]: 설명…` 과 섞이지 않게
-// dest 가 `<…>` 이거나 경로·URL 꼴(`/` `.` `#` 포함)일 때만 정의로 본다.
+// 참조 링크 정의 `[id]: dest` 후보. 첫 토큰이 정의 dest 인지는 isLinkDestination 이
+// 따로 가린다 — 한국어 각주 `[역주]: 3.5의 의미로 …` 의 `3.5의` 를 `.` 하나 때문에
+// 경로로 오인하면 숫자 3.5 가 산문 집계에서 빠지고 조사 변경이 링크 FAIL 로 새어 나온다.
 const LINK_DEFINITION_RE =
-  /^ {0,3}\[((?:[^\]\\\n]|\\.)+)\]:[ \t]*(<[^>\n]*>|\S*[/.#]\S*)(?=\s|$)/gm;
+  /^ {0,3}\[((?:[^\]\\\n]|\\.)+)\]:[ \t]*(<[^>\n]*>|\S+)(?=\s|$)/gm;
+// 정의 dest 로 인정하는 경로·URL 모양: `<…>` 꺾쇠 · 스킴(`https:` `mailto:`) ·
+// `/` 포함(`./` `../` 도 여기 해당) · `#` 시작 · ASCII 파일명.확장자(확장자는 글자로
+// 시작해야 `3.5` · `v2.1` 같은 버전 숫자가 파일명으로 읽히지 않는다).
+const LINK_DEST_RE =
+  /^(?:<[^>\n]*>|[a-z][a-z0-9+.-]*:\S*|\S*\/\S*|#\S*|[A-Za-z0-9_.-]+\.[A-Za-z][A-Za-z0-9]{0,4})$/;
+const HANGUL_RE = /\p{Script=Hangul}/u;
+
+// 꺾쇠는 명시적 구문이라 그대로 인정하고, 맨 토큰은 한글이 섞이면 산문으로 본다
+// (`입력/출력 비율` 의 `입력/출력` 은 `/` 가 있어도 경로가 아니다).
+function isLinkDestination(dest) {
+  if (dest.startsWith("<")) return LINK_DEST_RE.test(dest);
+  return !HANGUL_RE.test(dest) && LINK_DEST_RE.test(dest);
+}
+
+// 정의 줄을 replacer 결과로 바꾸되, dest 가 경로·URL 꼴이 아니면 줄을 그대로 둔다.
+function replaceLinkDefinitions(text, replacer) {
+  return text.replace(LINK_DEFINITION_RE, (match, _label, dest) =>
+    isLinkDestination(dest) ? replacer(dest) : match
+  );
+}
 
 // [start, end) 구간들을 replacer 결과로 바꾼다. ranges 는 시작 오프셋 오름차순이어야 한다.
 function replaceRanges(text, ranges, replacer) {
@@ -476,7 +502,7 @@ function collectInlineCode(prose) {
 function collectLinks(prose) {
   const urls = [];
   let rest = replaceRanges(prose, findLinkLike(prose, "image"), () => " ");
-  rest = rest.replace(LINK_DEFINITION_RE, (_, _label, dest) => {
+  rest = replaceLinkDefinitions(rest, dest => {
     urls.push(stripAngles(dest));
     return " ";
   });
@@ -524,10 +550,16 @@ function countTags(prose) {
 // 숫자 토큰 = [부호]숫자(.,)[접미]. 부호는 공백 · 문자열 시작 · 여는 괄호 뒤의 `-`/`+` 만
 // (범위 `3-5`, 날짜 `2026-08-22`, 목록 `- `, 표 `|---|` 는 부호가 아님). 접미는 한국어
 // 조사와 섞이지 않게 화이트리스트만: % · ASCII 단위(뒤에 영숫자가 없을 때) · 수량 접미.
+// 다중 글자 단위는 조사와 충돌하지 않는 순수 수량 단위만 넣고, 정규식 대안은 첫 매치가
+// 이기므로 긴 것부터 놓는다 — 한 글자 `개` 가 먼저 잡히면 `3개월` 이 `3개`+`월` 로 갈린다.
+// 밀리초 · 킬로바이트처럼 풀어 쓴 단위는 넣지 않는다(ms · KB 로 충분).
+const KOREAN_MULTI_CHAR_UNITS = ["개월", "분기", "주일", "시간"].sort(
+  (a, b) => b.length - a.length
+);
 const NUMBER_SUFFIX = [
   "%",
   "(?:ms|px|pt|KB|MB|GB|[skxKM])(?![A-Za-z0-9])",
-  "시간",
+  ...KOREAN_MULTI_CHAR_UNITS,
   "[만천억배자턴개줄분초번회건명일주월년]",
 ].join("|");
 const NUMBER_RE = new RegExp(
@@ -541,7 +573,7 @@ function collectProseTokens(prose) {
   let plain = prose.replace(COMMENT_RE, " ");
   plain = replaceRanges(plain, findInlineCode(plain), () => " ");
   plain = replaceRanges(plain, findLinkLike(plain, "image"), () => " ");
-  plain = plain.replace(LINK_DEFINITION_RE, " ");
+  plain = replaceLinkDefinitions(plain, () => " ");
   plain = replaceRanges(
     plain,
     findLinkLike(plain, "link"),
@@ -900,6 +932,26 @@ const FIXTURE_REFLINK = fixture(
   "[docs]: ./docs/guide.md",
   '[홈]: https://example.com/ "홈"'
 );
+// 다중 글자 단위(개월 · 분기 · 주일 · 시간)가 한 글자 접미보다 먼저 매칭돼야 한다.
+const FIXTURE_UNITS = fixture(
+  "다중 글자 단위",
+  "# 제목",
+  "",
+  "3개월 뒤 2분기 실적을 1주일 동안 24시간 내내 봤습니다."
+);
+// 줄 머리 `[역주]: …` 한국어 각주와 진짜 정의(`./…` · `https:`)가 한 파일에 섞인 경우.
+// `3.5의` 와 `3.5`(뒤에 공백) 둘 다 경로·URL 꼴이 아니라 산문 숫자로 집계돼야 한다.
+const FIXTURE_FOOTNOTE = fixture(
+  "각주와 링크 정의",
+  "# 제목",
+  "",
+  "[가이드][guide] 와 [참고][ref] 를 보세요.",
+  "",
+  "[역주]: 3.5의 의미로 사용됨",
+  "[역주2]: 3.5 버전에서 추가됨",
+  "[guide]: ./docs/guide.md",
+  "[ref]: https://a.example/x"
+);
 
 const SELF_TEST_CASES = [
   {
@@ -1132,6 +1184,76 @@ const SELF_TEST_CASES = [
         ["링크 URL", "'[docs]'×1"],
         ["링크 URL", "after에만 './docs/intro.md'×1"],
       ],
+    },
+  },
+  {
+    // 단위 뒤 조사만 바뀐 변화(뒤→이 지나, 동안→간)는 PASS — 접미가 단위에서 멈추고
+    // 조사 `이` `간` 을 먹지 않아야 한다.
+    id: "u",
+    name: "다중 글자 단위 뒤 조사만 변경",
+    before: FIXTURE_UNITS,
+    after: FIXTURE_UNITS.replace("3개월 뒤", "3개월이 지나").replace(
+      "1주일 동안",
+      "1주일간"
+    ),
+    expect: { pass: true, errors: [], warnings: [] },
+  },
+  {
+    // 한 글자 `개` 가 먼저 잡히던 때는 `3개월` 이 `3개`+`월` 로 갈려 이 변조가 통과했다.
+    id: "v",
+    name: "단위 절단 3개월 → 3개",
+    before: FIXTURE_UNITS,
+    after: FIXTURE_UNITS.replace("3개월 뒤", "3개 뒤"),
+    expect: {
+      pass: false,
+      errors: ["숫자 토큰"],
+      warnings: [],
+      details: [["숫자 토큰", "before에만 '3개월'×1, after에만 '3개'×1"]],
+    },
+  },
+  {
+    // `.` 만 보고 dest 로 읽던 때는 `3.5의`→`3.5라는` 조사 변경이 링크 FAIL 로 새어 나왔다.
+    id: "w",
+    name: "한국어 각주 `[역주]: 3.5의 …` 조사 변경",
+    before: FIXTURE_FOOTNOTE,
+    after: FIXTURE_FOOTNOTE.replace(
+      "3.5의 의미로 사용됨",
+      "3.5라는 의미로 쓰임"
+    ),
+    expect: { pass: true, errors: [], warnings: [] },
+  },
+  {
+    // dest 조건을 좁혀도 상대 경로 · https 정의 변조는 기존대로 잡혀야 한다.
+    id: "x",
+    name: "각주 옆 정의 dest 변조(./docs · https)",
+    before: FIXTURE_FOOTNOTE,
+    after: FIXTURE_FOOTNOTE.replace(
+      "./docs/guide.md",
+      "./docs/intro.md"
+    ).replace("https://a.example/x", "https://b.example/x"),
+    expect: {
+      pass: false,
+      errors: ["링크 URL"],
+      warnings: [],
+      details: [
+        ["링크 URL", "'./docs/guide.md'×1"],
+        ["링크 URL", "'https://a.example/x'×1"],
+        ["링크 URL", "after에만 './docs/intro.md'×1, 'https://b.example/x'×1"],
+      ],
+    },
+  },
+  {
+    // 각주의 3.5 가 링크가 아니라 산문 숫자로 집계되는지 — 값 변조는 숫자 토큰 FAIL 이어야
+    // 하고 링크 URL 에는 아무 차이도 없어야 한다.
+    id: "y",
+    name: "각주 숫자 변조 3.5의 → 3.6의",
+    before: FIXTURE_FOOTNOTE,
+    after: FIXTURE_FOOTNOTE.replace("3.5의 의미로", "3.6의 의미로"),
+    expect: {
+      pass: false,
+      errors: ["숫자 토큰"],
+      warnings: [],
+      details: [["숫자 토큰", "before에만 '3.5'×1, after에만 '3.6'×1"]],
     },
   },
 ];
