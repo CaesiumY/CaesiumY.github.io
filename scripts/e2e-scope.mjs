@@ -48,6 +48,20 @@ const POSTS_ROUTES = "src/pages/posts";
 // 핀 맵과 달리 손으로 적은 목록이라 runCheck가 실존 여부를 따로 검사한다.
 const CONTENT_BASE_SPECS = ["e2e/posts-tabs.spec.ts", "e2e/og-image.spec.ts"];
 
+// Astro 빌드 입력이 아니어서 렌더 결과를 바꿀 수 없는 경로. 에이전트 지침과
+// 스킬 데이터가 여기 산다 — 번역 초안 PR은 글과 함께 이 경로들을 늘 같이
+// 커밋하므로, 이게 없으면 초안 PR이 전부 ALL로 떨어진다.
+//
+// "빌드에 영향 없다"는 단정은 시간이 지나면 깨질 수 있다(스킬 목록을 렌더하는
+// 페이지가 생기는 순간 거짓이 된다). runCheck가 빌드 입력에서 이 접두어들을
+// 찾아 전제가 여전히 참인지 검사한다.
+const NON_BUILD_PREFIXES = [".claude/", ".agents/"];
+
+// 빌드 입력으로 취급하는 텍스트 파일. 위 전제를 검사할 대상이다.
+const BUILD_INPUT_ROOTS = ["src"];
+const BUILD_INPUT_FILES = ["astro.config.ts"];
+const TEXT_SOURCE = /\.(ts|tsx|js|jsx|mjs|cjs|astro|json|css)$/;
+
 const toPosix = p => p.split(path.sep).join("/");
 const abs = rel => path.join(repoRoot, rel);
 
@@ -245,6 +259,14 @@ function postSlugIntent(literal, reserved, postFirstSegments) {
   return normalized;
 }
 
+/** 전제 검사 대상이 되는 빌드 입력 텍스트 파일. */
+function buildInputFiles() {
+  const fromRoots = BUILD_INPUT_ROOTS.flatMap(root =>
+    walk(root, name => TEXT_SOURCE.test(name))
+  );
+  return [...fromRoots, ...BUILD_INPUT_FILES.filter(f => existsSync(abs(f)))];
+}
+
 /**
  * 핀 무결성 검사.
  *
@@ -253,6 +275,9 @@ function postSlugIntent(literal, reserved, postFirstSegments) {
  * 2) fixture 파일은 글을 지목하려고 존재하므로 최소 1개의 핀을 내야 한다.
  * 3) CONTENT_BASE_SPECS는 유일하게 손으로 적은 목록이라 실존 여부를 검사한다.
  *    이게 없으면 스펙 rename이 콘텐츠 티어를 조용히 축소시킨다.
+ * 4) NON_BUILD_PREFIXES가 "빌드가 읽지 않는 경로"라는 전제를 검사한다. 빌드
+ *    입력이 그 경로를 참조하기 시작하면 전제가 깨지고, 스코핑이 렌더 결과를
+ *    바꾸는 변경에 E2E를 건너뛰게 된다.
  *
  * 이 검사가 없으면 글 이름 변경이 스코핑을 조용히 무력화한다(핀이 하나도
  * 안 걸려 항상 최소 셋만 도는 상태로 퇴화).
@@ -292,6 +317,16 @@ function runCheck(specSources, postUrls, pins) {
     if (!existsSync(abs(spec))) {
       errors.add(
         `  ${spec}: CONTENT_BASE_SPECS에 있으나 파일이 없습니다 — 스펙을 옮겼다면 상수도 함께 갱신하세요`
+      );
+    }
+  }
+
+  for (const file of buildInputFiles()) {
+    const source = readFileSync(abs(file), "utf8");
+    for (const prefix of NON_BUILD_PREFIXES) {
+      if (!source.includes(prefix)) continue;
+      errors.add(
+        `  ${file}: "${prefix}"를 참조합니다 — 이 경로는 빌드에 영향을 주지 않는다는 전제로 E2E 스코핑 안전 목록에 있습니다. 빌드가 실제로 읽는다면 NON_BUILD_PREFIXES에서 빼세요`
       );
     }
   }
@@ -341,11 +376,25 @@ function readStdin() {
   }
 }
 
+/**
+ * 이 파일 하나만 바뀌었을 때 전체 스위트가 필요 없다고 말할 수 있는가.
+ *
+ * 글(contents/)이거나, 빌드가 읽지 않는 경로다. 그 외에는 전부 모른다고 보고
+ * ALL로 떨어진다 — 판단 근거가 없는 경로를 안전하다고 우기지 않는다.
+ */
+function isScopeSafe(file) {
+  const p = toPosix(file);
+  return (
+    p.startsWith("contents/") ||
+    NON_BUILD_PREFIXES.some(prefix => p.startsWith(prefix))
+  );
+}
+
 /** 변경 파일 목록 → 실행할 스펙 목록(또는 ALL). */
 function resolveScope(changed, pins) {
-  // 판정 불가·콘텐츠 밖 변경은 전부 돌린다 (fail-safe)
+  // 판정 불가·근거 없는 경로 변경은 전부 돌린다 (fail-safe)
   if (!changed) return "ALL";
-  if (changed.some(file => !toPosix(file).startsWith("contents/"))) return "ALL";
+  if (changed.some(file => !isScopeSafe(file))) return "ALL";
 
   // 실존 여부로 거르지 않는다 — 목록이 낡았으면 runCheck가 CI에서 먼저 실패하고,
   // 그래도 새어 나오면 playwright가 "no tests found"로 시끄럽게 죽는 편이
