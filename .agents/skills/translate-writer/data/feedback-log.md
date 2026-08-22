@@ -425,7 +425,28 @@
 | 2026-02-20 | prescriptive | 정해진 / 명시적인 | translation-learner | 반영 완료 |
 | 2026-02-20 | risk averse | 보수적인 / 리스크를 꺼리는 | translation-learner | 반영 완료 |
 | 2026-02-20 | brute force (migration) | 한 번에 밀어붙이기 / 전면 전환 | translation-learner | 반영 완료 |
+| 2026-08-22 | Squint Test | 스퀸트 테스트(Squint Test) | translation-learner | 제안 |
+| 2026-08-22 | x-height | x-height (원문 유지) | translation-learner | 제안 |
+| 2026-08-22 | sentence case | 문장 표기(sentence case) | translation-learner | 제안 |
+| 2026-08-22 | primary action | 주요 액션(primary action) | translation-learner | 제안 |
+| 2026-08-22 | interaction cost | 상호작용 비용(interaction cost) | translation-learner | 제안 |
+| 2026-08-22 | line height | 줄 간격(line height) | translation-learner | 제안 |
+| 2026-08-22 | contrast ratio | 명암비(contrast ratio) | translation-learner | 제안 |
+| 2026-08-22 | typeface / font | 서체 / 폰트 (구분 사용) | translation-learner | 제안 |
 
 ---
 
-✅ **마지막 업데이트**: 2026-02-20 14:00 KST
+## 2026-08-22 — 16 little UI design tips that make a big impact
+
+- **원문**: [16 little UI design tips that make a big impact](https://www.adhamdannaway.com/blog/ui-design/ui-design-tips) (Adham Dannaway)
+- **번역 제목**: [번역] 작지만 확실한 효과를 내는 UI 디자인 팁 16가지
+- **판정**: ✅ 승인
+- **점수**: Reviewer 8.8/10 (자연 9, 어휘 9, 흐름 8, 개발자 맥락 9) · Verifier 8.7/10 (의미 8.5, 기술 9.5, 뉘앙스 8)
+- **이력**: 1차 이중 검증에서 verifier FAIL(원문에 없는 발행일 날조 Critical) → 15건 수정 후 2차 PASS → Polish 25건 적용 → 3중 재감사에서 18건 추가 수정
+- **학습된 규칙**: 원문에 없는 메타데이터 표기 금지, hedge 표현 보존, above/at least 구분, 저자의 의도적 반복 유지, 범위 한정어 보존, 절차형 목록 존댓말 유지
+
+> 이 항목은 Claude Code 세션에서 학습된 내용을 Codex 미러(`.agents/`)에 반영한 것입니다. 원본 기록은 `.claude/skills/translate-writer/data/feedback-log.md`에 있습니다.
+
+---
+
+✅ **마지막 업데이트**: 2026-08-22 KST
