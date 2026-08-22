@@ -104,6 +104,12 @@ export function hasAgentsImport(markdown) {
 
     // Resolve any comments that open on this line, keeping the text around
     // them; a comment left open flips the flag and drops the remainder.
+    // The comment is spliced out with NOTHING in its place. Substituting a
+    // space would invent a word boundary: `prefix<!-- note -->@AGENTS.md`
+    // would become `prefix @AGENTS.md` and satisfy IMPORT, even though the
+    // stripped text Claude Code sees is `prefix@AGENTS.md`, which is not an
+    // import. Manufacturing a boundary here would let a decorative comment
+    // keep CI green after the real import was deleted.
     for (;;) {
       const start = line.indexOf("<!--");
       if (start === -1) break;
@@ -113,7 +119,7 @@ export function hasAgentsImport(markdown) {
         inComment = true;
         break;
       }
-      line = line.slice(0, start) + " " + line.slice(end + 3);
+      line = line.slice(0, start) + line.slice(end + 3);
     }
 
     if (IMPORT.test(line)) return true;

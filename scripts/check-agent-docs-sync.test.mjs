@@ -49,6 +49,22 @@ test("accepts the shapes Claude Code treats as an import", async (t) => {
       "",
       "@AGENTS.md"
     ),
+    // A fenced example may show an opener with no closer; the fence walk must
+    // skip it rather than let it swallow the import underneath.
+    "after a fenced comment delimiter": md(
+      "# X",
+      "",
+      "```md",
+      "<!--",
+      "```",
+      "",
+      "@AGENTS.md"
+    ),
+    "with a comment sitting beside it": md(
+      "# X",
+      "",
+      "prefix <!-- note --> @AGENTS.md"
+    ),
   };
 
   for (const [name, source] of Object.entries(accepted)) {
@@ -84,6 +100,13 @@ test("rejects tokens that only look like an import", async (t) => {
     ),
     "inside an unterminated comment": md("# X", "", "<!-- @AGENTS.md"),
     "as part of a longer path": md("# X", "", "@AGENTS.md.bak"),
+    // Splicing a space in place of the comment would invent the word boundary
+    // IMPORT needs; Claude Code sees `prefix@AGENTS.md`, which is not an import.
+    "glued to a comment with no boundary": md(
+      "# X",
+      "",
+      "prefix<!-- note -->@AGENTS.md"
+    ),
     "nowhere at all": md("# X", "", "no import here"),
   };
 
