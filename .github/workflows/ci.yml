@@ -94,8 +94,7 @@ jobs:
           SPECS: ${{ steps.e2e-scope.outputs.specs }}
         run: |
           pnpm exec playwright install --with-deps chromium
-          if [ "$SPECS" = "ALL" ]; then
-            pnpm test
-          else
-            pnpm exec playwright test $SPECS
-          fi
+          # ALL은 "인자 없이 전체"라는 뜻이다. 인자를 비워 pnpm test 한 경로로
+          # 합치면 package.json의 test 스크립트가 두 경로로 갈리지 않는다.
+          if [ "$SPECS" = "ALL" ]; then SPECS=""; fi
+          pnpm test $SPECS
