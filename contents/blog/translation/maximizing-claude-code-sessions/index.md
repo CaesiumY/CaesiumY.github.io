@@ -4,7 +4,7 @@ description: "Anthropic 공식 블로그 번역입니다. 토큰 가격을 결�
 pubDatetime: 2026-08-22T00:10:26Z
 modDatetime: 2026-08-22T04:48:20Z
 featured: false
-draft: true
+draft: false
 tags: ["translation", "claude-code", "prompt-caching", "ai", "productivity"]
 series: "Claude 공식 블로그 번역"
 ---
