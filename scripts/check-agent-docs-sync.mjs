@@ -15,10 +15,6 @@
  * editing CLAUDE.md and dropping the import line, which would strip every
  * shared rule from Claude Code sessions with no visible error.
  *
- * Import parsing skips code spans and fenced code blocks, matching Claude
- * Code's own behaviour — a backticked `@AGENTS.md` is literal text, not an
- * import, so it must not satisfy this check.
- *
  * Usage: node scripts/check-agent-docs-sync.mjs [claude-md agents-md]
  * Exit codes: 0 = wired correctly, 1 = import missing or file absent.
  */
@@ -49,25 +45,50 @@ for (const p of [claudePath, agentsPath]) {
   if (!existsSync(p)) fail(`missing ${path.relative(repoRoot, p)}`);
 }
 
-const raw = readFileSync(claudePath, "utf8");
+const lines = readFileSync(claudePath, "utf8").split(/\r?\n/);
 
-// Strip fenced blocks and inline code spans before looking for the import,
-// so a documented `@AGENTS.md` example never counts as the real import.
-const stripped = raw
-  .replace(/^```[\s\S]*?^```/gm, "")
-  .replace(/^~~~[\s\S]*?^~~~/gm, "")
-  .replace(/`[^`\n]*`/g, "");
+// Walk the file tracking fenced-code state instead of regex-matching whole
+// blocks. A block regex needs a CLOSING fence to match, so an unclosed fence
+// would leave its body searchable and a stray `@AGENTS.md` example inside it
+// would satisfy this check even after the real import was deleted. CommonMark
+// also lets a fence be indented up to three spaces, which a `^`-anchored regex
+// misses. Either case makes the guard pass exactly when it must fail.
+const FENCE = /^ {0,3}(`{3,}|~{3,})/;
+const prose = [];
+let openFence = null;
 
-// The import must stand alone on its line; trailing text would make Claude
-// Code treat the rest of the line as prose, not as part of the path.
-const hasImport = stripped
-  .split(/\r?\n/)
-  .some((line) => line.trim() === "@AGENTS.md");
+for (const line of lines) {
+  const match = FENCE.exec(line);
+  if (openFence) {
+    // A closer repeats the opener's character at least as many times.
+    if (
+      match &&
+      match[1][0] === openFence[0] &&
+      match[1].length >= openFence.length
+    ) {
+      openFence = null;
+    }
+    continue; // fenced body and both fence lines are never import sites
+  }
+  if (match) {
+    openFence = match[1];
+    continue;
+  }
+  // Inline code spans are excluded too, so a documented `@AGENTS.md` example
+  // stays literal. Backtick runs must match in length, same as CommonMark.
+  prose.push(line.replace(/(`+)[^`]*?\1/g, " "));
+}
 
-if (!hasImport) {
+// Claude Code resolves `@path` imports anywhere in the prose, including inside
+// a sentence or a list item, so match the token by its boundaries rather than
+// demanding that it own the whole line.
+const IMPORT = /(?:^|\s)@AGENTS\.md(?=\s|$)/;
+
+if (!prose.some((line) => IMPORT.test(line))) {
   fail(
     "CLAUDE.md no longer imports AGENTS.md.\n" +
-      "  Add a line containing exactly `@AGENTS.md` (outside code blocks).\n" +
+      "  Add `@AGENTS.md` on its own line, or inline in a sentence.\n" +
+      "  It must sit outside code fences and backticks to count as an import.\n" +
       "  Without it, Claude Code sessions load none of the shared guidance."
   );
 }
