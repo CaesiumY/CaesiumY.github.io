@@ -45,7 +45,19 @@ for (const p of [claudePath, agentsPath]) {
   if (!existsSync(p)) fail(`missing ${path.relative(repoRoot, p)}`);
 }
 
-const lines = readFileSync(claudePath, "utf8").split(/\r?\n/);
+// Claude Code strips block-level HTML comments before injecting a memory file
+// into context, so a `@AGENTS.md` mentioned inside `<!-- ... -->` is NOT an
+// import. Strip comments FIRST: a maintainer note explaining the import would
+// otherwise satisfy this check on its own and keep CI green after the real
+// import was deleted. Doing it before the fence walk also stops a fence marker
+// written inside a comment from opening a phantom code block.
+// An unterminated `<!--` swallows the rest of the file, which fails safe: the
+// guard reports a missing import rather than trusting text of unclear status.
+const source = readFileSync(claudePath, "utf8")
+  .replace(/<!--[\s\S]*?-->/g, " ")
+  .replace(/<!--[\s\S]*$/, " ");
+
+const lines = source.split(/\r?\n/);
 
 // Walk the file tracking fenced-code state instead of regex-matching whole
 // blocks. A block regex needs a CLOSING fence to match, so an unclosed fence
