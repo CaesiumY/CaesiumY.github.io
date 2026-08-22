@@ -2,63 +2,15 @@
 
 Guide for Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Overview
+<!-- 이 저장소의 지침 정본은 AGENTS.md 하나입니다. 공통 내용은 AGENTS.md만 고치세요. -->
+<!-- 아래 @AGENTS.md 는 Claude Code의 import 문법으로, 세션 시작 시 AGENTS.md 전문을 이 자리에 펼쳐 읽습니다. -->
+<!-- Windows에서는 심링크에 관리자 권한이 필요해 공식 문서가 import 방식을 권장합니다. -->
 
-Caesiumy's personal blog at https://caesiumy.dev — Astro SSG, started from the AstroPaper template and customized since. Blog posts live in `contents/blog/` (not `src/content/`).
+@AGENTS.md
 
-## Development Commands
+---
 
-```bash
-pnpm install       # Install dependencies (pnpm 10, Node 22.22.3+ / 24.16+ / 26.3+)
-pnpm dev           # Dev server (localhost:4321)
-pnpm build         # astro check + astro build + pagefind index + copy to public/
-pnpm preview       # Preview the production build
-pnpm test          # Playwright E2E tests (auto-starts the dev server)
-pnpm lint          # ESLint
-pnpm format        # Prettier write (see the CI & platform gotchas)
-pnpm sync          # Astro type sync
-```
-
-## Design Rules
-
-- ⚠️ IMPORTANT: Blog post images live in the same folder as the post markdown (`contents/blog/<post>/image.png`, referenced as `./image.png`) — never in `public/`, which bypasses Astro image optimization. Use markdown image syntax, not HTML `<img>` tags.
-- ⚠️ IMPORTANT: Never disable ESLint rules or ignore files without explicit user permission — fix the root cause instead. If disabling is truly unavoidable, write `// eslint-disable-next-line <rule> -- Reason: <detailed reason>` and report it as a "Confirmation Required" item in your final response.
-- Verify changes with `pnpm build` and inspect `dist/`, not just the dev server — image optimization, pagefind indexing, and scheduled-post filtering happen only at build time, so dev-only verification can pass while the build is broken.
-- Use Conventional Commits for all commit messages.
-
-## Gotchas & Landmines
-
-### View Transitions (ClientRouter)
-
-Page navigations swap the DOM without a full reload. Three rules prevent the listener-leak class of bugs (fixed across PR #75/#76, guarded by `e2e/listener-leak.spec.ts`):
-
-- An inline `<script>` without `data-astro-rerun` runs once per browser session — listeners attached directly to page elements go dead on revisit. Attach to `document` with event delegation plus a global guard flag instead (pattern: `ThemeToggle.astro`, `PdfDownloadButton.astro`).
-- Never add listeners to persistent targets (`document`, `window`, `MediaQueryList`) on every swap — they accumulate. Sanctioned patterns: `data-astro-rerun` + AbortController aborted on `astro:before-swap` (`BackToTopButton.astro`, `progressBar.ts`), or hoist the listener to module top level and query the DOM fresh inside the handler (`Navigation.astro`).
-- Never cache DOM element references in module scope — after a swap they point at a detached tree (this silently broke ShareLinks). Re-initialize on `astro:page-load` with an idempotency guard (`ShareLinks.astro`).
-- When adding a new interactive script, extend `e2e/listener-leak.spec.ts` so the leak invariant covers it.
-
-### Content pipeline
-
-- Posts are plain `.md` only — there is no MDX integration. Files whose **filename** starts with `_` are excluded from the blog collection (loader pattern `**/[^_]*.md`), a stronger exclusion than `draft: true`. ⚠️ `_`-prefixed **directories are NOT excluded**: `contents/blog/_samples/` (17 posts) does load into the collection and shows up in dev listings — they are all `draft: true`, so only production hides them. Count posts with the loader's rule, not by filtering `_samples` out of a `find`.
-- Scheduled publishing is build-time only: a post with a future `pubDatetime` stays hidden until a build runs after that time (minus the 15-minute `SITE.scheduledPostMargin`). Without a redeploy it never appears. Dev mode shows drafts.
-- Omitted `tags` defaults to `["others"]`.
-- A `## 목차` heading inside a post triggers remark-toc auto-generation, collapsed under "목차 보기".
-- Add remark/rehype plugins via `markdown.processor: unified({...})` in `astro.config.ts` (Astro 6.4+ style) — the legacy top-level `markdown.remarkPlugins`/`rehypePlugins`/`remarkRehype` keys are deprecated.
-- The frontmatter schema lives in `src/content.config.ts` (`pubDatetime`, `modDatetime`, `ogImage`, `series`, ...) — read it before writing frontmatter; field names differ from upstream AstroPaper docs.
-- Translated posts must live under `contents/blog/translation/` and have a title starting with `[번역]` — the two must always agree, and `scripts/check-post-classification.mjs` enforces this in CI.
-
-### Build & search
-
-- The build chain is `astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/`. The copied `public/pagefind` is gitignored — search in dev mode only works after at least one local build.
-- Dynamic OG images (satori) require three local font files in `src/assets/fonts/` (Pretendard Regular/Bold, NotoEmoji) — missing fonts throw and fail the build.
-
-### CI & platform
-
-- The merge gate is the single `Code standards & build` job (audit → lint → format check → docs sync → asset lint → post classification → integrity self-test → build → E2E). The `Claude Code Review` workflow is advisory — its failures do not block merges.
-- Windows: after `pnpm format`, `git status` may list files as modified with no real content change (CRLF). Judge with `git diff` and restore false positives with `git checkout`. A fresh Windows checkout can also fail `pnpm format:check` on nearly every file (`endOfLine: "lf"` vs CRLF working copies) — trust the CI verdict and never mass-reformat to "fix" it.
-- Playwright runs against the dev server (port 4321), not the build; CI uses 1 worker with 2 retries. Test fixtures reference real post slugs (`e2e/fixtures/test-posts.ts`) — renaming those posts breaks the suite.
-- `CLAUDE.md` and `AGENTS.md` are mirrors — when editing one, mirror the change to the other. Only the title line, the intro line, and the `## Skills` section may differ; any other divergence fails CI (`node scripts/check-agent-docs-sync.mjs`).
-- Skill/agent definitions are linted by `node scripts/check-claude-assets.mjs` (also in CI): skill frontmatter must have `name`/`description`/`allowed-tools` with `name` matching the directory; agent `model` must be an alias (haiku|sonnet|opus, never a concrete model ID); `subagent_type`/`agentType` references (SKILL.md + references/*.md) must name a defined agent (`general-purpose` is forbidden); referenced `.claude/...` paths must exist.
+아래는 Claude Code 전용 내용입니다. Codex에는 해당하지 않으므로 AGENTS.md에는 넣지 마세요.
 
 ## Skills (Claude Code 스킬 시스템)
 
@@ -76,7 +28,3 @@ Page navigations swap the DOM without a full reload. Three rules prevent the lis
 - 번역 파이프라인은 오케스트레이터-워커 구조 — 메인 루프(Opus)는 조율 전용, 번역·검토·다듬기는 frontmatter 모델(haiku|sonnet|opus)의 전담 에이전트가 수행 (translate-writer SKILL.md '오케스트레이션 원칙' 섹션 참조)
 - 재작성 단계(Phase 2 수정, Phase 3 polish, 외부 윤문 도구) 뒤에는 무결성 게이트 필수: `node .claude/skills/translate-writer/scripts/check-translation-integrity.mjs <before.md> <after.md>` (헤딩·이미지·코드·수치·커맨드 불변 검사, exit 1이면 GATE 2 진입 금지). polish로 바뀐 문장은 translation-verifier 델타 모드로 재검증 — 원문을 보지 않는 윤문이 verifier 수정을 되돌린 사례가 있음
 - 사용자 게이트는 `✋ GATE N — AskUserQuestion` 표기로 통일 — 게이트에서 AskUserQuestion 없이 다음 Phase 진행 금지
-
-## Environment
-
-Optional env vars (schema in `astro.config.ts`): `PUBLIC_GOOGLE_SITE_VERIFICATION`, `PUBLIC_GOOGLE_ANALYTICS_ID`.
