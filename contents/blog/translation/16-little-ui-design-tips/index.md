@@ -5,7 +5,7 @@ pubDatetime: 2026-08-21T23:23:19Z
 modDatetime: 2026-08-21T23:23:19Z
 tags: ["translation", "ui-design", "ux", "accessibility", "design-system", "figma"]
 featured: false
-draft: true
+draft: false
 ---
 
 > 이 문서는 [16 little UI design tips that make a big impact](https://www.adhamdannaway.com/blog/ui-design/ui-design-tips)의 한글 번역입니다.
