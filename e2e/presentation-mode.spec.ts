@@ -1,8 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 
 // 목차(## 목차)가 있는 번역 포스트 - Agenda 슬라이드 검증 가능
-const TEST_POST_SLUG = "translation/claude-skills-guide-part-4";
-const TEST_POST_URL = `/posts/${TEST_POST_SLUG}`;
+const TEST_POST_URL = "/posts/translation/claude-skills-guide-part-4";
 // 핵심 요약 → details → hr → 도입 본문 패턴을 가진 실제 번역 포스트.
 // 별도 fixture를 콘텐츠 컬렉션에 넣지 않기 위해 이 URL을 사용하므로,
 // 슬러그나 문서 구조가 바뀌면 이 테스트도 함께 갱신해야 한다.

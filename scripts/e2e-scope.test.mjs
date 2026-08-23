@@ -14,7 +14,102 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { isScopeSafe, literalPointsToDoc } from "./e2e-scope.mjs";
+import {
+  isBareSlugReference,
+  isScopeSafe,
+  literalPointsToDoc,
+  postSlugIntent,
+} from "./e2e-scope.mjs";
+
+const RESERVED = new Set(["authored", "translated"]);
+
+// 실제 글 URL만 담는다 — isBareSlugReference는 이 맵을 조회해 판정한다.
+const POST_URLS = new Map([
+  ["/posts/ai/some-post", "contents/blog/ai/some-post/"],
+  ["/posts/translation/foo", "contents/blog/translation/foo/"],
+]);
+
+const violates = literal =>
+  isBareSlugReference(literal, postSlugIntent(literal, RESERVED), POST_URLS);
+
+test("isBareSlugReference flags a post named without the /posts/ prefix", async t => {
+  const violations = {
+    "a bare slug for a real post": "ai/some-post",
+    "another bare slug": "translation/foo",
+    "a bare slug with a trailing slash": "translation/foo/",
+  };
+
+  for (const [label, literal] of Object.entries(violations)) {
+    await t.test(label, () => {
+      assert.equal(violates(literal), true);
+    });
+  }
+});
+
+test("isBareSlugReference stays quiet on everything else", async t => {
+  const quiet = {
+    // The compliant form. postSlugIntent already resolved it, so the
+    // convention branch must not double-report the same literal.
+    "the prefixed URL for the same post": "/posts/ai/some-post",
+    "a prefixed URL for a missing post": "/posts/ai/gone",
+    // These also produce slug === null, so they reach this predicate. They are
+    // excluded because prefixing them again yields "/posts//posts/…", which no
+    // real post URL can equal — the condition itself rules them out.
+    "a tab route": "/posts/authored",
+    "a paginated tab route": "/posts/translated/2",
+    "root pagination": "/posts/2",
+    "the list route": "/posts",
+    // The literal that `TEST_POST_URL.replace("/posts/", "")` contributes.
+    "the bare prefix": "/posts/",
+    "a MIME type": "image/png",
+    "a bare slug for a post that does not exist": "career/gone",
+  };
+
+  for (const [label, literal] of Object.entries(quiet)) {
+    await t.test(label, () => {
+      assert.equal(violates(literal), false);
+    });
+  }
+});
+
+test("postSlugIntent reads a post reference out of a /posts/ URL", async t => {
+  const slugs = {
+    "a nested post": ["/posts/translation/foo", "translation/foo"],
+    "a top-level post": ["/posts/adding-new-post", "adding-new-post"],
+    // Astro serves both forms, so the map lookup key must not depend on it.
+    "a trailing slash": ["/posts/translation/foo/", "translation/foo"],
+  };
+
+  for (const [label, [literal, expected]] of Object.entries(slugs)) {
+    await t.test(label, () => {
+      assert.equal(postSlugIntent(literal, RESERVED), expected);
+    });
+  }
+});
+
+test("postSlugIntent ignores anything that is not a post URL", async t => {
+  const ignored = {
+    "a tab route": "/posts/authored",
+    "a paginated tab route": "/posts/translated/2",
+    "the list route itself": "/posts",
+    "root pagination": "/posts/2",
+    "an unrelated path": "/about",
+    "a MIME type": "image/png",
+    // The heuristic this replaced accepted bare slugs whenever the category
+    // still had posts, so a spec's pin silently vanished once the last post in
+    // that category was deleted. Bare slugs are now always rejected — and
+    // runCheck fails loudly when one of them would have resolved to a post.
+    "a bare slug that names a real post":
+      "ai/claude-code-token-burning-session-retrospect",
+    "a bare slug in an emptied category": "career/foo",
+  };
+
+  for (const [label, literal] of Object.entries(ignored)) {
+    await t.test(label, () => {
+      assert.equal(postSlugIntent(literal, RESERVED), null);
+    });
+  }
+});
 
 test("literalPointsToDoc treats a whole-literal path as a reference", async t => {
   const referencing = {

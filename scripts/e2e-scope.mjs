@@ -32,6 +32,8 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { kebabCase } from "es-toolkit";
 
+import { reservedRouteSegments } from "./lib/posts-routes.mjs";
+
 const repoRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   ".."
@@ -41,7 +43,6 @@ const BLOG_DIR = "contents/blog";
 const PAGES_DIR = "contents/pages";
 const E2E_DIR = "e2e";
 const FIXTURES_DIR = "e2e/fixtures";
-const POSTS_ROUTES = "src/pages/posts";
 
 // 콘텐츠만 바뀐 PR에서도 항상 도는 스펙. 특정 글이 아니라 목록 전체의 분류·
 // 페이지네이션 불변식을 보므로, 글이 늘거나 줄 때 깨질 수 있는 유일한 축이다.
@@ -152,18 +153,6 @@ function buildPageUrlMap() {
 }
 
 /**
- * /posts 아래 정적 라우트 이름. check-post-classification.mjs와 같은 이유로
- * 상수를 적지 않고 디렉터리에서 파생한다 — 탭이 늘어도 고칠 필요가 없다.
- */
-function reservedRouteSegments() {
-  const full = abs(POSTS_ROUTES);
-  if (!existsSync(full)) return [];
-  return readdirSync(full, { withFileTypes: true })
-    .filter(entry => entry.isDirectory() && !entry.name.startsWith("["))
-    .map(entry => entry.name);
-}
-
-/**
  * 파일에서 보간 없는 문자열 리터럴을 모두 뽑는다.
  *
  * 이스케이프된 따옴표(`"foo\"bar"`)에서 경계를 잘못 잡지 않도록 escape 시퀀스를
@@ -199,6 +188,24 @@ const extractLiterals = relFile => literalsIn(readFileSync(abs(relFile), "utf8")
 export function literalPointsToDoc(literal, doc) {
   const specifier = literal.split(/[?#]/)[0];
   return specifier === doc || specifier.endsWith(`/${doc}`);
+}
+
+/**
+ * 리터럴이 규약을 어기고 맨슬러그로 글을 지목하는가.
+ *
+ * 규약: 글은 /posts/ 접두어가 붙은 URL로만 지목한다. 맨슬러그는 무관한
+ * 리터럴과 형태로 구분되지 않아, 허용하면 탐지가 다시 콘텐츠 상태에 의존하게
+ * 된다. 핀은 걸리되(buildPinMap이 두 형태를 다 시도한다) 여기서 시끄럽게
+ * 실패시켜 조용한 축소로 새지 않게 막는다.
+ *
+ * `slug === null`인 리터럴에는 예약 라우트(/posts/authored)와 페이지네이션
+ * (/posts/2)도 섞여 있지만, 이미 /posts/가 붙어 있어 조회 키가
+ * "/posts//posts/authored"로 뭉개져 절대 매칭되지 않는다. 우연이 아니라
+ * "접두어를 한 번 더 붙여도 실존 글이 되는 리터럴만 위반"이라는 조건 자체가
+ * 그 둘을 배제한다.
+ */
+export function isBareSlugReference(literal, slug, postUrls) {
+  return slug === null && postUrls.has(`/posts/${normalizeUrl(literal)}`);
 }
 
 /** 스펙이 참조하는 fixture 파일 경로 목록. */
@@ -261,25 +268,22 @@ function buildPinMap(specSources, postUrls, pageUrls) {
 /**
  * 리터럴이 "글을 지목하려는 의도"인지 판별해 슬러그를 돌려준다. 아니면 null.
  *
- * 두 형태를 모두 받는다. 스펙마다 관용이 다르기 때문이다:
- *   "/posts/translation/foo"  — 완성된 URL (og-image, presentation-mode)
- *   "translation/foo"         — 맨슬러그 상수 (fixtures, heading-links)
+ * `/posts/` 접두어가 붙은 형태만 인정한다. 접두어 없는 맨슬러그
+ * ("translation/foo")는 "image/png" 같은 무관한 리터럴과 형태로 구분되지 않아,
+ * 예전에는 "첫 세그먼트가 현존 글에 있는가"라는 휴리스틱으로 갈랐다. 그런데 그
+ * 판별은 콘텐츠 상태에 의존해서, 한 카테고리의 글이 전부 사라지면 그 스펙의
+ * 리터럴이 무관한 문자열로 재분류되며 가드도 핀도 조용히 빠졌다(빈 디렉터리는
+ * git이 추적하지 않으므로 디렉터리에서 도출해도 CI에서는 복구되지 않는다).
  *
- * 맨슬러그는 "image/png" 같은 무관한 리터럴과 구분해야 하므로, 첫 세그먼트가
- * 실제 글 URL의 첫 세그먼트 집합에 있는 경우만 글 참조로 본다. 단일 세그먼트는
- * 카테고리 이름("ai")과 구분되지 않으므로 제외한다.
+ * 그래서 휴리스틱을 없애고 규약으로 바꿨다. 스펙은 글을 URL로만 지목하고,
+ * 맨슬러그로 걸린 핀은 runCheck가 규약 위반으로 실패시킨다.
  */
-function postSlugIntent(literal, reserved, postFirstSegments) {
-  const normalized = normalizeUrl(literal);
-  const asUrl = normalized.match(/^\/posts\/(.+)$/);
-  if (asUrl) {
-    const [first] = asUrl[1].split("/");
-    if (reserved.has(first) || /^\d+$/.test(first)) return null;
-    return asUrl[1];
-  }
-  const segments = normalized.split("/");
-  if (segments.length < 2 || !postFirstSegments.has(segments[0])) return null;
-  return normalized;
+export function postSlugIntent(literal, reserved) {
+  const asUrl = normalizeUrl(literal).match(/^\/posts\/(.+)$/);
+  if (!asUrl) return null;
+  const [first] = asUrl[1].split("/");
+  if (reserved.has(first) || /^\d+$/.test(first)) return null;
+  return asUrl[1];
 }
 
 /**
@@ -322,20 +326,24 @@ function buildInputFiles() {
  */
 function runCheck(specSources, postUrls, pins) {
   const reserved = new Set(reservedRouteSegments());
-  const postFirstSegments = new Set(
-    [...postUrls.keys()].map(url => url.split("/")[2])
-  );
   // fixture는 여러 스펙이 공유하므로 같은 위반이 스펙 수만큼 중복된다
   const errors = new Set();
 
   for (const sources of specSources.values()) {
     for (const [source, literals] of sources) {
       for (const literal of literals) {
-        const slug = postSlugIntent(literal, reserved, postFirstSegments);
-        if (slug === null || postUrls.has(`/posts/${slug}`)) continue;
-        errors.add(
-          `  ${source}: "${literal}" — 이 URL에 해당하는 글이 없습니다 (이름이 바뀌었거나 삭제됨)`
-        );
+        const slug = postSlugIntent(literal, reserved);
+        if (slug !== null && !postUrls.has(`/posts/${slug}`)) {
+          errors.add(
+            `  ${source}: "${literal}" — 이 URL에 해당하는 글이 없습니다 (이름이 바뀌었거나 삭제됨)`
+          );
+        }
+
+        if (isBareSlugReference(literal, slug, postUrls)) {
+          errors.add(
+            `  ${source}: "${literal}" — 글은 "/posts/" 접두어가 붙은 URL로 지목하세요 (맨슬러그는 무관한 문자열과 구분되지 않습니다)`
+          );
+        }
       }
     }
   }
