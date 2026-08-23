@@ -151,6 +151,14 @@ const structuredData = noindex
     {robots && <meta name="robots" content={robots} />}
     <link rel="sitemap" href="/sitemap-index.xml" />
 
+    <!-- 에이전트용 사이트 안내 (llmstxt.org) -->
+    <link
+      rel="alternate"
+      type="text/plain"
+      title="llms.txt"
+      href={new URL("llms.txt", Astro.site)}
+    />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={pageType} />
     <meta property="og:title" content={title} />
