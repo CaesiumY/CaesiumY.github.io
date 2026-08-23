@@ -66,7 +66,7 @@ ${SITE.author}(${SITE.authorEn})이 운영하는 한국어 1인 기술 블로그
 
 ## How to fetch
 
-- 전체 URL 목록: ${absolute("/sitemap-index.xml")}
+- 전체 URL 목록: ${absolute("/sitemap.xml")}
 - 갱신 구독: ${absolute("/rss.xml")}
 - 전문 검색: ${absolute("/search")}?q=검색어 (Pagefind 기반이라 자바스크립트가 필요합니다)
 - 태그별 목록: ${absolute("/tags")}

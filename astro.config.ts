@@ -14,6 +14,15 @@ import {
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import { SITE } from "./src/config";
 
+// 사이트맵에서 제외할 페이지. /portfolio는 noindex이고, /projects는
+// SITE.showProjects가 꺼지면 404로 리다이렉트된다.
+const EXCLUDED_FROM_SITEMAP = new Set(
+  [
+    `${SITE.website}/portfolio`,
+    ...(SITE.showProjects ? [] : [`${SITE.website}/projects`]),
+  ].map(url => url.replace(/\/+$/, ""))
+);
+
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
@@ -35,10 +44,10 @@ export default defineConfig({
       },
     }),
     sitemap({
-      filter: page =>
-        (SITE.showProjects || !page.endsWith("/projects")) &&
-        !page.endsWith("/portfolio") &&
-        !page.endsWith("/portfolio/"),
+      // endsWith로 걸러내면 /tags/portfolio 같은 태그 페이지까지 같이
+      // 빠진다(실제로 빠져 있었다). 제외 대상은 정확히 그 URL 하나뿐이므로
+      // 후행 슬래시만 정규화해 완전 일치로 판정한다.
+      filter: page => !EXCLUDED_FROM_SITEMAP.has(page.replace(/\/+$/, "")),
     }),
   ],
   markdown: {
