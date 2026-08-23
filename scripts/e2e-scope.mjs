@@ -190,6 +190,24 @@ export function literalPointsToDoc(literal, doc) {
   return specifier === doc || specifier.endsWith(`/${doc}`);
 }
 
+/**
+ * 리터럴이 규약을 어기고 맨슬러그로 글을 지목하는가.
+ *
+ * 규약: 글은 /posts/ 접두어가 붙은 URL로만 지목한다. 맨슬러그는 무관한
+ * 리터럴과 형태로 구분되지 않아, 허용하면 탐지가 다시 콘텐츠 상태에 의존하게
+ * 된다. 핀은 걸리되(buildPinMap이 두 형태를 다 시도한다) 여기서 시끄럽게
+ * 실패시켜 조용한 축소로 새지 않게 막는다.
+ *
+ * `slug === null`인 리터럴에는 예약 라우트(/posts/authored)와 페이지네이션
+ * (/posts/2)도 섞여 있지만, 이미 /posts/가 붙어 있어 조회 키가
+ * "/posts//posts/authored"로 뭉개져 절대 매칭되지 않는다. 우연이 아니라
+ * "접두어를 한 번 더 붙여도 실존 글이 되는 리터럴만 위반"이라는 조건 자체가
+ * 그 둘을 배제한다.
+ */
+export function isBareSlugReference(literal, slug, postUrls) {
+  return slug === null && postUrls.has(`/posts/${normalizeUrl(literal)}`);
+}
+
 /** 스펙이 참조하는 fixture 파일 경로 목록. */
 function importedFixtures(relSpec) {
   const source = readFileSync(abs(relSpec), "utf8");
@@ -321,11 +339,7 @@ function runCheck(specSources, postUrls, pins) {
           );
         }
 
-        // 규약: 글은 /posts/ 접두어가 붙은 URL로만 지목한다. 맨슬러그는 무관한
-        // 리터럴과 형태로 구분되지 않아, 허용하면 탐지가 다시 콘텐츠 상태에
-        // 의존하게 된다. 핀은 걸리되(buildPinMap이 두 형태를 다 시도한다)
-        // 여기서 시끄럽게 실패시켜 조용한 축소로 새지 않게 막는다.
-        if (slug === null && postUrls.has(`/posts/${normalizeUrl(literal)}`)) {
+        if (isBareSlugReference(literal, slug, postUrls)) {
           errors.add(
             `  ${source}: "${literal}" — 글은 "/posts/" 접두어가 붙은 URL로 지목하세요 (맨슬러그는 무관한 문자열과 구분되지 않습니다)`
           );
