@@ -170,8 +170,7 @@ function reservedRouteSegments() {
  * 한 토큰으로 소비한다. 파서가 아니므로 주석 안의 아포스트로피 같은 가짜
  * 리터럴은 여전히 섞이지만, 글 URL로 해석되지 않으면 그대로 버려진다.
  */
-function extractLiterals(relFile) {
-  const source = readFileSync(abs(relFile), "utf8");
+function literalsIn(source) {
   const literals = new Set();
   const patterns = [
     /"((?:[^"\\\n]|\\.)*)"/g,
@@ -182,6 +181,24 @@ function extractLiterals(relFile) {
     for (const [, value] of source.matchAll(pattern)) literals.add(value);
   }
   return literals;
+}
+
+const extractLiterals = relFile => literalsIn(readFileSync(abs(relFile), "utf8"));
+
+/**
+ * 리터럴 하나가 문서 파일을 경로로 가리키는가.
+ *
+ * Vite는 `import readme from "../README.md?raw"`처럼 접미사를 붙인 import를
+ * 지원하므로 비교 전에 ?query와 #hash를 떼어낸다. 떼지 않으면 실제 참조를
+ * 놓쳐 그 문서 변경이 안전하다고 잘못 판정된다.
+ *
+ * 부분 문자열이 아니라 "리터럴 전체가 경로"일 때만 참이다 — "CLAUDE.md"는
+ * src/data/projects.ts의 소개 문장에도 들어 있어서, 부분 일치로 보면 산문이
+ * CI를 멈춘다.
+ */
+export function literalPointsToDoc(literal, doc) {
+  const specifier = literal.split(/[?#]/)[0];
+  return specifier === doc || specifier.endsWith(`/${doc}`);
 }
 
 /** 스펙이 참조하는 fixture 파일 경로 목록. */
@@ -265,6 +282,21 @@ function postSlugIntent(literal, reserved, postFirstSegments) {
   return normalized;
 }
 
+/**
+ * 레포 루트의 마크다운 문서(AGENTS.md, CLAUDE.md, README.md 등).
+ *
+ * 콘텐츠 컬렉션은 contents/blog·contents/pages만 로드하므로 루트 문서는 렌더
+ * 대상이 아니다. 목록을 상수로 적지 않고 실제 디렉터리에서 읽어, 문서가
+ * 늘거나 이름이 바뀌어도 따라온다.
+ */
+const isRootMarkdown = p => !p.includes("/") && p.endsWith(".md");
+
+function rootMarkdownFiles() {
+  return readdirSync(repoRoot, { withFileTypes: true })
+    .filter(entry => entry.isFile() && entry.name.endsWith(".md"))
+    .map(entry => entry.name);
+}
+
 /** 전제 검사 대상이 되는 빌드 입력 텍스트 파일. */
 function buildInputFiles() {
   const fromRoots = BUILD_INPUT_ROOTS.flatMap(root =>
@@ -327,13 +359,31 @@ function runCheck(specSources, postUrls, pins) {
     }
   }
 
+  const rootDocs = rootMarkdownFiles();
   for (const file of buildInputFiles()) {
     const source = readFileSync(abs(file), "utf8");
-    // 슬래시를 붙이지 않고 찾는다 — 세그먼트를 나눠 조합한 경로도 잡아야 한다
+
+    // 디렉터리는 순수 이름을 통째로 찾는다 — 세그먼트를 나눠 조합한 경로도
+    // 잡아야 하고, ".claude"/".agents"는 산문에 등장하지 않아 오탐이 없다.
     for (const dir of NON_BUILD_DIRS) {
       if (!source.includes(dir)) continue;
       errors.add(
         `  ${file}: "${dir}"를 참조합니다 — 이 경로는 빌드에 영향을 주지 않는다는 전제로 E2E 스코핑 안전 목록에 있습니다. 빌드가 실제로 읽는다면 NON_BUILD_DIRS에서 빼세요`
+      );
+    }
+
+    // 문서 파일명은 같은 방법을 쓸 수 없다. "CLAUDE.md"는 산문에도 나온다
+    // (src/data/projects.ts의 스킬 소개 문장). 그래서 문자열 리터럴 하나가
+    // 통째로 그 파일을 가리키는 경로일 때만 참조로 본다 — 긴 문장 안에
+    // 파일명이 섞인 경우와 구분된다.
+    const literals = literalsIn(source);
+    for (const doc of rootDocs) {
+      const referenced = [...literals].some(literal =>
+        literalPointsToDoc(literal, doc)
+      );
+      if (!referenced) continue;
+      errors.add(
+        `  ${file}: "${doc}"를 경로로 참조합니다 — 루트 마크다운은 빌드에 영향을 주지 않는다는 전제로 E2E 스코핑 안전 목록에 있습니다. 빌드가 실제로 읽는다면 isScopeSafe의 루트 문서 분기를 좁히세요`
       );
     }
   }
@@ -393,11 +443,12 @@ function readStdin() {
  * 글(contents/)이거나, 빌드가 읽지 않는 경로다. 그 외에는 전부 모른다고 보고
  * ALL로 떨어진다 — 판단 근거가 없는 경로를 안전하다고 우기지 않는다.
  */
-function isScopeSafe(file) {
+export function isScopeSafe(file) {
   const p = toPosix(file);
   return (
     p.startsWith("contents/") ||
-    NON_BUILD_DIRS.some(dir => p.startsWith(nonBuildPrefix(dir)))
+    NON_BUILD_DIRS.some(dir => p.startsWith(nonBuildPrefix(dir))) ||
+    isRootMarkdown(p)
   );
 }
 
@@ -424,18 +475,26 @@ function resolveScope(changed, pins) {
   return [...selected].sort().join(" ");
 }
 
-const args = process.argv.slice(2);
-const specSources = collectSpecSources();
-const postUrls = buildPostUrlMap();
-const pins = buildPinMap(specSources, postUrls, buildPageUrlMap());
+function main(args) {
+  const specSources = collectSpecSources();
+  const postUrls = buildPostUrlMap();
+  const pins = buildPinMap(specSources, postUrls, buildPageUrlMap());
 
-if (args.includes("--check")) {
-  runCheck(specSources, postUrls, pins);
-} else {
+  if (args.includes("--check")) {
+    runCheck(specSources, postUrls, pins);
+    return;
+  }
   const refIndex = args.indexOf("--changed-from");
   const changed =
-    refIndex === -1
-      ? readStdin()
-      : changedFilesFrom(args[refIndex + 1]);
+    refIndex === -1 ? readStdin() : changedFilesFrom(args[refIndex + 1]);
   process.stdout.write(`${resolveScope(changed, pins)}\n`);
+}
+
+// 테스트에서 import할 수 있도록, 직접 실행할 때만 돈다. 가드가 없으면 import가
+// readStdin()까지 타서 stdin이 열려 있는 환경에서 그대로 멈춘다.
+if (
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+) {
+  main(process.argv.slice(2));
 }
