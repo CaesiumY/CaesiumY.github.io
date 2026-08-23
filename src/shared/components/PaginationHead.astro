@@ -1,0 +1,18 @@
+---
+import type { Page } from "astro";
+import type { CollectionEntry } from "astro:content";
+import { SITE } from "@/config";
+
+// 페이지네이션된 목록에서 크롤러가 2페이지 너머로 넘어갈 수 있게 하는 head 링크.
+// Layout의 name="head" 슬롯에 넣어 쓴다.
+export interface Props {
+  page: Page<CollectionEntry<"blog">>;
+}
+
+const { page } = Astro.props;
+
+const absolute = (path: string) => new URL(path, SITE.website).href;
+---
+
+{page.url.prev && <link rel="prev" href={absolute(page.url.prev)} />}
+{page.url.next && <link rel="next" href={absolute(page.url.next)} />}

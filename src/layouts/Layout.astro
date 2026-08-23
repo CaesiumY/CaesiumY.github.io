@@ -326,6 +326,9 @@ const structuredData = noindex
         });
       })();
     </script>
+    <!-- 페이지별 head 추가분(rel=next/prev 등). 채우지 않으면 아무것도
+    렌더하지 않으므로 기존 호출부에는 영향이 없다. -->
+    <slot name="head" />
   </head>
   <body>
     <slot />
