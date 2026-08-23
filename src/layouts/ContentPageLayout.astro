@@ -1,0 +1,36 @@
+---
+import Header from "@/layouts/components/Header.astro";
+import Footer from "@/layouts/components/Footer.astro";
+import Breadcrumb from "@/layouts/components/Breadcrumb.astro";
+import Layout from "./Layout.astro";
+import { SITE } from "@/config";
+
+// AboutLayout과 달리 저자 신원(Person JSON-LD)이나 이력서 PDF 버튼을 강제하지
+// 않는 범용 문서 레이아웃. 개인정보 처리방침이나 연락처처럼 "사이트에 관한
+// 문서"에 쓴다.
+export interface Props {
+  frontmatter: {
+    title: string;
+    description?: string;
+    robots?: string;
+  };
+  sectionId: string;
+}
+
+const { frontmatter, sectionId } = Astro.props;
+---
+
+<Layout
+  title={`${frontmatter.title} | ${SITE.title}`}
+  description={frontmatter.description || SITE.desc}
+  robots={frontmatter.robots}
+>
+  <Header />
+  <Breadcrumb />
+  <main id="main-content">
+    <section id={sectionId} class="app-prose mb-28 max-w-app">
+      <slot />
+    </section>
+  </main>
+  <Footer />
+</Layout>

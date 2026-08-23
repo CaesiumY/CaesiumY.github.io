@@ -45,6 +45,20 @@ const { noMarginTop = false } = Astro.props;
       <span>Copyright &#169; {currentYear}</span>
       <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
       <span>All rights reserved.</span>
+      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+      <a
+        href="/privacy"
+        class="hover:text-accent hover:underline focus-visible:underline"
+      >
+        개인정보 처리방침
+      </a>
+      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+      <a
+        href="/contact"
+        class="hover:text-accent hover:underline focus-visible:underline"
+      >
+        연락처
+      </a>
       {
         import.meta.env.DEV && (
           <>

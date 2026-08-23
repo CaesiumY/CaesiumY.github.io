@@ -88,6 +88,8 @@ ${series.map(({ series: slug, seriesName, count }) => `- [${seriesName}](${absol
 
 - [소개](${absolute("/about")}): 저자 이력, 기술 스택, 연락처
 - [프로젝트](${absolute("/projects")}): 만든 것들
+- [연락처](${absolute("/contact")}): 문의 방법과 에이전트용 인용 안내
+- [개인정보 처리방침](${absolute("/privacy")}): 이 사이트가 거치는 외부 서비스와 브라우저 저장 항목
 - [전체 글](${absolute("/posts")}): 최신순 목록
 `;
 
