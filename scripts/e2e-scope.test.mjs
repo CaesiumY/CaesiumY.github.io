@@ -14,7 +14,52 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { isScopeSafe, literalPointsToDoc } from "./e2e-scope.mjs";
+import {
+  isScopeSafe,
+  literalPointsToDoc,
+  postSlugIntent,
+} from "./e2e-scope.mjs";
+
+const RESERVED = new Set(["authored", "translated"]);
+
+test("postSlugIntent reads a post reference out of a /posts/ URL", async t => {
+  const slugs = {
+    "a nested post": ["/posts/translation/foo", "translation/foo"],
+    "a top-level post": ["/posts/adding-new-post", "adding-new-post"],
+    // Astro serves both forms, so the map lookup key must not depend on it.
+    "a trailing slash": ["/posts/translation/foo/", "translation/foo"],
+  };
+
+  for (const [label, [literal, expected]] of Object.entries(slugs)) {
+    await t.test(label, () => {
+      assert.equal(postSlugIntent(literal, RESERVED), expected);
+    });
+  }
+});
+
+test("postSlugIntent ignores anything that is not a post URL", async t => {
+  const ignored = {
+    "a tab route": "/posts/authored",
+    "a paginated tab route": "/posts/translated/2",
+    "the list route itself": "/posts",
+    "root pagination": "/posts/2",
+    "an unrelated path": "/about",
+    "a MIME type": "image/png",
+    // The heuristic this replaced accepted bare slugs whenever the category
+    // still had posts, so a spec's pin silently vanished once the last post in
+    // that category was deleted. Bare slugs are now always rejected — and
+    // runCheck fails loudly when one of them would have resolved to a post.
+    "a bare slug that names a real post":
+      "ai/claude-code-token-burning-session-retrospect",
+    "a bare slug in an emptied category": "career/foo",
+  };
+
+  for (const [label, literal] of Object.entries(ignored)) {
+    await t.test(label, () => {
+      assert.equal(postSlugIntent(literal, RESERVED), null);
+    });
+  }
+});
 
 test("literalPointsToDoc treats a whole-literal path as a reference", async t => {
   const referencing = {

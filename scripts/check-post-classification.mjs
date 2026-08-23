@@ -19,6 +19,8 @@ import { readdirSync, readFileSync, existsSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
+import { reservedRouteSegments } from "./lib/posts-routes.mjs";
+
 const repoRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   ".."
@@ -26,16 +28,6 @@ const repoRoot = path.resolve(
 const BLOG = path.join(repoRoot, "contents/blog");
 const TRANSLATION_DIR = path.join(BLOG, "translation");
 const TITLE_PREFIX = "[번역]";
-const POSTS_ROUTES = path.join(repoRoot, "src/pages/posts");
-
-// 예약어를 상수로 적어두면 라우트가 늘 때 갱신을 잊는다. 예약의 원인 자체가
-// "/posts 아래 정적 라우트 디렉터리의 존재"이므로 그 디렉터리에서 직접 파생한다.
-// 대괄호로 시작하는 것([...page], [...slug])은 동적 라우트라 예약어가 아니다.
-function reservedDirs() {
-  return readdirSync(POSTS_ROUTES, { withFileTypes: true })
-    .filter(entry => entry.isDirectory() && !entry.name.startsWith("["))
-    .map(entry => entry.name);
-}
 
 // 발행 대상 md만 수집한다: 파일명이 _로 시작하지 않고, 경로에 _로 시작하는
 // 세그먼트(_samples 등)가 없는 .md. 주의: 로더와 다르다 — 로더 패턴
@@ -65,7 +57,7 @@ function titleStartsWithPrefix(file) {
 const allPosts = collectPosts(BLOG);
 const errors = [];
 
-const reserved = reservedDirs();
+const reserved = reservedRouteSegments();
 
 for (const name of reserved) {
   if (existsSync(path.join(BLOG, name))) {

@@ -5,6 +5,14 @@
  * - slug frontmatter 없음 → URL 경로와 localStorage 키가 일치 (continue-reading 요구)
  * - PostNavigation의 이전/다음 글 링크 존재 (listener-leak의 View Transitions 왕복 요구)
  * - 스크롤 가능 높이가 충분히 긴 글 (back-to-top 30% 가시성 임계 검증 요구)
+ *
+ * 글은 반드시 `/posts/` 접두어가 붙은 URL로 지목한다. scripts/e2e-scope.mjs가
+ * 이 리터럴을 읽어 "이 스펙이 어느 글에 묶여 있는지"를 도출하는데, 접두어 없는
+ * 맨슬러그는 무관한 문자열과 형태로 구분되지 않아 탐지가 콘텐츠 상태에 의존하게
+ * 된다. 규약 위반은 `node scripts/e2e-scope.mjs --check`가 잡는다.
  */
-export const TEST_POST_SLUG = "ai/claude-code-token-burning-session-retrospect";
-export const TEST_POST_URL = `/posts/${TEST_POST_SLUG}`;
+export const TEST_POST_URL =
+  "/posts/ai/claude-code-token-burning-session-retrospect";
+
+/** localStorage 키. 위 선정 조건대로 URL 경로에서 그대로 파생된다. */
+export const TEST_POST_SLUG = TEST_POST_URL.replace("/posts/", "");

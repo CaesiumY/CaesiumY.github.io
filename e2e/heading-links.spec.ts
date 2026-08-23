@@ -1,8 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 
-// 테스트용 블로그 포스트 (기존 테스트와 동일한 포스트 사용)
-const TEST_POST_SLUG = "ai/claude-code-token-burning-session-retrospect";
-const TEST_POST_URL = `/posts/${TEST_POST_SLUG}`;
+import { TEST_POST_URL } from "./fixtures/test-posts";
 
 /**
  * hydration 및 스크립트 실행 완료 대기
