@@ -66,6 +66,8 @@ ${SITE.author}(${SITE.authorEn})이 운영하는 한국어 1인 기술 블로그
 
 ## How to fetch
 
+- 글 URL 뒤에 \`.md\`를 붙이면 HTML을 파싱하지 않고 원본 마크다운을 받습니다.
+  예: ${absolute("/posts/ai/claude-interview-agents")}.md
 - 전체 URL 목록: ${absolute("/sitemap.xml")}
 - 갱신 구독: ${absolute("/rss.xml")}
 - 전문 검색: ${absolute("/search")}?q=검색어 (Pagefind 기반이라 자바스크립트가 필요합니다)
