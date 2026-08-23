@@ -265,6 +265,21 @@ function postSlugIntent(literal, reserved, postFirstSegments) {
   return normalized;
 }
 
+/**
+ * 레포 루트의 마크다운 문서(AGENTS.md, CLAUDE.md, README.md 등).
+ *
+ * 콘텐츠 컬렉션은 contents/blog·contents/pages만 로드하므로 루트 문서는 렌더
+ * 대상이 아니다. 목록을 상수로 적지 않고 실제 디렉터리에서 읽어, 문서가
+ * 늘거나 이름이 바뀌어도 따라온다.
+ */
+const isRootMarkdown = p => !p.includes("/") && p.endsWith(".md");
+
+function rootMarkdownFiles() {
+  return readdirSync(repoRoot, { withFileTypes: true })
+    .filter(entry => entry.isFile() && entry.name.endsWith(".md"))
+    .map(entry => entry.name);
+}
+
 /** 전제 검사 대상이 되는 빌드 입력 텍스트 파일. */
 function buildInputFiles() {
   const fromRoots = BUILD_INPUT_ROOTS.flatMap(root =>
@@ -327,13 +342,31 @@ function runCheck(specSources, postUrls, pins) {
     }
   }
 
+  const rootDocs = rootMarkdownFiles();
   for (const file of buildInputFiles()) {
     const source = readFileSync(abs(file), "utf8");
-    // 슬래시를 붙이지 않고 찾는다 — 세그먼트를 나눠 조합한 경로도 잡아야 한다
+
+    // 디렉터리는 순수 이름을 통째로 찾는다 — 세그먼트를 나눠 조합한 경로도
+    // 잡아야 하고, ".claude"/".agents"는 산문에 등장하지 않아 오탐이 없다.
     for (const dir of NON_BUILD_DIRS) {
       if (!source.includes(dir)) continue;
       errors.add(
         `  ${file}: "${dir}"를 참조합니다 — 이 경로는 빌드에 영향을 주지 않는다는 전제로 E2E 스코핑 안전 목록에 있습니다. 빌드가 실제로 읽는다면 NON_BUILD_DIRS에서 빼세요`
+      );
+    }
+
+    // 문서 파일명은 같은 방법을 쓸 수 없다. "CLAUDE.md"는 산문에도 나온다
+    // (src/data/projects.ts의 스킬 소개 문장). 그래서 문자열 리터럴 하나가
+    // 통째로 그 파일을 가리키는 경로일 때만 참조로 본다 — 긴 문장 안에
+    // 파일명이 섞인 경우와 구분된다.
+    const literals = extractLiterals(file);
+    for (const doc of rootDocs) {
+      const referenced = [...literals].some(
+        literal => literal === doc || literal.endsWith(`/${doc}`)
+      );
+      if (!referenced) continue;
+      errors.add(
+        `  ${file}: "${doc}"를 경로로 참조합니다 — 루트 마크다운은 빌드에 영향을 주지 않는다는 전제로 E2E 스코핑 안전 목록에 있습니다. 빌드가 실제로 읽는다면 isScopeSafe의 루트 문서 분기를 좁히세요`
       );
     }
   }
@@ -397,7 +430,8 @@ function isScopeSafe(file) {
   const p = toPosix(file);
   return (
     p.startsWith("contents/") ||
-    NON_BUILD_DIRS.some(dir => p.startsWith(nonBuildPrefix(dir)))
+    NON_BUILD_DIRS.some(dir => p.startsWith(nonBuildPrefix(dir))) ||
+    isRootMarkdown(p)
   );
 }
 
