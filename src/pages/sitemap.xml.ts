@@ -31,11 +31,17 @@ const BUILT_AT = new Date();
 const postUpdatedAt = (post: CollectionEntry<"blog">) =>
   new Date(post.data.modDatetime ?? post.data.pubDatetime);
 
+/**
+ * 글 묶음의 최종 변경 시각. 글이 없으면 빌드 시각으로 대체한다. 비어 있을 때
+ * epoch(1970)를 내보내면 크롤러에게 죽은 페이지로 읽힌다.
+ */
 const latestOf = (posts: CollectionEntry<"blog">[]) =>
-  posts.reduce<Date>((latest, post) => {
-    const updated = postUpdatedAt(post);
-    return updated > latest ? updated : latest;
-  }, new Date(0));
+  posts.length === 0
+    ? BUILT_AT
+    : posts.reduce<Date>((latest, post) => {
+        const updated = postUpdatedAt(post);
+        return updated > latest ? updated : latest;
+      }, new Date(0));
 
 /**
  * 목록 라우트의 페이지네이션 URL을 만든다. paginate()와 같은 규칙이어야
@@ -46,8 +52,9 @@ const paginatedEntries = (
   base: string,
   posts: CollectionEntry<"blog">[]
 ): SitemapEntry[] => {
-  if (posts.length === 0) return [];
-
+  // 글이 0편이어도 1페이지는 만든다. Astro의 paginate가 lastPage를
+  // Math.max(1, ...)로 잡아 빈 목록에도 페이지를 생성하기 때문이다. 여기서
+  // 빈 배열을 돌려주면 살아 있는 라우트가 사이트맵에서 빠진다.
   const pageSize = SITE.postPerPage;
   const pageCount = Math.max(1, Math.ceil(posts.length / pageSize));
 

@@ -1,6 +1,7 @@
 import type { CollectionEntry } from "astro:content";
 import { getImage } from "astro:assets";
 import { getPath } from "./getPath";
+import { maskCodeRegions } from "./markdownCodeRegions";
 import { SITE } from "@/config";
 
 /**
@@ -86,7 +87,13 @@ export const buildPostMarkdown = async (post: CollectionEntry<"blog">) => {
     "",
   ].join("\n");
 
-  const content = absolutizeSiteLinks(await resolveLocalImages(body, filePath));
+  // 코드 블록 안의 "보여주기용" 마크다운은 재작성 대상이 아니다. 예제가
+  // 실제 URL로 바뀌면 독자가 그대로 따라 할 수 없다.
+  const { masked, restore } = maskCodeRegions(body);
+  const rewritten = absolutizeSiteLinks(
+    await resolveLocalImages(masked, filePath)
+  );
+  const content = restore(rewritten);
 
   return `${frontmatter}${content.trimEnd()}\n`;
 };

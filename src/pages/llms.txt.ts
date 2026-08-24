@@ -15,7 +15,9 @@ import { SITE } from "@/config";
  * getSortedPosts를 거치면 사이트 목록 페이지와 정확히 같은 집합이 나온다.
  */
 
-const absolute = (path: string) => `${SITE.website}${path}`;
+// 시리즈 슬러그에는 한글이 들어간다. sitemap.xml.ts와 같은 규칙으로
+// 퍼센트 인코딩해 어떤 URL 파서에서도 안전하게 만든다.
+const absolute = (path: string) => encodeURI(`${SITE.website}${path}`);
 
 const formatDate = (date: Date) => date.toISOString().slice(0, 10);
 
@@ -41,6 +43,13 @@ export const GET: APIRoute = async () => {
     isTranslatedPost(post.filePath)
   );
   const series = getUniqueSeries(allPosts);
+
+  // /projects는 SITE.showProjects가 꺼지면 404로 리다이렉트된다.
+  // 에이전트에게 죽은 URL을 안내하지 않도록 사이트맵과 같은 조건으로 가린다.
+  const projectsLine = SITE.showProjects
+    ? `- [프로젝트](${absolute("/projects")}): 만든 것들
+`
+    : "";
 
   const body = `# ${SITE.title}
 
@@ -70,7 +79,7 @@ ${SITE.author}(${SITE.authorEn})이 운영하는 한국어 1인 기술 블로그
   예: ${absolute("/posts/ai/claude-interview-agents")}.md
 - 전체 URL 목록: ${absolute("/sitemap.xml")}
 - 갱신 구독: ${absolute("/rss.xml")}
-- 전문 검색: ${absolute("/search")}?q=검색어 (Pagefind 기반이라 자바스크립트가 필요합니다)
+- 전문 검색: ${absolute("/search")}?q=<검색할 키워드> (Pagefind 기반이라 자바스크립트가 필요합니다)
 - 태그별 목록: ${absolute("/tags")}
 - 직접 쓴 글만: ${absolute("/posts/authored")} / 번역글만: ${absolute("/posts/translated")}
 
@@ -89,8 +98,7 @@ ${series.map(({ series: slug, seriesName, count }) => `- [${seriesName}](${absol
 ## Site pages
 
 - [소개](${absolute("/about")}): 저자 이력, 기술 스택, 연락처
-- [프로젝트](${absolute("/projects")}): 만든 것들
-- [연락처](${absolute("/contact")}): 문의 방법과 에이전트용 인용 안내
+${projectsLine}- [연락처](${absolute("/contact")}): 문의 방법과 에이전트용 인용 안내
 - [개인정보 처리방침](${absolute("/privacy")}): 이 사이트가 거치는 외부 서비스와 브라우저 저장 항목
 - [전체 글](${absolute("/posts")}): 최신순 목록
 `;
