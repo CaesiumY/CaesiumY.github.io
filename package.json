@@ -37,7 +37,7 @@
     "react-dom": "^19.2.8",
     "remark-collapse": "^0.1.2",
     "remark-toc": "^9.0.0",
-    "satori": "^0.29.0",
+    "satori": "^0.33.2",
     "sharp": "^0.35.0",
     "sonner": "^2.0.8",
     "tailwind-merge": "^3.6.0",
