@@ -24,7 +24,14 @@ const localImages = import.meta.glob<{ default: ImageMetadata }>(
 const dirnameOf = (filePath: string) =>
   filePath.slice(0, filePath.lastIndexOf("/"));
 
-/** 마크다운의 상대 이미지 경로를 절대 에셋 URL로 바꾼다. */
+/**
+ * 마크다운의 상대 경로를 절대 에셋 URL로 바꾼다.
+ *
+ * 정규식은 이미지뿐 아니라 `./`나 `../`로 시작하는 모든 링크에 걸린다.
+ * 이 저장소에서 상대 경로는 전부 글 폴더 안의 이미지라 사실상 이미지 전용이고,
+ * 에셋 표에서 못 찾은 대상은 원문 그대로 남기므로 이미지가 아닌 상대 링크가
+ * 생기더라도 잘못 재작성되지는 않는다.
+ */
 const resolveLocalImages = async (body: string, filePath: string) => {
   const postDir = dirnameOf(filePath);
   const pattern = /(!?\[[^\]]*\]\()(\.\.?\/[^)\s]+)/g;
