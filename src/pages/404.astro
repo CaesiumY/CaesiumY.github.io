@@ -4,16 +4,46 @@ import Header from "@/layouts/components/Header.astro";
 import Footer from "@/layouts/components/Footer.astro";
 import LinkButton from "@/shared/components/LinkButton.astro";
 import { SITE } from "@/config";
+
+// 에이전트가 막다른 길에서 복구할 수 있도록, 사람용 링크와 같은 목적지를
+// 마크다운으로도 제공한다. 텍스트 추출기는 <pre> 내용을 그대로 읽는다.
+// 상대 경로는 에이전트가 기준 URL을 못 잡는 경우가 있어 절대 URL로 적는다.
+const destinations = [
+  { label: "전체 글 목록", path: "/posts", note: "All posts" },
+  {
+    label: "에이전트용 사이트 안내",
+    path: "/llms.txt",
+    note: "Site guide for agents",
+  },
+  { label: "사이트맵", path: "/sitemap.xml", note: "Sitemap" },
+  { label: "RSS 피드", path: "/rss.xml", note: "RSS feed" },
+  { label: "저자 소개", path: "/about", note: "About the author" },
+  {
+    label: "전문 검색",
+    path: "/search",
+    note: "Full-text search (append ?q=<query>)",
+  },
+];
+
+const recoveryMarkdown = `# 404 Not Found (${SITE.website.replace("https://", "")})
+
+The requested path does not exist on this site.
+
+## Where to go instead
+${destinations.map(({ path, note }) => `- ${note}: ${SITE.website}${path}`).join("\n")}
+
+Any post URL also serves raw Markdown by appending .md
+`;
 ---
 
-<Layout title={`404 Not Found | ${SITE.title}`}>
+<Layout title={`404 Not Found | ${SITE.title}`} robots="noindex, nofollow">
   <Header />
 
   <main
     id="main-content"
-    class="mx-auto flex max-w-app flex-1 items-center justify-center"
+    class="mx-auto flex max-w-app flex-1 flex-col items-center justify-center px-4"
   >
-    <div class="mb-14 flex flex-col items-center justify-center">
+    <div class="flex flex-col items-center justify-center">
       <h1 class="text-9xl font-bold text-accent">404</h1>
       <span aria-hidden="true">¯\_(ツ)_/¯</span>
       <p class="mt-4 text-2xl sm:text-3xl">페이지를 찾을 수 없습니다</p>
@@ -24,6 +54,27 @@ import { SITE } from "@/config";
         홈으로 돌아가기
       </LinkButton>
     </div>
+
+    <section aria-labelledby="recovery-heading" class="mb-14 w-full">
+      <h2 id="recovery-heading" class="sr-only">이동할 수 있는 곳</h2>
+      <ul class="flex flex-wrap justify-center gap-x-4 gap-y-2">
+        {
+          destinations.map(({ label, path }) => (
+            <li>
+              <LinkButton
+                href={path}
+                class="underline decoration-dashed underline-offset-4"
+              >
+                {label}
+              </LinkButton>
+            </li>
+          ))
+        }
+      </ul>
+
+      <pre
+        class="mt-8 overflow-x-auto rounded border border-border bg-muted/40 p-4 text-xs whitespace-pre-wrap opacity-60">{recoveryMarkdown}</pre>
+    </section>
   </main>
 
   <Footer />

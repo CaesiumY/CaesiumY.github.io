@@ -1,0 +1,14 @@
+---
+import { getEntry, render } from "astro:content";
+import ContentPageLayout from "@/layouts/ContentPageLayout.astro";
+
+const entry = await getEntry("pages", "privacy");
+if (!entry) {
+  throw new Error("Content collection entry 'pages/privacy' not found");
+}
+const { Content } = await render(entry);
+---
+
+<ContentPageLayout frontmatter={entry.data} sectionId="privacy">
+  <Content />
+</ContentPageLayout>

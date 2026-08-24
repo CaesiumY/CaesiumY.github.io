@@ -72,6 +72,12 @@ const layoutProps = {
 ---
 
 <Layout {...layoutProps}>
+  <link
+    slot="head"
+    rel="alternate"
+    type="text/markdown"
+    href={`${SITE.website}${getPath(post.id, post.filePath)}.md`}
+  />
   <Header />
   <BackButton />
   <main
