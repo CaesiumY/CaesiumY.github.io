@@ -30,6 +30,10 @@ const pages = defineCollection({
     title: z.string(),
     description: z.string().optional(),
     robots: z.string().optional(),
+    // 사이트맵의 lastmod로 쓴다. 빌드 시각을 대신 쓰면 글 하나만 올려도
+    // 이 페이지들이 "방금 수정됨"으로 바뀌어 lastmod 자체가 무의미해진다.
+    // 적지 않으면 사이트맵에서 lastmod를 생략한다.
+    modDatetime: z.date().optional(),
   }),
 });
 

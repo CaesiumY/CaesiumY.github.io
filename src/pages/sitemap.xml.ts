@@ -22,22 +22,27 @@ import { SITE } from "@/config";
 
 interface SitemapEntry {
   path: string;
-  lastmod: Date;
+  /**
+   * 실제 변경 시각을 알 수 없으면 비운다. sitemap 프로토콜에서 lastmod는
+   * 선택 항목이고, 틀린 값은 없는 값보다 나쁘다.
+   *
+   * 빌드 시각으로 채우면 안 된다. 글 하나만 올려도 배포가 일어나므로 내용이
+   * 그대로인 /about, /privacy 같은 페이지까지 "방금 수정됨"이 되고, 크롤러가
+   * 사이트맵 타임스탬프 전체를 신뢰하지 않게 된다. 파일 mtime도 못 쓴다.
+   * CI 체크아웃이 모든 파일을 같은 시각으로 새로 찍기 때문이다. git 커밋
+   * 날짜는 배포 워크플로가 얕은 체크아웃이라 조회할 수 없다.
+   */
+  lastmod?: Date;
 }
-
-const BUILT_AT = new Date();
 
 /** 글의 최종 변경 시각. modDatetime이 없으면 발행 시각이 곧 최종 변경이다. */
 const postUpdatedAt = (post: CollectionEntry<"blog">) =>
   new Date(post.data.modDatetime ?? post.data.pubDatetime);
 
-/**
- * 글 묶음의 최종 변경 시각. 글이 없으면 빌드 시각으로 대체한다. 비어 있을 때
- * epoch(1970)를 내보내면 크롤러에게 죽은 페이지로 읽힌다.
- */
+/** 글 묶음의 최종 변경 시각. 글이 없으면 알 수 없으므로 비운다. */
 const latestOf = (posts: CollectionEntry<"blog">[]) =>
   posts.length === 0
-    ? BUILT_AT
+    ? undefined
     : posts.reduce<Date>((latest, post) => {
         const updated = postUpdatedAt(post);
         return updated > latest ? updated : latest;
@@ -75,8 +80,13 @@ const escapeXml = (value: string) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&apos;");
 
-const renderUrl = ({ path, lastmod }: SitemapEntry) =>
-  `  <url>\n    <loc>${escapeXml(encodeURI(`${SITE.website}${path}`))}</loc>\n    <lastmod>${lastmod.toISOString()}</lastmod>\n  </url>`;
+const renderUrl = ({ path, lastmod }: SitemapEntry) => {
+  const loc = escapeXml(encodeURI(`${SITE.website}${path}`));
+  const modified = lastmod
+    ? `\n    <lastmod>${lastmod.toISOString()}</lastmod>`
+    : "";
+  return `  <url>\n    <loc>${loc}</loc>${modified}\n  </url>`;
+};
 
 export const GET: APIRoute = async () => {
   const allPosts = await getCollection("blog");
@@ -89,6 +99,12 @@ export const GET: APIRoute = async () => {
 
   const tags = getUniqueTags(allPosts);
   const series = getUniqueSeries(allPosts);
+
+  // 콘텐츠 페이지의 lastmod는 frontmatter의 modDatetime에서만 온다. 적혀
+  // 있지 않으면 lastmod 없이 URL만 싣는다.
+  const pages = await getCollection("pages");
+  const pageUpdatedAt = (id: string) =>
+    pages.find(page => page.id === id)?.data.modDatetime;
 
   const entries: SitemapEntry[] = [
     { path: "/", lastmod: latestOf(sortedPosts) },
@@ -112,13 +128,13 @@ export const GET: APIRoute = async () => {
       paginatedEntries(`/series/${slug}/`, getPostsBySeries(allPosts, slug))
     ),
 
-    // 정적 문서. 내용이 바뀌면 배포가 일어나므로 빌드 시각이 곧 최종 변경이다.
-    { path: "/about/", lastmod: BUILT_AT },
-    { path: "/contact/", lastmod: BUILT_AT },
-    { path: "/privacy/", lastmod: BUILT_AT },
-    { path: "/search/", lastmod: BUILT_AT },
+    { path: "/about/", lastmod: pageUpdatedAt("about") },
+    { path: "/contact/", lastmod: pageUpdatedAt("contact") },
+    { path: "/privacy/", lastmod: pageUpdatedAt("privacy") },
+    // 코드로만 이루어진 페이지라 변경 시각을 알 방법이 없다.
+    { path: "/search/" },
     // /portfolio는 noindex, /drafts는 dev 전용이므로 싣지 않는다.
-    ...(SITE.showProjects ? [{ path: "/projects/", lastmod: BUILT_AT }] : []),
+    ...(SITE.showProjects ? [{ path: "/projects/" }] : []),
   ];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>

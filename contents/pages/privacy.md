@@ -1,6 +1,7 @@
 ---
 title: "개인정보 처리방침"
 description: "Caesiumy's BLOG가 어떤 데이터를 다루는지, 어떤 외부 서비스를 거치는지 정리한 문서입니다."
+modDatetime: 2026-08-24
 ---
 
 # 개인정보 처리방침
