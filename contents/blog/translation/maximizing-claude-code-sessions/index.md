@@ -9,7 +9,7 @@ tags: ["translation", "claude-code", "prompt-caching", "ai", "productivity"]
 series: "Claude 공식 블로그 번역"
 ---
 
-> 이 문서는 [Maximizing the value of your Claude Code sessions](https://claude.com/blog/maximizing-the-value-of-your-claude-code-sessions)의 한글 번역입니다.
+> 이 문서는 [Maximizing the value of your Claude Code sessions](https://claude.com/blog/maximizing-the-value-of-your-claude-code-sessions)의 한글 번역입니다. 본문의 다이어그램은 원문의 그림을 한국어로 다시 그린 것이라 Anthropic이 발행한 원본 이미지와는 다릅니다.
 
 ## 목차
 
