@@ -1,7 +1,7 @@
 ---
 title: "연락처"
 description: "블로그 글에 대한 제보, 번역 허가 문의, 협업 제안을 보내는 방법입니다."
-modDatetime: 2026-08-24
+modDatetime: 2026-08-25
 ---
 
 # 연락처
