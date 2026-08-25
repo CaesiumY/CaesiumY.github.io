@@ -63,22 +63,23 @@ const structuredData = noindex
   : pageType === "article"
     ? {
         "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        headline: title,
-        image: `${socialImageURL}`,
-        datePublished: pubDatetime?.toISOString(),
-        ...(modDatetime && { dateModified: modDatetime.toISOString() }),
-        author: {
-          "@type": "Person",
-          name: SITE.author,
-          url: SITE.profile,
-        },
-        publisher: {
-          "@type": "Person",
-          name: SITE.author,
-          url: SITE.website,
-        },
-        ...(tags.length > 0 && { keywords: tags.join(", ") }),
+        // 글에서도 저자를 @id로 홈페이지·프로필과 같은 엔티티에 묶는다.
+        // 다만 @id 참조만 남기면 이 문서만 읽는 소비자는 저자 정보를 잃으므로,
+        // Person 본체를 @graph에 함께 실어 정보와 연결을 모두 유지한다.
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            headline: title,
+            image: `${socialImageURL}`,
+            datePublished: pubDatetime?.toISOString(),
+            ...(modDatetime && { dateModified: modDatetime.toISOString() }),
+            inLanguage: SITE.lang,
+            author: { "@id": authorPerson["@id"] },
+            publisher: { "@id": authorPerson["@id"] },
+            ...(tags.length > 0 && { keywords: tags.join(", ") }),
+          },
+          authorPerson,
+        ],
       }
     : pageType === "profile"
       ? {
