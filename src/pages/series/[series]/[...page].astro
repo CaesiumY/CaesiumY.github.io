@@ -7,6 +7,7 @@ import Header from "@/layouts/components/Header.astro";
 import Footer from "@/layouts/components/Footer.astro";
 import Card from "@/features/blog/components/Card.astro";
 import Pagination from "@/features/blog/components/Pagination.astro";
+import PaginationHead from "@/shared/components/PaginationHead.astro";
 import getUniqueSeries from "@/utils/getUniqueSeries";
 import getPostsBySeries from "@/utils/getPostsBySeries";
 import { SITE } from "@/config";
@@ -35,6 +36,7 @@ const { page, seriesName } = Astro.props;
   description={`"${seriesName}" 시리즈의 모든 글입니다.`}
   ogImage={`/series/${series}/og.png`}
 >
+  <PaginationHead slot="head" {page} />
   <Header />
   <Main
     pageTitle={[`Series:`, `${seriesName}`]}

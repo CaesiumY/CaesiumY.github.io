@@ -14,7 +14,7 @@ export const SOCIALS: Social[] = [
   },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/in/chang-sik-yoon-120757217",
+    href: "https://www.linkedin.com/in/chang-sik-yoon/",
     linkTitle: "Caesiumy의 LinkedIn 프로필 보기",
     icon: "ph:linkedin-logo",
   },

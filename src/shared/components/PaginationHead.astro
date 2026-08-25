@@ -1,0 +1,22 @@
+---
+import type { Page } from "astro";
+import type { CollectionEntry } from "astro:content";
+import { SITE } from "@/config";
+
+// 페이지네이션된 목록에서 크롤러가 2페이지 너머로 넘어갈 수 있게 하는 head 링크.
+// Layout의 name="head" 슬롯에 넣어 쓴다.
+export interface Props {
+  page: Page<CollectionEntry<"blog">>;
+}
+
+const { page } = Astro.props;
+
+// canonical과 같은 형태로 맞춘다. Astro의 page.url은 후행 슬래시가 없는데,
+// 이 사이트의 canonical에는 있다. 어긋나면 크롤러가 rel=next를 따라갈 때
+// canonical이 아닌 URL을 먼저 만나 리다이렉트를 한 번 더 탄다.
+const canonical = (path: string) =>
+  new URL(path.endsWith("/") ? path : `${path}/`, SITE.website).href;
+---
+
+{page.url.prev && <link rel="prev" href={canonical(page.url.prev)} />}
+{page.url.next && <link rel="next" href={canonical(page.url.next)} />}

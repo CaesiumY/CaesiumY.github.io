@@ -7,6 +7,7 @@ import Header from "@/layouts/components/Header.astro";
 import Footer from "@/layouts/components/Footer.astro";
 import Card from "@/features/blog/components/Card.astro";
 import Pagination from "@/features/blog/components/Pagination.astro";
+import PaginationHead from "@/shared/components/PaginationHead.astro";
 import PostFilterTabs from "@/features/blog/components/PostFilterTabs.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { isTranslatedPost } from "@/utils/isTranslatedPost";
@@ -28,6 +29,7 @@ const { page } = Astro.props;
   description="직접 작성한 글만 모았습니다. 프론트엔드 개발, AI 도구, 회고 등."
   pageType="website"
 >
+  <PaginationHead slot="head" {page} />
   <Header />
   <Main pageTitle="Posts" pageDesc="직접 쓴 글만 모았습니다.">
     <PostFilterTabs activeTab="authored" />
