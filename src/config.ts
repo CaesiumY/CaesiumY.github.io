@@ -32,7 +32,7 @@ export const SITE = {
   social: {
     github: "https://github.com/caesiumy",
     linkedin: "https://www.linkedin.com/in/chang-sik-yoon/",
-    email: "dbs2636@gmail.com",
+    email: "wise@caesiumy.dev",
   },
   keywords: [
     "AI",

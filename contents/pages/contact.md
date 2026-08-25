@@ -8,7 +8,7 @@ modDatetime: 2026-08-24
 
 읽어 주셔서 감사합니다. 아래 어느 경로로든 편하게 연락 주세요.
 
-- 이메일: [dbs2636@gmail.com](mailto:dbs2636@gmail.com)
+- 이메일: [wise@caesiumy.dev](mailto:wise@caesiumy.dev)
 - GitHub: [github.com/caesiumy](https://github.com/caesiumy)
 - LinkedIn: [chang-sik-yoon](https://www.linkedin.com/in/chang-sik-yoon/)
 
