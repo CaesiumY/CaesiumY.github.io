@@ -27,10 +27,12 @@ export const SITE = {
   authorEn: "Chang-sik Yoon",
   authorDescription:
     "AI로 생산성을 혁신하고 지식을 연결하는 프론트엔드 엔지니어",
+  // 구조화 데이터(Person.jobTitle)에 쓴다. about 페이지의 경력 표기와 같은 표현.
+  authorJobTitle: "프론트엔드 엔지니어",
   social: {
     github: "https://github.com/caesiumy",
     linkedin: "https://www.linkedin.com/in/chang-sik-yoon/",
-    email: "dbs2636@gmail.com",
+    email: "wise@caesiumy.dev",
   },
   keywords: [
     "AI",

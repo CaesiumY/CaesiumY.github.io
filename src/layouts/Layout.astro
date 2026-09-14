@@ -43,54 +43,68 @@ const socialImageURL = new URL(ogImage, Astro.url);
 // robots 디렉티브는 대소문자를 구분하지 않으며 none = noindex + nofollow와 동등
 const noindex = /noindex|none/i.test(robots ?? "");
 
+// 저자 신원. 홈페이지와 프로필 페이지가 같은 엔티티를 가리켜야 검색엔진과
+// 에이전트가 둘을 한 사람으로 묶는다. @id를 정규 프로필 URL로 고정해 둔다.
+const authorPerson = {
+  "@type": "Person",
+  "@id": `${SITE.website}/about#person`,
+  name: SITE.author,
+  alternateName: SITE.authorEn,
+  description: SITE.authorDescription,
+  jobTitle: SITE.authorJobTitle,
+  url: `${SITE.website}/about`,
+  sameAs: [SITE.social.github, SITE.social.linkedin],
+  knowsAbout: SITE.keywords,
+};
+
 // 페이지 타입에 따른 JSON-LD 구조화 데이터
 const structuredData = noindex
   ? null
   : pageType === "article"
     ? {
         "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        headline: title,
-        image: `${socialImageURL}`,
-        datePublished: pubDatetime?.toISOString(),
-        ...(modDatetime && { dateModified: modDatetime.toISOString() }),
-        author: {
-          "@type": "Person",
-          name: SITE.author,
-          url: SITE.profile,
-        },
-        publisher: {
-          "@type": "Person",
-          name: SITE.author,
-          url: SITE.website,
-        },
-        ...(tags.length > 0 && { keywords: tags.join(", ") }),
+        // 글에서도 저자를 @id로 홈페이지·프로필과 같은 엔티티에 묶는다.
+        // 다만 @id 참조만 남기면 이 문서만 읽는 소비자는 저자 정보를 잃으므로,
+        // Person 본체를 @graph에 함께 실어 정보와 연결을 모두 유지한다.
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            headline: title,
+            image: `${socialImageURL}`,
+            datePublished: pubDatetime?.toISOString(),
+            ...(modDatetime && { dateModified: modDatetime.toISOString() }),
+            inLanguage: SITE.lang,
+            author: { "@id": authorPerson["@id"] },
+            publisher: { "@id": authorPerson["@id"] },
+            ...(tags.length > 0 && { keywords: tags.join(", ") }),
+          },
+          authorPerson,
+        ],
       }
     : pageType === "profile"
       ? {
           "@context": "https://schema.org",
-          "@type": "Person",
-          name: SITE.author,
-          alternateName: SITE.authorEn,
-          description: SITE.authorDescription,
-          // 인물의 정규 프로필 페이지(고정값). 현재 페이지 canonical이 아님.
-          url: `${SITE.website}/about`,
+          ...authorPerson,
           image: `${socialImageURL}`,
-          sameAs: [SITE.social.github, SITE.social.linkedin],
           email: `mailto:${SITE.social.email}`,
-          knowsAbout: SITE.keywords,
         }
       : {
           "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: SITE.title,
-          description: SITE.desc,
-          url: SITE.website,
-          author: {
-            "@type": "Person",
-            name: SITE.author,
-            url: SITE.profile,
-          },
+          // 개인 블로그라 사이트와 사람을 같이 싣는다. 사이트 정보만 있으면
+          // 에이전트가 "누구의 사이트인가"를 풀지 못한다.
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": `${SITE.website}#website`,
+              name: SITE.title,
+              description: SITE.desc,
+              url: SITE.website,
+              inLanguage: SITE.lang,
+              author: { "@id": authorPerson["@id"] },
+              publisher: { "@id": authorPerson["@id"] },
+            },
+            authorPerson,
+          ],
         };
 ---
 
