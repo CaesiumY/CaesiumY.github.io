@@ -1,5 +1,5 @@
 ---
-title: "[번역] AI 네이티브 SDLC 플레이북"
+title: "[번역] AI 네이티브 SDLC(소프트웨어 개발 생명주기) 플레이북"
 description: "Anthropic 공식 블로그 번역입니다. 코드 작성이 더 이상 병목이 아닌 시대에 SDLC를 루프로 다시 설계하는 AI 네이티브 SDLC의 여섯 단계로 묶인 플레이를 intent.md, CLAUDE.md, 스킬, 훅, 평가 중심으로 소개합니다."
 pubDatetime: 2026-09-19T10:53:00Z
 modDatetime: 2026-09-19T10:53:00Z
