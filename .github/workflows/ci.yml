@@ -64,6 +64,9 @@ jobs:
       - name: "🏷️ Check post classification"
         run: node scripts/check-post-classification.mjs
 
+      - name: "🖼️ Check post image accessibility"
+        run: node scripts/check-post-image-accessibility.mjs
+
       - name: "📌 Check E2E content pins"
         run: node scripts/e2e-scope.mjs --check
 
