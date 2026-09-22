@@ -46,7 +46,7 @@ draft: false
 
 바로 여기서 저는 바이브 코더와 소프트웨어 엔지니어 사이의 [차이](https://yusufaytas.com/the-invisible-difference)를 발견합니다. 바이브 코더는 프로토타입으로 소프트웨어를 만들어서 아이디어를 검증해보고 싶어하는 사람입니다. 소프트웨어 엔지니어는 소프트웨어 개발 생명주기 전체를 고민하는 사람입니다. 그러니 이 차이는 도구의 차이가 아닙니다. 책임이 시작되는 지점과 끝나는 지점의 차이입니다.
 
-![제발, 이거 머지해도 될까요?](https://yusufaytas.com/images/2026/06/pretty-please-approve-pr.jpg)
+![](https://yusufaytas.com/images/2026/06/pretty-please-approve-pr.jpg)
 
 제발, 이거 머지해도 될까요?
 

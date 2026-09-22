@@ -50,7 +50,7 @@ UI 디자인은 어렵습니다. 레이아웃, 간격, 타이포그래피, 색�
 
 아래 두 디자인은 단기 숙박 예약 앱의 매물 상세 페이지입니다. 첫 번째는 원본 디자인이며, 두 번째는 몇 가지 UI 디자인 팁을 빠르게 적용한 결과입니다.
 
-![UI 디자인 팁을 적용하기 전후의 UI 디자인 예시](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-0.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-0.webp)
 
 UI 디자인 팁을 적용하기 전후의 UI 디자인 예시
 
@@ -75,7 +75,7 @@ UI 디자인 팁을 적용하기 전후의 UI 디자인 예시
 
 예시 디자인에서는 콘텐츠 사이에 여백이 부족해 어수선하고 이해하기 어려워 보입니다. 간격을 넓히면 콘텐츠를 명확하게 그룹화하는 데 도움이 되어 더 정돈되고 이해하기 쉬워집니다.
 
-![충분한 간격이 없는 인터페이스 예시와 충분한 간격을 준 인터페이스 예시](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-1.webp)
 
 충분한 간격이 없는 인터페이스 예시와 충분한 간격을 준 인터페이스 예시
 
@@ -85,13 +85,13 @@ UI 디자인에서 일관성이란 비슷한 요소는 비슷하게 보이고 �
 
 예시 디자인에서는 어떤 아이콘은 채워져 있고 어떤 아이콘은 그렇지 않아 스타일이 일관되지 않습니다. 채워진 아이콘은 흔히 요소가 선택된 상태를 나타내므로, 일부 사용자에게 혼란을 줄 수 있습니다. 모든 아이콘을 2pt 두께의 선과 둥근 모서리로 통일하면 일관성이 좋아지고 아이콘마다 비슷한 시각적 무게를 갖게 됩니다. 품질 좋은 [무료 아이콘 세트](https://www.adhamdannaway.com/blog/icons/free-icon-sets)를 쓰면 이런 문제는 보통 신경 쓰지 않아도 됩니다.
 
-![일관되지 않은 스타일의 아이콘과 일관된 스타일의 아이콘 비교](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-2.1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-2.1.webp)
 
 일관되지 않은 스타일의 아이콘과 일관된 스타일의 아이콘 비교
 
 아이콘에는 사람들이 의미를 이해하는 데 도움이 되도록 텍스트 라벨도 함께 붙입니다. 특히 스크린 리더(화면을 볼 수 없는 사람에게 음성이나 점자로 인터페이스를 설명해주는 소프트웨어)를 사용하는 사람들에게 중요합니다.
 
-![일관되지 않은 아이콘 스타일과 일관된 아이콘 스타일을 적용한 UI 디자인 비교](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-2.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-2.webp)
 
 일관되지 않은 아이콘 스타일과 일관된 아이콘 스타일을 적용한 UI 디자인 비교
 
@@ -101,7 +101,7 @@ UI 디자인에서 일관성이란 비슷한 요소는 비슷하게 보이고 �
 
 예시 디자인에서는 아이콘 컨테이너가 "Book now"(지금 예약하기) 버튼과 시각적으로 비슷한 스타일을 갖고 있습니다. 그래서 실제로는 인터랙티브하지 않은데도 인터랙티브한 요소처럼 보입니다. 아이콘에서 파란색과 버튼 스타일을 제거하면 인터랙티브 요소로 오해받는 상황을 막을 수 있습니다.
 
-![비슷하게 생긴 요소가 비슷하게 작동하도록 수정한 UI 디자인 예시](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-3.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-3.webp)
 
 비슷하게 생긴 요소가 비슷하게 작동하도록 수정한 UI 디자인 예시
 
@@ -113,11 +113,11 @@ UI 디자인에서 일관성이란 비슷한 요소는 비슷하게 보이고 �
 
 아래는 명확한 시각적 위계가 없는 웹사이트 히어로 배너 예시와, 요소가 중요도 순서대로 명확하게 배치된 예시입니다.
 
-![명확한 시각적 위계가 없는 웹사이트 히어로 배너 UI 디자인 팁 예시](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-4.3.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-4.3.webp)
 
 명확한 시각적 위계가 없는 웹사이트 히어로 배너 UI 디자인 팁 예시
 
-![명확한 시각적 위계를 갖춘 웹사이트 히어로 배너 UI 디자인 팁 예시](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-4.4.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-4.4.webp)
 
 명확한 시각적 위계를 갖춘 웹사이트 히어로 배너 UI 디자인 팁 예시
 
@@ -125,19 +125,19 @@ UI 디자인에서 일관성이란 비슷한 요소는 비슷하게 보이고 �
 
 이제 예시 디자인에 스퀸트 테스트를 적용해보겠습니다. 비슷하게 강한 존재감을 가진 여러 요소가 서로 시선을 다투고 있는 게 보입니다. 반면 왼쪽 하단의 주요 액션(primary action)은 전혀 눈에 띄지 않습니다.
 
-![예시 UI 디자인에 스퀸트 테스트를 적용한 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-4.1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-4.1.webp)
 
 예시 UI 디자인에 스퀸트 테스트를 적용한 모습
 
 일반적으로 주요 액션은 인터페이스에서 가장 눈에 띄는 요소여야 합니다. 대비가 강한 배경색과 볼드 폰트를 적용하면 가장 눈에 띄게 만드는 데 도움이 됩니다. 이렇게 하면 대비가 낮은 버튼의 접근성 문제도 함께 해결됩니다. 이 문제는 뒤에서 다시 살펴보겠습니다.
 
-![주요 액션에 대비가 강한 배경색과 볼드 폰트를 적용해 가장 눈에 띄는 요소로 만든 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-4.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-4.webp)
 
 주요 액션에 대비가 강한 배경색과 볼드 폰트를 적용해 가장 눈에 띄는 요소로 만든 모습
 
 수정된 디자인에 스퀸트 테스트를 적용해보면, 주요 액션이 확실히 가장 눈에 띄는 요소입니다.
 
-![수정된 UI 디자인에 스퀸트 테스트를 적용해 주요 액션이 가장 눈에 띄는 것을 확인한 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-4.2.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-4.2.webp)
 
 수정된 UI 디자인에 스퀸트 테스트를 적용해 주요 액션이 가장 눈에 띄는 것을 확인한 모습
 
@@ -147,13 +147,13 @@ UI 디자인에서 일관성이란 비슷한 요소는 비슷하게 보이고 �
 
 불필요한 정보와 시각적 스타일은 주의를 흐트러뜨리고 인지 부하(인터페이스를 사용하는 데 필요한 두뇌 활동량)를 늘릴 수 있습니다. 불필요한 선, 색상, 배경, 애니메이션을 피해 더 단순하고 집중도 높은 인터페이스를 만드세요.
 
-![불필요한 여백과 테두리를 제거해 UI 디자인을 단순화한 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-5.1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-5.1.webp)
 
 불필요한 여백과 테두리를 제거해 UI 디자인을 단순화한 모습
 
 예시 디자인에서는 이미지 주변의 여백과 테두리가 불필요한 시각적 복잡함을 더하고 있습니다. 정보를 전달하거나 요소를 그룹화하는 데 꼭 필요한 게 아니므로, 안심하고 제거해 디자인을 단순화할 수 있습니다.
 
-![불필요한 여백과 테두리를 제거해 UI 디자인을 단순화한 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-5.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-5.webp)
 
 불필요한 여백과 테두리를 제거해 UI 디자인을 단순화한 모습
 
@@ -165,7 +165,7 @@ UI 디자인에서 일관성이란 비슷한 요소는 비슷하게 보이고 �
 
 모든 인터랙티브 요소에 색상을 넣어야 하는 건 아닙니다. 이미 다른 시각적 신호로 인터랙티브함을 드러내는 요소도 있기 때문입니다. 예를 들어 아래 예시의 카드는 파란색 링크가 있든 없든 여전히 인터랙티브하게 느껴집니다.
 
-![파란색 밑줄 링크가 있는 카드 컴포넌트와 없는 카드 컴포넌트 비교](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-6.1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-6.1.webp)
 
 파란색 밑줄 링크가 있는 카드 컴포넌트와 없는 카드 컴포넌트 비교
 
@@ -173,7 +173,7 @@ UI 디자인에서 일관성이란 비슷한 요소는 비슷하게 보이고 �
 
 별점처럼 인터랙티브하지 않은 다른 요소에서도 파란색을 함께 제거합니다. 그러면 인터랙티브 요소와 그렇지 않은 요소를 훨씬 쉽게 구분할 수 있습니다.
 
-![예시 디자인에서 인터랙티브하지 않은 요소의 색상을 제거한 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-6.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-6.webp)
 
 예시 디자인에서 인터랙티브하지 않은 요소의 색상을 제거한 모습
 
@@ -185,13 +185,13 @@ UI 디자인에서 일관성이란 비슷한 요소는 비슷하게 보이고 �
 
 예시 디자인에서는 사진 위에 놓인 화살표 아이콘의 명암비가 너무 낮습니다. 아이콘에 회색을 쓰고 불투명한 흰색 배경을 추가하면, 어떤 사진 위에 놓이든 관계없이 충분한 3:1 명암비를 확보할 수 있습니다. 아이콘의 탭 영역도 더 크고 명확하게 보이게 되어 상호작용 비용(interaction cost)도 함께 줄어듭니다.
 
-![아이콘에 불투명한 흰색 배경을 추가해 충분한 3:1 명암비를 확보한 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-7.1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-7.1.webp)
 
 아이콘에 불투명한 흰색 배경을 추가해 충분한 3:1 명암비를 확보한 모습
 
 원본 예시에서는 주요 버튼의 명암비도 너무 낮았습니다. 앞서 시각적 위계를 다룰 때 이미 고쳤지만, 여기서도 짚고 넘어갈 만합니다.
 
-![주요 버튼의 명암비를 3:1 이상으로 높인 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-7.2.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-7.2.webp)
 
 주요 버튼의 명암비를 3:1 이상으로 높인 모습
 
@@ -199,7 +199,7 @@ UI 디자인에서 일관성이란 비슷한 요소는 비슷하게 보이고 �
 
 화살표 아이콘과 버튼의 명암비를 3:1 넘게 높이면 아래와 같은 디자인이 됩니다. 조금씩 나아지고 있지만, 아직 고쳐야 할 문제가 남아 있습니다.
 
-![아이콘과 버튼의 명암비가 필요한 3:1 비율을 넘긴 예시 디자인](https://www.adhamdannaway.com/wp-content/uploads/2024/01/ui-design-tips-7.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/01/ui-design-tips-7.webp)
 
 아이콘과 버튼의 명암비가 필요한 3:1 비율을 넘긴 예시 디자인
 
@@ -212,13 +212,13 @@ UI 디자인에서 일관성이란 비슷한 요소는 비슷하게 보이고 �
 
 예시 디자인에서는 사진 개수를 표시하는 요소의 작은 텍스트가 명암비 기준에 미달합니다. 회색 컨테이너의 불투명도를 높이고 텍스트에 그림자를 추가해 명암비를 4.5:1 넘게 끌어올립니다.
 
-![회색 사진 개수 컨테이너의 불투명도를 높여 명암비를 4.5:1 넘게 만든 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-8.1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-8.1.webp)
 
 회색 사진 개수 컨테이너의 불투명도를 높여 명암비를 4.5:1 넘게 만든 모습
 
 위치 텍스트의 명암비도 너무 낮습니다. 씬(thin) 굵기로 되어 있어 가독성은 더욱 떨어집니다. 더 진한 회색을 사용하면 텍스트 접근성을 높이는 데 도움이 됩니다. 이 텍스트는 곧 몇 가지 요소를 더 다듬어 개선하겠습니다.
 
-![회색 사진 개수 컨테이너의 불투명도를 높여 명암비를 4.5:1 넘게 높인 예시 디자인](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-8.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-8.webp)
 
 회색 사진 개수 컨테이너의 불투명도를 높여 명암비를 4.5:1 넘게 높인 예시 디자인
 
@@ -230,7 +230,7 @@ UI 디자인에서 일관성이란 비슷한 요소는 비슷하게 보이고 �
 
 예시 디자인에서는 "reviews"(리뷰) 텍스트가 링크임을 나타내기 위해 파란색을 사용합니다. 색상을 제거하면 링크 텍스트가 다른 텍스트와 똑같아 보이므로, 색맹인 사람은 그것이 링크인지 알 수 없습니다. 링크 텍스트에 밑줄을 그으면 색상이 없어도 다른 텍스트와 명확하게 구분됩니다.
 
-![색상을 제거했을 때 밑줄이 있는 링크 텍스트와 없는 링크 텍스트 비교](https://www.adhamdannaway.com/wp-content/uploads/2024/01/ui-design-tips-9.1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/01/ui-design-tips-9.1.webp)
 
 색상을 제거했을 때 밑줄이 있는 링크 텍스트와 없는 링크 텍스트 비교
 
@@ -242,11 +242,11 @@ UI 디자인에서 일관성이란 비슷한 요소는 비슷하게 보이고 �
 
 예시 디자인의 제목은 장식이 많은 세리프 서체를 쓰는데, 다소 읽기 어렵고 일부 사람에게는 산만하게 느껴질 수 있습니다. 이 서체가 가진 개성은 단기 숙박 예약 앱의 일부 사진과 어울리지 않을 수도 있습니다. 본문 텍스트에 쓰인 것과 같은 산세리프 서체로 단순화하면 사용성과 미적인 면 모두 개선할 수 있습니다.
 
-![장식이 많은 세리프 서체와 단순한 산세리프 서체 비교](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-10.1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-10.1.webp)
 
 장식이 많은 세리프 서체와 단순한 산세리프 서체 비교
 
-![예시 디자인의 세리프 서체를 단순한 산세리프 서체로 바꾼 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-10.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-10.webp)
 
 예시 디자인의 세리프 서체를 단순한 산세리프 서체로 바꾼 모습
 
@@ -254,19 +254,19 @@ UI 디자인에서 일관성이란 비슷한 요소는 비슷하게 보이고 �
 
 소문자가 크고 자간이 넓은 서체를 고르세요. 작은 크기에서도 대체로 가독성이 더 좋습니다. 서체에서 소문자의 높이를 x-height라고 부릅니다.
 
-![League Spartan과 Inter 서체의 x-height를 비교한 UI 디자인 팁](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-11.1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-11.1.webp)
 
 League Spartan과 Inter 서체의 x-height를 비교한 UI 디자인 팁
 
 예시 디자인에서는 x-height가 상대적으로 낮은 League Spartan 서체를 사용하고 있습니다. x-height가 더 큰 Inter 같은 서체로 바꾸면 가독성을 높일 수 있습니다.
 
-![예시 문단에서 League Spartan과 Inter 서체의 x-height를 비교한 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-11.2.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-11.2.webp)
 
 예시 문단에서 League Spartan과 Inter 서체의 x-height를 비교한 모습
 
 League Spartan에서 Inter로 서체를 바꾼 뒤 예시 디자인은 이렇게 바뀝니다. UI 디자인 팁을 잘 적용해가고 있지만, 아직 고쳐야 할 문제가 몇 가지 더 남아 있습니다.
 
-![League Spartan에서 Inter 서체로 바꾼 예시 텍스트](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-11.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-11.webp)
 
 League Spartan에서 Inter 서체로 바꾼 예시 텍스트
 
@@ -278,11 +278,11 @@ League Spartan에서 Inter 서체로 바꾼 예시 텍스트
 
 예시 디자인에서는 위치 텍스트가 대문자로 되어 있습니다. 첫 단어와 고유명사(사람, 장소, 사물의 이름)만 대문자로 쓰는 문장 표기(sentence case)로 바꾸면 가독성을 높일 수 있습니다.
 
-![대문자 문장과 문장 표기(sentence case) 문장의 모양을 비교한 UI 디자인 팁](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-12.1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-12.1.webp)
 
 대문자 문장과 문장 표기(sentence case) 문장의 모양을 비교한 UI 디자인 팁
 
-![대문자에서 문장 표기(sentence case)로 바꾼 예시 텍스트](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-12.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-12.webp)
 
 대문자에서 문장 표기(sentence case)로 바꾼 예시 텍스트
 
@@ -292,7 +292,7 @@ League Spartan에서 Inter 서체로 바꾼 예시 텍스트
 
 레귤러와 볼드 굵기만 사용해서 [디자인 시스템](https://www.practical-ui.com/design-system/)을 단순하고 간결하게 유지하세요. 일부 서체는 세미볼드 옵션도 있는데, 볼드가 너무 두껍게 느껴진다면 그 대신 쓸 수 있습니다.
 
-![씬, 라이트, 레귤러, 세미볼드, 볼드 폰트 예시 중 레귤러와 볼드만 남기고 나머지에 취소선을 그은 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/01/ui-design-tips-13.2.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/01/ui-design-tips-13.2.webp)
 
 씬, 라이트, 레귤러, 세미볼드, 볼드 폰트 예시 중 레귤러와 볼드만 남기고 나머지에 취소선을 그은 모습
 
@@ -304,11 +304,11 @@ League Spartan에서 Inter 서체로 바꾼 예시 텍스트
 
 예시 디자인에서는 위치 텍스트가 라이트 굵기로 되어 있습니다. 명암비를 기준치인 4.5:1 넘게 높였다 해도, 가느다란 글자는 여전히 어떤 사람들에게는 읽기 어려울 수 있습니다. 굵기를 레귤러로 높이면 가독성이 좋아지고 디자인도 더 단순해집니다.
 
-![라이트 굵기와 레귤러 굵기로 표시한 위치 텍스트를 비교한 UI 디자인 팁](https://www.adhamdannaway.com/wp-content/uploads/2024/01/ui-design-tips-13.1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/01/ui-design-tips-13.1.webp)
 
 라이트 굵기와 레귤러 굵기로 표시한 위치 텍스트를 비교한 UI 디자인 팁
 
-![라이트 굵기와 레귤러 굵기의 위치 텍스트를 비교한 예시 디자인](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-13.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-13.webp)
 
 라이트 굵기와 레귤러 굵기의 위치 텍스트를 비교한 예시 디자인
 
@@ -320,7 +320,7 @@ UI 디자인에서는 흰색과의 명암비가 매우 높기 때문에 순수�
 
 예시 디자인에서는 여러 요소에 순수한 검정색이 쓰이고 있습니다. 이를 진한 회색으로 바꾸면 가독성이 좋아집니다. 앞서 시각적 위계를 살펴볼 때 매물 설명 텍스트가 지나치게 눈에 띈다는 점을 짚었습니다. 인터페이스 요소가 중요도 순서대로 보이도록, 매물 설명 텍스트에는 더 옅은 회색을 써서 존재감을 낮춥니다.
 
-![예시 디자인의 검정색 텍스트를 진한 회색으로 바꾼 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-14.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-14.webp)
 
 예시 디자인의 검정색 텍스트를 진한 회색으로 바꾼 모습
 
@@ -330,13 +330,13 @@ UI 디자인에서는 흰색과의 명암비가 매우 높기 때문에 순수�
 
 가운데 정렬은 빠르게 읽을 수 있는 제목이나 짧은 텍스트에는 어울릴 수 있습니다. 하지만 긴 본문 텍스트에서 가운데 정렬을 쓰면 각 줄의 시작 지점이 계속 바뀌기 때문에 읽기가 더 어려워집니다. 매 줄의 시작 지점을 찾느라 눈이 더 힘들게 움직여야 합니다.
 
-![가운데 정렬 텍스트와 왼쪽 정렬 텍스트를 비교한 UI 디자인 팁](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-15.1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-15.1.webp)
 
 가운데 정렬 텍스트와 왼쪽 정렬 텍스트를 비교한 UI 디자인 팁
 
 예시 디자인에서는 매물 설명 텍스트가 가운데 정렬되어 있습니다. 왼쪽 정렬로 바꾸면 가독성이 좋아지고, 위쪽에 있는 왼쪽 정렬 텍스트와도 일관성이 맞습니다.
 
-![예시 디자인에서 매물 설명 텍스트를 가운데 정렬에서 왼쪽 정렬로 바꾼 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-15.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-15.webp)
 
 예시 디자인에서 매물 설명 텍스트를 가운데 정렬에서 왼쪽 정렬로 바꾼 모습
 
@@ -346,13 +346,13 @@ UI 디자인에서는 흰색과의 명암비가 매우 높기 때문에 순수�
 
 접근성과 가독성을 위해, 특히 긴 본문 텍스트에서는 줄 간격을 최소 1.5(150%) 이상으로 설정하세요. 대체로 줄 간격을 1.5에서 2 사이로 유지하면 잘 맞습니다.
 
-![폰트 크기와 줄 간격의 차이를 보여주는 UI 디자인 팁 다이어그램](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-16.1.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-16.1.webp)
 
 폰트 크기와 줄 간격의 차이를 보여주는 UI 디자인 팁 다이어그램
 
 예시 디자인에서는 본문 텍스트의 줄 간격이 1(100%)에 불과합니다. 이를 1.5(150%)로 높이면 가독성이 좋아지고 보기에도 더 나아집니다.
 
-![예시 UI 디자인에서 줄 간격을 1(100%)에서 1.5(150%)로 바꾼 모습](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-16.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-16.webp)
 
 예시 UI 디자인에서 줄 간격을 1(100%)에서 1.5(150%)로 바꾼 모습
 
@@ -360,7 +360,7 @@ UI 디자인에서는 흰색과의 명암비가 매우 높기 때문에 순수�
 
 단순하지만 강력한 몇 가지 UI 디자인 팁만으로, 예시 UI 디자인에 있던 수많은 문제를 빠르게 찾아내고 고쳤습니다. 필요하다면 장식적인 비주얼 스타일은 특정 브랜드 분위기에 맞춰 더 다듬을 수도 있습니다. 다만 이번 예시에서는 기본기를 제대로 갖추는 데 집중했습니다.
 
-![UI 디자인 팁을 적용하기 전후의 예시 디자인](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-0.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-tips-0.webp)
 
 UI 디자인 팁을 적용하기 전후의 예시 디자인
 
@@ -374,7 +374,7 @@ UI 디자인이 이렇게까지 어려울 필요가 없다는 걸 조금은 느�
 
 여기 소개한 팁은 제 [UI 디자인 책](https://www.practical-ui.com/)에 있는 논리 기반 UI 디자인 팁 중 극히 일부일 뿐입니다. 책에는 상세한 예시와 함께 수백 가지 팁이 더 있습니다. 예시 인터페이스는 제 [Figma 디자인 시스템](https://www.practical-ui.com/design-system/)으로 만들었습니다. 관심이 있으시면 [책을 만든 과정](https://www.adhamdannaway.com/portfolio/ui-design-book)도 살짝 엿보실 수 있습니다.
 
-![UI 디자인 팁으로 가득한 UI 디자인 책](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-book.webp)
+![](https://www.adhamdannaway.com/wp-content/uploads/2024/08/ui-design-book.webp)
 
 UI 디자인 팁으로 가득한 UI 디자인 책
 

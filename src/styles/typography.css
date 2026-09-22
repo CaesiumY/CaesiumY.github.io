@@ -53,9 +53,12 @@
     }
 
     table {
+      @apply max-sm:block max-sm:overflow-x-auto;
+
       th,
       td {
         @apply border border-border p-2;
+        word-break: keep-all;
       }
 
       th {
@@ -63,7 +66,7 @@
       }
 
       code {
-        @apply break-all sm:break-normal;
+        @apply break-normal;
       }
     }
 
