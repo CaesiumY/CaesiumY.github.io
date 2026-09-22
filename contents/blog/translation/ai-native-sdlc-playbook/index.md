@@ -57,6 +57,8 @@ series: "Claude 공식 블로그 번역"
 - 통제 장치가 현실과 어긋나며 감당할 수 없어집니다. 한 줄씩 손으로 리뷰하는 방식은 사람이 코드를 작성할 때는 합리적이었지만 에이전트가 diff 대부분을 작성하기 시작하면 따라잡을 수 없습니다.
 - 예외 처리가 여전히 매주나 매달 열리는 회의와 위원회를 거치기 때문에 거버넌스 비용이 늘어납니다.
 
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a8739a1b934ffe55bfc9715_44592f18.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/189) -->
+
 ![에이전트 도입 전후의 여섯 단계(계획, 설계, 구현, 테스트, 배포, 유지보수) 소요 시간 비교](./01-before-after-timeline.png)
 
 구현은 더 이상 제약이 아닙니다. 제약은 그 앞뒤에 있는 사람 속도 단계입니다. 사람 속도 단계는 길이를 그대로 유지하는 반면 구현 단계는 몇 시간으로 줄어듭니다.
@@ -70,6 +72,8 @@ series: "Claude 공식 블로그 번역"
 AI 네이티브 SDLC는 기존의 통제 목표에 새로운 강제 수단을 결합해 다시 설계한 프로세스입니다. 프로세스는 일직선 흐름 대신 루프가 되고 그 각 지점에 AI가 내장됩니다. AI 네이티브 SDLC는 다음 플레이(play)로의 인계와 실행을 자동화해, 전통적인 SDLC에서 단계 사이 인계를 수작업으로 번거롭게 처리하던 문제를 줄이도록 돕습니다.
 
 이런 변화는 에이전틱 SDLC, AI SDLC, 또는 그냥 에이전틱 소프트웨어 개발이라고도 부릅니다. 이름은 다르지만 가리키는 대상은 같습니다.
+
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a8858c2eccce183e7553cf2_53b010df.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/189) -->
 
 ![직선으로 이어진 기존 SDLC와 루프로 순환하는 AI 네이티브 SDLC의 여섯 단계 비교](./02-line-vs-loop.png)
 
@@ -109,6 +113,8 @@ AI 네이티브 SDLC는 기존의 통제 목표에 새로운 강제 수단을 �
 한 단계는 산출물을 커밋하며 끝나고 그 커밋이 다음 단계를 시작시킵니다. 수용된 `intent.md`는 요구사항과 설계 패스를 촉발하고 승인된 `spec.md`는 플랜 모드(Plan mode)를, 머지된 PR은 파이프라인을 촉발하며 프로덕션에서 관리 범위를 벗어난 상황은 다음 `intent.md`를 작성해 루프를 계속 이어갑니다.
 
 처음에는 각 단계를 직접 손으로 프롬프트하지만 최종적으로는 수용된 산출물마다 다음 게이트를 실행시키는 루프에 도달하는 것이 목표입니다. 사람의 주의는 게이트에 집중되어 각 단계를 처음부터 다시 시작하기보다 에이전트가 표시해둔 내용을 리뷰하는 데 쓰입니다.
+
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a8855c75344623fc81efcb8_5d5a3c05.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/189) -->
 
 ![플레이 의존성 그래프: 어디서든 시작할 수 있는 플레이 다섯 개와 이후 단계로 이어지는 플레이](./03-play-dependency-graph.png)
 
@@ -1060,6 +1066,8 @@ Claude Security는 Claude Enterprise 조직에서 공개 베타로 사용할 수
 대화와 조직의 지식은 채널에 남고 채널의 누구든 대응을 이끌고 실행할 수 있습니다. 팀원 누구나 실시간으로 가설을 검증하고, 새 선택지를 탐색하고, 조사할 수 있으며 채널 기록이 감사 가능성을 더해 줍니다. MCP 접근 권한을 통해 Claude는 지표가 기준선으로 돌아왔는지 확인해 스레드에 알리고 사후 분석을 버전 관리되는 교훈 파일에 기록해 이후 조사에서 읽을 수 있게 합니다.
 
 Claude Tag가 맡는 일이 인시던트만은 아닙니다. MCP를 통해 티켓에 태그되거나 채널에서 요청을 받으면 Claude는 같은 방식으로 작업을 분류합니다. 작고 범위가 분명한 수정은 리뷰 게이트를 거치는 PR로 올라오고 더 큰 사안은 1단계: 계획을 위한 `intent.md`로 작성되어 루프가 스스로 다음 일을 채우기 시작합니다. 참고: [Anthropic에서 Claude Tag가 CI/CD 온콜을 운영하는 방법](https://claude.com/blog/ai-ci-cd-on-call).
+
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a8760aded54a2a8319cd5b9_fe6d780d.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/189) -->
 
 ![#inc-checkout 채널에서 R. Mehta와 Claude가 체크아웃 오류율 상승을 진단하고 롤백하는 인시던트 대화](./04-slack-incident.png)
 
