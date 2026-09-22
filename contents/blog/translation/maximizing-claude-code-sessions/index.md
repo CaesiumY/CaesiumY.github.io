@@ -46,6 +46,8 @@ series: "Claude 공식 블로그 번역"
 
 어떤 세션에서는 Claude가 테스트와 그 테스트가 검증하는 파일을 읽고 수정한 뒤 몇 턴 만에 끝냅니다. 다른 세션에서는 저장소를 grep으로 먼저 훑고 필요한 두 파일에 도달하기까지 십여 개 파일을 읽어들입니다. 그 모든 턴마다 오늘 아침부터 쌓인 다른 대화 내용까지 함께 끌고 다니는 셈입니다.
 
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1946bc7cd69c4c8919db_be236b0d.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/171) -->
+
 ![토큰 사용량 비교 다이어그램](./session-comparison.png)
 *세션 A(두 파일만 읽음)는 요청 5번, 세션 B(먼저 탐색함)는 요청 18번.*
 
@@ -67,6 +69,8 @@ series: "Claude 공식 블로그 번역"
 
 이 글에서 알아야 할 것은 하나입니다. 지금부터 다룰 나머지 내용은 전부 모델 가격에 곱해집니다. 문제가 정말 어렵거나 모호할 때는 더 큰 모델을, 작업이 일상적일 때는 더 작은 모델을 쓰세요.
 
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1946bc7cd69c4c8919de_da980737.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/171) -->
+
 ![모델 크기에 따른 예시 곡선 그래프](./model-size-curve.png)
 *그래프는 예시일 뿐입니다.*
 
@@ -77,6 +81,8 @@ series: "Claude 공식 블로그 번역"
 첫 번째는 프리필(prefill) 단계입니다. 모델이 요청과 컨텍스트를 읽습니다. 여기에는 시스템 프롬프트, `CLAUDE.md`, 메시지, 그 이후 대화에 추가된 모든 내용(Claude가 읽은 파일과 실행한 명령어의 출력)이 포함됩니다. 이 전체가 입력 토큰입니다.
 
 두 번째는 디코드(decode) 단계로, 모델이 출력 토큰, 즉 생각 과정과 도구 호출, 여러분이 눈으로 보는 텍스트를 씁니다. 토큰을 한 번에 하나씩 생성하므로 200토큰 응답은 모델을 200번 순차 실행하는 것입니다. 토큰당 GPU를 붙잡아 두는 시간이 디코드 쪽이 훨씬 길기 때문에 출력 토큰 가격은 입력 토큰의 약 5배입니다.
+
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1947bc7cd69c4c891a0f_c69dbb11.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/171) -->
 
 ![입력 토큰과 출력 토큰 처리 단계 다이어그램](./prefill-decode-diagram.png)
 
@@ -143,6 +149,8 @@ Claude가 얼마나 많이 읽는지는 대부분 스스로 얼마나 알아내�
 
 "`utils.test.ts`에서 실패하는 테스트를 고쳐줘"라고 하면 탐색 과정을 건너뛰고 Read 호출 한 번만 들고, "`@utils.test.ts`에서 실패하는 테스트를 고쳐줘"라고 하면 그 Read 호출조차 들지 않습니다.
 
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1b213f60488b546224d4_cab63270.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/171) -->
+
 ![Read 호출 여부에 따른 차이를 보여주는 다이어그램](./read-call-comparison.png)
 *"테스트가 실패해"는 6턴, "utils.test.ts를 고쳐줘"는 1턴, "@utils.test.ts를 고쳐줘"는 0턴.*
 
@@ -162,6 +170,8 @@ Claude가 플래그와 `tail`을 써서 이 문제를 알아서 처리해주는 
 
 같은 작업이라도 긴 세션 하나로 처리하면 짧은 세션 여러 개로 나눠 처리할 때보다 비용이 더 듭니다. 그것도 생각보다 훨씬 많이 드는데, 40번째 턴은 그 앞의 39개 턴까지 함께 다시 읽어들이기 때문입니다. 세션의 컨텍스트는 짧고 관련성 있게 유지하는 게 좋으므로 한 작업의 컨텍스트를 다음 작업까지 끌고 가지 마세요. 새로운 걸 시작할 때는 `/clear`를, 같은 작업의 앞부분이 끝났을 때는 `/compact`를 실행하세요.
 
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1cdb7fb1ad2229b0afa5_92ab0ee2.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/171) -->
+
 ![세션 길이에 따른 컨텍스트 누적 다이어그램](./session-length-context.png)
 
 > **팁:** 나중에 세션을 다시 찾고 싶다면 `/clear`하기 전에 `/rename`하세요. `/compact`할 때는 무엇을 남길지 알려주거나 항상 같은 내용이라면 `CLAUDE.md`에 "Compact instructions" 섹션을 만들어두세요. 100만 토큰 모델을 쓰면서 자동 압축 안전망을 예전 위치로 돌리고 싶다면, `/autocompact 200k`로 되돌릴 수 있습니다(Claude Code v2.1.221 이상 필요).
@@ -176,6 +186,8 @@ Claude가 플래그와 `tail`을 써서 이 문제를 알아서 처리해주는 
 
 로그를 훑어보는 일처럼 유지할 필요 없는 출력이 많이 나온다면 서브에이전트를 쓰면 그만큼 이득을 봅니다. Claude가 이런 작업에는 종종 알아서 서브에이전트를 쓰지만 그렇지 않을 때는 직접 요청하면 됩니다("이 로그는 서브에이전트에서 훑어봐줘"처럼요). 다만 메인 세션에는 서브에이전트가 보고하기로 한 내용만 돌아온다는 점은 기억해두세요.
 
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1cdb7fb1ad2229b0afaa_a653b369.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/171) -->
+
 ![서브에이전트가 별도 컨텍스트에서 동작하는 방식을 보여주는 다이어그램](./subagent-context-separation.png)
 *하나의 대화가 메인 세션과 서브에이전트 세 개, 총 네 개의 컨텍스트로 나뉘고, 서브에이전트의 컨텍스트는 작업이 끝나면 버려집니다.*
 
@@ -184,6 +196,8 @@ Claude가 플래그와 `tail`을 써서 이 문제를 알아서 처리해주는 
 ## 가장 먼저 확인할 것
 
 지금까지 살펴본 내용 중 눈여겨볼 만한 것은 네 가지입니다. 대략 비용이 큰 순서대로 정리했습니다.
+
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1dd4531c50c7022d5171_df696a6b.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/171) -->
 
 ![비용에 영향을 미치는 네 가지 요소 다이어그램](./four-cost-factors.png)
 

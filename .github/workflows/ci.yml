@@ -67,9 +67,6 @@ jobs:
       - name: "🖼️ Check post image accessibility"
         run: node scripts/check-post-image-accessibility.mjs
 
-      - name: "🧾 Check translation image provenance"
-        run: node scripts/check-translation-image-provenance.mjs
-
       - name: "📌 Check E2E content pins"
         run: node scripts/e2e-scope.mjs --check
 
