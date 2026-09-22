@@ -336,3 +336,79 @@ test("findTranslationImages는 코드 밖의 Markdown 이미지와 행을 찾는
     { file: filePath, line: 5, target: "./actual.png" },
   ]);
 });
+
+test("findTranslationImages는 균형 괄호가 있는 로컬 이미지 파일명을 보존한다", () => {
+  const images = findTranslationImages(
+    "![도식](./diagram(1).png)",
+    "contents/blog/translation/post/index.md"
+  );
+
+  assert.deepEqual(images, [
+    {
+      file: "contents/blog/translation/post/index.md",
+      line: 1,
+      target: "./diagram(1).png",
+    },
+  ]);
+});
+
+test("frontmatter의 로컬 ogImage도 출처 등록을 요구한다", () => {
+  const { fixture, failures } = validateFixture({
+    markdown: [
+      "---",
+      "ogImage: ./cover.png",
+      "---",
+      "본문입니다.",
+    ].join("\n"),
+    files: ["cover.png"],
+  });
+
+  assert.match(messages(failures), /cover\.png.*등록/);
+  rmSync(fixture.root, { recursive: true, force: true });
+});
+
+test("frontmatter의 로컬 ogImage를 original로 등록할 수 있다", () => {
+  const { fixture, failures } = validateFixture({
+    markdown: [
+      "---",
+      'ogImage: "./cover.png"',
+      "---",
+      "본문입니다.",
+    ].join("\n"),
+    files: ["cover.png"],
+    registry: {
+      version: 1,
+      posts: {
+        post: {
+          provenanceUrl:
+            "https://github.com/example/repo/commit/0123456789abcdef",
+          rationale: "번역 시리즈의 직접 제작 커버 이미지",
+          images: {
+            "cover.png": {
+              kind: "original",
+            },
+          },
+        },
+      },
+    },
+  });
+
+  assert.deepEqual(failures, []);
+  rmSync(fixture.root, { recursive: true, force: true });
+});
+
+test("findTranslationImages는 중첩 및 escape 괄호 파일명을 보존한다", () => {
+  const filePath = "contents/blog/translation/post/index.md";
+  const images = findTranslationImages(
+    [
+      "![중첩](./diagram(foo(1)).png)",
+      "![escape](./diagram\\(1\\).png)",
+    ].join("\n"),
+    filePath
+  );
+
+  assert.deepEqual(images, [
+    { file: filePath, line: 1, target: "./diagram(foo(1)).png" },
+    { file: filePath, line: 2, target: "./diagram(1).png" },
+  ]);
+});

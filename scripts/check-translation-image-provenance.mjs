@@ -12,8 +12,7 @@ import { fileURLToPath } from "node:url";
 import { maskCodeRegions } from "../src/utils/markdownCodeRegions.ts";
 
 const PLACEHOLDER = /\uE000(\d+)\uE000/g;
-const INLINE_IMAGE =
-  /!\[([^\]]*)\]\(\s*(<[^>\r\n]+>|[^\s)]+)(?:\s+(?:"[^"]*"|'[^']*'|\([^)]*\)))?\s*\)/g;
+const IMAGE_START = "![";
 const HTML_IMAGE = /<img\b/i;
 const SUPPORTED_KINDS = new Set([
   "original",
@@ -43,11 +42,113 @@ function imageTarget(destination) {
   if (trimmed.startsWith("<") && trimmed.endsWith(">")) {
     return trimmed.slice(1, -1);
   }
-  return trimmed;
+  return trimmed.replace(/\\([()])/g, "$1");
+}
+
+function inlineImageEnd(line, index) {
+  const trailing = line
+    .slice(index)
+    .match(/^(?:\s+(?:"[^"]*"|'[^']*'|\([^)]*\)))?\s*\)/);
+  return trailing ? index + trailing[0].length : null;
+}
+
+function readInlineImage(line, start) {
+  const altEnd = line.indexOf("](", start + IMAGE_START.length);
+  if (altEnd === -1) return null;
+
+  let index = altEnd + 2;
+  while (/\s/.test(line[index] ?? "")) index++;
+
+  if (line[index] === "<") {
+    const close = line.indexOf(">", index + 1);
+    const end = close === -1 ? null : inlineImageEnd(line, close + 1);
+    if (end === null) return null;
+    return { start, end, target: imageTarget(line.slice(index, close + 1)) };
+  }
+
+  const targetStart = index;
+  let depth = 0;
+  while (index < line.length) {
+    const character = line[index];
+    if (character === "\\") {
+      index += 2;
+      continue;
+    }
+    if (character === "(") {
+      depth++;
+      index++;
+      continue;
+    }
+    if (character === ")") {
+      if (depth === 0) {
+        return { start, end: index + 1, target: imageTarget(line.slice(targetStart, index)) };
+      }
+      depth--;
+      index++;
+      continue;
+    }
+    if (/\s/.test(character) && depth === 0) {
+      const end = inlineImageEnd(line, index);
+      if (end === null) return null;
+      return { start, end, target: imageTarget(line.slice(targetStart, index)) };
+    }
+    index++;
+  }
+
+  return null;
+}
+
+function findInlineImages(line) {
+  const images = [];
+  let searchStart = 0;
+  while (searchStart < line.length) {
+    const start = line.indexOf(IMAGE_START, searchStart);
+    if (start === -1) break;
+    const image = readInlineImage(line, start);
+    if (!image) {
+      searchStart = start + IMAGE_START.length;
+      continue;
+    }
+    images.push(image);
+    searchStart = image.end;
+  }
+  return images;
+}
+
+function removeInlineImages(line) {
+  let supported = "";
+  let previousEnd = 0;
+  for (const image of findInlineImages(line)) {
+    supported += line.slice(previousEnd, image.start);
+    previousEnd = image.end;
+  }
+  return supported + line.slice(previousEnd);
+}
+function findFrontmatterOgImages(markdown, filePath) {
+  const lines = markdown.split(/\r?\n/);
+  if (lines[0]?.replace(/^\uFEFF/, "") !== "---") return [];
+
+  const images = [];
+  for (let index = 1; index < lines.length; index++) {
+    if (lines[index] === "---") break;
+
+    const match = lines[index].match(/^ogImage:\s*(.*?)\s*$/);
+    if (!match || match[1].length === 0) continue;
+
+    const value = match[1];
+    const target =
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+        ? value.slice(1, -1)
+        : value;
+    images.push({ file: filePath, line: index + 1, target });
+  }
+
+  return images;
 }
 
 /**
- * Markdown 본문에서 코드 영역 밖의 인라인 이미지 참조를 찾습니다.
+ * Markdown 본문과 frontmatter에서 이미지 참조를 찾습니다.
  *
  * @returns {Array<{file: string, line: number, target: string}>}
  */
@@ -57,15 +158,16 @@ export function findTranslationImages(markdown, filePath) {
   const lines = masked.split("\n");
 
   for (let index = 0; index < lines.length; index++) {
-    INLINE_IMAGE.lastIndex = 0;
-    for (const match of lines[index].matchAll(INLINE_IMAGE)) {
+    for (const image of findInlineImages(lines[index])) {
       images.push({
         file: filePath,
         line: index + 1,
-        target: imageTarget(match[2]),
+        target: image.target,
       });
     }
   }
+
+  images.push(...findFrontmatterOgImages(markdown, filePath));
 
   return images;
 }
@@ -152,7 +254,7 @@ function unsupportedImageFailures(markdown, filePath) {
 
   for (let index = 0; index < lines.length; index++) {
     const line = lines[index];
-    const supported = line.replace(INLINE_IMAGE, "");
+    const supported = removeInlineImages(line);
 
     if (HTML_IMAGE.test(supported)) {
       failures.push({

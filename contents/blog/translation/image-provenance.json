@@ -24,6 +24,60 @@
         }
       }
     },
+    "claude-skills-guide-part-1": {
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/commit/42b047d910e8b05c24b378151d9cd4a5a77b3f71",
+      "rationale": "Claude 스킬 가이드 번역 시리즈 1부를 위해 직접 제작한 커버 이미지입니다.",
+      "images": {
+        "chapter-1-cover.png": {
+          "kind": "original"
+        }
+      }
+    },
+    "claude-skills-guide-part-2": {
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/commit/42b047d910e8b05c24b378151d9cd4a5a77b3f71",
+      "rationale": "Claude 스킬 가이드 번역 시리즈 2부를 위해 직접 제작한 커버 이미지입니다.",
+      "images": {
+        "chapter-2-cover.png": {
+          "kind": "original"
+        }
+      }
+    },
+    "claude-skills-guide-part-3": {
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/commit/42b047d910e8b05c24b378151d9cd4a5a77b3f71",
+      "rationale": "Claude 스킬 가이드 번역 시리즈 3부를 위해 직접 제작한 커버 이미지입니다.",
+      "images": {
+        "chapter-3-cover.png": {
+          "kind": "original"
+        }
+      }
+    },
+    "claude-skills-guide-part-4": {
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/commit/42b047d910e8b05c24b378151d9cd4a5a77b3f71",
+      "rationale": "Claude 스킬 가이드 번역 시리즈 4부를 위해 직접 제작한 커버 이미지입니다.",
+      "images": {
+        "chapter-4-cover.png": {
+          "kind": "original"
+        }
+      }
+    },
+    "claude-skills-guide-part-5": {
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/commit/42b047d910e8b05c24b378151d9cd4a5a77b3f71",
+      "rationale": "Claude 스킬 가이드 번역 시리즈 5부를 위해 직접 제작한 커버 이미지입니다.",
+      "images": {
+        "chapter-5-cover.png": {
+          "kind": "original"
+        }
+      }
+    },
+    "claude-skills-guide-part-6": {
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/commit/42b047d910e8b05c24b378151d9cd4a5a77b3f71",
+      "rationale": "Claude 스킬 가이드 번역 시리즈 6부를 위해 직접 제작한 커버 이미지입니다.",
+      "images": {
+        "chapter-6-cover.png": {
+          "kind": "original"
+        }
+      }
+    },
     "maximizing-claude-code-sessions": {
       "sourceArticleUrl": "https://claude.com/blog/maximizing-the-value-of-your-claude-code-sessions",
       "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/pull/171",
