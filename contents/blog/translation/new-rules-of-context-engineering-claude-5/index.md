@@ -55,7 +55,7 @@ Claude 자체 역량이 발전하면서 이 작업은 의외로 어려워질 수
 
 예를 들어 저희가 Claude Code를 내부에서 쓴 기록을 보면, 시스템 프롬프트와 스킬, 사용자 요청이 서로 부딪히곤 합니다. 그 결과 "적절히 문서화를 남겨라"와 "절대 주석을 추가하지 마라"처럼 상충하는 메시지가 한 요청 안에 여러 개 섞여 있는 게 보입니다.
 
-<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a63620bedb2b7813b1071e2_afa90c36.png (한국어로 다시 그림, PR #120) -->
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a63620bedb2b7813b1071e2_afa90c36.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/120) -->
 
 ![시스템 프롬프트·스킬·사용자 요청에서 온 상충하는 지시가 하나의 컨텍스트에 섞여 있는 모습](./context-conflict.png)
 
@@ -69,7 +69,7 @@ Claude 자체 역량이 발전하면서 이 작업은 의외로 어려워질 수
 
 그동안 컨텍스트 엔지니어링의 모범 사례로 통했지만 이제는 낡은 오해로 밀려난 것들이 여럿 있습니다. 예를 들면 다음과 같습니다.
 
-<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a63620bedb2b7813b107213_3979f6a1.png (한국어로 다시 그림, PR #120) -->
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a63620bedb2b7813b107213_3979f6a1.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/120) -->
 
 ![그때의 원칙 6개에 취소선을 긋고 지금의 원칙 6개로 이어지는 대조 목록](./then-and-now.png)
 
@@ -95,7 +95,7 @@ Claude 자체 역량이 발전하면서 이 작업은 의외로 어려워질 수
 
 도구 사용에서 가장 우선했던 원칙은 Claude에게 사용법 예시를 보여주는 것이었습니다. 그런데 최신 모델에서는 예시를 주는 행위 자체가 오히려 Claude의 탐색 범위를 특정 영역으로 가둔다는 사실을 저희가 발견했습니다.
 
-<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a63620bedb2b7813b107216_c4fdec0d.png (한국어로 다시 그림, PR #120) -->
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a63620bedb2b7813b107216_c4fdec0d.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/120) -->
 
 ![약 9,100자에 달하던 예전 TodoWrite 설명과, 상태 값을 간결하게 열거한 새 인터페이스 비교](./todowrite-comparison.png)
 
@@ -145,7 +145,7 @@ Claude Code는 코딩에 초점을 맞췄기 때문에, 저희 시스템 프롬�
 
 지금까지 다룬 내용을 종합하면, 실제로 컨텍스트를 조립할 때는 어떤 모습이 될까요?
 
-<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a63620bedb2b7813b10721a_836a850d.png (한국어로 다시 그림, PR #120) -->
+<!-- 원본 이미지: https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a63620bedb2b7813b10721a_836a850d.png (한국어로 다시 그림: https://github.com/CaesiumY/CaesiumY.github.io/pull/120) -->
 
 ![여러분의 프롬프트, 레퍼런스, 시스템 프롬프트, Claude.MD 파일, 스킬, 메모리가 쌓여 컨텍스트 윈도우를 이루는 그림](./context-window.png)
 
