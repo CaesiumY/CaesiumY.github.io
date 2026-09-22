@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "posts": {
+    "new-rules-of-context-engineering-claude-5": {
+      "sourceArticleUrl": "https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models",
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/pull/120",
+      "rationale": "원문의 도식을 한국어로 다시 그려 이미지 안의 핵심 정보를 번역 없이 읽을 수 있게 하고, Astro 반응형 이미지 최적화를 적용합니다.",
+      "images": {
+        "context-conflict.png": {
+          "kind": "localized-redraw",
+          "sourceImageUrl": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a63620bedb2b7813b1071e2_afa90c36.png"
+        },
+        "then-and-now.png": {
+          "kind": "localized-redraw",
+          "sourceImageUrl": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a63620bedb2b7813b107213_3979f6a1.png"
+        },
+        "todowrite-comparison.png": {
+          "kind": "localized-redraw",
+          "sourceImageUrl": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a63620bedb2b7813b107216_c4fdec0d.png"
+        },
+        "context-window.png": {
+          "kind": "localized-redraw",
+          "sourceImageUrl": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a63620bedb2b7813b10721a_836a850d.png"
+        }
+      }
+    },
+    "claude-skills-guide-part-1": {
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/commit/42b047d910e8b05c24b378151d9cd4a5a77b3f71",
+      "rationale": "Claude 스킬 가이드 번역 시리즈 1부를 위해 직접 제작한 커버 이미지입니다.",
+      "images": {
+        "chapter-1-cover.png": {
+          "kind": "original"
+        }
+      }
+    },
+    "claude-skills-guide-part-2": {
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/commit/42b047d910e8b05c24b378151d9cd4a5a77b3f71",
+      "rationale": "Claude 스킬 가이드 번역 시리즈 2부를 위해 직접 제작한 커버 이미지입니다.",
+      "images": {
+        "chapter-2-cover.png": {
+          "kind": "original"
+        }
+      }
+    },
+    "claude-skills-guide-part-3": {
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/commit/42b047d910e8b05c24b378151d9cd4a5a77b3f71",
+      "rationale": "Claude 스킬 가이드 번역 시리즈 3부를 위해 직접 제작한 커버 이미지입니다.",
+      "images": {
+        "chapter-3-cover.png": {
+          "kind": "original"
+        }
+      }
+    },
+    "claude-skills-guide-part-4": {
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/commit/42b047d910e8b05c24b378151d9cd4a5a77b3f71",
+      "rationale": "Claude 스킬 가이드 번역 시리즈 4부를 위해 직접 제작한 커버 이미지입니다.",
+      "images": {
+        "chapter-4-cover.png": {
+          "kind": "original"
+        }
+      }
+    },
+    "claude-skills-guide-part-5": {
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/commit/42b047d910e8b05c24b378151d9cd4a5a77b3f71",
+      "rationale": "Claude 스킬 가이드 번역 시리즈 5부를 위해 직접 제작한 커버 이미지입니다.",
+      "images": {
+        "chapter-5-cover.png": {
+          "kind": "original"
+        }
+      }
+    },
+    "claude-skills-guide-part-6": {
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/commit/42b047d910e8b05c24b378151d9cd4a5a77b3f71",
+      "rationale": "Claude 스킬 가이드 번역 시리즈 6부를 위해 직접 제작한 커버 이미지입니다.",
+      "images": {
+        "chapter-6-cover.png": {
+          "kind": "original"
+        }
+      }
+    },
+    "maximizing-claude-code-sessions": {
+      "sourceArticleUrl": "https://claude.com/blog/maximizing-the-value-of-your-claude-code-sessions",
+      "provenanceUrl": "https://github.com/CaesiumY/CaesiumY.github.io/pull/171",
+      "rationale": "본문과 다이어그램의 언어를 통일한 한국어판을 제공해 이미지 안의 정보를 번역 없이 읽을 수 있게 합니다.",
+      "images": {
+        "session-comparison.png": {
+          "kind": "localized-redraw",
+          "sourceImageUrl": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1946bc7cd69c4c8919db_be236b0d.png"
+        },
+        "model-size-curve.png": {
+          "kind": "localized-redraw",
+          "sourceImageUrl": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1946bc7cd69c4c8919de_da980737.png"
+        },
+        "prefill-decode-diagram.png": {
+          "kind": "localized-redraw",
+          "sourceImageUrl": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1947bc7cd69c4c891a0f_c69dbb11.png"
+        },
+        "read-call-comparison.png": {
+          "kind": "localized-redraw",
+          "sourceImageUrl": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1b213f60488b546224d4_cab63270.png"
+        },
+        "session-length-context.png": {
+          "kind": "localized-redraw",
+          "sourceImageUrl": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1cdb7fb1ad2229b0afa5_92ab0ee2.png"
+        },
+        "subagent-context-separation.png": {
+          "kind": "localized-redraw",
+          "sourceImageUrl": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1cdb7fb1ad2229b0afaa_a653b369.png"
+        },
+        "four-cost-factors.png": {
+          "kind": "localized-redraw",
+          "sourceImageUrl": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a7f1dd4531c50c7022d5171_df696a6b.png"
+        }
+      }
+    }
+  }
+}
