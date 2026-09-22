@@ -34,10 +34,10 @@ const localizedImage = (overrides = {}) => ({
   ...overrides,
 });
 
-function createFixture({ markdown = "", registry, files = [] }) {
+function createFixture({ markdown = "", registry, files = [], postPath = "post" }) {
   const root = mkdtempSync(path.join(tmpdir(), "translation-provenance-"));
   const translationDir = path.join(root, "translation");
-  const postDir = path.join(translationDir, "post");
+  const postDir = path.join(translationDir, postPath);
   mkdirSync(postDir, { recursive: true });
   const markdownPath = path.join(postDir, "index.md");
   writeFileSync(markdownPath, markdown, "utf8");
@@ -195,6 +195,21 @@ test("rightsBasis 또는 rightsEvidence가 없는 source-copy를 거부한다", 
   }
 });
 
+test("source-copy rightsEvidence는 검증 가능한 URL이어야 한다", () => {
+  const { fixture, failures } = validateFixture({
+    markdown: "![복제](./diagram.png)",
+    files: ["diagram.png"],
+    registry: localizedRegistry({
+      kind: "source-copy",
+      rightsBasis: "permission",
+      rightsEvidence: "trust me",
+    }),
+  });
+
+  assert.match(messages(failures), /rightsEvidence.*HTTP/);
+  rmSync(fixture.root, { recursive: true, force: true });
+});
+
 test("sourceImageUrl이 없는 original 이미지를 허용한다", () => {
   const { fixture, failures } = validateFixture({
     markdown: "![직접 제작](./diagram.png)",
@@ -227,6 +242,25 @@ test("Markdown에서 참조되지 않는 오래된 등록을 거부한다", () =
   });
 
   assert.match(messages(failures), /참조되지 않/);
+  rmSync(fixture.root, { recursive: true, force: true });
+});
+
+test("등록부에 없는 고아 로컬 이미지 파일을 거부한다", () => {
+  const { fixture, failures } = validateFixture({
+    markdown: "본문만 있습니다.",
+    files: ["copied.png"],
+    registry: {
+      version: 1,
+      posts: {
+        post: {
+          ...postMetadata(),
+          images: {},
+        },
+      },
+    },
+  });
+
+  assert.match(messages(failures), /copied\.png.*등록/);
   rmSync(fixture.root, { recursive: true, force: true });
 });
 
@@ -352,6 +386,25 @@ test("findTranslationImages는 균형 괄호가 있는 로컬 이미지 파일�
   ]);
 });
 
+test("중첩된 alt 링크 뒤의 바깥 이미지 목적지를 검사한다", () => {
+  const filePath = "contents/blog/translation/post/index.md";
+  const images = findTranslationImages(
+    "![see [source](https://example.com)](./copied.png)",
+    filePath
+  );
+
+  assert.deepEqual(images, [
+    { file: filePath, line: 1, target: "./copied.png" },
+  ]);
+
+  const { fixture, failures } = validateFixture({
+    markdown: "![see [source](https://example.com)](./copied.png)",
+    files: ["copied.png"],
+  });
+  assert.match(messages(failures), /copied\.png.*등록/);
+  rmSync(fixture.root, { recursive: true, force: true });
+});
+
 test("frontmatter의 로컬 ogImage도 출처 등록을 요구한다", () => {
   const { fixture, failures } = validateFixture({
     markdown: [
@@ -397,6 +450,33 @@ test("frontmatter의 로컬 ogImage를 original로 등록할 수 있다", () => 
   rmSync(fixture.root, { recursive: true, force: true });
 });
 
+test("frontmatter ogImage의 YAML 인라인 주석을 제거해 해석한다", () => {
+  const { fixture, failures } = validateFixture({
+    markdown: [
+      "---",
+      'ogImage: "./cover.png" # generated locally',
+      "---",
+      "본문입니다.",
+    ].join("\n"),
+    files: ["cover.png"],
+    registry: {
+      version: 1,
+      posts: {
+        post: {
+          provenanceUrl: "https://github.com/example/repo/commit/0123456789abcdef",
+          rationale: "번역 시리즈의 직접 제작 커버 이미지",
+          images: {
+            "cover.png": { kind: "original" },
+          },
+        },
+      },
+    },
+  });
+
+  assert.deepEqual(failures, []);
+  rmSync(fixture.root, { recursive: true, force: true });
+});
+
 test("findTranslationImages는 중첩 및 escape 괄호 파일명을 보존한다", () => {
   const filePath = "contents/blog/translation/post/index.md";
   const images = findTranslationImages(
@@ -411,4 +491,26 @@ test("findTranslationImages는 중첩 및 escape 괄호 파일명을 보존한�
     { file: filePath, line: 1, target: "./diagram(foo(1)).png" },
     { file: filePath, line: 2, target: "./diagram(1).png" },
   ]);
+});
+
+test("중첩된 번역 글 경로를 registry key와 파일 경로에 그대로 사용한다", () => {
+  const { fixture, failures } = validateFixture({
+    postPath: "group/post",
+    markdown: "![중첩](./diagram.png)",
+    files: ["diagram.png"],
+    registry: {
+      version: 1,
+      posts: {
+        "group/post": {
+          ...postMetadata(),
+          images: {
+            "diagram.png": localizedImage(),
+          },
+        },
+      },
+    },
+  });
+
+  assert.deepEqual(failures, []);
+  rmSync(fixture.root, { recursive: true, force: true });
 });

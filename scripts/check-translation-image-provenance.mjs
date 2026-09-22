@@ -14,6 +14,7 @@ import { maskCodeRegions } from "../src/utils/markdownCodeRegions.ts";
 const PLACEHOLDER = /\uE000(\d+)\uE000/g;
 const IMAGE_START = "![";
 const HTML_IMAGE = /<img\b/i;
+const IMAGE_FILE = /\.(?:avif|gif|jpe?g|png|svg|webp)$/i;
 const SUPPORTED_KINDS = new Set([
   "original",
   "localized-redraw",
@@ -45,6 +46,33 @@ function imageTarget(destination) {
   return trimmed.replace(/\\([()])/g, "$1");
 }
 
+function findImageDestinationStart(line, start) {
+  let index = start + IMAGE_START.length;
+  let depth = 1;
+
+  while (index < line.length) {
+    const character = line[index];
+    if (character === "\\") {
+      index += 2;
+      continue;
+    }
+    if (character === "[") {
+      depth++;
+      index++;
+      continue;
+    }
+    if (character === "]") {
+      depth--;
+      if (depth === 0) {
+        return line[index + 1] === "(" ? index + 2 : null;
+      }
+    }
+    index++;
+  }
+
+  return null;
+}
+
 function inlineImageEnd(line, index) {
   const trailing = line
     .slice(index)
@@ -53,10 +81,10 @@ function inlineImageEnd(line, index) {
 }
 
 function readInlineImage(line, start) {
-  const altEnd = line.indexOf("](", start + IMAGE_START.length);
-  if (altEnd === -1) return null;
+  const destinationStart = findImageDestinationStart(line, start);
+  if (destinationStart === null) return null;
 
-  let index = altEnd + 2;
+  let index = destinationStart;
   while (/\s/.test(line[index] ?? "")) index++;
 
   if (line[index] === "<") {
@@ -124,6 +152,47 @@ function removeInlineImages(line) {
   }
   return supported + line.slice(previousEnd);
 }
+
+function parseFrontmatterScalar(value) {
+  const trimmed = value.trim();
+  if (trimmed.length === 0) return null;
+
+  const quote = trimmed[0];
+  if (quote === '"' || quote === "'") {
+    let index = 1;
+    while (index < trimmed.length) {
+      if (trimmed[index] === "\\" && quote === '"') {
+        index += 2;
+        continue;
+      }
+      if (trimmed[index] === quote) {
+        const raw = trimmed.slice(0, index + 1);
+        if (quote === '"') {
+          try {
+            return JSON.parse(raw);
+          } catch {
+            return raw.slice(1, -1);
+          }
+        }
+        return raw.slice(1, -1).replace(/''/g, "'");
+      }
+      index++;
+    }
+    return null;
+  }
+
+  for (let index = 0; index < trimmed.length; index++) {
+    if (
+      trimmed[index] === "#" &&
+      (index === 0 || /\s/.test(trimmed[index - 1]))
+    ) {
+      return trimmed.slice(0, index).trim();
+    }
+  }
+
+  return trimmed;
+}
+
 function findFrontmatterOgImages(markdown, filePath) {
   const lines = markdown.split(/\r?\n/);
   if (lines[0]?.replace(/^\uFEFF/, "") !== "---") return [];
@@ -135,12 +204,8 @@ function findFrontmatterOgImages(markdown, filePath) {
     const match = lines[index].match(/^ogImage:\s*(.*?)\s*$/);
     if (!match || match[1].length === 0) continue;
 
-    const value = match[1];
-    const target =
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"))
-        ? value.slice(1, -1)
-        : value;
+    const target = parseFrontmatterScalar(match[1]);
+    if (target === null) continue;
     images.push({ file: filePath, line: index + 1, target });
   }
 
@@ -212,8 +277,15 @@ function isNonEmptyString(value) {
 }
 
 function postSlugForFile(filePath, translationDir) {
-  const relative = path.relative(translationDir, filePath);
-  return relative.split(path.sep)[0];
+  const relative = path.relative(translationDir, filePath).split(path.sep).join("/");
+  const directory = path.posix.dirname(relative);
+  return directory === "."
+    ? path.posix.basename(relative, path.posix.extname(relative))
+    : directory;
+}
+
+function postImagePath(translationDir, slug, filename) {
+  return path.join(translationDir, ...slug.split("/"), filename);
 }
 
 function registryFailure(registryPath, message) {
@@ -390,11 +462,11 @@ function validateImageRecord({ record, filename, slug, post, registryPath }) {
         )
       );
     }
-    if (!isNonEmptyString(record.rightsEvidence)) {
+    if (!isHttpUrl(record.rightsEvidence)) {
       failures.push(
         registryFailure(
           registryPath,
-          `source-copy 이미지 '${filename}'에는 rightsEvidence가 필요합니다`
+          `source-copy 이미지 '${filename}'에는 rightsEvidence(HTTP 또는 HTTPS URL)가 필요합니다`
         )
       );
     }
@@ -428,6 +500,105 @@ function safeRegistryFilename(filename) {
     !filename.includes("\\") &&
     !filename.includes("\0")
   );
+}
+
+function collectImageFiles(target, files = []) {
+  const info = statSync(target);
+  if (info.isFile()) {
+    if (IMAGE_FILE.test(target)) files.push(target);
+    return files;
+  }
+
+  for (const entry of readdirSync(target, { withFileTypes: true })) {
+    const fullPath = path.join(target, entry.name);
+    if (entry.isDirectory()) {
+      collectImageFiles(fullPath, files);
+    } else if (entry.isFile() && IMAGE_FILE.test(entry.name)) {
+      files.push(fullPath);
+    }
+  }
+
+  return files.sort();
+}
+
+function isWithinPath(child, parent) {
+  const relative = path.relative(parent, child);
+  return (
+    relative === "" ||
+    (relative !== ".." &&
+      !relative.startsWith(`..${path.sep}`) &&
+      !path.isAbsolute(relative))
+  );
+}
+
+function orphanImageFailures({
+  translationDir,
+  registryPath,
+  markdownByPost,
+  referencesByPost,
+  registry,
+}) {
+  const failures = [];
+  let imageFiles;
+  try {
+    imageFiles = collectImageFiles(translationDir);
+  } catch (error) {
+    return [
+      registryFailure(
+        translationDir,
+        `로컬 이미지 파일을 읽을 수 없습니다: ${error instanceof Error ? error.message : String(error)}`
+      ),
+    ];
+  }
+
+  const postDirectories = [...markdownByPost.entries()].flatMap(
+    ([slug, markdownPaths]) =>
+      markdownPaths.map(markdownPath => ({
+        slug,
+        directory: path.dirname(markdownPath),
+      }))
+  );
+
+  for (const imagePath of imageFiles) {
+    const owner = postDirectories
+      .filter(({ directory }) => isWithinPath(imagePath, directory))
+      .sort((left, right) => right.directory.length - left.directory.length)[0];
+
+    if (!owner) {
+      failures.push(
+        registryFailure(
+          registryPath,
+          `번역 글 폴더에 속하지 않는 로컬 이미지 '${path.relative(translationDir, imagePath)}'가 있습니다`
+        )
+      );
+      continue;
+    }
+
+    const relative = path.relative(owner.directory, imagePath);
+    const filename = relative.split(path.sep).join("/");
+    if (!safeRegistryFilename(filename)) {
+      failures.push(
+        registryFailure(
+          registryPath,
+          `로컬 이미지 '${owner.slug}/${filename}'은 글 폴더 바로 아래의 단일 파일이어야 합니다`
+        )
+      );
+      continue;
+    }
+
+    const record = registry.posts[owner.slug]?.images?.[filename];
+    const isReferenced = referencesByPost.get(owner.slug)?.has(filename);
+    if (!record && !isReferenced) {
+      failures.push(
+        registryFailure(
+          registryPath,
+          `로컬 이미지 '${owner.slug}/${filename}'의 출처 등록이 없습니다. image-provenance.json에 등록하세요`
+        )
+      );
+    }
+  }
+
+  return failures;
 }
 
 /**
@@ -541,7 +712,11 @@ export function validateTranslationImageProvenance({
         continue;
       }
 
-      const imagePath = path.join(resolvedTranslationDir, slug, classified.filename);
+      const imagePath = postImagePath(
+        resolvedTranslationDir,
+        slug,
+        classified.filename
+      );
       if (!isLocalFile(imagePath)) {
         failures.push(
           markdownFailure(
@@ -564,6 +739,16 @@ export function validateTranslationImageProvenance({
 
     referencesByPost.set(slug, postReferences);
   }
+
+  failures.push(
+    ...orphanImageFailures({
+      translationDir: resolvedTranslationDir,
+      registryPath: resolvedRegistryPath,
+      markdownByPost,
+      referencesByPost,
+      registry,
+    })
+  );
 
   for (const [slug, post] of Object.entries(registry.posts)) {
     const postFiles = markdownByPost.get(slug) ?? [];
@@ -605,7 +790,7 @@ export function validateTranslationImageProvenance({
         );
       }
 
-      const imagePath = path.join(resolvedTranslationDir, slug, filename);
+      const imagePath = postImagePath(resolvedTranslationDir, slug, filename);
       if (!isLocalFile(imagePath)) {
         failures.push(
           registryFailure(
