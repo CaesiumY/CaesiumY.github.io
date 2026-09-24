@@ -6,6 +6,8 @@ Guide for Codex (OpenAI Codex) when working with code in this repository.
 
 Caesiumy's personal blog at https://caesiumy.dev — Astro SSG, started from the AstroPaper template and customized since. Blog posts live in `contents/blog/` (not `src/content/`).
 
+Hard-to-reverse design decisions are recorded as ADRs in `docs/adr/` — read the one covering an area before changing it (e.g. how translated posts are identified, why `/posts` is split into static routes).
+
 ## Development Commands
 
 ```bash
