@@ -33,11 +33,11 @@ Guide for Claude Code (claude.ai/code) when working with code in this repository
 
 `mattpocock-skills` 플러그인(`/triage`, `/to-tickets`, `/implement`, `/wayfinder` 등)이 읽는 레포 설정입니다. Claude Code 전용 플러그인이라 AGENTS.md가 아니라 여기에 둡니다.
 
-개발 워크플로(아이디어 → 스펙 → 티켓 → 구현, 디버깅, 리뷰)는 이 플러그인으로 진행합니다. 어떤 스킬을 쓸지 모르겠으면 `/ask-matt`을 쓰세요. superpowers·oh-my-claudecode 하네스는 더 이상 쓰지 않습니다. 과거 설계 결정은 `docs/adr/`에 있습니다.
+개발 워크플로(아이디어 → 스펙 → 티켓 → 구현, 디버깅, 리뷰)는 이 플러그인으로 진행합니다. 어떤 스킬을 쓸지 모르겠으면 `/ask-matt`을 쓰세요. superpowers·oh-my-claudecode 하네스는 더 이상 쓰지 않습니다.
 
 ### Issue tracker
 
-GitHub Issues(`CaesiumY/CaesiumY.github.io`)를 `gh` CLI로 다룹니다. 외부 PR은 트리아지 대상이 아닙니다. See `docs/agents/issue-tracker.md`.
+GitHub Issues(`CaesiumY/CaesiumY.github.io`)를 `gh` CLI로 다룹니다. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
