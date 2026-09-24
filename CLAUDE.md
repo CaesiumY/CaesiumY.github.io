@@ -41,8 +41,8 @@ GitHub Issues(`CaesiumY/CaesiumY.github.io`)를 `gh` CLI로 다룹니다. 외부
 
 ### Triage labels
 
-기본 5개 역할 라벨(`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`)을 이름 그대로 쓰고, 카테고리는 기존 `bug`/`enhancement` 라벨을 씁니다. See `docs/agents/triage-labels.md`.
+기본 역할 라벨을 이름 그대로 쓰고, 카테고리는 기존 `bug`/`enhancement` 라벨을 씁니다. See `docs/agents/triage-labels.md`.
 
 ### Domain docs
 
-Single-context — 루트 `CONTEXT.md` + `docs/adr/`(필요해질 때 생성). See `docs/agents/domain.md`.
+Single-context — 루트 `CONTEXT.md`(필요해질 때 생성) + `docs/adr/`. See `docs/agents/domain.md`.
