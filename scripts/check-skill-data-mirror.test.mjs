@@ -8,15 +8,29 @@
  * it must let through. The allow-list is deliberately narrow: if a case here
  * starts passing when it should fail, the normalization grew too broad.
  *
- * There is intentionally no smoke test against the real repo. The dedicated CI
- * step already checks the live tree, and running it here too would turn one
- * drift into two red steps with the same cause.
+ * The CLI cases run against a throwaway `git init` repo, never the real one.
+ * The dedicated CI step already checks the live tree, and running it here too
+ * would turn one drift into two red steps with the same cause.
  */
 
 import assert from "node:assert/strict";
+import { execFileSync, spawnSync } from "node:child_process";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
-import { diffMirror, normalize } from "./check-skill-data-mirror.mjs";
+import {
+  diffMirror,
+  normalize,
+  pairSkills,
+  parseIndexListing,
+} from "./check-skill-data-mirror.mjs";
+
+const scriptPath = fileURLToPath(
+  new URL("./check-skill-data-mirror.mjs", import.meta.url)
+);
 
 const FILE = "100644";
 const LINK = "120000";
@@ -154,4 +168,127 @@ test("normalize never changes the line count", () => {
     normalize(source).split("\n").length,
     source.split("\n").length
   );
+});
+
+test("back-to-back self-references are all normalized", () => {
+  // The first version consumed the character before each match, so the second
+  // segment of `.claude/.agents/` was never rewritten.
+  assert.equal(normalize("x .claude/.agents/y"), normalize("x .agents/.claude/y"));
+});
+
+test("a skill with data/ on only one side fails", () => {
+  // Pairing only the skills present on both sides let a deleted or renamed
+  // data/ directory drop out of the check and stay green.
+  const { pairs, problems } = pairSkills(
+    new Set(["blog-writer", "translate-writer"]),
+    new Set(["blog-writer"])
+  );
+  assert.deepEqual(pairs, ["blog-writer"]);
+  assert.deepEqual(paths(problems), ["translate-writer/data"]);
+  assert.match(problems[0].reason, /only in \.claude/);
+});
+
+test("comparing no skills at all fails", () => {
+  const { problems } = pairSkills(new Set(), new Set());
+  assert.equal(problems.length, 1);
+  assert.match(problems[0].reason, /no skill data/);
+});
+
+test("index listing parsing", async (t) => {
+  await t.test("a tab inside the path is kept", () => {
+    const [entry] = parseIndexListing(
+      "100644 abc 0\tdir/with\ttab.md\u0000",
+      "dir"
+    );
+    assert.equal(entry.rel, "with\ttab.md");
+  });
+
+  await t.test("unmerged entries are refused, not overwritten", () => {
+    assert.throws(
+      () =>
+        parseIndexListing(
+          "100644 aaa 2\tdir/a.md\u0000100644 bbb 3\tdir/a.md\u0000",
+          "dir"
+        ),
+      /unmerged/
+    );
+  });
+});
+
+// ---- CLI contract, against a throwaway repo ----
+
+function fixtureRepo(t) {
+  const root = mkdtempSync(path.join(tmpdir(), "skill-data-mirror-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  execFileSync("git", ["init", "-q"], { cwd: root });
+
+  const git = (...args) => execFileSync("git", args, { cwd: root });
+  return {
+    root,
+    file(rel, content) {
+      mkdirSync(path.dirname(path.join(root, rel)), { recursive: true });
+      writeFileSync(path.join(root, rel), content);
+      git("add", rel);
+    },
+    // Registered straight in the index so the fixture needs no OS symlink
+    // support (the same trick the skills document for Windows).
+    link(rel, target) {
+      const sha = execFileSync("git", ["hash-object", "-w", "--stdin"], {
+        cwd: root,
+        input: target,
+        encoding: "utf8",
+      }).trim();
+      git("update-index", "--add", "--cacheinfo", `120000,${sha},${rel}`);
+    },
+  };
+}
+
+const run = (root) =>
+  spawnSync(process.execPath, [scriptPath, root], { encoding: "utf8" });
+
+function seedMirror(repo) {
+  for (const side of [".claude", ".agents"]) {
+    repo.file(`${side}/skills/demo/data/style-guide.md`, "# Guide\n");
+    repo.file(`${side}/skills/demo/data/approved-posts/01.md`, "post\n");
+    repo.link(`${side}/skills/demo/data/samples/01.md`, "../approved-posts/01.md");
+  }
+}
+
+test("CLI exits 0 on a mirrored tree", (t) => {
+  const repo = fixtureRepo(t);
+  seedMirror(repo);
+  const result = run(repo.root);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /demo/);
+});
+
+test("CLI exits 1 and names each drifted path", (t) => {
+  const repo = fixtureRepo(t);
+  seedMirror(repo);
+  repo.file(".claude/skills/demo/data/approved-posts/02.md", "new\n");
+  repo.file(".agents/skills/demo/data/style-guide.md", "# Guide\nextra\n");
+
+  const result = run(repo.root);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /demo\/data\/approved-posts\/02\.md: only in \.claude/);
+  assert.match(result.stderr, /demo\/data\/style-guide\.md: content differs/);
+});
+
+test("CLI exits 1 when one side lost its whole data/ directory", (t) => {
+  const repo = fixtureRepo(t);
+  repo.file(".claude/skills/demo/data/style-guide.md", "# Guide\n");
+  repo.file(".agents/skills/demo/SKILL.md", "---\nname: demo\n---\n");
+
+  const result = run(repo.root);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /demo\/data: only in \.claude/);
+});
+
+test("CLI exits 1 when there is nothing to compare", (t) => {
+  const repo = fixtureRepo(t);
+  repo.file("README.md", "empty\n");
+
+  const result = run(repo.root);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /no skill data/);
 });
