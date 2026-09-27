@@ -207,8 +207,9 @@ test("a shared skill with data/ on only one side fails", async (t) => {
 });
 
 test("a single-side skill is out of scope, even with data/", () => {
-  // Claude-only skills (e.g. agents-md-optimizer) live in .claude/skills/ alone
-  // by design; demanding a mirror of their data/ would contradict AGENTS.md.
+  // A skill with nothing at all on the other side (e.g. the Claude-only
+  // agents-md-optimizer) is one-sided by design; demanding a mirror of its data/
+  // would contradict AGENTS.md.
   const { pairs, problems } = pairSkills(
     sideOf(["blog-writer", "claude-only"], ["blog-writer", "claude-only"]),
     sideOf(["blog-writer"], ["blog-writer"])
@@ -331,7 +332,7 @@ test("CLI exits 1 when there is nothing to compare", (t) => {
   assert.match(result.stderr, /no skill data/);
 });
 
-test("CLI ignores a Claude-only skill's data/", (t) => {
+test("CLI ignores the data/ of a skill that exists on one side only", (t) => {
   const repo = fixtureRepo(t);
   seedMirror(repo);
   repo.file(".claude/skills/solo/SKILL.md", "---\nname: solo\n---\n");
@@ -346,4 +347,20 @@ test("CLI exits 1 on a repo root that does not exist", () => {
   const result = run(missing);
   assert.equal(result.status, 1);
   assert.match(result.stderr, /does not exist/);
+});
+
+test("CLI still checks data/ when one side lost only its SKILL.md", (t) => {
+  // Keying "mirrored" on SKILL.md let a deleted or mis-cased SKILL.md on one
+  // side drop the whole skill out of the check while its data drifted.
+  const repo = fixtureRepo(t);
+  seedMirror(repo);
+  execFileSync("git", ["rm", "-q", "--cached", ".agents/skills/demo/SKILL.md"], {
+    cwd: repo.root,
+    env,
+  });
+  repo.file(".agents/skills/demo/data/style-guide.md", "# Guide\ndrift\n");
+
+  const result = run(repo.root);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /demo\/data\/style-guide\.md: content differs/);
 });

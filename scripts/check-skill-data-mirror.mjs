@@ -10,9 +10,11 @@
  * so the Codex copy went six months without an update while CI stayed green
  * (issue #153).
  *
- * A skill is mirrored when its SKILL.md exists on both sides; Claude-only skills
- * (e.g. agents-md-optimizer) live in .claude/skills/ alone by design and are
- * skipped. For every mirrored skill this guard fails when only one side has a
+ * A skill is mirrored when its directory has any tracked file on both sides. A
+ * skill that exists on one side only (e.g. the Claude-only agents-md-optimizer)
+ * is skipped by design. Presence is not keyed on SKILL.md: a deleted or
+ * mis-cased SKILL.md on one side would otherwise drop the skill's data out of
+ * the check. For every mirrored skill this guard fails when only one side has a
  * `data/` directory, when nothing is compared at all, or on any content
  * difference except two, which are an explicit allow-list:
  *
@@ -147,10 +149,10 @@ export function diffMirror(claude, agents) {
 
 /**
  * Decide which skills to compare. Each argument describes one side:
- * `{skills, data}`, the names with a SKILL.md and the names with a `data/`
- * directory.
+ * `{skills, data}`, the names with any tracked file and the names with a
+ * `data/` directory.
  *
- * Only skills present on BOTH sides are mirrored; a Claude-only skill is out of
+ * Only skills present on BOTH sides are mirrored; a single-side skill is out of
  * scope even when it has data. For a mirrored skill, `data/` on one side only is
  * drift, not something to skip: pairing only the skills whose data exists on
  * both sides let a deleted or renamed `data/` fall out of the check while CI
@@ -255,7 +257,7 @@ function loadEntries(repoRoot, prefix) {
   return entries;
 }
 
-/** `{skills, data}` for one side: the names with a SKILL.md and with a `data/`. */
+/** `{skills, data}` for one side: the names with any tracked file and with a `data/`. */
 function readSide(repoRoot, root) {
   const skills = new Set();
   const data = new Set();
@@ -263,7 +265,7 @@ function readSide(repoRoot, root) {
 
   for (const file of files.split("\0").filter(Boolean)) {
     const [skill, ...rest] = file.slice(root.length + 1).split("/");
-    if (rest.length === 1 && rest[0] === "SKILL.md") skills.add(skill);
+    if (rest.length > 0) skills.add(skill);
     if (rest.length > 1 && rest[0] === "data") data.add(skill);
   }
 
