@@ -93,12 +93,17 @@ export async function fetchOgImage(url: string): Promise<string | null> {
   }
 }
 
+/** 스킴 없이 `//`로 시작하는 프로토콜 상대 URL(`//cdn…`)인지 판정합니다. */
+function isProtocolRelative(url: string): boolean {
+  return url.startsWith("//");
+}
+
 /**
  * 사이트 안의 정적 파일을 가리키는 루트 상대 경로(`/projects/x.webp`)인지
- * 판정합니다. 프로토콜 상대 URL(`//cdn…`)은 외부이므로 제외합니다.
+ * 판정합니다. 프로토콜 상대 URL은 외부이므로 제외합니다.
  */
 function isRootRelativePath(url: string): boolean {
-  return url.startsWith("/") && !url.startsWith("//");
+  return url.startsWith("/") && !isProtocolRelative(url);
 }
 
 /**
@@ -109,7 +114,7 @@ function isRootRelativePath(url: string): boolean {
  */
 async function respondsWithImage(url: string): Promise<boolean> {
   // 프로토콜 상대 URL은 Node fetch가 파싱하지 못하므로 https로 요청한다
-  const target = url.startsWith("//") ? `https:${url}` : url;
+  const target = isProtocolRelative(url) ? `https:${url}` : url;
 
   try {
     return await fetchWithTimeout(target, async response => {
@@ -130,12 +135,17 @@ async function respondsWithImage(url: string): Promise<boolean> {
 export async function fetchProjectOgImage(
   project: Project
 ): Promise<string | null> {
-  // 수동 ogImage: 로컬 경로는 그대로, 그 밖의 값은 이미지로 확인될 때만 사용
+  // 수동 ogImage: 로컬 경로는 그대로, 그 밖의 값은 http(s)이고 이미지로
+  // 확인될 때만 사용. 스킴 검사를 fetch에 맡기지 않는다 — Node fetch는 data:를
+  // 200 image/*로 응답해 검증을 통과시킨다
   if (project.ogImage) {
     if (isRootRelativePath(project.ogImage)) {
       return project.ogImage;
     }
-    if (await respondsWithImage(project.ogImage)) {
+    if (
+      isValidImageUrl(project.ogImage) &&
+      (await respondsWithImage(project.ogImage))
+    ) {
       return project.ogImage;
     }
   }

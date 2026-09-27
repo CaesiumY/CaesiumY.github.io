@@ -135,9 +135,17 @@ test("프로토콜 상대 URL은 https로 요청해 검증하고 원래 값을 �
   assert.equal(await fetchProjectOgImage(project({ ogImage })), ogImage);
 });
 
-test("http(s)가 아닌 값은 그대로 통과시키지 않는다", async () => {
-  const ogImage = "javascript:alert(1)";
-  stubFetch({ [ogImage]: new TypeError("unsupported scheme") });
+// 스킴 거부를 fetch의 throw에 맡기면 안 된다 — 실제 Node fetch는 javascript:는
+// 거부하지만 data:는 200 image/*로 응답해 검증을 통과시킨다. 그래서 목에
+// 응답을 등록하지 않고 "요청 자체가 없어야 한다"로 단언한다
+for (const ogImage of [
+  "javascript:alert(1)",
+  "data:image/png;base64,iVBORw0KGgo=",
+]) {
+  test(`http(s)가 아닌 값은 요청 없이 버린다: ${ogImage.split(":")[0]}:`, async () => {
+    const fetchMock = stubFetch({});
 
-  assert.equal(await fetchProjectOgImage(project({ ogImage })), null);
-});
+    assert.equal(await fetchProjectOgImage(project({ ogImage })), null);
+    assert.equal(fetchMock.mock.callCount(), 0);
+  });
+}
