@@ -1,0 +1,15 @@
+---
+import { Icon } from "astro-icon/components";
+
+// Icon의 is:inline은 필수다. astro-icon은 페이지에서 첫 아이콘에만 <symbol>을
+// 넣고 이후엔 <use>로 참조한다. ProjectCard는 이 플레이스홀더를 런타임 폴백용
+// <template> 안에도 두는데, 첫 인스턴스가 inert한 template 안에 들어가면
+// 나머지 플레이스홀더의 <use>가 가리킬 symbol이 문서에 없어 아이콘이 사라진다.
+---
+
+<div
+  data-project-thumb="placeholder"
+  class="flex aspect-video w-full items-center justify-center bg-accent/5 dark:bg-accent/10"
+>
+  <Icon name="ph:image" size={48} class="text-foreground/20" is:inline />
+</div>

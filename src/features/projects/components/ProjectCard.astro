@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import type { Project } from "@/data/projects";
+import ProjectThumbPlaceholder from "./ProjectThumbPlaceholder.astro";
 
 export interface Props {
   project: Project;
@@ -30,7 +31,10 @@ const primaryUrl = liveUrl ?? githubUrl ?? "#";
   >
     {
       ogImageUrl ? (
-        <div class="relative aspect-video w-full overflow-hidden">
+        <div
+          data-project-thumb="image"
+          class="relative aspect-video w-full overflow-hidden"
+        >
           <img
             src={ogImageUrl}
             alt={`${title} 프로젝트 미리보기`}
@@ -41,11 +45,13 @@ const primaryUrl = liveUrl ?? githubUrl ?? "#";
           />
           {/* Gradient overlay */}
           <div class="absolute inset-0 bg-linear-to-t from-background/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          {/* 런타임 로드 실패 시 래퍼를 이 내용으로 교체 (아래 스크립트) */}
+          <template data-project-thumb-fallback>
+            <ProjectThumbPlaceholder />
+          </template>
         </div>
       ) : (
-        <div class="flex aspect-video w-full items-center justify-center bg-accent/5 dark:bg-accent/10">
-          <Icon name="ph:image" size={48} class="text-foreground/20" />
-        </div>
+        <ProjectThumbPlaceholder />
       )
     }
   </a>
