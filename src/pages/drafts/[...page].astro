@@ -32,25 +32,23 @@ const { page } = Astro.props;
     pageTitle="Draft Posts"
     pageDesc={`개발 환경에서만 보이는 Draft 포스트들입니다. (총 ${page.total}개)`}
   >
-    {
-      import.meta.env.DEV ? (
-        page.data.length > 0 ? (
-          <ul>
-            {page.data.map(data => (
-              <Card {...data} />
-            ))}
-          </ul>
-        ) : (
-          <p class="text-muted-foreground text-center">
-            Draft 포스트가 없습니다.
-          </p>
-        )
+    {import.meta.env.DEV ? (
+      page.data.length > 0 ? (
+        <ul>
+          {page.data.map(data => (
+            <Card {...data} />
+          ))}
+        </ul>
       ) : (
         <p class="text-muted-foreground text-center">
-          이 페이지는 개발 환경에서만 접근할 수 있습니다.
+          Draft 포스트가 없습니다.
         </p>
       )
-    }
+    ) : (
+      <p class="text-muted-foreground text-center">
+        이 페이지는 개발 환경에서만 접근할 수 있습니다.
+      </p>
+    )}
   </Main>
 
   {page.lastPage > 1 && <Pagination {page} />}

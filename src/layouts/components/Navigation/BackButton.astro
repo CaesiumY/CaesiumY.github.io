@@ -4,24 +4,22 @@ import LinkButton from "@/shared/components/LinkButton.astro";
 import { SITE } from "@/config";
 ---
 
-{
-  SITE.showBackButton && (
-    <div class="mx-auto flex w-full max-w-app items-center justify-start px-2">
-      <LinkButton
-        id="back-button"
-        href="/"
-        class="focus-outline mt-8 mb-2 flex items-center hover:text-foreground/75"
-      >
-        <Icon
-          name="ph:caret-left"
-          class="inline-block size-6 rtl:rotate-180"
-          size={24}
-        />
-        <span>뒤로 가기</span>
-      </LinkButton>
-    </div>
-  )
-}
+{SITE.showBackButton && <div
+  class="mx-auto flex w-full max-w-app items-center justify-start px-2"
+>
+  <LinkButton
+    id="back-button"
+    href="/"
+    class="focus-outline mt-8 mb-2 flex items-center hover:text-foreground/75"
+  >
+    <Icon
+      name="ph:caret-left"
+      class="inline-block size-6 rtl:rotate-180"
+      size={24}
+    />
+    <span>뒤로 가기</span>
+  </LinkButton>
+</div>}
 
 <script>
   /* Update Search Praam */

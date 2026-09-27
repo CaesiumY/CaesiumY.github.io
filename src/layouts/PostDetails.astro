@@ -95,28 +95,24 @@ const layoutProps = {
         id="article"
         class="app-prose mx-auto mt-8 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
       >
-        {
-          ogImageUrl && (
-            <img
-              src={ogImageUrl}
-              alt={`${title} 썸네일`}
-              width={1200}
-              height={630}
-              class="mb-8 h-auto w-full rounded-lg"
-              loading="lazy"
-              decoding="async"
-            />
-          )
-        }
-        {
-          series && seriesPosts.length > 1 && (
-            <SeriesList
-              posts={seriesPosts}
-              currentPostId={post.id}
-              seriesName={series}
-            />
-          )
-        }
+        {ogImageUrl && (
+          <img
+            src={ogImageUrl}
+            alt={`${title} 썸네일`}
+            width={1200}
+            height={630}
+            class="mb-8 h-auto w-full rounded-lg"
+            loading="lazy"
+            decoding="async"
+          />
+        )}
+        {series && seriesPosts.length > 1 && (
+          <SeriesList
+            posts={seriesPosts}
+            currentPostId={post.id}
+            seriesName={series}
+          />
+        )}
         <Content />
       </article>
     </PostMetadata>

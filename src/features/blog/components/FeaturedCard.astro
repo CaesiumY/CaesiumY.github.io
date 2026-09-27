@@ -24,27 +24,27 @@ const postUrl = getPath(id, filePath);
   class="group flex flex-col overflow-hidden rounded-lg border border-border bg-background transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-lg"
 >
   <a href={postUrl} class="block" aria-label={`${title} - 클릭하여 글 읽기`}>
-    {
-      thumbnailUrl ? (
-        <div class="relative aspect-video w-full overflow-hidden">
-          <img
-            src={thumbnailUrl}
-            alt={title}
-            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            loading={index === 0 ? "eager" : "lazy"}
-            decoding="async"
-          />
-          <div class="absolute inset-0 bg-linear-to-t from-background/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-        </div>
-      ) : (
+    {thumbnailUrl ? (
+      <div class="relative aspect-video w-full overflow-hidden">
+        <img
+          src={thumbnailUrl}
+          alt={title}
+          class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          loading={index === 0 ? "eager" : "lazy"}
+          decoding="async"
+        />
         <div
-          class="flex aspect-video w-full items-center justify-center bg-accent/5 dark:bg-accent/10"
-          aria-hidden="true"
-        >
-          <Icon name="ph:article" size={48} class="text-foreground/20" />
-        </div>
-      )
-    }
+          class="absolute inset-0 bg-linear-to-t from-background/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        />
+      </div>
+    ) : (
+      <div
+        class="flex aspect-video w-full items-center justify-center bg-accent/5 dark:bg-accent/10"
+        aria-hidden="true"
+      >
+        <Icon name="ph:article" size={48} class="text-foreground/20" />
+      </div>
+    )}
   </a>
   <div class="flex flex-1 flex-col border-t border-border p-4">
     <a
