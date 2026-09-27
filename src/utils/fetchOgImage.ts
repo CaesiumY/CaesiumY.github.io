@@ -81,15 +81,61 @@ export async function fetchOgImage(url: string): Promise<string | null> {
 }
 
 /**
+ * 외부 절대 URL(http/https)인지 판정합니다.
+ * base 없이 파싱하므로 `/projects/x.webp` 같은 루트 상대 경로는 false입니다.
+ */
+function isExternalUrl(url: string): boolean {
+  try {
+    return ["http:", "https:"].includes(new URL(url).protocol);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * URL이 실제로 이미지를 돌려주는지 확인합니다.
+ * 상태 코드가 아니라 content-type으로 판정합니다 — 200에 text/html을 주는
+ * URL(이동된 파일, 로그인 페이지 등)이 카드에 깨진 이미지로 박히는 것을 막기
+ * 위해서입니다. HEAD를 거부하는 호스트가 있어 GET을 쓰고, 본문은 읽지 않습니다.
+ */
+async function isImageUrl(url: string): Promise<boolean> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (compatible; AstroBot/1.0; +https://astro.build)",
+      },
+      signal: controller.signal,
+    });
+    const contentType = response.headers.get("content-type") ?? "";
+    // 판정에 본문은 필요 없으므로 다운로드를 끊는다 (실패해도 판정과 무관)
+    await response.body?.cancel().catch(() => {});
+    return contentType.toLowerCase().startsWith("image/");
+  } catch {
+    return false;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+/**
  * 프로젝트의 OG 이미지를 가져옵니다.
  * ogImage(수동) → liveUrl → githubUrl 순서로 시도합니다.
  */
 export async function fetchProjectOgImage(
   project: Project
 ): Promise<string | null> {
-  // 수동으로 지정된 ogImage가 있으면 바로 반환
+  // 수동 ogImage: 로컬 경로는 그대로, 외부 URL은 이미지일 때만 사용
   if (project.ogImage) {
-    return project.ogImage;
+    if (!isExternalUrl(project.ogImage)) {
+      return project.ogImage;
+    }
+    if (await isImageUrl(project.ogImage)) {
+      return project.ogImage;
+    }
   }
 
   // liveUrl이 있으면 시도

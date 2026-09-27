@@ -4,6 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/layouts/components/Header.astro";
 import Footer from "@/layouts/components/Footer.astro";
 import ProjectCard from "@/features/projects/components/ProjectCard.astro";
+import ProjectThumbFallback from "@/features/projects/components/ProjectThumbFallback.astro";
 import { projects } from "@/data/projects";
 import { fetchProjectOgImage } from "@/utils/fetchOgImage";
 import { SITE } from "@/config";
@@ -33,6 +34,7 @@ const projectsWithOgImages = await Promise.all(
           {projectsWithOgImages.map(({ project, ogImageUrl }) => (
             <ProjectCard project={project} ogImageUrl={ogImageUrl} />
           ))}
+          <ProjectThumbFallback />
         </div>
       ) : (
         <p class="text-center text-foreground/60">
