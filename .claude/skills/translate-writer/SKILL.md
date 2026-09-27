@@ -272,6 +272,7 @@ AskUserQuestion으로 사용자에게 질문:
 4. style-guide.md 업데이트 (승인 패턴 강화)
 5. feedback-log.md 기록
 6. 새 용어 발견 시 용어집 업데이트 제안
+7. `.agents/skills/translate-writer/data/`에도 같은 변경을 반영 (Codex용 미러) — `git add` 후 `node scripts/check-skill-data-mirror.mjs`로 확인. 어긋나면 머지 게이트가 실패합니다
 
 거절된 경우:
 1. 거절 이유 파악
