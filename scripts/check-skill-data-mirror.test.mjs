@@ -228,7 +228,7 @@ function fixtureRepo(t) {
     file(rel, content) {
       mkdirSync(path.dirname(path.join(root, rel)), { recursive: true });
       writeFileSync(path.join(root, rel), content);
-      git("add", rel);
+      git("add", "-f", rel);
     },
     // Registered straight in the index so the fixture needs no OS symlink
     // support (the same trick the skills document for Windows).
