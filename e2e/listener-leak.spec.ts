@@ -41,7 +41,8 @@ async function installTestInstrumentation(page: Page) {
         (type === "scroll" ||
           type === "click" ||
           type === "keydown" ||
-          type === "error")
+          type === "error" ||
+          type === "astro:page-load")
       ) {
         return `document:${type}`;
       }
@@ -363,8 +364,10 @@ test.describe("프로젝트 썸네일 폴백 (ProjectThumbFallback 리스너 검
 
     await waitForListenerCountsStable(page);
     const baseline = await page.evaluate(() => window.__listenerCounts!());
-    // 캡처 단계 error 위임이 실제로 추적되고 있어야 불변량 비교가 의미 있다
+    // 폴백 스크립트의 두 영속 리스너가 실제로 추적되고 있어야 불변량 비교가
+    // 의미 있다 (page-load는 다른 컴포넌트도 쓰므로 존재만 확인)
     expect(baseline["document:error"]).toBe(1);
+    expect(baseline["document:astro:page-load"]).toBeGreaterThan(0);
 
     for (let round = 0; round < 3; round++) {
       await historyNavigate(page, "forward", AWAY_PATH);

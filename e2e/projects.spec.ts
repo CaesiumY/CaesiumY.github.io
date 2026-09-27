@@ -74,3 +74,28 @@ test("이미지 로드가 실패하면 카드가 플레이스홀더로 바뀐다
   // 교체된 플레이스홀더도 아이콘을 그린다 (astro-icon symbol/use 함정 회귀 방지)
   await expect(page.locator(`${PLACEHOLDER} svg path`)).toHaveCount(cardCount);
 });
+
+test("깨진 카드만 플레이스홀더로 바뀌고 나머지는 이미지를 유지한다", async ({
+  page,
+}) => {
+  await page.goto(PROJECTS_URL);
+  await revealAllCards(page);
+
+  const cardCount = await page.locator(CARD).count();
+  const firstCard = page.locator(CARD).first();
+  const brokenSrc = await firstCard
+    .locator(`${IMAGE} img`)
+    .evaluate((el: HTMLImageElement) => el.src);
+
+  // 첫 카드의 이미지 URL 하나만 끊고 다시 로드 (라우팅 중엔 HTTP 캐시가 꺼진다)
+  await page.route(
+    url => url.href === brokenSrc,
+    route => route.abort()
+  );
+  await page.reload();
+  await revealAllCards(page);
+
+  await expect(firstCard.locator(PLACEHOLDER)).toHaveCount(1);
+  await expect(firstCard.locator(IMAGE)).toHaveCount(0);
+  await expect(page.locator(IMAGE)).toHaveCount(cardCount - 1);
+});

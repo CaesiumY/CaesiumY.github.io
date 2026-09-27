@@ -14,11 +14,12 @@
     if (window.__projectThumbFallbackBound) return;
     window.__projectThumbFallbackBound = true;
 
-    const IMAGE_SELECTOR = '[data-project-thumb="image"] img';
+    const WRAPPER_SELECTOR = '[data-project-thumb="image"]';
+    const IMAGE_SELECTOR = WRAPPER_SELECTOR + " img";
 
     // 요소 참조는 캐시하지 않고 호출 시점의 DOM에서 찾는다 (View Transitions 스왑 대응)
     function fallback(img) {
-      const wrapper = img.closest('[data-project-thumb="image"]');
+      const wrapper = img.closest(WRAPPER_SELECTOR);
       const template = wrapper?.querySelector(
         "template[data-project-thumb-fallback]"
       );

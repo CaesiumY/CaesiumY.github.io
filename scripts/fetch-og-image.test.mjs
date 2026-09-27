@@ -122,3 +122,21 @@ test("루트 상대 ogImage는 요청하지 않고 그대로 쓴다", async () =
   );
   assert.equal(fetchMock.mock.callCount(), 0);
 });
+
+test("프로토콜 상대 URL은 로컬로 보지 않고 검증 대상에 넣는다", async () => {
+  const ogImage = "//cdn.example/hero.png";
+  const liveUrl = "https://live.example/";
+  const fetchMock = stubFetch({
+    [liveUrl]: () => response(htmlWithOg(LIVE_OG), "text/html"),
+  });
+
+  assert.equal(await fetchProjectOgImage(project({ ogImage, liveUrl })), LIVE_OG);
+  assert.equal(fetchMock.mock.calls[0].arguments[0], ogImage);
+});
+
+test("http(s)가 아닌 값은 그대로 통과시키지 않는다", async () => {
+  const ogImage = "javascript:alert(1)";
+  stubFetch({ [ogImage]: new TypeError("unsupported scheme") });
+
+  assert.equal(await fetchProjectOgImage(project({ ogImage })), null);
+});

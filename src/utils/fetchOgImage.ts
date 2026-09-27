@@ -14,10 +14,13 @@ function isValidImageUrl(url: string): boolean {
 }
 
 /**
- * URL에서 OG 이미지를 추출합니다.
- * 캐싱 없이 항상 새로 fetch합니다.
+ * 봇 User-Agent와 5초 타임아웃을 붙여 요청하고, 응답 처리까지 그 시간 안에 끝냅니다.
+ * 타임아웃은 본문 읽기(handle)까지 감싸야 느린 본문이 빌드를 붙잡지 않습니다.
  */
-export async function fetchOgImage(url: string): Promise<string | null> {
+async function fetchWithTimeout<T>(
+  url: string,
+  handle: (response: Response) => Promise<T>
+): Promise<T> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 5000);
 
@@ -29,12 +32,24 @@ export async function fetchOgImage(url: string): Promise<string | null> {
       },
       signal: controller.signal,
     });
+    return await handle(response);
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
 
-    if (!response.ok) {
+/**
+ * URL에서 OG 이미지를 추출합니다.
+ * 캐싱 없이 항상 새로 fetch합니다.
+ */
+export async function fetchOgImage(url: string): Promise<string | null> {
+  try {
+    const html = await fetchWithTimeout(url, response =>
+      response.ok ? response.text() : Promise.resolve(null)
+    );
+    if (html === null) {
       return null;
     }
-
-    const html = await response.text();
 
     // og:image 메타 태그 파싱 (ReDoS 방지를 위해 길이 제한)
     const ogImageMatch = html.match(
@@ -75,21 +90,15 @@ export async function fetchOgImage(url: string): Promise<string | null> {
     return null;
   } catch {
     return null;
-  } finally {
-    clearTimeout(timeoutId);
   }
 }
 
 /**
- * 외부 절대 URL(http/https)인지 판정합니다.
- * base 없이 파싱하므로 `/projects/x.webp` 같은 루트 상대 경로는 false입니다.
+ * 사이트 안의 정적 파일을 가리키는 루트 상대 경로(`/projects/x.webp`)인지
+ * 판정합니다. 프로토콜 상대 URL(`//cdn…`)은 외부이므로 제외합니다.
  */
-function isExternalUrl(url: string): boolean {
-  try {
-    return ["http:", "https:"].includes(new URL(url).protocol);
-  } catch {
-    return false;
-  }
+function isRootRelativePath(url: string): boolean {
+  return url.startsWith("/") && !url.startsWith("//");
 }
 
 /**
@@ -99,25 +108,15 @@ function isExternalUrl(url: string): boolean {
  * 위해서입니다. HEAD를 거부하는 호스트가 있어 GET을 쓰고, 본문은 읽지 않습니다.
  */
 async function isImageUrl(url: string): Promise<boolean> {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 5000);
-
   try {
-    const response = await fetch(url, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (compatible; AstroBot/1.0; +https://astro.build)",
-      },
-      signal: controller.signal,
+    return await fetchWithTimeout(url, async response => {
+      const contentType = response.headers.get("content-type") ?? "";
+      // 판정에 본문은 필요 없으므로 다운로드를 끊는다 (실패해도 판정과 무관)
+      await response.body?.cancel().catch(() => {});
+      return contentType.toLowerCase().startsWith("image/");
     });
-    const contentType = response.headers.get("content-type") ?? "";
-    // 판정에 본문은 필요 없으므로 다운로드를 끊는다 (실패해도 판정과 무관)
-    await response.body?.cancel().catch(() => {});
-    return contentType.toLowerCase().startsWith("image/");
   } catch {
     return false;
-  } finally {
-    clearTimeout(timeoutId);
   }
 }
 
@@ -128,9 +127,9 @@ async function isImageUrl(url: string): Promise<boolean> {
 export async function fetchProjectOgImage(
   project: Project
 ): Promise<string | null> {
-  // 수동 ogImage: 로컬 경로는 그대로, 외부 URL은 이미지일 때만 사용
+  // 수동 ogImage: 로컬 경로는 그대로, 그 밖의 값은 이미지로 확인될 때만 사용
   if (project.ogImage) {
-    if (!isExternalUrl(project.ogImage)) {
+    if (isRootRelativePath(project.ogImage)) {
       return project.ogImage;
     }
     if (await isImageUrl(project.ogImage)) {
