@@ -189,6 +189,14 @@ async function gotoViaHeader(page: Page, path: string) {
   });
 }
 
+/** 뷰포트를 문서 높이만큼 키워 lazy 이미지를 모두 로드시킨다 */
+async function revealWholePage(page: Page) {
+  const height = await page.evaluate(
+    () => document.documentElement.scrollHeight
+  );
+  await page.setViewportSize({ width: 1280, height });
+}
+
 /** 히스토리 이동(뒤로/앞으로)을 VT 스왑으로 수행하고 도착 경로를 확인 */
 async function historyNavigate(
   page: Page,
@@ -387,13 +395,11 @@ test.describe("프로젝트 썸네일 폴백 (ProjectThumbFallback 리스너 검
         ? route.abort()
         : route.continue()
     );
-    // 모든 lazy 썸네일이 뷰포트 안에 들어오도록 충분히 큰 화면
-    await page.setViewportSize({ width: 1280, height: 8000 });
-
     // 풀 로드가 아닌 스왑으로 처음 진입 — 인라인 스크립트가 스왑 중에 실행되는 경로
     await page.goto(AWAY_PATH);
     await waitForInitialPageLoad(page);
     await gotoViaHeader(page, PROJECTS_PATH);
+    await revealWholePage(page);
 
     const image = page.locator('[data-project-thumb="image"]');
     const placeholder = page.locator('[data-project-thumb="placeholder"]');
@@ -403,6 +409,7 @@ test.describe("프로젝트 썸네일 폴백 (ProjectThumbFallback 리스너 검
     // 떠났다가 돌아와도 새 DOM에서 다시 폴백 (요소 참조 캐시 회귀 방지)
     await historyNavigate(page, "back", AWAY_PATH);
     await historyNavigate(page, "forward", PROJECTS_PATH);
+    await revealWholePage(page);
     await expect(image).toHaveCount(0);
     await expect(placeholder).not.toHaveCount(0);
   });

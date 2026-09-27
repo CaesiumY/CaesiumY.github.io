@@ -107,9 +107,12 @@ function isRootRelativePath(url: string): boolean {
  * URL(이동된 파일, 로그인 페이지 등)이 카드에 깨진 이미지로 박히는 것을 막기
  * 위해서입니다. HEAD를 거부하는 호스트가 있어 GET을 쓰고, 본문은 읽지 않습니다.
  */
-async function isImageUrl(url: string): Promise<boolean> {
+async function respondsWithImage(url: string): Promise<boolean> {
+  // 프로토콜 상대 URL은 Node fetch가 파싱하지 못하므로 https로 요청한다
+  const target = url.startsWith("//") ? `https:${url}` : url;
+
   try {
-    return await fetchWithTimeout(url, async response => {
+    return await fetchWithTimeout(target, async response => {
       const contentType = response.headers.get("content-type") ?? "";
       // 판정에 본문은 필요 없으므로 다운로드를 끊는다 (실패해도 판정과 무관)
       await response.body?.cancel().catch(() => {});
@@ -132,7 +135,7 @@ export async function fetchProjectOgImage(
     if (isRootRelativePath(project.ogImage)) {
       return project.ogImage;
     }
-    if (await isImageUrl(project.ogImage)) {
+    if (await respondsWithImage(project.ogImage)) {
       return project.ogImage;
     }
   }

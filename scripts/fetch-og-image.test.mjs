@@ -123,15 +123,16 @@ test("루트 상대 ogImage는 요청하지 않고 그대로 쓴다", async () =
   assert.equal(fetchMock.mock.callCount(), 0);
 });
 
-test("프로토콜 상대 URL은 로컬로 보지 않고 검증 대상에 넣는다", async () => {
+test("프로토콜 상대 URL은 https로 요청해 검증하고 원래 값을 쓴다", async () => {
+  // 실제 Node fetch는 base가 없어 "//…"를 파싱하지 못하고 throw한다.
+  // 목이 원문 그대로의 URL을 받아 주면 그 사실이 가려지므로, 목에는
+  // 정규화된 https URL만 등록한다
   const ogImage = "//cdn.example/hero.png";
-  const liveUrl = "https://live.example/";
-  const fetchMock = stubFetch({
-    [liveUrl]: () => response(htmlWithOg(LIVE_OG), "text/html"),
+  stubFetch({
+    "https://cdn.example/hero.png": () => response("PNG", "image/png"),
   });
 
-  assert.equal(await fetchProjectOgImage(project({ ogImage, liveUrl })), LIVE_OG);
-  assert.equal(fetchMock.mock.calls[0].arguments[0], ogImage);
+  assert.equal(await fetchProjectOgImage(project({ ogImage })), ogImage);
 });
 
 test("http(s)가 아닌 값은 그대로 통과시키지 않는다", async () => {

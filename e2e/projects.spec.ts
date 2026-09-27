@@ -81,21 +81,27 @@ test("깨진 카드만 플레이스홀더로 바뀌고 나머지는 이미지를
   await page.goto(PROJECTS_URL);
   await revealAllCards(page);
 
-  const cardCount = await page.locator(CARD).count();
-  const firstCard = page.locator(CARD).first();
-  const brokenSrc = await firstCard
-    .locator(`${IMAGE} img`)
-    .evaluate((el: HTMLImageElement) => el.src);
-
-  // 첫 카드의 이미지 URL 하나만 끊고 다시 로드 (라우팅 중엔 HTTP 캐시가 꺼진다)
-  await page.route(
-    url => url.href === brokenSrc,
-    route => route.abort()
+  // 빌드 결과에 기대지 않도록 "이미지가 있는 첫 카드"를 인덱스로 고정한다
+  // (:has() 로케이터는 폴백 후 다음 카드로 재해석되므로 쓰지 않는다)
+  const cards = page.locator(CARD);
+  const targetIndex = await cards.evaluateAll(
+    (els, image) => els.findIndex(el => el.querySelector(image)),
+    IMAGE
   );
-  await page.reload();
-  await revealAllCards(page);
+  expect(targetIndex).toBeGreaterThanOrEqual(0);
+  const target = cards.nth(targetIndex);
+  const imageCount = await page.locator(IMAGE).count();
 
-  await expect(firstCard.locator(PLACEHOLDER)).toHaveCount(1);
-  await expect(firstCard.locator(IMAGE)).toHaveCount(0);
-  await expect(page.locator(IMAGE)).toHaveCount(cardCount - 1);
+  // 이미 뜬 카드 하나의 src를 끊기는 URL로 바꾼다. reload 없이 한 번의 로드
+  // 안에서 끝내므로, 요청마다 달라질 수 있는 og:image URL에 의존하지 않는다
+  await page.route("**/__broken-project-thumb__.png", route => route.abort());
+  await target
+    .locator(`${IMAGE} img`)
+    .evaluate((el: HTMLImageElement) => {
+      el.src = "/__broken-project-thumb__.png";
+    });
+
+  await expect(target.locator(PLACEHOLDER)).toHaveCount(1);
+  await expect(target.locator(IMAGE)).toHaveCount(0);
+  await expect(page.locator(IMAGE)).toHaveCount(imageCount - 1);
 });
