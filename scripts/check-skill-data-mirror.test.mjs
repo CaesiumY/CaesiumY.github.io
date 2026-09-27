@@ -176,20 +176,49 @@ test("back-to-back self-references are all normalized", () => {
   assert.equal(normalize("x .claude/.agents/y"), normalize("x .agents/.claude/y"));
 });
 
-test("a skill with data/ on only one side fails", () => {
-  // Pairing only the skills present on both sides let a deleted or renamed
-  // data/ directory drop out of the check and stay green.
+const sideOf = (skills, data) => ({
+  skills: new Set(skills),
+  data: new Set(data),
+});
+
+test("a shared skill with data/ on only one side fails", async (t) => {
+  // Pairing only the skills whose data/ exists on both sides let a deleted or
+  // renamed data/ directory drop out of the check and stay green.
+  const both = ["blog-writer", "translate-writer"];
+
+  await t.test("missing on .agents", () => {
+    const { pairs, problems } = pairSkills(
+      sideOf(both, both),
+      sideOf(both, ["blog-writer"])
+    );
+    assert.deepEqual(pairs, ["blog-writer"]);
+    assert.deepEqual(paths(problems), ["translate-writer/data"]);
+    assert.match(problems[0].reason, /only in \.claude/);
+  });
+
+  await t.test("missing on .claude", () => {
+    const { problems } = pairSkills(
+      sideOf(both, ["blog-writer"]),
+      sideOf(both, both)
+    );
+    assert.deepEqual(paths(problems), ["translate-writer/data"]);
+    assert.match(problems[0].reason, /only in \.agents/);
+  });
+});
+
+test("a single-side skill is out of scope, even with data/", () => {
+  // Claude-only skills (e.g. agents-md-optimizer) live in .claude/skills/ alone
+  // by design; demanding a mirror of their data/ would contradict AGENTS.md.
   const { pairs, problems } = pairSkills(
-    new Set(["blog-writer", "translate-writer"]),
-    new Set(["blog-writer"])
+    sideOf(["blog-writer", "claude-only"], ["blog-writer", "claude-only"]),
+    sideOf(["blog-writer"], ["blog-writer"])
   );
   assert.deepEqual(pairs, ["blog-writer"]);
-  assert.deepEqual(paths(problems), ["translate-writer/data"]);
-  assert.match(problems[0].reason, /only in \.claude/);
+  assert.deepEqual(problems, []);
 });
 
 test("comparing no skills at all fails", () => {
-  const { problems } = pairSkills(new Set(), new Set());
+  const { problems } = pairSkills(sideOf([], []), sideOf([], []));
   assert.equal(problems.length, 1);
   assert.match(problems[0].reason, /no skill data/);
 });
@@ -217,12 +246,18 @@ test("index listing parsing", async (t) => {
 
 // ---- CLI contract, against a throwaway repo ----
 
+// A git hook, or a caller that set GIT_INDEX_FILE / GIT_DIR, would otherwise
+// leak into every child git and point the fixture at the REAL repo's index.
+const env = Object.fromEntries(
+  Object.entries(process.env).filter(([key]) => !key.startsWith("GIT_"))
+);
+
 function fixtureRepo(t) {
   const root = mkdtempSync(path.join(tmpdir(), "skill-data-mirror-"));
   t.after(() => rmSync(root, { recursive: true, force: true }));
-  execFileSync("git", ["init", "-q"], { cwd: root });
+  execFileSync("git", ["init", "-q"], { cwd: root, env });
 
-  const git = (...args) => execFileSync("git", args, { cwd: root });
+  const git = (...args) => execFileSync("git", args, { cwd: root, env });
   return {
     root,
     file(rel, content) {
@@ -235,6 +270,7 @@ function fixtureRepo(t) {
     link(rel, target) {
       const sha = execFileSync("git", ["hash-object", "-w", "--stdin"], {
         cwd: root,
+        env,
         input: target,
         encoding: "utf8",
       }).trim();
@@ -244,10 +280,11 @@ function fixtureRepo(t) {
 }
 
 const run = (root) =>
-  spawnSync(process.execPath, [scriptPath, root], { encoding: "utf8" });
+  spawnSync(process.execPath, [scriptPath, root], { encoding: "utf8", env });
 
 function seedMirror(repo) {
   for (const side of [".claude", ".agents"]) {
+    repo.file(`${side}/skills/demo/SKILL.md`, "---\nname: demo\n---\n");
     repo.file(`${side}/skills/demo/data/style-guide.md`, "# Guide\n");
     repo.file(`${side}/skills/demo/data/approved-posts/01.md`, "post\n");
     repo.link(`${side}/skills/demo/data/samples/01.md`, "../approved-posts/01.md");
@@ -277,6 +314,7 @@ test("CLI exits 1 and names each drifted path", (t) => {
 test("CLI exits 1 when one side lost its whole data/ directory", (t) => {
   const repo = fixtureRepo(t);
   repo.file(".claude/skills/demo/data/style-guide.md", "# Guide\n");
+  repo.file(".claude/skills/demo/SKILL.md", "---\nname: demo\n---\n");
   repo.file(".agents/skills/demo/SKILL.md", "---\nname: demo\n---\n");
 
   const result = run(repo.root);
@@ -291,4 +329,21 @@ test("CLI exits 1 when there is nothing to compare", (t) => {
   const result = run(repo.root);
   assert.equal(result.status, 1);
   assert.match(result.stderr, /no skill data/);
+});
+
+test("CLI ignores a Claude-only skill's data/", (t) => {
+  const repo = fixtureRepo(t);
+  seedMirror(repo);
+  repo.file(".claude/skills/solo/SKILL.md", "---\nname: solo\n---\n");
+  repo.file(".claude/skills/solo/data/notes.md", "claude only\n");
+
+  const result = run(repo.root);
+  assert.equal(result.status, 0, result.stderr);
+});
+
+test("CLI exits 1 on a repo root that does not exist", () => {
+  const missing = path.join(tmpdir(), "skill-data-mirror-does-not-exist");
+  const result = run(missing);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /does not exist/);
 });

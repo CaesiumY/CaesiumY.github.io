@@ -10,9 +10,11 @@
  * so the Codex copy went six months without an update while CI stayed green
  * (issue #153).
  *
- * This guard pairs every skill that has a `data/` directory on either side and
- * fails when one side is missing it, when nothing is compared at all, or on any
- * content difference except two, which are an explicit allow-list:
+ * A skill is mirrored when its SKILL.md exists on both sides; Claude-only skills
+ * (e.g. agents-md-optimizer) live in .claude/skills/ alone by design and are
+ * skipped. For every mirrored skill this guard fails when only one side has a
+ * `data/` directory, when nothing is compared at all, or on any content
+ * difference except two, which are an explicit allow-list:
  *
  *  - path self-references: `.claude/...` vs `.agents/...`
  *  - the date on the two "마지막 업데이트" header forms the style analyzers write
@@ -34,6 +36,7 @@
  */
 
 import { execFileSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -44,7 +47,7 @@ const OUT_OF_SCOPE = /^style-history\//;
 // `.claude/` or `.agents/` as a path segment of its own, so `foo.claude/` is
 // left alone. A lookbehind, not a captured prefix: consuming the preceding
 // character skipped the second segment of `.claude/.agents/`.
-const SELF_REFERENCE = /(?<![\w.])\.(?:claude|agents)\//gm;
+const SELF_REFERENCE = /(?<![\w.])\.(?:claude|agents)\//g;
 
 // The only two date stamps the style analyzers write into a mirrored file.
 const DATE_STAMPS = [
@@ -143,30 +146,31 @@ export function diffMirror(claude, agents) {
 }
 
 /**
- * Decide which skills to compare. Both arguments are sets of skill names that
- * have a `data/` directory on that side.
+ * Decide which skills to compare. Each argument describes one side:
+ * `{skills, data}`, the names with a SKILL.md and the names with a `data/`
+ * directory.
  *
- * A skill on one side only is drift, not something to skip: pairing only the
- * common skills let a deleted or renamed `data/` fall out of the check while CI
+ * Only skills present on BOTH sides are mirrored; a Claude-only skill is out of
+ * scope even when it has data. For a mirrored skill, `data/` on one side only is
+ * drift, not something to skip: pairing only the skills whose data exists on
+ * both sides let a deleted or renamed `data/` fall out of the check while CI
  * stayed green. Comparing nothing at all fails for the same reason — a guard
  * that cannot find its target must not report success.
  */
-export function pairSkills(claudeSkills, agentsSkills) {
+export function pairSkills(claude, agents) {
   const problems = [];
-  const all = [...new Set([...claudeSkills, ...agentsSkills])].sort();
+  const pairs = [];
+  const mirrored = [...claude.skills].filter((s) => agents.skills.has(s)).sort();
 
-  for (const skill of all) {
-    if (!agentsSkills.has(skill)) {
-      problems.push({ path: `${skill}/data`, reason: "only in .claude" });
-    } else if (!claudeSkills.has(skill)) {
-      problems.push({ path: `${skill}/data`, reason: "only in .agents" });
-    }
+  for (const skill of mirrored) {
+    const inClaude = claude.data.has(skill);
+    const inAgents = agents.data.has(skill);
+    if (inClaude && inAgents) pairs.push(skill);
+    else if (inClaude) problems.push({ path: `${skill}/data`, reason: "only in .claude" });
+    else if (inAgents) problems.push({ path: `${skill}/data`, reason: "only in .agents" });
   }
 
-  const pairs = all.filter(
-    (skill) => claudeSkills.has(skill) && agentsSkills.has(skill)
-  );
-  if (all.length === 0) {
+  if (pairs.length === 0) {
     problems.push({
       path: `${ROOTS.claude}, ${ROOTS.agents}`,
       reason: "no skill data found to compare",
@@ -191,6 +195,7 @@ export function parseIndexListing(listing, prefix) {
     .filter(Boolean)
     .map((record) => {
       const tab = record.indexOf("\t");
+      if (tab === -1) throw new Error(`unexpected ls-files record: ${record}`);
       const [mode, sha, stage] = record.slice(0, tab).split(" ");
       const file = record.slice(tab + 1);
       if (stage !== "0") {
@@ -201,8 +206,11 @@ export function parseIndexListing(listing, prefix) {
 }
 
 function git(repoRoot, args, options = {}) {
+  // stderr is captured, not inherited: on failure it is already part of
+  // error.message, which main reports once.
   return execFileSync("git", args, {
     cwd: repoRoot,
+    stdio: ["pipe", "pipe", "pipe"],
     maxBuffer: 256 * 1024 * 1024,
     ...options,
   });
@@ -247,15 +255,19 @@ function loadEntries(repoRoot, prefix) {
   return entries;
 }
 
-/** Names of the skills with at least one indexed file under `<root>/<skill>/data/`. */
-function skillsWithData(repoRoot, root) {
-  return new Set(
-    git(repoRoot, ["ls-files", "-z", "--", root], { encoding: "utf8" })
-      .split("\0")
-      .map((file) => file.slice(root.length + 1).split("/"))
-      .filter((parts) => parts[1] === "data" && parts.length > 2)
-      .map((parts) => parts[0])
-  );
+/** `{skills, data}` for one side: the names with a SKILL.md and with a `data/`. */
+function readSide(repoRoot, root) {
+  const skills = new Set();
+  const data = new Set();
+  const files = git(repoRoot, ["ls-files", "-z", "--", root], { encoding: "utf8" });
+
+  for (const file of files.split("\0").filter(Boolean)) {
+    const [skill, ...rest] = file.slice(root.length + 1).split("/");
+    if (rest.length === 1 && rest[0] === "SKILL.md") skills.add(skill);
+    if (rest.length > 1 && rest[0] === "data") data.add(skill);
+  }
+
+  return { skills, data };
 }
 
 function main(argv) {
@@ -263,9 +275,14 @@ function main(argv) {
     ? path.resolve(argv[0])
     : path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
+  if (!existsSync(repoRoot)) {
+    process.stderr.write(`skill-data-mirror: repo root ${repoRoot} does not exist.\n`);
+    process.exit(1);
+  }
+
   const fail = (lines) => {
     process.stderr.write(
-      `skill-data-mirror: ${ROOTS.claude}/ and ${ROOTS.agents}/ have drifted.\n` +
+      `skill-data-mirror: ${ROOTS.claude}/ and ${ROOTS.agents}/ are not mirrored.\n` +
         lines.join("\n") +
         "\n" +
         "  Apply the same change to both sides. Only path self-references\n" +
@@ -279,8 +296,8 @@ function main(argv) {
   const failures = [];
   try {
     const paired = pairSkills(
-      skillsWithData(repoRoot, ROOTS.claude),
-      skillsWithData(repoRoot, ROOTS.agents)
+      readSide(repoRoot, ROOTS.claude),
+      readSide(repoRoot, ROOTS.agents)
     );
     pairs = paired.pairs;
     for (const { path: rel, reason } of paired.problems) {
