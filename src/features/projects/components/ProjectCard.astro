@@ -29,31 +29,31 @@ const primaryUrl = liveUrl ?? githubUrl ?? "#";
     class="block"
     aria-label={`${title} 프로젝트 미리보기 - 클릭하여 사이트 방문`}
   >
-    {
-      ogImageUrl ? (
+    {ogImageUrl ? (
+      <div
+        data-project-thumb="image"
+        class="relative aspect-video w-full overflow-hidden"
+      >
+        <img
+          src={ogImageUrl}
+          alt={`${title} 프로젝트 미리보기`}
+          class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+          referrerpolicy="no-referrer"
+        />
+        {/* Gradient overlay */}
         <div
-          data-project-thumb="image"
-          class="relative aspect-video w-full overflow-hidden"
-        >
-          <img
-            src={ogImageUrl}
-            alt={`${title} 프로젝트 미리보기`}
-            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            loading="lazy"
-            decoding="async"
-            referrerpolicy="no-referrer"
-          />
-          {/* Gradient overlay */}
-          <div class="absolute inset-0 bg-linear-to-t from-background/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-          {/* 런타임 로드 실패 시 래퍼를 이 내용으로 교체 (아래 스크립트) */}
-          <template data-project-thumb-fallback>
-            <ProjectThumbPlaceholder />
-          </template>
-        </div>
-      ) : (
-        <ProjectThumbPlaceholder />
-      )
-    }
+          class="absolute inset-0 bg-linear-to-t from-background/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        />
+        {/* 런타임 로드 실패 시 래퍼를 이 내용으로 교체 (아래 스크립트) */}
+        <template data-project-thumb-fallback>
+          <ProjectThumbPlaceholder />
+        </template>
+      </div>
+    ) : (
+      <ProjectThumbPlaceholder />
+    )}
   </a>
   <div class="flex flex-1 flex-col border-t border-border p-4">
     <a
@@ -76,34 +76,30 @@ const primaryUrl = liveUrl ?? githubUrl ?? "#";
     <p class="mt-2 flex-1 text-sm text-foreground/80">{description}</p>
 
     <ul class="mt-3 flex flex-wrap gap-2">
-      {
-        techStack.map(tech => (
-          <li class="rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 text-xs font-medium text-accent">
-            {tech}
-          </li>
-        ))
-      }
+      {techStack.map(tech => <li
+        class="rounded-full border border-accent/20 bg-accent/5 px-2.5 py-0.5 text-xs font-medium text-accent"
+      >
+        {tech}
+      </li>)}
     </ul>
 
-    {
-      githubUrl && (
-        <div class="mt-4 flex items-center justify-end border-t border-border pt-4">
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group/btn flex items-center gap-1 rounded-md px-2 py-1 text-sm text-foreground/80 transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent/10 hover:text-accent"
-            aria-label={`${title} GitHub 저장소`}
-          >
-            <Icon
-              name="ph:github-logo"
-              size={18}
-              class="transition-transform duration-200 group-hover/btn:rotate-12"
-            />
-            <span class="sr-only sm:not-sr-only">GitHub</span>
-          </a>
-        </div>
-      )
-    }
+    {githubUrl && <div
+      class="mt-4 flex items-center justify-end border-t border-border pt-4"
+    >
+      <a
+        href={githubUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group/btn flex items-center gap-1 rounded-md px-2 py-1 text-sm text-foreground/80 transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent/10 hover:text-accent"
+        aria-label={`${title} GitHub 저장소`}
+      >
+        <Icon
+          name="ph:github-logo"
+          size={18}
+          class="transition-transform duration-200 group-hover/btn:rotate-12"
+        />
+        <span class="sr-only sm:not-sr-only">GitHub</span>
+      </a>
+    </div>}
   </div>
 </article>

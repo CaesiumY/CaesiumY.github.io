@@ -24,27 +24,25 @@ const isExternalLink =
   href && (href.startsWith("http") || href.startsWith("mailto"));
 ---
 
-{
-  disabled ? (
-    <span
-      id={id}
-      class={cn("group inline-block", className)}
-      title={title}
-      aria-disabled={disabled}
-    >
-      <slot />
-    </span>
-  ) : (
-    <a
-      id={id}
-      {href}
-      class={cn("group inline-block hover:text-accent", className)}
-      aria-label={ariaLabel}
-      title={title}
-      target={isExternalLink ? "_blank" : undefined}
-      rel={isExternalLink ? "noopener noreferrer" : undefined}
-    >
-      <slot />
-    </a>
-  )
-}
+{disabled ? (
+  <span
+    id={id}
+    class={cn("group inline-block", className)}
+    title={title}
+    aria-disabled={disabled}
+  >
+    <slot />
+  </span>
+) : (
+  <a
+    id={id}
+    {href}
+    class={cn("group inline-block hover:text-accent", className)}
+    aria-label={ariaLabel}
+    title={title}
+    target={isExternalLink ? "_blank" : undefined}
+    rel={isExternalLink ? "noopener noreferrer" : undefined}
+  >
+    <slot />
+  </a>
+)}

@@ -48,15 +48,14 @@ const date =
     ]}
     size={24}
   />
-  {
-    isModified && (
-      <span class:list={["text-sm", { "sm:text-base": size === "lg" }]}>
-        {SITE.lang === "ko" ? "업데이트:" : "Updated:"}
-      </span>
-    )
-  }
+  {isModified && <span
+    class:list={["text-sm", { "sm:text-base": size === "lg" }]}
+  >
+    {SITE.lang === "ko" ? "업데이트:" : "Updated:"}
+  </span>}
   <time
     class:list={["text-sm", { "sm:text-base": size === "lg" }]}
-    datetime={datetime.toISOString()}>{date}</time
+    datetime={datetime.toISOString()}
+    >{date}</time
   >
 </div>

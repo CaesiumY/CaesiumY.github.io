@@ -107,30 +107,28 @@ const menuItemBase =
         <span class="sm:sr-only">Series</span>
       </LinkButton>
     </li>
-    {
-      SITE.showProjects && (
-        <li class:list={[menuItemBase, "delay-200 sm:delay-0"]}>
-          <LinkButton
-            href="/projects"
-            class:list={[
-              "focus-outline flex w-44 justify-center p-3 sm:w-auto sm:p-1",
-              {
-                "active-nav [&>svg]:text-accent": isActive("/projects"),
-              },
-            ]}
-            ariaLabel="projects"
-            title="Projects"
-          >
-            <Icon
-              name="ph:rocket-launch"
-              class="hidden sm:inline-block"
-              size={20}
-            />
-            <span class="sm:sr-only">Projects</span>
-          </LinkButton>
-        </li>
-      )
-    }
+    {SITE.showProjects && <li
+      class:list={[menuItemBase, "delay-200 sm:delay-0"]}
+    >
+      <LinkButton
+        href="/projects"
+        class:list={[
+          "focus-outline flex w-44 justify-center p-3 sm:w-auto sm:p-1",
+          {
+            "active-nav [&>svg]:text-accent": isActive("/projects"),
+          },
+        ]}
+        ariaLabel="projects"
+        title="Projects"
+      >
+        <Icon
+          name="ph:rocket-launch"
+          class="hidden sm:inline-block"
+          size={20}
+        />
+        <span class="sm:sr-only">Projects</span>
+      </LinkButton>
+    </li>}
     <!-- Search & Theme -->
     <li
       class:list={[

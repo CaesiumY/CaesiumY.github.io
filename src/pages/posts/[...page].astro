@@ -31,7 +31,9 @@ const { page } = Astro.props;
   <Main pageTitle="Posts" pageDesc="작성한 모든 글을 확인하세요.">
     <PostFilterTabs activeTab="all" />
     <ul>
-      {page.data.map(data => <Card {...data} />)}
+      {page.data.map(data => (
+        <Card {...data} />
+      ))}
     </ul>
   </Main>
 

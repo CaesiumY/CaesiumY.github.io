@@ -34,7 +34,9 @@ const { page } = Astro.props;
   <Main pageTitle="Posts" pageDesc="번역한 글만 모았습니다.">
     <PostFilterTabs activeTab="translated" />
     <ul>
-      {page.data.map(data => <Card {...data} />)}
+      {page.data.map(data => (
+        <Card {...data} />
+      ))}
     </ul>
   </Main>
 
