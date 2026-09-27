@@ -125,6 +125,7 @@ AskUserQuestion으로 사용자에게 질문:
    - **Windows에서 `ln -s`가 복사본을 만들거나 실패하면**: `git update-index --add --cacheinfo 120000,$(echo -n "../approved-posts/<파일명>" | git hash-object -w --stdin),.claude/skills/blog-writer/data/samples/<파일명>` 으로 git 심링크를 직접 등록하고, `git ls-files -s`로 mode가 120000인지 검증
 4. style-guide.md 업데이트 (승인 패턴 강화)
 5. feedback-log.md 기록
+6. `.agents/skills/blog-writer/data/`에도 같은 변경을 반영 (Codex용 미러) — `git add` 후 `node scripts/check-skill-data-mirror.mjs`로 확인. 어긋나면 머지 게이트가 실패합니다
 
 거절된 경우:
 1. 거절 이유 파악

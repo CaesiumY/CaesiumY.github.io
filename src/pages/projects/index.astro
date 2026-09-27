@@ -4,6 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/layouts/components/Header.astro";
 import Footer from "@/layouts/components/Footer.astro";
 import ProjectCard from "@/features/projects/components/ProjectCard.astro";
+import ProjectThumbFallback from "@/features/projects/components/ProjectThumbFallback.astro";
 import { projects } from "@/data/projects";
 import { fetchProjectOgImage } from "@/utils/fetchOgImage";
 import { SITE } from "@/config";
@@ -29,11 +30,14 @@ const projectsWithOgImages = await Promise.all(
   <Main pageTitle="Projects" pageDesc="진행한 프로젝트들입니다.">
     {
       projectsWithOgImages.length > 0 ? (
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projectsWithOgImages.map(({ project, ogImageUrl }) => (
-            <ProjectCard project={project} ogImageUrl={ogImageUrl} />
-          ))}
-        </div>
+        <>
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {projectsWithOgImages.map(({ project, ogImageUrl }) => (
+              <ProjectCard project={project} ogImageUrl={ogImageUrl} />
+            ))}
+          </div>
+          <ProjectThumbFallback />
+        </>
       ) : (
         <p class="text-center text-foreground/60">
           아직 등록된 프로젝트가 없습니다.

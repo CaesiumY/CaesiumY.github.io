@@ -28,3 +28,21 @@ Guide for Claude Code (claude.ai/code) when working with code in this repository
 - 번역 파이프라인은 오케스트레이터-워커 구조 — 메인 루프(Opus)는 조율 전용, 번역·검토·다듬기는 frontmatter 모델(haiku|sonnet|opus)의 전담 에이전트가 수행 (translate-writer SKILL.md '오케스트레이션 원칙' 섹션 참조)
 - 재작성 단계(Phase 2 수정, Phase 3 polish, 외부 윤문 도구) 뒤에는 무결성 게이트 필수: `node .claude/skills/translate-writer/scripts/check-translation-integrity.mjs <before.md> <after.md>` (헤딩·이미지·코드·수치·커맨드 불변 검사, exit 1이면 GATE 2 진입 금지). polish로 바뀐 문장은 translation-verifier 델타 모드로 재검증 — 원문을 보지 않는 윤문이 verifier 수정을 되돌린 사례가 있음
 - 사용자 게이트는 `✋ GATE N — AskUserQuestion` 표기로 통일 — 게이트에서 AskUserQuestion 없이 다음 Phase 진행 금지
+
+## Agent skills
+
+`mattpocock-skills` 플러그인(`/triage`, `/to-tickets`, `/implement`, `/wayfinder` 등)이 읽는 레포 설정입니다. Claude Code 전용 플러그인이라 AGENTS.md가 아니라 여기에 둡니다.
+
+개발 워크플로(아이디어 → 스펙 → 티켓 → 구현, 디버깅, 리뷰)는 이 플러그인으로 진행합니다. 어떤 스킬을 쓸지 모르겠으면 `/ask-matt`을 쓰세요. superpowers·oh-my-claudecode 하네스는 더 이상 쓰지 않습니다.
+
+### Issue tracker
+
+GitHub Issues(`CaesiumY/CaesiumY.github.io`)를 `gh` CLI로 다룹니다. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+기본 역할 라벨을 이름 그대로 쓰고, 카테고리는 기존 `bug`/`enhancement` 라벨을 씁니다. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context — 루트 `CONTEXT.md`(필요해질 때 생성) + `docs/adr/`. See `docs/agents/domain.md`.
