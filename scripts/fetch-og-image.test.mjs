@@ -6,7 +6,8 @@
 //
 // 네트워크는 globalThis.fetch를 목으로 바꿔 고정한다. 수동 ogImage가 200에
 // text/html을 돌려주는 URL이었을 때 카드에 깨진 이미지가 박힌 적이 있어서
-// (#142), 판정 기준은 상태 코드가 아니라 content-type이다.
+// (#142), 200이어도 content-type이 image/*가 아니면 탈락이다. 반대로 404처럼
+// 실패 상태에 image/*가 붙은 응답(CDN 에러 이미지)도 탈락이다(#202 리뷰 결정).
 import { afterEach, mock, test } from "node:test";
 import assert from "node:assert/strict";
 
@@ -92,11 +93,15 @@ test("text/html이고 폴백 대상이 없으면 null(플레이스홀더)이다"
   assert.equal(await fetchProjectOgImage(project({ ogImage })), null);
 });
 
-test("상태 코드가 아니라 content-type으로 판정한다", async () => {
+test("실패 상태에 image/*가 붙은 응답은 폴백으로 넘어간다", async () => {
   const ogImage = "https://cdn.example/hero.png";
-  stubFetch({ [ogImage]: () => response("PNG", "image/png", 404) });
+  const liveUrl = "https://live.example/";
+  stubFetch({
+    [ogImage]: () => response("PNG", "image/png", 404),
+    [liveUrl]: () => response(htmlWithOg(LIVE_OG), "text/html"),
+  });
 
-  assert.equal(await fetchProjectOgImage(project({ ogImage })), ogImage);
+  assert.equal(await fetchProjectOgImage(project({ ogImage, liveUrl })), LIVE_OG);
 });
 
 test("수동 ogImage 요청이 실패하면 폴백 사슬로 넘어간다", async () => {

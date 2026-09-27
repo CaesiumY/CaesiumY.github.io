@@ -108,9 +108,10 @@ function isRootRelativePath(url: string): boolean {
 
 /**
  * URL이 실제로 이미지를 돌려주는지 확인합니다.
- * 상태 코드가 아니라 content-type으로 판정합니다 — 200에 text/html을 주는
- * URL(이동된 파일, 로그인 페이지 등)이 카드에 깨진 이미지로 박히는 것을 막기
- * 위해서입니다. HEAD를 거부하는 호스트가 있어 GET을 쓰고, 본문은 읽지 않습니다.
+ * 성공 응답이면서 content-type이 image/*여야 합니다. 상태 코드만 보면 200에
+ * text/html을 주는 URL(이동된 파일, 로그인 페이지 등)이 통과하고, content-type만
+ * 보면 404에 에러 이미지를 주는 CDN이 통과합니다. HEAD를 거부하는 호스트가 있어
+ * GET을 쓰고, 본문은 읽지 않습니다.
  */
 async function respondsWithImage(url: string): Promise<boolean> {
   // 프로토콜 상대 URL은 Node fetch가 파싱하지 못하므로 https로 요청한다
@@ -121,7 +122,7 @@ async function respondsWithImage(url: string): Promise<boolean> {
       const contentType = response.headers.get("content-type") ?? "";
       // 판정에 본문은 필요 없으므로 다운로드를 끊는다 (실패해도 판정과 무관)
       await response.body?.cancel().catch(() => {});
-      return contentType.toLowerCase().startsWith("image/");
+      return response.ok && contentType.toLowerCase().startsWith("image/");
     });
   } catch {
     return false;
