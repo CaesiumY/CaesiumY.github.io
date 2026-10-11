@@ -19,6 +19,8 @@ export default defineConfig({
   ],
   webServer: {
     command: "pnpm dev",
+    // dev 도구 막대 끄기 (이유는 astro.config.ts의 devToolbar 주석)
+    env: { E2E_DISABLE_DEV_TOOLBAR: "1" },
     url: "http://localhost:4321",
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
