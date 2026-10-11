@@ -31,6 +31,11 @@ export default defineConfig({
   // 패턴을 쓰는 곳이 있어 실제로 렌더 공백이 사라진다(예: "만나보세요. 더 자세한").
   // Astro 6과 동일한 렌더를 유지하려고 명시적으로 true로 둔다.
   compressHTML: true,
+  // E2E(playwright.config.ts의 webServer.env)에서는 dev 도구 막대를 끈다. 도구 막대의
+  // audit 앱은 페이지 전체 lint를 비동기로 끝낸 뒤에야 astro:page-load 리스너를 달아,
+  // 느린 CI에서 listener-leak 스펙의 리스너 수 측정이 기준값보다 늦게 1 늘어난다.
+  // 배포 빌드에는 원래 도구 막대가 없다.
+  devToolbar: { enabled: process.env.E2E_DISABLE_DEV_TOOLBAR !== "1" },
   integrations: [
     react(),
     // include(사전 빌드된 @iconify-json/* 패키지 로드)만 쓰는 한 astro-icon은
