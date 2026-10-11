@@ -1,0 +1,1 @@
+../approved-posts/17-ai-native-sdlc-playbook.md
