@@ -34,6 +34,7 @@ async function generateOgImageForSite() {
           display: "flex",
           justifyContent: "center",
           margin: "2.5rem",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}
@@ -46,6 +47,8 @@ async function generateOgImageForSite() {
           display: "flex",
           justifyContent: "center",
           margin: "2rem",
+          position: "relative",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}
@@ -72,7 +75,9 @@ async function generateOgImageForSite() {
               textAlign: "center",
             }}
           >
-            <p style={{ fontSize: 72, fontWeight: "bold" }}>{SITE.title}</p>
+            <p style={{ fontSize: 72, fontWeight: "bold", margin: "16px 0" }}>
+              {SITE.title}
+            </p>
           </div>
           <div
             style={{

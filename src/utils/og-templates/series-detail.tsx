@@ -35,6 +35,7 @@ async function generateOgImageForSeriesDetail(seriesName: string) {
           display: "flex",
           justifyContent: "center",
           margin: "2.5rem",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}
@@ -47,6 +48,8 @@ async function generateOgImageForSeriesDetail(seriesName: string) {
           display: "flex",
           justifyContent: "center",
           margin: "2rem",
+          position: "relative",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}
@@ -76,7 +79,7 @@ async function generateOgImageForSeriesDetail(seriesName: string) {
                 fontWeight: "bold",
                 maxHeight: "70%",
                 overflow: "hidden",
-                marginTop: "8px",
+                margin: "8px 0 16px 0",
               }}
             >
               {seriesName}

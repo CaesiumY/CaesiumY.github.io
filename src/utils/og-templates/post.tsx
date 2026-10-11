@@ -42,6 +42,7 @@ async function generateOgImageForPost(postData: CollectionEntry<"blog">) {
           display: "flex",
           justifyContent: "center",
           margin: "2.5rem",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}
@@ -54,6 +55,8 @@ async function generateOgImageForPost(postData: CollectionEntry<"blog">) {
           display: "flex",
           justifyContent: "center",
           margin: "2rem",
+          position: "relative",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}
@@ -72,6 +75,7 @@ async function generateOgImageForPost(postData: CollectionEntry<"blog">) {
             style={{
               fontSize: 72,
               fontWeight: "bold",
+              margin: "16px 0",
               maxHeight: "84%",
               overflow: "hidden",
             }}

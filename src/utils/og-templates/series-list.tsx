@@ -35,6 +35,7 @@ async function generateOgImageForSeriesList() {
           display: "flex",
           justifyContent: "center",
           margin: "2.5rem",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}
@@ -47,6 +48,8 @@ async function generateOgImageForSeriesList() {
           display: "flex",
           justifyContent: "center",
           margin: "2rem",
+          position: "relative",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}
@@ -73,8 +76,10 @@ async function generateOgImageForSeriesList() {
               textAlign: "center",
             }}
           >
-            <p style={{ fontSize: 72, fontWeight: "bold" }}>Series</p>
-            <p style={{ fontSize: 28, color: "#666", marginTop: "12px" }}>
+            <p style={{ fontSize: 72, fontWeight: "bold", margin: "16px 0" }}>
+              Series
+            </p>
+            <p style={{ fontSize: 28, color: "#666", margin: "12px 0 16px 0" }}>
               시리즈로 묶인 연재 글 모음입니다.
             </p>
           </div>
