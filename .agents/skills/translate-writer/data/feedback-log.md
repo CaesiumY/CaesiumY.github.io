@@ -7,15 +7,67 @@
 
 ## 피드백 통계
 
-- 총 피드백 수: 15
-- 긍정 피드백: 15
+- 총 피드백 수: 16
+- 긍정 피드백: 16
 - 부정 피드백: 0
-- 승인된 번역: 15
+- 승인된 번역: 16
 - 거절된 번역: 0
 
 ---
 
 ## 피드백 이력
+
+### 2026-10-11 KST
+
+**원문**: The AI-Native SDLC playbook (Louis Claxton, Anthropic, https://claude.com/blog/the-ai-native-sdlc-playbook)
+
+**번역 제목**: [번역] AI 네이티브 SDLC(소프트웨어 개발 생명주기) 플레이북
+
+**유형**: 승인 (Opus 원문 대조 리뷰 지적 반영 후 승인, 2026-10-11 프로덕션 발행, PR #189, 머지 커밋 04805bf)
+
+**모드**: thorough (원문 약 1,000줄, 청크 분할 병렬 번역)
+
+**검토 점수**: 미기록 (호출 메시지에 점수 미전달)
+
+**체감 점수**: 미제공 (calibration divergence 분석 대상 아님)
+
+**원문 특성**:
+- **스타일**: 공식 블로그, 장문 플레이북·거버넌스 가이드 (Anthropic, Louis Claxton)
+- **주제**: 코드 작성이 병목이 아닌 시대에 SDLC를 루프로 다시 설계하는 방법을 단계별 플레이로 설명
+- **특징**: 플레이마다 반복되는 소제목(실행 방법, 거버넌스 고려사항, 예시), 기존 방식 vs AI 네이티브 비교, 측정 지표, 다이어그램 4장(한국어로 다시 그림)
+
+**추출된 스타일 규칙**:
+
+| 항목 | 패턴 | 지양 | 권장 |
+|------|------|------|------|
+| 번역자 설명 구분 | 다이어그램 색 이름이 가리키는 노드 등 번역자가 덧붙인 설명 | 저자의 말처럼 본문에 녹임 (원문 정제 단계 설명 포함) | `(옮긴이: ...)` 인라인 구분 |
+| 반복 소제목 | 플레이마다 같은 소제목 반복 | h4 (remark-toc가 목차에 넣어 75개 항목) | 굵은 라벨 (35개로 감소) |
+| 반복 지표 문단 끝맺음 | 명사 조각문과 서술문 혼재 | 혼재 | "~입니다." 통일 |
+| 대문자 파일명 | 문장 첫머리 `Intent.md` | 대문자 그대로 | `intent.md` 원래 표기 |
+| 뜻을 잃는 직역 | "package the final check", "Coverage is dated from the last run" | 단어별 직역 | "마지막 확인을 구성하는", "점검 범위는 가장 최근 스캔 시점을 기준으로 따집니다" |
+| 소제목 충돌 | 본문 Resources와 글 끝 "## 참고 자료" | 같은 이름 중복 | "더 읽을 문서" 등 구분 |
+| stage vs step | 둘 다 "단계"로 번역 | 뜻 뭉개짐(리뷰에서 오역 지적) | stage=단계, step=걸음·절차 |
+| managed-only keys | "관리자 전용" | 오역 | "관리형 설정 전용 키" |
+| Build (SDLC 단계) | 일괄 "빌드" | 일괄 치환 | 단계 이름은 "구현", 일반 build는 "빌드", 출현마다 판단 (사용자 지시) |
+| 장문 번역 방식 | 원문 약 1,000줄 | 단일 패스 번역 | 청크 분할 + 용어표 고정 병렬 번역 + 청크별 검증 |
+| 가운뎃점·em dash | 사용자 선호 | · , — | 쉼표, 조사, 괄호 |
+
+**style-guide.md 업데이트**:
+- "2. 번역투 회피 패턴"에 "장문 플레이북·가이드형 번역 (AI 네이티브 SDLC 스타일)" 소섹션 신설 (5행)
+- "3. 용어 규칙 - 일관성 규칙"에 Build/stage/step/교차 참조/관리형 설정 전용 키/라벨 고정 6행 추가
+- "4. 구조 규칙"에 "반복 소제목과 장문 번역 방식" 소섹션 신설
+- "10. 역주 규칙"에 "(옮긴이: ...)" 인라인 구분 소섹션 추가
+- 학습된 패턴 히스토리 2026-10-11 행, 분석 대상 샘플 17번 추가, 마지막 업데이트 2026-10-11 (백업: style-history/style-guide-20261011-000000.md)
+
+**glossary.md 업데이트 (사용자 확정 용어 반영 완료)**: "SDLC·거버넌스 관련" 표 신설 (Build→구현, play, stage/step, control band, approval gate, artifact, audit trail, source of truth, system of record, managed settings, managed-only keys, evals, plan mode, 교차 참조 형식, 라벨 번역 8종). hooks·skills·subagent·worktree·headless는 기존 항목과 중복이라 제외
+
+**승인된 번역 저장**:
+
+저장 경로: `.agents/skills/translate-writer/data/approved-posts/17-ai-native-sdlc-playbook.md`
+
+심링크 경로: `.agents/skills/translate-writer/data/samples/17-ai-native-sdlc-playbook.md` (메인 루프가 등록)
+
+---
 
 ### 2026-08-22 11:17
 
@@ -824,6 +876,7 @@
 | 클리퍼(clippings) 소스 아티팩트 | 낮음 → 중간 | 원문 소스 형식 검증 규칙 확장 |
 | polish batch(haiku) 반복 함정 (스타일 위반·평서체·중복·한정어 탈락·이스케이프) | 신규 | "polish 단계의 함정"에 검증 체크리스트 신설 |
 | 이미지 내용이 이미지 안에만 있을 때 캡션 처리 | 신규 | "이미지 alt 텍스트 규칙" 뒤에 캡션/로컬 소싱 소섹션 신설 |
+| 번역자 설명 구분·반복 소제목 h4 목차 폭증·stage/step 오역 (장문 플레이북) | 신규 | "장문 플레이북·가이드형 번역", "반복 소제목과 장문 번역 방식", "(옮긴이: ...)" 규칙 신설 |
 
 ---
 
@@ -845,6 +898,7 @@
 | 2026-07-27 | The new rules of context engineering for Claude 5 generation models | [번역] Claude 5세대 모델을 위한 컨텍스트 엔지니어링의 새로운 규칙 | R 8.1 / V 8.1 (R2/R3) |
 | 2026-08-22 | 16 little UI design tips that make a big impact | [번역] 작지만 확실한 효과를 내는 UI 디자인 팁 16가지 | R 8.75 / V 8.8 |
 | 2026-08-22 | Maximizing the value of your Claude Code sessions | [번역] Claude Code 세션의 가치를 극대화하는 방법 | R 8.0 / V 8.5 (R2) |
+| 2026-10-11 | The AI-Native SDLC playbook | [번역] AI 네이티브 SDLC(소프트웨어 개발 생명주기) 플레이북 | 미기록 (PR #189 발행) |
 
 ---
 
@@ -886,7 +940,13 @@
 | 2026-07-27 | rubric | 루브릭 (rubric) | translation-learner | 반영 완료 |
 | 2026-07-27 | agent harness | 에이전트 하네스 (agent harness) | translation-learner | 반영 완료 |
 | 2026-07-27 | myth | 오해 | translation-learner | 반영 완료 |
+| 2026-10-11 | Build(SDLC 단계) | 구현 | translation-learner | 반영 완료 |
+| 2026-10-11 | play / stage / step | 플레이 / 단계 / 걸음·절차 | translation-learner | 반영 완료 |
+| 2026-10-11 | control band, audit trail, source of truth, system of record | 관리 범위, 감사 추적, 단일 진실 공급원, 기록의 원천 (각 괄호 병기) | translation-learner | 반영 완료 |
+| 2026-10-11 | approval gate, artifact, evals, plan mode | 승인 게이트, 산출물, 평가, 플랜 모드 | translation-learner | 반영 완료 |
+| 2026-10-11 | managed settings / managed-only keys | 관리형 설정 / 관리형 설정 전용 키 | translation-learner | 반영 완료 |
+| 2026-10-11 | 라벨 8종 (Traditional/AI-native 등) | 기존 방식/AI 네이티브 등 | translation-learner | 반영 완료 |
 
 ---
 
-✅ **마지막 업데이트**: 2026-09-21 KST
+✅ **마지막 업데이트**: 2026-10-11 KST

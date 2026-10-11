@@ -179,6 +179,36 @@
 | quiet flag | quiet 플래그 | 출력 억제 플래그. 한 문서 내 표기 통일 |
 | bust the cache | 캐시를 깨뜨리다 | 능동 주체가 있는 문맥. "캐시를 날리다"는 무주체 서술에만 |
 
+### SDLC·거버넌스 관련
+
+| 원문 | 번역 | 비고 |
+|------|------|------|
+| Build (SDLC 단계 이름) | 구현 | 사용자 확정. 빌드 산출물·빌드 명령 같은 일반적 build는 "빌드"(위 Next.js 표). 일괄 치환 금지, 출현마다 판단 |
+| play | 플레이 | |
+| stage | 단계 | step과 구분 |
+| step | 걸음 / 절차 | stage("단계")와 겹치지 않게 선택. 둘 다 "단계"로 옮기면 뜻이 뭉개짐 |
+| control band | 관리 범위(control band) | 첫 등장 시 병기 |
+| approval gate | 승인 게이트 | |
+| artifact | 산출물 | |
+| audit trail | 감사 추적(audit trail) | 첫 등장 시 병기 |
+| source of truth | 단일 진실 공급원(source of truth) | 첫 등장 시 병기 |
+| system of record | 기록의 원천(system of record) | 첫 등장 시 병기 |
+| managed settings | 관리형 설정 | |
+| managed-only keys | 관리형 설정 전용 키 | "관리자 전용"은 오역 |
+| evals | 평가 | |
+| plan mode | 플랜 모드 | |
+| 교차 참조 | N단계: 이름 | 예: 3단계: 구현 |
+| Traditional / AI-native | 기존 방식 / AI 네이티브 | 비교 표 머리글 |
+| Getting started | 시작하기 | 라벨 |
+| Prerequisites | 전제 조건 | 라벨 |
+| How to run it | 실행 방법 | 라벨. 반복 소제목은 h4 대신 굵은 라벨 |
+| How to measure it | 측정 방법 | 라벨 |
+| Leading / Lagging indicator | 선행 지표 / 후행 지표 | |
+| Sidebar | 사이드바 | |
+| Worked example | 실제 예시 | |
+
+> hooks(훅), skills(스킬), subagent(서브에이전트), worktree(워크트리), headless(헤드리스)는 위 표에 이미 있어 중복 추가하지 않음.
+
 ---
 
 ## 업데이트 기록
@@ -195,6 +225,7 @@
 | 2026-07-03 | Vibe Coder vs Software Engineer 번역 승인: time to safe merge, vibe coding/vibe coder, contributor poker 추가 |
 | 2026-07-27 | Claude 5세대 컨텍스트 엔지니어링 번역 승인: unhobbling(발목 풀어주기), progressive disclosure(점진적 공개), deferred loading(지연 로딩), rubric(루브릭), agent harness(에이전트 하네스), myth→오해 추가. Context Engineering은 기존 등재 항목과 중복 확인되어 스킵 |
 | 2026-08-22 | Maximizing Claude Code sessions 번역 승인: prefill(프리필), decode(디코드), effort level(effort 레벨), thinking tokens(생각 토큰), quiet flag(quiet 플래그), bust the cache(캐시를 깨뜨리다) 추가 |
+| 2026-10-11 | AI 네이티브 SDLC 플레이북 번역 승인: Build(SDLC 단계)→구현, play, stage/step 구분, control band, approval gate, artifact, audit trail, source of truth, system of record, managed settings/managed-only keys, evals, plan mode, "N단계: 이름" 교차 참조, 라벨 번역(Traditional/AI-native, Getting started, Prerequisites, How to run/measure it, Leading/Lagging indicator, Sidebar, Worked example) 추가. hooks·skills·subagent·worktree·headless는 기존 항목과 중복이라 스킵 |
 
 ---
 
