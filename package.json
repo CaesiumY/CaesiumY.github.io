@@ -65,7 +65,7 @@
   },
   "pnpm": {
     "auditConfig": {
-      "//ignoreGhsas": "GHSA-ch52-4w7c-c8xp: http-cache-semantics<=4.2.0, no patched release yet. Astro uses it only in assets/build/remote.js to cache remote images during the static build; the site serves no HTTP responses through it. Remove this entry once a patched version ships or astro drops the dependency.",
+      "//ignoreGhsas": "GHSA-ch52-4w7c-c8xp (http-cache-semantics max-stale): no fixed release yet. 4.3.0 only fixes the separate Vary CVE; the advisory range (<=4.2.0) is stale, so audit passing without this entry does not mean it is fixed. Astro uses it only in assets/build/remote.js to cache remote images during the static build; the site serves no HTTP responses through it. Remove this entry once a release with the max-stale fix ships or astro drops the dependency. Tracked in #215.",
       "ignoreGhsas": [
         "GHSA-ch52-4w7c-c8xp"
       ]
