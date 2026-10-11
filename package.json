@@ -38,7 +38,7 @@
     "remark-collapse": "^0.1.2",
     "remark-toc": "^9.0.0",
     "satori": "^0.33.4",
-    "sharp": "^0.35.4",
+    "sharp": "^0.35.5",
     "sonner": "^2.0.8",
     "tailwind-merge": "^3.7.0",
     "tailwindcss": "^4.3.3"
@@ -62,5 +62,13 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.70.0"
+  },
+  "pnpm": {
+    "auditConfig": {
+      "//ignoreGhsas": "GHSA-ch52-4w7c-c8xp: http-cache-semantics<=4.2.0, no patched release yet. Astro uses it only in assets/build/remote.js to cache remote images during the static build; the site serves no HTTP responses through it. Remove this entry once a patched version ships or astro drops the dependency.",
+      "ignoreGhsas": [
+        "GHSA-ch52-4w7c-c8xp"
+      ]
+    }
   }
 }
