@@ -1,10 +1,10 @@
 ---
 title: "[번역] AI 네이티브 SDLC(소프트웨어 개발 생명주기) 플레이북"
 description: "Anthropic 공식 블로그 번역입니다. 코드 작성이 더는 병목이 아닌 시대에 맞춰 SDLC를 루프로 다시 설계하는 방법을, 여섯 단계에 걸친 플레이와 intent.md, CLAUDE.md, 스킬, 훅, 평가를 중심으로 소개합니다."
-pubDatetime: 2026-09-19T10:53:00Z
-modDatetime: 2026-09-19T10:53:00Z
+pubDatetime: 2026-10-11T08:27:21Z
+modDatetime: 2026-10-11T08:27:21Z
 featured: false
-draft: true
+draft: false
 tags: ["translation", "claude-code", "sdlc", "agentic-development", "governance"]
 series: "Claude 공식 블로그 번역"
 ---
