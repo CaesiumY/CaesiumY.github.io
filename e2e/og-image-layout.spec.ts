@@ -54,6 +54,7 @@ async function measureOgImage(page: Page, path: string): Promise<OgMetrics> {
       return [data[i], data[i + 1], data[i + 2]];
     };
 
+    // 테두리는 #000이고 그 바깥은 배경 #fefbfb, 뒤 카드 #ecebeb라서 80 미만이면 테두리다
     let frontCardLeftBorderX = -1;
     for (let x = 0; x < width; x++) {
       if (grey(x, 300) < 80) {
@@ -69,7 +70,9 @@ async function measureOgImage(page: Page, path: string): Promise<OgMetrics> {
       }
     }
 
-    // 글자 영역: 내용 div(x 128~1072)의 안쪽, 카드 테두리를 피해 y 70~560
+    // 글자 영역: 내용 div(x 128~1072)의 안쪽, 카드 테두리를 피해 y 70~560.
+    // 200 미만을 글자로 본다. 검은 글자와 회색 부제목(#666)은 걸리고 앞 카드 배경
+    // #fefbfb는 걸리지 않는다. 템플릿 색을 바꾸면 이 기준도 다시 볼 것
     const textBands: [number, number][] = [];
     let start = -1;
     for (let y = 70; y < 560; y++) {
@@ -115,6 +118,7 @@ function expectCardGeometry(m: OgMetrics) {
   expect(m.frontCardTopBorderY).toBe(63);
 }
 
+/** 기대값과 ±3px 이내인지 본다 (안티에일리어싱과 1px 반올림 여유) */
 function expectNear(actual: number, expected: number, message: string) {
   expect(Math.abs(actual - expected), `${message}: ${actual}`).toBeLessThan(4);
 }
@@ -157,6 +161,12 @@ test.describe("OG 이미지 - 렌더링 레이아웃 회귀", () => {
     // 제목 첫 줄 위쪽 y는 글자 모양에 따라 2~3px 달라지므로 범위로 본다.
     // 내용 div top 87 + <p> 여백 16px + 줄 높이 안의 여유 = 약 115.
     // 여백이 72px(글자 크기 기준 1em)로 커지면 160 이상으로 밀린다.
+    // 제목 줄과 하단 블로그명, 최소 두 줄이 있어야 한다 (폰트 로딩 실패 등으로 비면
+    // 아래 인덱스 접근에서 TypeError 대신 이 단언으로 실패한다)
+    expect(
+      m.textBands.length,
+      `글자 줄 수: ${JSON.stringify(m.textBands)}`
+    ).toBeGreaterThan(1);
     const titleTop = m.textBands[0][0];
     expect(titleTop, `제목 위쪽 y: ${titleTop}`).toBeGreaterThanOrEqual(105);
     expect(titleTop, `제목 위쪽 y: ${titleTop}`).toBeLessThanOrEqual(127);
