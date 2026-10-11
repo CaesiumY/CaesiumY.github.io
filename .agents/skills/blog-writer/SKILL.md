@@ -79,6 +79,7 @@ draft: true
 3. 필요하면 `.agents/skills/blog-writer/data/samples/`에 샘플을 추가합니다. samples/의 파일은 approved-posts/를 가리키는 git 심링크입니다 — Windows에서 `ln -s`가 복사본을 만들거나 실패하면 `git update-index --add --cacheinfo 120000,...`으로 심링크를 직접 등록하고 `git ls-files -s`로 mode 120000을 검증합니다.
 4. `style-learner` 역할 프롬프트 기준으로 피드백 로그와 스타일 가이드를 갱신합니다.
 5. 스타일 가이드를 바꿀 때는 먼저 `.agents/skills/blog-writer/data/style-history/`에 백업합니다.
+6. `data/` 아래에 쓴 변경을 `.claude/skills/blog-writer/data/`에도 똑같이 반영합니다(Claude Code용 미러). `git add` 후 `node scripts/check-skill-data-mirror.mjs`로 확인하며, 어긋나면 머지 게이트가 실패합니다.
 
 ## 카테고리
 

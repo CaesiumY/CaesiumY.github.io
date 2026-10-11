@@ -17,7 +17,9 @@ let tags = getUniqueTags(posts);
   <Header />
   <Main pageTitle="Tags" pageDesc="글에서 사용된 모든 태그입니다.">
     <ul>
-      {tags.map(({ tag, tagName }) => <Tag {tag} {tagName} size="lg" />)}
+      {tags.map(({ tag, tagName }) => (
+        <Tag {tag} {tagName} size="lg" />
+      ))}
     </ul>
   </Main>
   <Footer />

@@ -19,7 +19,9 @@ const seriesList = getUniqueSeriesWithMeta(posts);
       총 {seriesList.length}개의 시리즈
     </div>
     <div class="space-y-6">
-      {seriesList.map(meta => <SeriesCard {...meta} />)}
+      {seriesList.map(meta => (
+        <SeriesCard {...meta} />
+      ))}
     </div>
   </Main>
   <Footer />

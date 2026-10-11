@@ -61,32 +61,24 @@ const formattedDate =
   </div>
 
   <ol class="mt-3 space-y-1.5 border-t border-accent/10 pt-3 text-sm">
-    {
-      previewPosts.map((post, i) => (
-        <li class="flex items-start gap-2">
-          <span class="w-4 flex-none font-mono text-accent/40">{i + 1}.</span>
-          <a
-            href={post.href}
-            class="line-clamp-1 text-foreground/80 decoration-dashed underline-offset-2 hover:text-accent hover:underline"
-          >
-            {post.title}
-          </a>
-        </li>
-      ))
-    }
+    {previewPosts.map((post, i) => <li class="flex items-start gap-2">
+      <span class="w-4 flex-none font-mono text-accent/40">{i + 1}.</span>
+      <a
+        href={post.href}
+        class="line-clamp-1 text-foreground/80 decoration-dashed underline-offset-2 hover:text-accent hover:underline"
+      >
+        {post.title}
+      </a>
+    </li>)}
   </ol>
 
-  {
-    count > previewPosts.length && (
-      <div class="mt-3 text-right">
-        <a
-          href={`/series/${series}/`}
-          class="inline-flex items-center gap-1 text-sm text-accent hover:underline"
-        >
-          외 {count - previewPosts.length}편 더보기
-          <Icon name="ph:arrow-right" class="size-4" aria-hidden="true" />
-        </a>
-      </div>
-    )
-  }
+  {count > previewPosts.length && <div class="mt-3 text-right">
+    <a
+      href={`/series/${series}/`}
+      class="inline-flex items-center gap-1 text-sm text-accent hover:underline"
+    >
+      외 {count - previewPosts.length}편 더보기
+      <Icon name="ph:arrow-right" class="size-4" aria-hidden="true" />
+    </a>
+  </div>}
 </article>

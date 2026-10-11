@@ -41,50 +41,47 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
           href="/about"
         >
           더 자세한 소개
-        </LinkButton>를 확인해보세요.
+        </LinkButton
+        >를 확인해보세요.
       </p>
       {
         // only display if at least one social link is enabled
-        SOCIALS.length > 0 && (
-          <div class="mt-4 flex flex-col sm:flex-row sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">소셜 링크:</div>
-            <Socials />
-          </div>
-        )
+        SOCIALS.length > 0 && <div
+          class="mt-4 flex flex-col sm:flex-row sm:items-center"
+        >
+          <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">소셜 링크:</div>
+          <Socials />
+        </div>
       }
     </section>
 
     <Hr />
 
-    {
-      featuredPosts.length > 0 && (
-        <>
-          <section id="featured" class="pt-12 pb-6">
-            <h2 class="text-2xl font-semibold tracking-wide">Featured Posts</h2>
-            <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {featuredPosts.map((data, index) => (
-                <FeaturedCard {...data} index={index} />
-              ))}
-            </div>
-          </section>
-          {recentPosts.length > 0 && <Hr />}
-        </>
-      )
-    }
-
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">Recent Posts</h2>
-          <ul>
-            {recentPosts.map(
-              (data, index) =>
-                index < SITE.postPerIndex && <Card variant="h3" {...data} />
-            )}
-          </ul>
+    {featuredPosts.length > 0 && (
+      <>
+        <section id="featured" class="pt-12 pb-6">
+          <h2 class="text-2xl font-semibold tracking-wide">Featured Posts</h2>
+          <div
+            class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+          >
+            {featuredPosts.map((data, index) => (
+              <FeaturedCard {...data} index={index} />
+            ))}
+          </div>
         </section>
-      )
-    }
+        {recentPosts.length > 0 && <Hr />}
+      </>
+    )}
+
+    {recentPosts.length > 0 && <section id="recent-posts" class="pt-12 pb-6">
+      <h2 class="text-2xl font-semibold tracking-wide">Recent Posts</h2>
+      <ul>
+        {recentPosts.map(
+          (data, index) =>
+            index < SITE.postPerIndex && <Card variant="h3" {...data} />
+        )}
+      </ul>
+    </section>}
 
     <div class="my-8 text-center">
       <LinkButton href="/posts/">

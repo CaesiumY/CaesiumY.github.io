@@ -122,6 +122,8 @@ cp [작성된글경로] .claude/skills/blog-writer/data/approved-posts/YYYYMMDD-
 
 이 글은 향후 style-analyzer가 참조하는 샘플 데이터가 됨.
 
+**미러 동기화**: `data/` 아래에 쓴 모든 파일(approved-posts, samples 심링크, style-guide, feedback-log, 용어집)을 `.agents/skills/blog-writer/data/`에도 똑같이 반영하세요. `git add` 후 `node scripts/check-skill-data-mirror.mjs`가 exit 0이어야 합니다 — 어긋나면 머지 게이트가 실패합니다.
+
 ---
 
 ## 스타일 가이드 업데이트 규칙

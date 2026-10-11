@@ -58,22 +58,19 @@ Any post URL also serves raw Markdown by appending .md
     <section aria-labelledby="recovery-heading" class="mb-14 w-full">
       <h2 id="recovery-heading" class="sr-only">이동할 수 있는 곳</h2>
       <ul class="flex flex-wrap justify-center gap-x-4 gap-y-2">
-        {
-          destinations.map(({ label, path }) => (
-            <li>
-              <LinkButton
-                href={path}
-                class="underline decoration-dashed underline-offset-4"
-              >
-                {label}
-              </LinkButton>
-            </li>
-          ))
-        }
+        {destinations.map(({ label, path }) => <li>
+          <LinkButton
+            href={path}
+            class="underline decoration-dashed underline-offset-4"
+          >
+            {label}
+          </LinkButton>
+        </li>)}
       </ul>
 
       <pre
-        class="mt-8 overflow-x-auto rounded border border-border bg-muted/40 p-4 text-xs whitespace-pre-wrap opacity-60">{recoveryMarkdown}</pre>
+        class="mt-8 overflow-x-auto rounded border border-border bg-muted/40 p-4 text-xs whitespace-pre-wrap opacity-60"
+      >{recoveryMarkdown}</pre>
     </section>
   </main>
 

@@ -44,7 +44,9 @@ const { page, seriesName } = Astro.props;
     pageDesc={`"${seriesName}" 시리즈의 모든 글입니다.`}
   >
     <ul>
-      {page.data.map(data => <Card {...data} />)}
+      {page.data.map(data => (
+        <Card {...data} />
+      ))}
     </ul>
   </Main>
 

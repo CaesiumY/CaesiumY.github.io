@@ -55,6 +55,9 @@ jobs:
       - name: "🔁 Check agent docs sync"
         run: node scripts/check-agent-docs-sync.mjs
 
+      - name: "🪞 Check skill data mirror"
+        run: node scripts/check-skill-data-mirror.mjs
+
       - name: "🧪 Test repo scripts"
         run: pnpm run test:scripts
 

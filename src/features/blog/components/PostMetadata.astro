@@ -41,7 +41,8 @@ const postUrl = new URL(postPath, Astro.site || SITE.website).href;
     class:list={[
       "max-sm:hidden",
       { hidden: !SITE.editPost.enabled || hideEditPost },
-    ]}>|</span
+    ]}
+    >|</span
   >
   <EditPost {hideEditPost} {post} class="max-sm:hidden" />
   <PresentationModeButton />
@@ -62,5 +63,7 @@ const postUrl = new URL(postPath, Astro.site || SITE.website).href;
 
 <!-- Tags -->
 <ul class="mt-4 mb-8 sm:my-8">
-  {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
+  {tags.map(tag => (
+    <Tag tag={slugifyStr(tag)} tagName={tag} />
+  ))}
 </ul>

@@ -38,7 +38,11 @@ async function installTestInstrumentation(page: Page) {
     const keyFor = (target: EventTarget, type: string): string | null => {
       if (
         target === document &&
-        (type === "scroll" || type === "click" || type === "keydown")
+        (type === "scroll" ||
+          type === "click" ||
+          type === "keydown" ||
+          type === "error" ||
+          type === "astro:page-load")
       ) {
         return `document:${type}`;
       }
@@ -173,6 +177,24 @@ async function gotoNeighborPost(
     await page.waitForURL(url => url.pathname !== postPath);
   });
   return { postPath, neighborPath: new URL(page.url()).pathname };
+}
+
+/** 헤더 내비게이션 링크 클릭으로 해당 경로까지 View Transitions 스왑 */
+async function gotoViaHeader(page: Page, path: string) {
+  const link = page.locator(`header a[href="${path}"]`);
+  await expect(link).toBeVisible();
+  await withViewTransition(page, async () => {
+    await link.click();
+    await page.waitForURL(url => url.pathname === path);
+  });
+}
+
+/** 뷰포트를 문서 높이만큼 키워 lazy 이미지를 모두 로드시킨다 */
+async function revealWholePage(page: Page) {
+  const height = await page.evaluate(
+    () => document.documentElement.scrollHeight
+  );
+  await page.setViewportSize({ width: 1280, height });
 }
 
 /** 히스토리 이동(뒤로/앞으로)을 VT 스왑으로 수행하고 도착 경로를 확인 */
@@ -331,5 +353,64 @@ test.describe("모바일 메뉴 (Navigation 리스너 검증)", () => {
     await expect(menuItems).toHaveAttribute("data-state", "open");
     await page.keyboard.press("Escape");
     await expect(menuItems).toHaveAttribute("data-state", "closed");
+  });
+});
+
+test.describe("프로젝트 썸네일 폴백 (ProjectThumbFallback 리스너 검증)", () => {
+  const PROJECTS_PATH = "/projects";
+  const AWAY_PATH = "/tags";
+
+  test("/projects 왕복 후 영속 타겟 리스너 수가 늘지 않는다", async ({
+    page,
+  }) => {
+    await page.goto(PROJECTS_PATH);
+    await waitForInitialPageLoad(page);
+
+    // 워밍업 왕복 (글↔글 테스트와 같은 이유로 베이스라인 조건을 맞춘다)
+    await gotoViaHeader(page, AWAY_PATH);
+    await historyNavigate(page, "back", PROJECTS_PATH);
+
+    await waitForListenerCountsStable(page);
+    const baseline = await page.evaluate(() => window.__listenerCounts!());
+    // 폴백 스크립트의 두 영속 리스너가 실제로 추적되고 있어야 불변량 비교가
+    // 의미 있다 (page-load는 다른 컴포넌트도 쓰므로 존재만 확인)
+    expect(baseline["document:error"]).toBe(1);
+    expect(baseline["document:astro:page-load"]).toBeGreaterThan(0);
+
+    for (let round = 0; round < 3; round++) {
+      await historyNavigate(page, "forward", AWAY_PATH);
+      await historyNavigate(page, "back", PROJECTS_PATH);
+    }
+
+    await waitForListenerCountsStable(page);
+    const final = await page.evaluate(() => window.__listenerCounts!());
+    expect(final).toEqual(baseline);
+  });
+
+  test("스왑으로 진입·복귀해도 깨진 썸네일이 플레이스홀더로 바뀐다", async ({
+    page,
+  }) => {
+    await page.route("**/*", route =>
+      route.request().resourceType() === "image"
+        ? route.abort()
+        : route.continue()
+    );
+    // 풀 로드가 아닌 스왑으로 처음 진입 — 인라인 스크립트가 스왑 중에 실행되는 경로
+    await page.goto(AWAY_PATH);
+    await waitForInitialPageLoad(page);
+    await gotoViaHeader(page, PROJECTS_PATH);
+    await revealWholePage(page);
+
+    const image = page.locator('[data-project-thumb="image"]');
+    const placeholder = page.locator('[data-project-thumb="placeholder"]');
+    await expect(image).toHaveCount(0);
+    await expect(placeholder).not.toHaveCount(0);
+
+    // 떠났다가 돌아와도 새 DOM에서 다시 폴백 (요소 참조 캐시 회귀 방지)
+    await historyNavigate(page, "back", AWAY_PATH);
+    await historyNavigate(page, "forward", PROJECTS_PATH);
+    await revealWholePage(page);
+    await expect(image).toHaveCount(0);
+    await expect(placeholder).not.toHaveCount(0);
   });
 });

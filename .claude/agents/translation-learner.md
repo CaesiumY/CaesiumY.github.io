@@ -138,6 +138,8 @@ cp [번역된글경로] .claude/skills/translate-writer/data/approved-posts/YYYY
 이어서 `samples/`에 심링크 추가 (`ln -s ../approved-posts/YYYYMMDD-[slug].md .`) — style-analyzer가 승인된 스타일을 학습:
 - **Windows에서 `ln -s`가 복사본을 만들거나 실패하면** (아래 명령은 `$(...)`·`echo -n` 등 Bash 문법을 쓰므로 반드시 Git Bash·WSL 등 Bash 호환 셸에서 실행 — cmd/PowerShell에서는 동작하지 않음): `git update-index --add --cacheinfo 120000,$(echo -n "../approved-posts/YYYYMMDD-[slug].md" | git hash-object -w --stdin),.claude/skills/translate-writer/data/samples/YYYYMMDD-[slug].md` 으로 git 심링크를 직접 등록하고, `git ls-files -s`로 mode가 120000인지 검증
 
+**미러 동기화**: `data/` 아래에 쓴 모든 파일(approved-posts, samples 심링크, style-guide, feedback-log, 용어집)을 `.agents/skills/translate-writer/data/`에도 똑같이 반영하세요. `git add` 후 `node scripts/check-skill-data-mirror.mjs`가 exit 0이어야 합니다 — 어긋나면 머지 게이트가 실패합니다.
+
 ---
 
 ## 용어집 업데이트 처리

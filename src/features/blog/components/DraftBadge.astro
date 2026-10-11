@@ -13,17 +13,13 @@ const sizeClasses = {
 };
 ---
 
-{
-  import.meta.env.DEV && (
-    <span
-      class:list={[
-        "inline-block rounded font-semibold",
-        "border border-accent/30 bg-accent/10 text-accent",
-        sizeClasses[size],
-        className,
-      ]}
-    >
-      DRAFT
-    </span>
-  )
-}
+{import.meta.env.DEV && <span
+  class:list={[
+    "inline-block rounded font-semibold",
+    "border border-accent/30 bg-accent/10 text-accent",
+    sizeClasses[size],
+    className,
+  ]}
+>
+  DRAFT
+</span>}
