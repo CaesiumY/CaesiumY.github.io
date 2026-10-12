@@ -35,6 +35,7 @@ async function generateOgImageForAbout() {
           display: "flex",
           justifyContent: "center",
           margin: "2.5rem",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}
@@ -47,6 +48,9 @@ async function generateOgImageForAbout() {
           display: "flex",
           justifyContent: "center",
           margin: "2rem",
+          // 뒤 카드(absolute)보다 위에 그려지도록 위치 지정 요소로 만든다
+          position: "relative",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}

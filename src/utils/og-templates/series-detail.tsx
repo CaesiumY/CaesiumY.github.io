@@ -35,6 +35,7 @@ async function generateOgImageForSeriesDetail(seriesName: string) {
           display: "flex",
           justifyContent: "center",
           margin: "2.5rem",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}
@@ -47,6 +48,9 @@ async function generateOgImageForSeriesDetail(seriesName: string) {
           display: "flex",
           justifyContent: "center",
           margin: "2rem",
+          // 뒤 카드(absolute)보다 위에 그려지도록 위치 지정 요소로 만든다
+          position: "relative",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}
@@ -76,7 +80,8 @@ async function generateOgImageForSeriesDetail(seriesName: string) {
                 fontWeight: "bold",
                 maxHeight: "70%",
                 overflow: "hidden",
-                marginTop: "8px",
+                // satori 0.33의 <p> 기본 여백(부모 글자 크기 16px 기준 1em)을 그대로 고정한다
+                margin: "8px 0 16px 0",
               }}
             >
               {seriesName}

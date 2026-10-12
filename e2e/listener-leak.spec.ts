@@ -225,6 +225,22 @@ test.beforeEach(async ({ page }) => {
   }, STORAGE_KEY);
 });
 
+/**
+ * 이 스펙의 리스너 수 비교는 dev 도구 막대가 꺼져 있다는 전제 위에 있다. 도구 막대의
+ * audit 앱은 비동기 lint 뒤에야 astro:page-load 리스너를 달아 측정을 흔든다
+ * (astro.config.ts의 devToolbar 주석). playwright.config.ts의 webServer.env가
+ * 사라지면 여기서 먼저 실패한다. 로컬에서 직접 띄운 dev 서버를 재사용할 때는
+ * 도구 막대가 켜져 있는 게 정상이라, 항상 새 서버를 띄우는 CI에서만 확인한다.
+ */
+test("E2E dev 서버는 도구 막대 없이 떠야 함", async ({ page }) => {
+  test.skip(!process.env.CI, "로컬은 직접 띄운 dev 서버를 재사용할 수 있음");
+  await page.goto("/");
+  await waitForInitialPageLoad(page);
+  // 도구 막대는 로드 뒤 모듈을 받아 비동기로 붙으므로, 요청이 잠잠해진 뒤에 센다
+  await page.waitForLoadState("networkidle");
+  await expect(page.locator("astro-dev-toolbar")).toHaveCount(0);
+});
+
 test.describe("View Transitions 리스너 수명", () => {
   test("글↔글 왕복 후 영속 타겟 리스너 수가 늘지 않는다", async ({ page }) => {
     await page.goto(TEST_POST_URL);
