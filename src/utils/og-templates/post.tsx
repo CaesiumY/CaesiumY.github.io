@@ -42,6 +42,7 @@ async function generateOgImageForPost(postData: CollectionEntry<"blog">) {
           display: "flex",
           justifyContent: "center",
           margin: "2.5rem",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}
@@ -54,6 +55,9 @@ async function generateOgImageForPost(postData: CollectionEntry<"blog">) {
           display: "flex",
           justifyContent: "center",
           margin: "2rem",
+          // 뒤 카드(absolute)보다 위에 그려지도록 위치 지정 요소로 만든다
+          position: "relative",
+          boxSizing: "border-box",
           width: "88%",
           height: "80%",
         }}
@@ -72,6 +76,8 @@ async function generateOgImageForPost(postData: CollectionEntry<"blog">) {
             style={{
               fontSize: 72,
               fontWeight: "bold",
+              // satori 0.33의 <p> 기본 여백(부모 글자 크기 16px 기준 1em)을 그대로 고정한다
+              margin: "16px 0",
               maxHeight: "84%",
               overflow: "hidden",
             }}
